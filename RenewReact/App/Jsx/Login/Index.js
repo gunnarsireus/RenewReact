@@ -158,7 +158,7 @@ export default class Index extends Component {
                                            id="email"
                                            name="email"
                                            type="text"
-                                           value="" readonly/>
+                                           value="" readOnly=""/>
                                 </div>
                             </div>
 
@@ -177,7 +177,7 @@ export default class Index extends Component {
                                            data-val-required="PIN-kod får inte vara tom"
                                            id="PIN"
                                            name="PIN"
-                                           onKeyPress="return Site.Validation.isNumber(event)"
+                                          // onKeyPress="return Site.Validation.isNumber(event)"
                                            type="text"
                                            value="" />
                                 </div>
@@ -198,7 +198,7 @@ export default class Index extends Component {
                                            data-val-required="Lösenord får inte vara tom"
                                            id="password1"
                                            name="password1"
-                                           onKeyUp="return Site.Validation.isSecurePassword(event)"
+                                          // onKeyUp="return Site.Validation.isSecurePassword(event)"
                                            type="password"
                                            value="" />
                                 </div>
@@ -219,7 +219,7 @@ export default class Index extends Component {
                                            data-val-required="Bekräfta får inte vara tom"
                                            id="password2"
                                            name="password2"
-                                           onKeyUp="return Site.Validation.isSecurePassword(event)"
+                                          // onKeyUp="return Site.Validation.isSecurePassword(event)"
                                            type="password"
                                            value="" />
                                 </div>

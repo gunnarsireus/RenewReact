@@ -40452,13 +40452,13 @@ webpackJsonp([0,2],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var homeTemplate = __webpack_require__(476);
+	var loginTemplate = __webpack_require__(476);
 
 	var viewModel = kendo.observable({
 	    title: "Login"
 	});
 
-	var view = new kendo.View(homeTemplate, {
+	var view = new kendo.View(loginTemplate, {
 	    model: viewModel,
 	    show: function show() {
 	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-login"));
@@ -40806,7 +40806,7 @@ webpackJsonp([0,2],[
 	                                                    id: "email",
 	                                                    name: "email",
 	                                                    type: "text",
-	                                                    value: "", readonly: true })
+	                                                    value: "", readOnly: "" })
 	                                            )
 	                                        ),
 	                                        _react2.default.createElement(
@@ -40833,9 +40833,9 @@ webpackJsonp([0,2],[
 	                                                    "data-val-length": "PIN-kod m�ste vara mellan 6 och 6 tecken",
 	                                                    "data-val-required": "PIN-kod f�r inte vara tom",
 	                                                    id: "PIN",
-	                                                    name: "PIN",
-	                                                    onKeyPress: "return Site.Validation.isNumber(event)",
-	                                                    type: "text",
+	                                                    name: "PIN"
+	                                                    // onKeyPress="return Site.Validation.isNumber(event)"
+	                                                    , type: "text",
 	                                                    value: "" })
 	                                            )
 	                                        ),
@@ -40863,9 +40863,9 @@ webpackJsonp([0,2],[
 	                                                    "data-val-length": "L�senord m�ste vara mellan 6 och 45 tecken",
 	                                                    "data-val-required": "L�senord f�r inte vara tom",
 	                                                    id: "password1",
-	                                                    name: "password1",
-	                                                    onKeyUp: "return Site.Validation.isSecurePassword(event)",
-	                                                    type: "password",
+	                                                    name: "password1"
+	                                                    // onKeyUp="return Site.Validation.isSecurePassword(event)"
+	                                                    , type: "password",
 	                                                    value: "" })
 	                                            )
 	                                        ),
@@ -40893,9 +40893,9 @@ webpackJsonp([0,2],[
 	                                                    "data-val-length": "Bekr�fta m�ste vara mellan 6 och 45 tecken",
 	                                                    "data-val-required": "Bekr�fta f�r inte vara tom",
 	                                                    id: "password2",
-	                                                    name: "password2",
-	                                                    onKeyUp: "return Site.Validation.isSecurePassword(event)",
-	                                                    type: "password",
+	                                                    name: "password2"
+	                                                    // onKeyUp="return Site.Validation.isSecurePassword(event)"
+	                                                    , type: "password",
 	                                                    value: "" })
 	                                            )
 	                                        )

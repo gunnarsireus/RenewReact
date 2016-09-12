@@ -1,4 +1,4 @@
-﻿var homeTemplate = require('./login.html');
+﻿var loginTemplate = require('./login.html');
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Index from '../../Jsx/Login/index.js';
@@ -6,7 +6,7 @@ var viewModel = kendo.observable({
     title: "Login"
 })
 
-var view = new kendo.View(homeTemplate, {
+var view = new kendo.View(loginTemplate, {
     model: viewModel,
     show: function () {
        ReactDOM.render(

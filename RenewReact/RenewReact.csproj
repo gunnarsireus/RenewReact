@@ -365,6 +365,7 @@
     <Content Include="App\js\FullCalendar-2.6.1\fullscheduler.js" />
     <Content Include="App\js\FullCalendar-2.6.1\lang\sv.js" />
     <Content Include="App\js\FullCalendar-2.6.1\moment.min.js" />
+    <Content Include="App\js\platform\additional-methods.js" />
     <Content Include="App\js\platform\bootstrap-clockpicker.js" />
     <Content Include="App\js\platform\bootstrap-datepicker.js" />
     <Content Include="App\js\platform\bootstrap-duallistbox.js" />

@@ -55,11 +55,8 @@ webpackJsonp([0,2],[
 
 	// Add new routes here...
 
-	//router.route('/', function (e) {
-	//    layout.showIn("#content", home);
-	//});
 	router.route('/', function (e) {
-	    layout.showIn("#content", login);
+	    layout.showIn("#content", home);
 	});
 
 	router.route('/arendeKlasser', function (e) {
@@ -99,6 +96,10 @@ webpackJsonp([0,2],[
 	    layout.showIn("#content", loggaut);
 	});
 
+	router.route('/login', function (e) {
+	    layout.showIn("#content", login);
+	});
+
 	module.exports = router;
 
 /***/ },
@@ -114,7 +115,7 @@ webpackJsonp([0,2],[
 	// these links populate the navbar
 	var viewModel = kendo.observable({
 	    linksLeft: {
-	        list: [[{ title: 'Admin', href: '', icon: '' }, { title: 'Personal', href: '#/personal', icon: '' }, { title: 'Felanmälan', href: '#/felanmalan', icon: '' }], [{ title: 'Ärenden', href: '', icon: '' }, { title: 'Pågående', href: '#/pagaende', icon: '' }, { title: 'Arkiverade', href: '#/arkiverade', icon: '' }], [{ title: 'Meddelanden', href: '', icon: '' }, { title: 'Nyheter', href: '#/nyheter', icon: '' }, { title: 'Erbjudanden', href: '#/erbjudanden', icon: '' }], [{ title: 'Register', href: '', icon: '' }, { title: 'Kunder', href: '#/kunder', icon: '' }, { title: 'Boende', href: '#/boende', icon: '' }, { title: 'Tidkoder', href: '#/tidkoder', icon: '' }, { title: 'Ärendeklasser', href: '#/arendeKlasser', icon: '' }]]
+	        list: [[{ title: 'Admin', href: '', icon: '' }, { title: 'Personal', href: '#/personal', icon: '' }, { title: 'Felanmälan', href: '#/felanmalan', icon: '' }], [{ title: 'Ärenden', href: '', icon: '' }, { title: 'Pågående', href: '#/pagaende', icon: '' }, { title: 'Arkiverade', href: '#/arkiverade', icon: '' }], [{ title: 'Meddelanden', href: '', icon: '' }, { title: 'Nyheter', href: '#/nyheter', icon: '' }, { title: 'Erbjudanden', href: '#/erbjudanden', icon: '' }], [{ title: 'Register', href: '', icon: '' }, { title: 'Kunder', href: '#/kunder', icon: '' }, { title: 'Boende', href: '#/boende', icon: '' }, { title: 'Tidkoder', href: '#/tidkoder', icon: '' }, { title: 'Ärendeklasser', href: '#/arendeKlasser', icon: '' }, { title: 'Login', href: '#/login', icon: '' }]]
 	    },
 	    linksRight: {
 	        list: [[{ title: 'Admin Admin', href: '#/admin', icon: '' }], [{ title: 'Logga ut', href: '#/loggaut', icon: '' }]]
@@ -40461,6 +40462,7 @@ webpackJsonp([0,2],[
 	var view = new kendo.View(loginTemplate, {
 	    model: viewModel,
 	    show: function show() {
+	        document.getElementsByTagName("header")[0].classList.add("hidden");
 	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-login"));
 	        kendo.fx(this.element).fade('in').duration(500).play();
 	    }

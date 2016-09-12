@@ -9,6 +9,7 @@ var viewModel = kendo.observable({
 var view = new kendo.View(loginTemplate, {
     model: viewModel,
     show: function () {
+       document.getElementsByTagName("header")[0].classList.add("hidden");
        ReactDOM.render(
            <Index />,
            document.getElementById("react-login"));

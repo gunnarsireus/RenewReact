@@ -18,7 +18,8 @@ var viewModel = kendo.observable({
                     { title: 'Kunder', href: '#/kunder', icon: '' },
                     { title: 'Boende', href: '#/boende', icon: '' },
                     { title: 'Tidkoder', href: '#/tidkoder', icon: '' },
-                    { title: 'Ärendeklasser', href: '#/arendeKlasser', icon: '' }]
+                    { title: 'Ärendeklasser', href: '#/arendeKlasser', icon: '' },
+                    { title: 'Login', href: '#/login', icon: '' }]
         ]
     },
     linksRight: {

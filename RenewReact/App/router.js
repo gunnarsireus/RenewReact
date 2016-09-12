@@ -40,11 +40,8 @@ var router = new kendo.Router({
 
 // Add new routes here...
     
-//router.route('/', function (e) {
-//    layout.showIn("#content", home);
-//});
 router.route('/', function (e) {
-    layout.showIn("#content", login);
+    layout.showIn("#content", home);
 });
 
 router.route('/arendeKlasser', function (e) {
@@ -82,6 +79,10 @@ router.route('/admin', function (e) {
 });
 router.route('/loggaut', function (e) {
     layout.showIn("#content", loggaut);
+});
+
+router.route('/login', function (e) {
+    layout.showIn("#content", login);
 });
 
 module.exports = router;

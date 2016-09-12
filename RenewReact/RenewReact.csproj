@@ -160,6 +160,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Enums.cs" />
+    <Compile Include="Helpers\SiteButtons.cs" />
+    <Compile Include="Helpers\SiteDateTimeInputs.cs" />
+    <Compile Include="Helpers\SiteInputForms.cs" />
+    <Compile Include="Helpers\SiteInputPanels.cs" />
+    <Compile Include="Helpers\SiteLinks.cs" />
+    <Compile Include="Helpers\SiteMessageFields.cs" />
+    <Compile Include="Helpers\SiteMultilineInputs.cs" />
+    <Compile Include="Helpers\SitePanels.cs" />
+    <Compile Include="Helpers\SitePhotos.cs" />
+    <Compile Include="Helpers\SiteSelect2Inputs.cs" />
+    <Compile Include="Helpers\SiteSelectDual.cs" />
+    <Compile Include="Helpers\SiteSelectInputs.cs" />
+    <Compile Include="Helpers\SiteSelectMultiple.cs" />
+    <Compile Include="Helpers\SiteTextInputs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIModel\Login\UIAccount_F.cs" />
     <Compile Include="UIModel\Login\UIAccount_V.cs" />
@@ -256,6 +271,8 @@
     <Content Include="App\css\site.css" />
     <Content Include="App\Jsx\Erbjudanden\Index.js" />
     <Content Include="App\Jsx\Felanmalan\Index.js" />
+    <Content Include="App\Jsx\Home\components\RightPart.js" />
+    <Content Include="App\Jsx\Home\components\LeftPart.js" />
     <Content Include="App\Jsx\Home\components\Footer.js" />
     <Content Include="App\Jsx\Home\components\UIRoot.js" />
     <Content Include="App\img\address.png" />
@@ -320,6 +337,7 @@
     <Content Include="App\img\view.png" />
     <Content Include="App\Jsx\Admin\Index.js" />
     <Content Include="App\Jsx\Loggaut\Index.js" />
+    <Content Include="App\Jsx\Login\Index.js" />
     <Content Include="App\js\DataTables-1.10.4\dataTables.autoFill.js" />
     <Content Include="App\js\DataTables-1.10.4\dataTables.autoFill.min.js" />
     <Content Include="App\js\DataTables-1.10.4\dataTables.bootstrap.js" />
@@ -443,6 +461,8 @@
     <Content Include="App\Views\layout\layout.js" />
     <Content Include="App\Views\Loggaut\loggaut.html" />
     <Content Include="App\Views\Loggaut\loggaut.js" />
+    <Content Include="App\Views\Login\login.html" />
+    <Content Include="App\Views\Login\login.js" />
     <Content Include="App\Views\Nyheter\nyheter.html" />
     <Content Include="App\Views\Nyheter\nyheter.js" />
     <Content Include="App\Views\Pagaende\pagaende.html" />
@@ -744,6 +764,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="App\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include=".gitignore" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

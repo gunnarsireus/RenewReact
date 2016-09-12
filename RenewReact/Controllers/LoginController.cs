@@ -17,7 +17,7 @@ namespace RenewReact.Controllers
             {
                 return base.ToLoginPage();
             }
-            return View();
+            return View("~/Views/Home/Index.cshtml");
         }
 
         /* CRUDL operations */

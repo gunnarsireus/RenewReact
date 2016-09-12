@@ -8,7 +8,12 @@
     @*@Styles.Render("~/bootstrap/css")*@
 </head>
 <body>
-    <div id="applicationHost"></div>
+    <div id="page" class="site-pagemargin-top">
+        <section id="main">
+            <div id="applicationHost" class="container">
+            </div>
+        </section>
+    </div>
     <script src="~/Built/commons.chunk.js"></script>
     <script src="~/Built/vendor.entry.chunk.js"></script>
     <script src="~/Built/startRouter.entry.chunk.js"></script>
@@ -23,8 +28,8 @@
 
 
     @*@Scripts.Render("~/jquery/js")
-    @Scripts.Render("~/bootstrap/js")
-    @Scripts.Render("~/site-components/js")
-    @Scripts.Render("~/site-home/js")*@
+        @Scripts.Render("~/bootstrap/js")
+        @Scripts.Render("~/site-components/js")
+        @Scripts.Render("~/site-home/js")*@
 </body>
 </html>

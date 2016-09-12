@@ -1,14 +1,4 @@
-﻿/*Adjust for extra divs from this React implementaion*/
-.container {
-  margin-right: auto;
-  margin-left: auto;
-  padding-left: 7px !important;
-  padding-right: 15px;
-}
-.navbar-header {
-  padding-left: 7px !important;
-}
-
+﻿
 /* Margins */
 
 .site-pagemargin-top {

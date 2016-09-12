@@ -18,6 +18,8 @@ var arendeKlasser = require('../App/Views/ArendeKlasser/arendeKlasser');
 var admin = require('../App/Views/Admin/admin');
 var loggaut = require('../App/Views/Loggaut/loggaut');
 
+var login = require('../App/Views/Login/login');
+
 var router = new kendo.Router({
     init: function () {
         
@@ -38,10 +40,12 @@ var router = new kendo.Router({
 
 // Add new routes here...
     
+//router.route('/', function (e) {
+//    layout.showIn("#content", home);
+//});
 router.route('/', function (e) {
-    layout.showIn("#content", home);
+    layout.showIn("#content", login);
 });
-
 
 router.route('/arendeKlasser', function (e) {
     layout.showIn("#content", arendeKlasser);

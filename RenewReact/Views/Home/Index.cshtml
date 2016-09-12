@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>@ViewBag.Title</title>
+    @*@Styles.Render("~/bootstrap/css")*@
+</head>
+<body>
+    <div id="applicationHost"></div>
+    <script src="~/Built/commons.chunk.js"></script>
+    <script src="~/Built/vendor.entry.chunk.js"></script>
+    <script src="~/Built/startRouter.entry.chunk.js"></script>
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmNxg2znkmhynBQgfFqP7fznbycHXiVmc" type="text/javascript"></script>
+    }
+    else
+    {
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANry8wQsbEBLLvb0EsFgGsLOHqiViaPfI" type="text/javascript"></script>
+    }
+
+
+    @*@Scripts.Render("~/jquery/js")
+    @Scripts.Render("~/bootstrap/js")
+    @Scripts.Render("~/site-components/js")
+    @Scripts.Render("~/site-home/js")*@
+</body>
+</html>

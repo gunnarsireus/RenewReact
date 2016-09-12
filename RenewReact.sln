@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenewReact", "RenewReact\RenewReact.csproj", "{2365026C-2CA6-4412-B903-FCE3FB870A6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerLibrary", "ServerLibrary\ServerLibrary.csproj", "{94998C5B-F98C-4524-9A34-C0CBAB60D87E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		McBrain|Any CPU = McBrain|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2365026C-2CA6-4412-B903-FCE3FB870A6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2365026C-2CA6-4412-B903-FCE3FB870A6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2365026C-2CA6-4412-B903-FCE3FB870A6B}.McBrain|Any CPU.ActiveCfg = Release|Any CPU
+		{2365026C-2CA6-4412-B903-FCE3FB870A6B}.McBrain|Any CPU.Build.0 = Release|Any CPU
+		{2365026C-2CA6-4412-B903-FCE3FB870A6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2365026C-2CA6-4412-B903-FCE3FB870A6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94998C5B-F98C-4524-9A34-C0CBAB60D87E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94998C5B-F98C-4524-9A34-C0CBAB60D87E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94998C5B-F98C-4524-9A34-C0CBAB60D87E}.McBrain|Any CPU.ActiveCfg = McBrain|Any CPU
+		{94998C5B-F98C-4524-9A34-C0CBAB60D87E}.McBrain|Any CPU.Build.0 = McBrain|Any CPU
+		{94998C5B-F98C-4524-9A34-C0CBAB60D87E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94998C5B-F98C-4524-9A34-C0CBAB60D87E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -8,10 +8,10 @@
     @*@Styles.Render("~/bootstrap/css")*@
 </head>
 <body>
+    <div id="isUserAuthorized" style="display:none">@Html.Raw((string)ViewBag.UserAuthorized ?? "")</div>
     <div id="page" class="site-pagemargin-top">
         <section id="main">
-            <div id="applicationHost" class="container">
-            </div>
+            <div id="applicationHost" class="container"></div>
         </section>
     </div>
     <script src="~/Built/commons.chunk.js"></script>

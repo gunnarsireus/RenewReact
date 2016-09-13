@@ -16,24 +16,24 @@ webpackJsonp([0,2],[
 	var layout = __webpack_require__(2);
 	var home = __webpack_require__(4);
 
-	var personal = __webpack_require__(438);
-	var felanmalan = __webpack_require__(441);
+	var personal = __webpack_require__(441);
+	var felanmalan = __webpack_require__(444);
 
-	var pagaende = __webpack_require__(444);
-	var arkiverade = __webpack_require__(447);
+	var pagaende = __webpack_require__(447);
+	var arkiverade = __webpack_require__(450);
 
-	var nyheter = __webpack_require__(450);
-	var erbjudanden = __webpack_require__(453);
+	var nyheter = __webpack_require__(453);
+	var erbjudanden = __webpack_require__(456);
 
-	var kunder = __webpack_require__(456);
-	var boende = __webpack_require__(459);
-	var tidkoder = __webpack_require__(462);
-	var arendeKlasser = __webpack_require__(465);
+	var kunder = __webpack_require__(459);
+	var boende = __webpack_require__(462);
+	var tidkoder = __webpack_require__(465);
+	var arendeKlasser = __webpack_require__(468);
 
-	var admin = __webpack_require__(468);
-	var loggaut = __webpack_require__(471);
+	var admin = __webpack_require__(471);
+	var loggaut = __webpack_require__(474);
 
-	var login = __webpack_require__(474);
+	var login = __webpack_require__(438);
 
 	var router = new kendo.Router({
 	    init: function init() {
@@ -176,6 +176,8 @@ webpackJsonp([0,2],[
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var homeTemplate = __webpack_require__(437);
+	var layout = __webpack_require__(2);
+	var login = __webpack_require__(438);
 
 	var viewModel = kendo.observable({
 	    title: "Home"
@@ -184,8 +186,13 @@ webpackJsonp([0,2],[
 	var view = new kendo.View(homeTemplate, {
 	    model: viewModel,
 	    show: function show() {
-	        _reactDom2.default.render(_react2.default.createElement(_UIRoot2.default, null), document.getElementById("react-home"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
+	        if (document.getElementById("isUserAuthorized").innerHTML === 'UserAuthorized') {
+	            document.getElementsByTagName("header")[0].classList.remove("hidden");
+	            _reactDom2.default.render(_react2.default.createElement(_UIRoot2.default, null), document.getElementById("react-home"));
+	            kendo.fx(this.element).fade('in').duration(500).play();
+	        } else {
+	            layout.showIn("#content", login);
+	        }
 	    }
 	});
 
@@ -39325,1135 +39332,7 @@ webpackJsonp([0,2],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(440);
-
-
-	var viewModel = kendo.observable({
-	    title: "Personal"
-	});
-
-	var view = new kendo.View(detailsTemplate, {
-	    model: viewModel,
-	    show: function show() {
-
-	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-personal"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
-	    }
-	});
-
-	module.exports = view;
-
-/***/ },
-/* 439 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Index = function (_Component) {
-	    _inherits(Index, _Component);
-
-	    function Index() {
-	        _classCallCheck(this, Index);
-
-	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
-	    }
-
-	    _createClass(Index, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'h1',
-	                null,
-	                'This is Personal page'
-	            );
-	        }
-	    }]);
-
-	    return Index;
-	}(_react.Component);
-
-	exports.default = Index;
-	;
-
-/***/ },
-/* 440 */
-/***/ function(module, exports) {
-
-	module.exports = "<h1   style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-personal\"></div>\r\n";
-
-/***/ },
-/* 441 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(38);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _index = __webpack_require__(442);
-
-	var _index2 = _interopRequireDefault(_index);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var detailsTemplate = __webpack_require__(443);
-
-
-	var viewModel = kendo.observable({
-	    title: "Felanmalan"
-	});
-
-	var view = new kendo.View(detailsTemplate, {
-	    model: viewModel,
-	    show: function show() {
-
-	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-felanmalan"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
-	    }
-	});
-
-	module.exports = view;
-
-/***/ },
-/* 442 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Index = function (_Component) {
-	    _inherits(Index, _Component);
-
-	    function Index() {
-	        _classCallCheck(this, Index);
-
-	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
-	    }
-
-	    _createClass(Index, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'h1',
-	                null,
-	                'This is Felanmälan page'
-	            );
-	        }
-	    }]);
-
-	    return Index;
-	}(_react.Component);
-
-	exports.default = Index;
-	;
-
-/***/ },
-/* 443 */
-/***/ function(module, exports) {
-
-	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-felanmalan\"></div>\r\n";
-
-/***/ },
-/* 444 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(38);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _index = __webpack_require__(445);
-
-	var _index2 = _interopRequireDefault(_index);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var detailsTemplate = __webpack_require__(446);
-
-
-	var viewModel = kendo.observable({
-	    title: "Pagaende"
-	});
-
-	var view = new kendo.View(detailsTemplate, {
-	    model: viewModel,
-	    show: function show() {
-
-	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-pagaende"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
-	    }
-	});
-
-	module.exports = view;
-
-/***/ },
-/* 445 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Index = function (_Component) {
-	    _inherits(Index, _Component);
-
-	    function Index() {
-	        _classCallCheck(this, Index);
-
-	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
-	    }
-
-	    _createClass(Index, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'h1',
-	                null,
-	                'This is Pågående page'
-	            );
-	        }
-	    }]);
-
-	    return Index;
-	}(_react.Component);
-
-	exports.default = Index;
-	;
-
-/***/ },
-/* 446 */
-/***/ function(module, exports) {
-
-	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-pagaende\" ></div>\r\n";
-
-/***/ },
-/* 447 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(38);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _index = __webpack_require__(448);
-
-	var _index2 = _interopRequireDefault(_index);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var detailsTemplate = __webpack_require__(449);
-
-
-	var viewModel = kendo.observable({
-	    title: "Arkiverade"
-	});
-
-	var view = new kendo.View(detailsTemplate, {
-	    model: viewModel,
-	    show: function show() {
-
-	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-arkiverade"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
-	    }
-	});
-
-	module.exports = view;
-
-/***/ },
-/* 448 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Index = function (_Component) {
-	    _inherits(Index, _Component);
-
-	    function Index() {
-	        _classCallCheck(this, Index);
-
-	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
-	    }
-
-	    _createClass(Index, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'h1',
-	                null,
-	                'This is Arkiverade page'
-	            );
-	        }
-	    }]);
-
-	    return Index;
-	}(_react.Component);
-
-	exports.default = Index;
-	;
-
-/***/ },
-/* 449 */
-/***/ function(module, exports) {
-
-	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-arkiverade\" ></div>\r\n";
-
-/***/ },
-/* 450 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(38);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _index = __webpack_require__(451);
-
-	var _index2 = _interopRequireDefault(_index);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var detailsTemplate = __webpack_require__(452);
-
-
-	var viewModel = kendo.observable({
-	    title: "Nyheter"
-	});
-
-	var view = new kendo.View(detailsTemplate, {
-	    model: viewModel,
-	    show: function show() {
-
-	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-nyheter"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
-	    }
-	});
-
-	module.exports = view;
-
-/***/ },
-/* 451 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Index = function (_Component) {
-	    _inherits(Index, _Component);
-
-	    function Index() {
-	        _classCallCheck(this, Index);
-
-	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
-	    }
-
-	    _createClass(Index, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'h1',
-	                null,
-	                'This is Nyheter page'
-	            );
-	        }
-	    }]);
-
-	    return Index;
-	}(_react.Component);
-
-	exports.default = Index;
-	;
-
-/***/ },
-/* 452 */
-/***/ function(module, exports) {
-
-	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-nyheter\" ></div>\r\n";
-
-/***/ },
-/* 453 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(38);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _index = __webpack_require__(454);
-
-	var _index2 = _interopRequireDefault(_index);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var detailsTemplate = __webpack_require__(455);
-
-
-	var viewModel = kendo.observable({
-	    title: "Erbjudanden"
-	});
-
-	var view = new kendo.View(detailsTemplate, {
-	    model: viewModel,
-	    show: function show() {
-
-	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-erbjudanden"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
-	    }
-	});
-
-	module.exports = view;
-
-/***/ },
-/* 454 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Index = function (_Component) {
-	    _inherits(Index, _Component);
-
-	    function Index() {
-	        _classCallCheck(this, Index);
-
-	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
-	    }
-
-	    _createClass(Index, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'h1',
-	                null,
-	                'This is Erbjudanden page'
-	            );
-	        }
-	    }]);
-
-	    return Index;
-	}(_react.Component);
-
-	exports.default = Index;
-	;
-
-/***/ },
-/* 455 */
-/***/ function(module, exports) {
-
-	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-erbjudanden\"></div>\r\n";
-
-/***/ },
-/* 456 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(38);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _index = __webpack_require__(457);
-
-	var _index2 = _interopRequireDefault(_index);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var detailsTemplate = __webpack_require__(458);
-
-
-	var viewModel = kendo.observable({
-	    title: "Kunder"
-	});
-
-	var view = new kendo.View(detailsTemplate, {
-	    model: viewModel,
-	    show: function show() {
-
-	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-kunder"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
-	    }
-	});
-
-	module.exports = view;
-
-/***/ },
-/* 457 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Index = function (_Component) {
-	    _inherits(Index, _Component);
-
-	    function Index() {
-	        _classCallCheck(this, Index);
-
-	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
-	    }
-
-	    _createClass(Index, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'h1',
-	                null,
-	                'This is Kunder page'
-	            );
-	        }
-	    }]);
-
-	    return Index;
-	}(_react.Component);
-
-	exports.default = Index;
-	;
-
-/***/ },
-/* 458 */
-/***/ function(module, exports) {
-
-	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-kunder\" ></div>\r\n";
-
-/***/ },
-/* 459 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(38);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _index = __webpack_require__(460);
-
-	var _index2 = _interopRequireDefault(_index);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var detailsTemplate = __webpack_require__(461);
-
-
-	var viewModel = kendo.observable({
-	    title: "Boende"
-	});
-
-	var view = new kendo.View(detailsTemplate, {
-	    model: viewModel,
-	    show: function show() {
-
-	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-boende"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
-	    }
-	});
-
-	module.exports = view;
-
-/***/ },
-/* 460 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Index = function (_Component) {
-	    _inherits(Index, _Component);
-
-	    function Index() {
-	        _classCallCheck(this, Index);
-
-	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
-	    }
-
-	    _createClass(Index, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'h1',
-	                null,
-	                'This is Boende page'
-	            );
-	        }
-	    }]);
-
-	    return Index;
-	}(_react.Component);
-
-	exports.default = Index;
-	;
-
-/***/ },
-/* 461 */
-/***/ function(module, exports) {
-
-	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-boende\" ></div>\r\n";
-
-/***/ },
-/* 462 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(38);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _index = __webpack_require__(463);
-
-	var _index2 = _interopRequireDefault(_index);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var detailsTemplate = __webpack_require__(464);
-
-
-	var viewModel = kendo.observable({
-	    title: "Tidkoder"
-	});
-
-	var view = new kendo.View(detailsTemplate, {
-	    model: viewModel,
-	    show: function show() {
-
-	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-tidkoder"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
-	    }
-	});
-
-	module.exports = view;
-
-/***/ },
-/* 463 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Index = function (_Component) {
-	    _inherits(Index, _Component);
-
-	    function Index() {
-	        _classCallCheck(this, Index);
-
-	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
-	    }
-
-	    _createClass(Index, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'h1',
-	                null,
-	                'This is Tidkoder page'
-	            );
-	        }
-	    }]);
-
-	    return Index;
-	}(_react.Component);
-
-	exports.default = Index;
-	;
-
-/***/ },
-/* 464 */
-/***/ function(module, exports) {
-
-	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-tidkoder\"></div>\r\n";
-
-/***/ },
-/* 465 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(38);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _index = __webpack_require__(466);
-
-	var _index2 = _interopRequireDefault(_index);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var detailsTemplate = __webpack_require__(467);
-
-
-	var viewModel = kendo.observable({
-	    title: "ArendeKlasser"
-	});
-
-	var view = new kendo.View(detailsTemplate, {
-	    model: viewModel,
-	    show: function show() {
-
-	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-arendeKlasser"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
-	    }
-	});
-
-	module.exports = view;
-
-/***/ },
-/* 466 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Index = function (_Component) {
-	    _inherits(Index, _Component);
-
-	    function Index() {
-	        _classCallCheck(this, Index);
-
-	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
-	    }
-
-	    _createClass(Index, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'h1',
-	                null,
-	                'This is Ärendeklasser page'
-	            );
-	        }
-	    }]);
-
-	    return Index;
-	}(_react.Component);
-
-	exports.default = Index;
-	;
-
-/***/ },
-/* 467 */
-/***/ function(module, exports) {
-
-	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-arendeKlasser\" >hej</div>\r\n";
-
-/***/ },
-/* 468 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(38);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _index = __webpack_require__(469);
-
-	var _index2 = _interopRequireDefault(_index);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var detailsTemplate = __webpack_require__(470);
-
-
-	var viewModel = kendo.observable({
-	    title: "Admin"
-	});
-
-	var view = new kendo.View(detailsTemplate, {
-	    model: viewModel,
-	    show: function show() {
-
-	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-admin"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
-	    }
-	});
-
-	module.exports = view;
-
-/***/ },
-/* 469 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Index = function (_Component) {
-	    _inherits(Index, _Component);
-
-	    function Index() {
-	        _classCallCheck(this, Index);
-
-	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
-	    }
-
-	    _createClass(Index, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'h1',
-	                null,
-	                'This is Admin page'
-	            );
-	        }
-	    }]);
-
-	    return Index;
-	}(_react.Component);
-
-	exports.default = Index;
-	;
-
-/***/ },
-/* 470 */
-/***/ function(module, exports) {
-
-	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-admin\" ></div>\r\n";
-
-/***/ },
-/* 471 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(38);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _index = __webpack_require__(472);
-
-	var _index2 = _interopRequireDefault(_index);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var detailsTemplate = __webpack_require__(473);
-
-
-	var viewModel = kendo.observable({
-	    title: "Loggaut"
-	});
-
-	var view = new kendo.View(detailsTemplate, {
-	    model: viewModel,
-	    show: function show() {
-
-	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-loggaut"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
-	    }
-	});
-
-	module.exports = view;
-
-/***/ },
-/* 472 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Index = function (_Component) {
-	    _inherits(Index, _Component);
-
-	    function Index() {
-	        _classCallCheck(this, Index);
-
-	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
-	    }
-
-	    _createClass(Index, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'h1',
-	                null,
-	                'This is Logga ut page'
-	            );
-	        }
-	    }]);
-
-	    return Index;
-	}(_react.Component);
-
-	exports.default = Index;
-	;
-
-/***/ },
-/* 473 */
-/***/ function(module, exports) {
-
-	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-loggaut\" ></div>\r\n";
-
-/***/ },
-/* 474 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(38);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _index = __webpack_require__(475);
-
-	var _index2 = _interopRequireDefault(_index);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var loginTemplate = __webpack_require__(476);
+	var loginTemplate = __webpack_require__(440);
 
 	var viewModel = kendo.observable({
 	    title: "Login"
@@ -40463,7 +39342,10 @@ webpackJsonp([0,2],[
 	    model: viewModel,
 	    show: function show() {
 	        document.getElementsByTagName("header")[0].classList.add("hidden");
+
 	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-login"));
+	        var validatePanel = $('#validate-account-panel');
+	        validatePanel.show();
 	        kendo.fx(this.element).fade('in').duration(500).play();
 	    }
 	});
@@ -40471,7 +39353,7 @@ webpackJsonp([0,2],[
 	module.exports = view;
 
 /***/ },
-/* 475 */
+/* 439 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -40950,10 +39832,1138 @@ webpackJsonp([0,2],[
 	;
 
 /***/ },
-/* 476 */
+/* 440 */
 /***/ function(module, exports) {
 
 	module.exports = "<div id=\"react-login\"></div>\r\n";
+
+/***/ },
+/* 441 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(38);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _index = __webpack_require__(442);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var detailsTemplate = __webpack_require__(443);
+
+
+	var viewModel = kendo.observable({
+	    title: "Personal"
+	});
+
+	var view = new kendo.View(detailsTemplate, {
+	    model: viewModel,
+	    show: function show() {
+
+	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-personal"));
+	        kendo.fx(this.element).fade('in').duration(500).play();
+	    }
+	});
+
+	module.exports = view;
+
+/***/ },
+/* 442 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Index = function (_Component) {
+	    _inherits(Index, _Component);
+
+	    function Index() {
+	        _classCallCheck(this, Index);
+
+	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
+	    }
+
+	    _createClass(Index, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'h1',
+	                null,
+	                'This is Personal page'
+	            );
+	        }
+	    }]);
+
+	    return Index;
+	}(_react.Component);
+
+	exports.default = Index;
+	;
+
+/***/ },
+/* 443 */
+/***/ function(module, exports) {
+
+	module.exports = "<h1   style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-personal\"></div>\r\n";
+
+/***/ },
+/* 444 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(38);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _index = __webpack_require__(445);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var detailsTemplate = __webpack_require__(446);
+
+
+	var viewModel = kendo.observable({
+	    title: "Felanmalan"
+	});
+
+	var view = new kendo.View(detailsTemplate, {
+	    model: viewModel,
+	    show: function show() {
+
+	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-felanmalan"));
+	        kendo.fx(this.element).fade('in').duration(500).play();
+	    }
+	});
+
+	module.exports = view;
+
+/***/ },
+/* 445 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Index = function (_Component) {
+	    _inherits(Index, _Component);
+
+	    function Index() {
+	        _classCallCheck(this, Index);
+
+	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
+	    }
+
+	    _createClass(Index, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'h1',
+	                null,
+	                'This is Felanmälan page'
+	            );
+	        }
+	    }]);
+
+	    return Index;
+	}(_react.Component);
+
+	exports.default = Index;
+	;
+
+/***/ },
+/* 446 */
+/***/ function(module, exports) {
+
+	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-felanmalan\"></div>\r\n";
+
+/***/ },
+/* 447 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(38);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _index = __webpack_require__(448);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var detailsTemplate = __webpack_require__(449);
+
+
+	var viewModel = kendo.observable({
+	    title: "Pagaende"
+	});
+
+	var view = new kendo.View(detailsTemplate, {
+	    model: viewModel,
+	    show: function show() {
+
+	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-pagaende"));
+	        kendo.fx(this.element).fade('in').duration(500).play();
+	    }
+	});
+
+	module.exports = view;
+
+/***/ },
+/* 448 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Index = function (_Component) {
+	    _inherits(Index, _Component);
+
+	    function Index() {
+	        _classCallCheck(this, Index);
+
+	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
+	    }
+
+	    _createClass(Index, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'h1',
+	                null,
+	                'This is Pågående page'
+	            );
+	        }
+	    }]);
+
+	    return Index;
+	}(_react.Component);
+
+	exports.default = Index;
+	;
+
+/***/ },
+/* 449 */
+/***/ function(module, exports) {
+
+	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-pagaende\" ></div>\r\n";
+
+/***/ },
+/* 450 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(38);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _index = __webpack_require__(451);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var detailsTemplate = __webpack_require__(452);
+
+
+	var viewModel = kendo.observable({
+	    title: "Arkiverade"
+	});
+
+	var view = new kendo.View(detailsTemplate, {
+	    model: viewModel,
+	    show: function show() {
+
+	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-arkiverade"));
+	        kendo.fx(this.element).fade('in').duration(500).play();
+	    }
+	});
+
+	module.exports = view;
+
+/***/ },
+/* 451 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Index = function (_Component) {
+	    _inherits(Index, _Component);
+
+	    function Index() {
+	        _classCallCheck(this, Index);
+
+	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
+	    }
+
+	    _createClass(Index, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'h1',
+	                null,
+	                'This is Arkiverade page'
+	            );
+	        }
+	    }]);
+
+	    return Index;
+	}(_react.Component);
+
+	exports.default = Index;
+	;
+
+/***/ },
+/* 452 */
+/***/ function(module, exports) {
+
+	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-arkiverade\" ></div>\r\n";
+
+/***/ },
+/* 453 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(38);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _index = __webpack_require__(454);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var detailsTemplate = __webpack_require__(455);
+
+
+	var viewModel = kendo.observable({
+	    title: "Nyheter"
+	});
+
+	var view = new kendo.View(detailsTemplate, {
+	    model: viewModel,
+	    show: function show() {
+
+	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-nyheter"));
+	        kendo.fx(this.element).fade('in').duration(500).play();
+	    }
+	});
+
+	module.exports = view;
+
+/***/ },
+/* 454 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Index = function (_Component) {
+	    _inherits(Index, _Component);
+
+	    function Index() {
+	        _classCallCheck(this, Index);
+
+	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
+	    }
+
+	    _createClass(Index, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'h1',
+	                null,
+	                'This is Nyheter page'
+	            );
+	        }
+	    }]);
+
+	    return Index;
+	}(_react.Component);
+
+	exports.default = Index;
+	;
+
+/***/ },
+/* 455 */
+/***/ function(module, exports) {
+
+	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-nyheter\" ></div>\r\n";
+
+/***/ },
+/* 456 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(38);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _index = __webpack_require__(457);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var detailsTemplate = __webpack_require__(458);
+
+
+	var viewModel = kendo.observable({
+	    title: "Erbjudanden"
+	});
+
+	var view = new kendo.View(detailsTemplate, {
+	    model: viewModel,
+	    show: function show() {
+
+	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-erbjudanden"));
+	        kendo.fx(this.element).fade('in').duration(500).play();
+	    }
+	});
+
+	module.exports = view;
+
+/***/ },
+/* 457 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Index = function (_Component) {
+	    _inherits(Index, _Component);
+
+	    function Index() {
+	        _classCallCheck(this, Index);
+
+	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
+	    }
+
+	    _createClass(Index, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'h1',
+	                null,
+	                'This is Erbjudanden page'
+	            );
+	        }
+	    }]);
+
+	    return Index;
+	}(_react.Component);
+
+	exports.default = Index;
+	;
+
+/***/ },
+/* 458 */
+/***/ function(module, exports) {
+
+	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-erbjudanden\"></div>\r\n";
+
+/***/ },
+/* 459 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(38);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _index = __webpack_require__(460);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var detailsTemplate = __webpack_require__(461);
+
+
+	var viewModel = kendo.observable({
+	    title: "Kunder"
+	});
+
+	var view = new kendo.View(detailsTemplate, {
+	    model: viewModel,
+	    show: function show() {
+
+	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-kunder"));
+	        kendo.fx(this.element).fade('in').duration(500).play();
+	    }
+	});
+
+	module.exports = view;
+
+/***/ },
+/* 460 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Index = function (_Component) {
+	    _inherits(Index, _Component);
+
+	    function Index() {
+	        _classCallCheck(this, Index);
+
+	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
+	    }
+
+	    _createClass(Index, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'h1',
+	                null,
+	                'This is Kunder page'
+	            );
+	        }
+	    }]);
+
+	    return Index;
+	}(_react.Component);
+
+	exports.default = Index;
+	;
+
+/***/ },
+/* 461 */
+/***/ function(module, exports) {
+
+	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-kunder\" ></div>\r\n";
+
+/***/ },
+/* 462 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(38);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _index = __webpack_require__(463);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var detailsTemplate = __webpack_require__(464);
+
+
+	var viewModel = kendo.observable({
+	    title: "Boende"
+	});
+
+	var view = new kendo.View(detailsTemplate, {
+	    model: viewModel,
+	    show: function show() {
+
+	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-boende"));
+	        kendo.fx(this.element).fade('in').duration(500).play();
+	    }
+	});
+
+	module.exports = view;
+
+/***/ },
+/* 463 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Index = function (_Component) {
+	    _inherits(Index, _Component);
+
+	    function Index() {
+	        _classCallCheck(this, Index);
+
+	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
+	    }
+
+	    _createClass(Index, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'h1',
+	                null,
+	                'This is Boende page'
+	            );
+	        }
+	    }]);
+
+	    return Index;
+	}(_react.Component);
+
+	exports.default = Index;
+	;
+
+/***/ },
+/* 464 */
+/***/ function(module, exports) {
+
+	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-boende\" ></div>\r\n";
+
+/***/ },
+/* 465 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(38);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _index = __webpack_require__(466);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var detailsTemplate = __webpack_require__(467);
+
+
+	var viewModel = kendo.observable({
+	    title: "Tidkoder"
+	});
+
+	var view = new kendo.View(detailsTemplate, {
+	    model: viewModel,
+	    show: function show() {
+
+	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-tidkoder"));
+	        kendo.fx(this.element).fade('in').duration(500).play();
+	    }
+	});
+
+	module.exports = view;
+
+/***/ },
+/* 466 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Index = function (_Component) {
+	    _inherits(Index, _Component);
+
+	    function Index() {
+	        _classCallCheck(this, Index);
+
+	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
+	    }
+
+	    _createClass(Index, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'h1',
+	                null,
+	                'This is Tidkoder page'
+	            );
+	        }
+	    }]);
+
+	    return Index;
+	}(_react.Component);
+
+	exports.default = Index;
+	;
+
+/***/ },
+/* 467 */
+/***/ function(module, exports) {
+
+	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-tidkoder\"></div>\r\n";
+
+/***/ },
+/* 468 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(38);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _index = __webpack_require__(469);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var detailsTemplate = __webpack_require__(470);
+
+
+	var viewModel = kendo.observable({
+	    title: "ArendeKlasser"
+	});
+
+	var view = new kendo.View(detailsTemplate, {
+	    model: viewModel,
+	    show: function show() {
+
+	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-arendeKlasser"));
+	        kendo.fx(this.element).fade('in').duration(500).play();
+	    }
+	});
+
+	module.exports = view;
+
+/***/ },
+/* 469 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Index = function (_Component) {
+	    _inherits(Index, _Component);
+
+	    function Index() {
+	        _classCallCheck(this, Index);
+
+	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
+	    }
+
+	    _createClass(Index, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'h1',
+	                null,
+	                'This is Ärendeklasser page'
+	            );
+	        }
+	    }]);
+
+	    return Index;
+	}(_react.Component);
+
+	exports.default = Index;
+	;
+
+/***/ },
+/* 470 */
+/***/ function(module, exports) {
+
+	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-arendeKlasser\" >hej</div>\r\n";
+
+/***/ },
+/* 471 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(38);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _index = __webpack_require__(472);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var detailsTemplate = __webpack_require__(473);
+
+
+	var viewModel = kendo.observable({
+	    title: "Admin"
+	});
+
+	var view = new kendo.View(detailsTemplate, {
+	    model: viewModel,
+	    show: function show() {
+
+	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-admin"));
+	        kendo.fx(this.element).fade('in').duration(500).play();
+	    }
+	});
+
+	module.exports = view;
+
+/***/ },
+/* 472 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Index = function (_Component) {
+	    _inherits(Index, _Component);
+
+	    function Index() {
+	        _classCallCheck(this, Index);
+
+	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
+	    }
+
+	    _createClass(Index, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'h1',
+	                null,
+	                'This is Admin page'
+	            );
+	        }
+	    }]);
+
+	    return Index;
+	}(_react.Component);
+
+	exports.default = Index;
+	;
+
+/***/ },
+/* 473 */
+/***/ function(module, exports) {
+
+	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-admin\" ></div>\r\n";
+
+/***/ },
+/* 474 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(38);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _index = __webpack_require__(475);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var detailsTemplate = __webpack_require__(476);
+
+
+	var viewModel = kendo.observable({
+	    title: "Loggaut"
+	});
+
+	var view = new kendo.View(detailsTemplate, {
+	    model: viewModel,
+	    show: function show() {
+
+	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-loggaut"));
+	        kendo.fx(this.element).fade('in').duration(500).play();
+	    }
+	});
+
+	module.exports = view;
+
+/***/ },
+/* 475 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Index = function (_Component) {
+	    _inherits(Index, _Component);
+
+	    function Index() {
+	        _classCallCheck(this, Index);
+
+	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
+	    }
+
+	    _createClass(Index, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'h1',
+	                null,
+	                'This is Logga ut page'
+	            );
+	        }
+	    }]);
+
+	    return Index;
+	}(_react.Component);
+
+	exports.default = Index;
+	;
+
+/***/ },
+/* 476 */
+/***/ function(module, exports) {
+
+	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-loggaut\" ></div>\r\n";
 
 /***/ }
 ]);

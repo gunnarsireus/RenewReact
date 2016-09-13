@@ -1,6 +1,6 @@
 ﻿// jQuery
 require('../Scripts/kendo/2015.1.318/jquery.min'); //jquery 1.9.1
-
+//require('jquery'); //jquery 1.11.2
 // PubSub
 require('../Scripts/pubsub.js');
 
@@ -31,7 +31,8 @@ require('../App/css/site.css');
 
 //jquery.js
 //require('../App/js/platform/modernizr-2.5.3.js');
-require('../App/js/platform/jquery-1.11.2.js');
+//require('../App/js/platform/jquery-1.11.2.js');
+require('jquery');
 require('../App/js/platform/jquery-ui-1.11.2.js');
 //require('../App/js/platform/jquery.jeditable.js",
 //require('../App/js/platform/jquery.uiblock.js');

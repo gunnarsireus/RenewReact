@@ -15,6 +15,7 @@ namespace RenewReact.Controllers
             {
                 return base.ToLoginPage();
             }
+            ViewBag.UserAuthorized = "UserAuthorized";
             return View();
         }
     }

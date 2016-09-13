@@ -10,10 +10,11 @@ var view = new kendo.View(loginTemplate, {
     model: viewModel,
     show: function () {
        document.getElementsByTagName("header")[0].classList.add("hidden");
-       ReactDOM.render(
-           <Index />,
-           document.getElementById("react-login"));
-        kendo.fx(this.element).fade('in').duration(500).play();
+
+       ReactDOM.render(<Index />,document.getElementById("react-login"));
+       var validatePanel = $('#validate-account-panel');
+       validatePanel.show();
+       kendo.fx(this.element).fade('in').duration(500).play();
     }
 });
 

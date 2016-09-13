@@ -6,7 +6,7 @@ import Index from '../../Jsx/Felanmalan/index.js';
 
 var viewModel = kendo.observable({
     title: "Felanmalan"
-})
+});
 
 var view = new kendo.View(detailsTemplate, {
     model: viewModel,

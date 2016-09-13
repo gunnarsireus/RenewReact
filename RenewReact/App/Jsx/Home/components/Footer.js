@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 require('../../../img/progress.gif');
 export default class Footer extends Component {
-
+    displayName: 'Footer';
     render () {
         return   <footer style={{marginTop:"60px"}}>
                     <div className="container">

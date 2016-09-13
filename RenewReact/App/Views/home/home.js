@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import UIRoot from '../../Jsx/Home/components/UIRoot.js';
 var viewModel = kendo.observable({
     title: "Home"
-})
+});
 
 var view = new kendo.View(homeTemplate, {
     model: viewModel,

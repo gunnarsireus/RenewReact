@@ -6,7 +6,7 @@ import Index from '../../Jsx/Erbjudanden/index.js';
 
 var viewModel = kendo.observable({
     title: "Erbjudanden"
-})
+});
 
 var view = new kendo.View(detailsTemplate, {
     model: viewModel,

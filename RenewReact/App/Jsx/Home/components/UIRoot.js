@@ -4,7 +4,7 @@ import Body from './Body';
 import Footer from './Footer';
 
 export default class UIRoot extends Component {
-
+    displayName: 'UIRoot';
     render() {
         return <div>
             <Body />

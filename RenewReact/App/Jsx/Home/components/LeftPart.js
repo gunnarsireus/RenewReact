@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 require('../../../img/logotype.png');
 
 export default class Index extends Component {
-
+    displayName: 'LeftPart';
     render() {
        return <div className="col-md-3 site-page-control">
             <h3 className="site-page-header">Renew Service</h3>

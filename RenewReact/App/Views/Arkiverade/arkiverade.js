@@ -6,7 +6,7 @@ import Index from '../../Jsx/Arkiverade/index.js';
 
 var viewModel = kendo.observable({
     title: "Arkiverade"
-})
+});
 
 var view = new kendo.View(detailsTemplate, {
     model: viewModel,

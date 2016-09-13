@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 require('../../../img/logotype.png');
 
 export default class Index extends Component {
-
+    displayName: 'RightPart';
     render() {
        return <div className="col-md-9 site-page-content">
             <div className="row">

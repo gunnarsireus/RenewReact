@@ -6,7 +6,7 @@ import Index from '../../Jsx/ArendeKlasser/index.js';
 
 var viewModel = kendo.observable({
     title: "ArendeKlasser"
-})
+});
 
 var view = new kendo.View(detailsTemplate, {
     model: viewModel,

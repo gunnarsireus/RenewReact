@@ -11,7 +11,7 @@ window.React = React; // export for http://fb.me/react-devtools
 
 var viewModel = kendo.observable({
     title: "Chat"
-})
+});
 
 var view = new kendo.View(FluxChatTemplate, {
     model: viewModel,

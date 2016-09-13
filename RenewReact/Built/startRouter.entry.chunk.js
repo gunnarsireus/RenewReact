@@ -16,22 +16,22 @@ webpackJsonp([0,2],[
 	var layout = __webpack_require__(2);
 	var home = __webpack_require__(4);
 
-	var personal = __webpack_require__(441);
-	var felanmalan = __webpack_require__(444);
+	var personal = __webpack_require__(444);
+	var felanmalan = __webpack_require__(447);
 
-	var pagaende = __webpack_require__(447);
-	var arkiverade = __webpack_require__(450);
+	var pagaende = __webpack_require__(450);
+	var arkiverade = __webpack_require__(453);
 
-	var nyheter = __webpack_require__(453);
-	var erbjudanden = __webpack_require__(456);
+	var nyheter = __webpack_require__(456);
+	var erbjudanden = __webpack_require__(459);
 
-	var kunder = __webpack_require__(459);
-	var boende = __webpack_require__(462);
-	var tidkoder = __webpack_require__(465);
-	var arendeKlasser = __webpack_require__(468);
+	var kunder = __webpack_require__(462);
+	var boende = __webpack_require__(465);
+	var tidkoder = __webpack_require__(468);
+	var arendeKlasser = __webpack_require__(471);
 
-	var admin = __webpack_require__(471);
-	var loggaut = __webpack_require__(474);
+	var admin = __webpack_require__(474);
+	var loggaut = __webpack_require__(477);
 
 	var login = __webpack_require__(438);
 
@@ -54,10 +54,6 @@ webpackJsonp([0,2],[
 	});
 
 	// Add new routes here...
-
-	router.route('/', function (e) {
-	    layout.showIn("#content", home);
-	});
 
 	router.route('/arendeKlasser', function (e) {
 	    layout.showIn("#content", arendeKlasser);
@@ -100,6 +96,9 @@ webpackJsonp([0,2],[
 	    layout.showIn("#content", login);
 	});
 
+	router.route('/', function (e) {
+	    layout.showIn("#content", home);
+	});
 	module.exports = router;
 
 /***/ },
@@ -39326,13 +39325,13 @@ webpackJsonp([0,2],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(439);
+	var _UIRoot = __webpack_require__(439);
 
-	var _index2 = _interopRequireDefault(_index);
+	var _UIRoot2 = _interopRequireDefault(_UIRoot);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var loginTemplate = __webpack_require__(440);
+	var loginTemplate = __webpack_require__(443);
 
 	var viewModel = kendo.observable({
 	    title: "Login"
@@ -39343,9 +39342,7 @@ webpackJsonp([0,2],[
 	    show: function show() {
 	        document.getElementsByTagName("header")[0].classList.add("hidden");
 
-	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-login"));
-	        var validatePanel = $('#validate-account-panel');
-	        validatePanel.show();
+	        _reactDom2.default.render(_react2.default.createElement(_UIRoot2.default, null), document.getElementById("react-login"));
 	        kendo.fx(this.element).fade('in').duration(500).play();
 	    }
 	});
@@ -39356,7 +39353,72 @@ webpackJsonp([0,2],[
 /* 439 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	        value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _validateAccountPanel = __webpack_require__(440);
+
+	var _validateAccountPanel2 = _interopRequireDefault(_validateAccountPanel);
+
+	var _secureAccountPanel = __webpack_require__(441);
+
+	var _secureAccountPanel2 = _interopRequireDefault(_secureAccountPanel);
+
+	var _forgotAccountPanel = __webpack_require__(442);
+
+	var _forgotAccountPanel2 = _interopRequireDefault(_forgotAccountPanel);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var UIRoot = function (_Component) {
+	        _inherits(UIRoot, _Component);
+
+	        function UIRoot() {
+	                _classCallCheck(this, UIRoot);
+
+	                return _possibleConstructorReturn(this, (UIRoot.__proto__ || Object.getPrototypeOf(UIRoot)).apply(this, arguments));
+	        }
+
+	        _createClass(UIRoot, [{
+	                key: 'render',
+	                value: function render() {
+	                        return _react2.default.createElement(
+	                                'div',
+	                                null,
+	                                ' ',
+	                                _react2.default.createElement(_validateAccountPanel2.default, { show: true }),
+	                                _react2.default.createElement(_secureAccountPanel2.default, { show: false }),
+	                                _react2.default.createElement(_forgotAccountPanel2.default, { show: false })
+	                        );
+	                }
+	        }]);
+
+	        return UIRoot;
+	}(_react.Component);
+
+	exports.default = UIRoot;
+	;
+
+/***/ },
+/* 440 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -39376,446 +39438,154 @@ webpackJsonp([0,2],[
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Index = function (_Component) {
-	    _inherits(Index, _Component);
+	var ValidateAccountPanel = function (_Component) {
+	    _inherits(ValidateAccountPanel, _Component);
 
-	    function Index() {
-	        _classCallCheck(this, Index);
+	    function ValidateAccountPanel() {
+	        _classCallCheck(this, ValidateAccountPanel);
 
-	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (ValidateAccountPanel.__proto__ || Object.getPrototypeOf(ValidateAccountPanel)).apply(this, arguments));
 	    }
 
-	    _createClass(Index, [{
-	        key: "render",
+	    _createClass(ValidateAccountPanel, [{
+	        key: 'displayStyle',
+	        value: function displayStyle() {
+	            return this.props.show ? 'block' : 'none';
+	        }
+	    }, {
+	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                "div",
-	                null,
+	                'div',
+	                { className: 'row', id: 'validate-account-panel', style: { display: this.displayStyle() } },
 	                _react2.default.createElement(
-	                    "div",
-	                    { className: "row", id: "validate-account-panel", hidden: true },
+	                    'div',
+	                    { className: 'col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4 site-form-border' },
 	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4 site-form-border" },
+	                        'fieldset',
+	                        null,
 	                        _react2.default.createElement(
-	                            "fieldset",
+	                            'center',
 	                            null,
 	                            _react2.default.createElement(
-	                                "center",
+	                                'h3',
 	                                null,
-	                                _react2.default.createElement(
-	                                    "h3",
-	                                    null,
-	                                    "Renew Service"
-	                                )
-	                            ),
-	                            _react2.default.createElement("br", null),
-	                            _react2.default.createElement(
-	                                "form",
-	                                { id: "validate-account-form" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "row" },
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "col-md-12" },
-	                                        _react2.default.createElement(
-	                                            "div",
-	                                            { className: "form-group" },
-	                                            _react2.default.createElement(
-	                                                "label",
-	                                                { className: "control-label col-md-3", style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: "email" },
-	                                                "Anv�ndare"
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                "div",
-	                                                { className: "col-md-9 input-group" },
-	                                                _react2.default.createElement(
-	                                                    "span",
-	                                                    { className: "input-group-addon" },
-	                                                    _react2.default.createElement("span", { className: "glyphicon glyphicon-user" })
-	                                                ),
-	                                                _react2.default.createElement("input", { className: "form-control",
-	                                                    "data-autoajax": "true",
-	                                                    "data-val": "true",
-	                                                    "data-val-length-min": "5",
-	                                                    "data-val-length-max": "100",
-	                                                    "data-val-length": "Anv�ndare m�ste vara mellan 5 och 100 tecken",
-	                                                    "data-val-required": "Anv�ndare f�r inte vara tom",
-	                                                    id: "email",
-	                                                    name: "email",
-	                                                    type: "text",
-	                                                    value: "" })
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            "div",
-	                                            { className: "form-group" },
-	                                            _react2.default.createElement(
-	                                                "label",
-	                                                { className: "control-label col-md-3", style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: "password" },
-	                                                "L�senord"
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                "div",
-	                                                { className: "col-md-9 input-group" },
-	                                                _react2.default.createElement(
-	                                                    "span",
-	                                                    { className: "input-group-addon" },
-	                                                    _react2.default.createElement("span", { className: "glyphicon glyphicon-lock" })
-	                                                ),
-	                                                _react2.default.createElement("input", { className: "form-control",
-	                                                    "data-autoajax": "true",
-	                                                    "data-val": "true",
-	                                                    "data-val-length-min": "6",
-	                                                    "data-val-length-max": "45",
-	                                                    "data-val-length": "L�senord m�ste vara mellan 6 och 45 tecken",
-	                                                    "data-val-required": "L�senord f�r inte vara tom",
-	                                                    id: "password",
-	                                                    name: "password",
-	                                                    type: "password",
-	                                                    value: "" })
-	                                            )
-	                                        )
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "row" },
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "col-md-6" },
-	                                        _react2.default.createElement(
-	                                            "button",
-	                                            { id: "register-button", type: "button", className: "btn btn-success pull-left " },
-	                                            "Registrera"
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "col-md-6" },
-	                                        _react2.default.createElement(
-	                                            "button",
-	                                            { id: "validate-button", type: "button", className: "btn btn-info pull-right " },
-	                                            "Logga in"
-	                                        )
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "row" },
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "col-md-12" },
-	                                        _react2.default.createElement(
-	                                            "div",
-	                                            { id: "forgot-password-link", className: "text-info text-right site-row-spacing", style: { cursor: "pointer" } },
-	                                            "Gl�mt l�senord?"
-	                                        )
-	                                    )
-	                                ),
-	                                _react2.default.createElement("br", null),
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "row" },
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "col-md-12" },
-	                                        _react2.default.createElement("div", { id: "custom-message", className: "alert alert-warning", hidden: true })
-	                                    )
-	                                )
+	                                'Renew Service'
 	                            )
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    "div",
-	                    { className: "row", id: "forgot-account-panel", hidden: true },
-	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4 site-form-border" },
+	                        ),
+	                        _react2.default.createElement('br', null),
 	                        _react2.default.createElement(
-	                            "fieldset",
-	                            null,
+	                            'form',
+	                            { id: 'validate-account-form' },
 	                            _react2.default.createElement(
-	                                "center",
-	                                null,
+	                                'div',
+	                                { className: 'row' },
 	                                _react2.default.createElement(
-	                                    "h3",
-	                                    null,
-	                                    "Gl�mt l�senord"
-	                                ),
-	                                _react2.default.createElement(
-	                                    "i",
-	                                    null,
+	                                    'div',
+	                                    { className: 'col-md-12' },
 	                                    _react2.default.createElement(
-	                                        "small",
-	                                        null,
-	                                        "PIN-kod f�r verifiering skickas till e-postadressen"
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement("br", null),
-	                            _react2.default.createElement(
-	                                "form",
-	                                { id: "forgot-account-form" },
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "row" },
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "col-md-12" },
+	                                        'div',
+	                                        { className: 'form-group' },
 	                                        _react2.default.createElement(
-	                                            "div",
-	                                            { className: "form-group" },
+	                                            'label',
+	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'email' },
+	                                            'Användare'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col-md-9 input-group' },
 	                                            _react2.default.createElement(
-	                                                "label",
-	                                                { className: "control-label col-md-3", style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: "email" },
-	                                                "E-post"
+	                                                'span',
+	                                                { className: 'input-group-addon' },
+	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-user' })
 	                                            ),
-	                                            _react2.default.createElement(
-	                                                "div",
-	                                                { className: "col-md-9 input-group" },
-	                                                _react2.default.createElement(
-	                                                    "span",
-	                                                    { className: "input-group-addon" },
-	                                                    _react2.default.createElement("span", { className: "glyphicon glyphicon-envelope" })
-	                                                ),
-	                                                _react2.default.createElement("input", { className: "form-control",
-	                                                    "data-autoajax": "true",
-	                                                    "data-val": "true",
-	                                                    "data-val-length-min": "5",
-	                                                    "data-val-length-max": "100",
-	                                                    "data-val-length": "E-post m�ste vara mellan 5 och 100 tecken",
-	                                                    "data-val-required": "E-post f�r inte vara tom",
-	                                                    id: "email",
-	                                                    name: "email",
-	                                                    type: "text",
-	                                                    value: "" })
-	                                            )
-	                                        )
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "row" },
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "col-md-6" },
-	                                        _react2.default.createElement(
-	                                            "div",
-	                                            { id: "go-back-link", className: "text-info text-left site-half-row-spacing", style: { cursor: "pointer" } },
-	                                            "Tillbaka"
+	                                            _react2.default.createElement('input', { className: 'form-control',
+	                                                'data-autoajax': 'true',
+	                                                'data-val': 'true',
+	                                                'data-val-length-min': '5',
+	                                                'data-val-length-max': '100',
+	                                                'data-val-length': 'Användare måste vara mellan 5 och 100 tecken',
+	                                                'data-val-required': 'Användare får inte vara tom',
+	                                                id: 'email',
+	                                                name: 'email',
+	                                                type: 'text',
+	                                                value: '' })
 	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "col-md-6" },
+	                                        'div',
+	                                        { className: 'form-group' },
 	                                        _react2.default.createElement(
-	                                            "button",
-	                                            { id: "sendpin-button", type: "button", className: "btn btn-info pull-right " },
-	                                            "Skicka"
+	                                            'label',
+	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'password' },
+	                                            'Lösenord'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col-md-9 input-group' },
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { className: 'input-group-addon' },
+	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-lock' })
+	                                            ),
+	                                            _react2.default.createElement('input', { className: 'form-control',
+	                                                'data-autoajax': 'true',
+	                                                'data-val': 'true',
+	                                                'data-val-length-min': '6',
+	                                                'data-val-length-max': '45',
+	                                                'data-val-length': 'Lösenord måste vara mellan 6 och 45 tecken',
+	                                                'data-val-required': 'Lösenord får inte vara tom',
+	                                                id: 'password',
+	                                                name: 'password',
+	                                                type: 'password',
+	                                                value: '' })
 	                                        )
-	                                    )
-	                                ),
-	                                _react2.default.createElement("br", null),
-	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "row" },
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "col-md-12" },
-	                                        _react2.default.createElement("div", { id: "custom-message", className: "alert alert-warning", hidden: true })
-	                                    )
-	                                )
-	                            )
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    "div",
-	                    { className: "row", id: "secure-account-panel", hidden: true },
-	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4 site-form-border" },
-	                        _react2.default.createElement(
-	                            "fieldset",
-	                            null,
-	                            _react2.default.createElement(
-	                                "center",
-	                                null,
-	                                _react2.default.createElement(
-	                                    "h3",
-	                                    null,
-	                                    "S�tt l�senord"
-	                                ),
-	                                _react2.default.createElement(
-	                                    "i",
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        "small",
-	                                        null,
-	                                        "PIN-kod har skickats till e-postadressen"
 	                                    )
 	                                )
 	                            ),
-	                            _react2.default.createElement("br", null),
 	                            _react2.default.createElement(
-	                                "form",
-	                                { id: "secure-account-form" },
+	                                'div',
+	                                { className: 'row' },
 	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "row" },
+	                                    'div',
+	                                    { className: 'col-md-6' },
 	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "col-md-12" },
-	                                        _react2.default.createElement(
-	                                            "div",
-	                                            { className: "form-group" },
-	                                            _react2.default.createElement(
-	                                                "label",
-	                                                { className: "control-label col-md-3", style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: "email" },
-	                                                "E-post"
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                "div",
-	                                                { className: "col-md-9 input-group" },
-	                                                _react2.default.createElement(
-	                                                    "span",
-	                                                    { className: "input-group-addon" },
-	                                                    _react2.default.createElement("span", { className: "glyphicon glyphicon-envelope" })
-	                                                ),
-	                                                _react2.default.createElement("input", { className: "form-control",
-	                                                    "data-autoajax": "true",
-	                                                    id: "email",
-	                                                    name: "email",
-	                                                    type: "text",
-	                                                    value: "", readOnly: "" })
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            "div",
-	                                            { className: "form-group" },
-	                                            _react2.default.createElement(
-	                                                "label",
-	                                                { className: "control-label col-md-3", style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: "PIN" },
-	                                                "PIN-kod"
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                "div",
-	                                                { className: "col-md-9 input-group" },
-	                                                _react2.default.createElement(
-	                                                    "span",
-	                                                    { className: "input-group-addon" },
-	                                                    _react2.default.createElement("span", { className: "glyphicon glyphicon-lock" })
-	                                                ),
-	                                                _react2.default.createElement("input", { className: "form-control",
-	                                                    "data-autoajax": "true",
-	                                                    "data-val": "true",
-	                                                    "data-val-length-min": "6",
-	                                                    "data-val-length-max": "6",
-	                                                    "data-val-length": "PIN-kod m�ste vara mellan 6 och 6 tecken",
-	                                                    "data-val-required": "PIN-kod f�r inte vara tom",
-	                                                    id: "PIN",
-	                                                    name: "PIN"
-	                                                    // onKeyPress="return Site.Validation.isNumber(event)"
-	                                                    , type: "text",
-	                                                    value: "" })
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            "div",
-	                                            { className: "form-group" },
-	                                            _react2.default.createElement(
-	                                                "label",
-	                                                { className: "control-label col-md-3", style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: "password1" },
-	                                                "L�senord"
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                "div",
-	                                                { className: "col-md-9 input-group" },
-	                                                _react2.default.createElement(
-	                                                    "span",
-	                                                    { className: "input-group-addon" },
-	                                                    _react2.default.createElement("span", { className: "glyphicon glyphicon-lock" })
-	                                                ),
-	                                                _react2.default.createElement("input", { className: "form-control",
-	                                                    "data-autoajax": "true",
-	                                                    "data-val": "true",
-	                                                    "data-val-length-min": "6",
-	                                                    "data-val-length-max": "45",
-	                                                    "data-val-length": "L�senord m�ste vara mellan 6 och 45 tecken",
-	                                                    "data-val-required": "L�senord f�r inte vara tom",
-	                                                    id: "password1",
-	                                                    name: "password1"
-	                                                    // onKeyUp="return Site.Validation.isSecurePassword(event)"
-	                                                    , type: "password",
-	                                                    value: "" })
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            "div",
-	                                            { className: "form-group" },
-	                                            _react2.default.createElement(
-	                                                "label",
-	                                                { className: "control-label col-md-3", style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: "password2" },
-	                                                "Bekr�fta"
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                "div",
-	                                                { className: "col-md-9 input-group" },
-	                                                _react2.default.createElement(
-	                                                    "span",
-	                                                    { className: "input-group-addon" },
-	                                                    _react2.default.createElement("span", { className: "glyphicon glyphicon-lock" })
-	                                                ),
-	                                                _react2.default.createElement("input", { className: "form-control",
-	                                                    "data-autoajax": "true",
-	                                                    "data-val": "true",
-	                                                    "data-val-length-min": "6",
-	                                                    "data-val-length-max": "45",
-	                                                    "data-val-length": "Bekr�fta m�ste vara mellan 6 och 45 tecken",
-	                                                    "data-val-required": "Bekr�fta f�r inte vara tom",
-	                                                    id: "password2",
-	                                                    name: "password2"
-	                                                    // onKeyUp="return Site.Validation.isSecurePassword(event)"
-	                                                    , type: "password",
-	                                                    value: "" })
-	                                            )
-	                                        )
+	                                        'button',
+	                                        { id: 'register-button', type: 'button', className: 'btn btn-success pull-left ' },
+	                                        'Registrera'
 	                                    )
 	                                ),
 	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "row" },
+	                                    'div',
+	                                    { className: 'col-md-6' },
 	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "col-md-6" },
-	                                        _react2.default.createElement(
-	                                            "button",
-	                                            { id: "resend-pin-button", type: "button", className: "btn btn-default pull-left " },
-	                                            "Ny PIN-kod"
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "col-md-6" },
-	                                        _react2.default.createElement(
-	                                            "button",
-	                                            { id: "set-password-button", type: "button", className: "btn btn-info pull-right " },
-	                                            "S�tt l�senord"
-	                                        )
+	                                        'button',
+	                                        { id: 'validate-button', type: 'button', className: 'btn btn-info pull-right ' },
+	                                        'Logga in'
 	                                    )
-	                                ),
-	                                _react2.default.createElement("br", null),
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
 	                                _react2.default.createElement(
-	                                    "div",
-	                                    { className: "row" },
+	                                    'div',
+	                                    { className: 'col-md-12' },
 	                                    _react2.default.createElement(
-	                                        "div",
-	                                        { className: "col-md-12" },
-	                                        _react2.default.createElement("div", { id: "custom-message", className: "alert alert-warning", hidden: true })
+	                                        'div',
+	                                        { id: 'forgot-password-link', className: 'text-info text-right site-row-spacing', style: { cursor: "pointer" } },
+	                                        'Glömt lösenord?'
 	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement('br', null),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-md-12' },
+	                                    _react2.default.createElement('div', { id: 'custom-message', className: 'alert alert-warning', hidden: true })
 	                                )
 	                            )
 	                        )
@@ -39825,20 +39595,413 @@ webpackJsonp([0,2],[
 	        }
 	    }]);
 
-	    return Index;
+	    return ValidateAccountPanel;
 	}(_react.Component);
 
-	exports.default = Index;
+	exports.default = ValidateAccountPanel;
 	;
 
 /***/ },
-/* 440 */
+/* 441 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SecureAccountPanel = function (_Component) {
+	    _inherits(SecureAccountPanel, _Component);
+
+	    function SecureAccountPanel() {
+	        _classCallCheck(this, SecureAccountPanel);
+
+	        return _possibleConstructorReturn(this, (SecureAccountPanel.__proto__ || Object.getPrototypeOf(SecureAccountPanel)).apply(this, arguments));
+	    }
+
+	    _createClass(SecureAccountPanel, [{
+	        key: 'displayStyle',
+	        value: function displayStyle() {
+	            return this.props.show ? 'block' : 'none';
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'row', id: 'secure-account-panel', style: { display: this.displayStyle() } },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4 site-form-border' },
+	                    _react2.default.createElement(
+	                        'fieldset',
+	                        null,
+	                        _react2.default.createElement(
+	                            'center',
+	                            null,
+	                            _react2.default.createElement(
+	                                'h3',
+	                                null,
+	                                'Sätt lösenord'
+	                            ),
+	                            _react2.default.createElement(
+	                                'i',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'small',
+	                                    null,
+	                                    'PIN-kod har skickats till e-postadressen'
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'form',
+	                            { id: 'secure-account-form' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-md-12' },
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'email' },
+	                                            'E-post'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col-md-9 input-group' },
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { className: 'input-group-addon' },
+	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-envelope' })
+	                                            ),
+	                                            _react2.default.createElement('input', { className: 'form-control',
+	                                                'data-autoajax': 'true',
+	                                                id: 'email',
+	                                                name: 'email',
+	                                                type: 'text',
+	                                                value: '', readOnly: '' })
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'PIN' },
+	                                            'PIN-kod'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col-md-9 input-group' },
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { className: 'input-group-addon' },
+	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-lock' })
+	                                            ),
+	                                            _react2.default.createElement('input', { className: 'form-control',
+	                                                'data-autoajax': 'true',
+	                                                'data-val': 'true',
+	                                                'data-val-length-min': '6',
+	                                                'data-val-length-max': '6',
+	                                                'data-val-length': 'PIN-kod måste vara mellan 6 och 6 tecken',
+	                                                'data-val-required': 'PIN-kod får inte vara tom',
+	                                                id: 'PIN',
+	                                                name: 'PIN'
+	                                                // onKeyPress="return Site.Validation.isNumber(event)"
+	                                                , type: 'text',
+	                                                value: '' })
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'password1' },
+	                                            'Lösenord'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col-md-9 input-group' },
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { className: 'input-group-addon' },
+	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-lock' })
+	                                            ),
+	                                            _react2.default.createElement('input', { className: 'form-control',
+	                                                'data-autoajax': 'true',
+	                                                'data-val': 'true',
+	                                                'data-val-length-min': '6',
+	                                                'data-val-length-max': '45',
+	                                                'data-val-length': 'Lösenord måste vara mellan 6 och 45 tecken',
+	                                                'data-val-required': 'Lösenord får inte vara tom',
+	                                                id: 'password1',
+	                                                name: 'password1'
+	                                                // onKeyUp="return Site.Validation.isSecurePassword(event)"
+	                                                , type: 'password',
+	                                                value: '' })
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'password2' },
+	                                            'Bekräfta'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col-md-9 input-group' },
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { className: 'input-group-addon' },
+	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-lock' })
+	                                            ),
+	                                            _react2.default.createElement('input', { className: 'form-control',
+	                                                'data-autoajax': 'true',
+	                                                'data-val': 'true',
+	                                                'data-val-length-min': '6',
+	                                                'data-val-length-max': '45',
+	                                                'data-val-length': 'Bekräfta måste vara mellan 6 och 45 tecken',
+	                                                'data-val-required': 'Bekräfta får inte vara tom',
+	                                                id: 'password2',
+	                                                name: 'password2'
+	                                                // onKeyUp="return Site.Validation.isSecurePassword(event)"
+	                                                , type: 'password',
+	                                                value: '' })
+	                                        )
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-md-6' },
+	                                    _react2.default.createElement(
+	                                        'button',
+	                                        { id: 'resend-pin-button', type: 'button', className: 'btn btn-default pull-left ' },
+	                                        'Ny PIN-kod'
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-md-6' },
+	                                    _react2.default.createElement(
+	                                        'button',
+	                                        { id: 'set-password-button', type: 'button', className: 'btn btn-info pull-right ' },
+	                                        'Sätt lösenord'
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement('br', null),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-md-12' },
+	                                    _react2.default.createElement('div', { id: 'custom-message', className: 'alert alert-warning', hidden: true })
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return SecureAccountPanel;
+	}(_react.Component);
+
+	exports.default = SecureAccountPanel;
+	;
+
+/***/ },
+/* 442 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ForgotAccountPanel = function (_Component) {
+	    _inherits(ForgotAccountPanel, _Component);
+
+	    function ForgotAccountPanel() {
+	        _classCallCheck(this, ForgotAccountPanel);
+
+	        return _possibleConstructorReturn(this, (ForgotAccountPanel.__proto__ || Object.getPrototypeOf(ForgotAccountPanel)).apply(this, arguments));
+	    }
+
+	    _createClass(ForgotAccountPanel, [{
+	        key: 'displayStyle',
+	        value: function displayStyle() {
+	            return this.props.show ? 'block' : 'none';
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'row', id: 'forgot-account-panel', style: { display: this.displayStyle() } },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4 site-form-border' },
+	                    _react2.default.createElement(
+	                        'fieldset',
+	                        null,
+	                        _react2.default.createElement(
+	                            'center',
+	                            null,
+	                            _react2.default.createElement(
+	                                'h3',
+	                                null,
+	                                'Gl�mt l�senord'
+	                            ),
+	                            _react2.default.createElement(
+	                                'i',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'small',
+	                                    null,
+	                                    'PIN-kod f�r verifiering skickas till e-postadressen'
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'form',
+	                            { id: 'forgot-account-form' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-md-12' },
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'email' },
+	                                            'E-post'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col-md-9 input-group' },
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { className: 'input-group-addon' },
+	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-envelope' })
+	                                            ),
+	                                            _react2.default.createElement('input', { className: 'form-control',
+	                                                'data-autoajax': 'true',
+	                                                'data-val': 'true',
+	                                                'data-val-length-min': '5',
+	                                                'data-val-length-max': '100',
+	                                                'data-val-length': 'E-post m�ste vara mellan 5 och 100 tecken',
+	                                                'data-val-required': 'E-post f�r inte vara tom',
+	                                                id: 'email',
+	                                                name: 'email',
+	                                                type: 'text',
+	                                                value: '' })
+	                                        )
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-md-6' },
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { id: 'go-back-link', className: 'text-info text-left site-half-row-spacing', style: { cursor: "pointer" } },
+	                                        'Tillbaka'
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-md-6' },
+	                                    _react2.default.createElement(
+	                                        'button',
+	                                        { id: 'sendpin-button', type: 'button', className: 'btn btn-info pull-right ' },
+	                                        'Skicka'
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement('br', null),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-md-12' },
+	                                    _react2.default.createElement('div', { id: 'custom-message', className: 'alert alert-warning', hidden: true })
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return ForgotAccountPanel;
+	}(_react.Component);
+
+	exports.default = ForgotAccountPanel;
+	;
+
+/***/ },
+/* 443 */
 /***/ function(module, exports) {
 
 	module.exports = "<div id=\"react-login\"></div>\r\n";
 
 /***/ },
-/* 441 */
+/* 444 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39851,13 +40014,13 @@ webpackJsonp([0,2],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(442);
+	var _index = __webpack_require__(445);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(443);
+	var detailsTemplate = __webpack_require__(446);
 
 
 	var viewModel = kendo.observable({
@@ -39876,7 +40039,7 @@ webpackJsonp([0,2],[
 	module.exports = view;
 
 /***/ },
-/* 442 */
+/* 445 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39926,13 +40089,13 @@ webpackJsonp([0,2],[
 	;
 
 /***/ },
-/* 443 */
+/* 446 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1   style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-personal\"></div>\r\n";
 
 /***/ },
-/* 444 */
+/* 447 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39945,13 +40108,13 @@ webpackJsonp([0,2],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(445);
+	var _index = __webpack_require__(448);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(446);
+	var detailsTemplate = __webpack_require__(449);
 
 
 	var viewModel = kendo.observable({
@@ -39970,7 +40133,7 @@ webpackJsonp([0,2],[
 	module.exports = view;
 
 /***/ },
-/* 445 */
+/* 448 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40020,13 +40183,13 @@ webpackJsonp([0,2],[
 	;
 
 /***/ },
-/* 446 */
+/* 449 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-felanmalan\"></div>\r\n";
 
 /***/ },
-/* 447 */
+/* 450 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40039,13 +40202,13 @@ webpackJsonp([0,2],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(448);
+	var _index = __webpack_require__(451);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(449);
+	var detailsTemplate = __webpack_require__(452);
 
 
 	var viewModel = kendo.observable({
@@ -40064,7 +40227,7 @@ webpackJsonp([0,2],[
 	module.exports = view;
 
 /***/ },
-/* 448 */
+/* 451 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40114,13 +40277,13 @@ webpackJsonp([0,2],[
 	;
 
 /***/ },
-/* 449 */
+/* 452 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-pagaende\" ></div>\r\n";
 
 /***/ },
-/* 450 */
+/* 453 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40133,13 +40296,13 @@ webpackJsonp([0,2],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(451);
+	var _index = __webpack_require__(454);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(452);
+	var detailsTemplate = __webpack_require__(455);
 
 
 	var viewModel = kendo.observable({
@@ -40158,7 +40321,7 @@ webpackJsonp([0,2],[
 	module.exports = view;
 
 /***/ },
-/* 451 */
+/* 454 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40208,13 +40371,13 @@ webpackJsonp([0,2],[
 	;
 
 /***/ },
-/* 452 */
+/* 455 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-arkiverade\" ></div>\r\n";
 
 /***/ },
-/* 453 */
+/* 456 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40227,13 +40390,13 @@ webpackJsonp([0,2],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(454);
+	var _index = __webpack_require__(457);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(455);
+	var detailsTemplate = __webpack_require__(458);
 
 
 	var viewModel = kendo.observable({
@@ -40252,7 +40415,7 @@ webpackJsonp([0,2],[
 	module.exports = view;
 
 /***/ },
-/* 454 */
+/* 457 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40302,13 +40465,13 @@ webpackJsonp([0,2],[
 	;
 
 /***/ },
-/* 455 */
+/* 458 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-nyheter\" ></div>\r\n";
 
 /***/ },
-/* 456 */
+/* 459 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40321,13 +40484,13 @@ webpackJsonp([0,2],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(457);
+	var _index = __webpack_require__(460);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(458);
+	var detailsTemplate = __webpack_require__(461);
 
 
 	var viewModel = kendo.observable({
@@ -40346,7 +40509,7 @@ webpackJsonp([0,2],[
 	module.exports = view;
 
 /***/ },
-/* 457 */
+/* 460 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40396,13 +40559,13 @@ webpackJsonp([0,2],[
 	;
 
 /***/ },
-/* 458 */
+/* 461 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-erbjudanden\"></div>\r\n";
 
 /***/ },
-/* 459 */
+/* 462 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40415,13 +40578,13 @@ webpackJsonp([0,2],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(460);
+	var _index = __webpack_require__(463);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(461);
+	var detailsTemplate = __webpack_require__(464);
 
 
 	var viewModel = kendo.observable({
@@ -40440,7 +40603,7 @@ webpackJsonp([0,2],[
 	module.exports = view;
 
 /***/ },
-/* 460 */
+/* 463 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40490,13 +40653,13 @@ webpackJsonp([0,2],[
 	;
 
 /***/ },
-/* 461 */
+/* 464 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-kunder\" ></div>\r\n";
 
 /***/ },
-/* 462 */
+/* 465 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40509,13 +40672,13 @@ webpackJsonp([0,2],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(463);
+	var _index = __webpack_require__(466);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(464);
+	var detailsTemplate = __webpack_require__(467);
 
 
 	var viewModel = kendo.observable({
@@ -40534,7 +40697,7 @@ webpackJsonp([0,2],[
 	module.exports = view;
 
 /***/ },
-/* 463 */
+/* 466 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40584,13 +40747,13 @@ webpackJsonp([0,2],[
 	;
 
 /***/ },
-/* 464 */
+/* 467 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-boende\" ></div>\r\n";
 
 /***/ },
-/* 465 */
+/* 468 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40603,13 +40766,13 @@ webpackJsonp([0,2],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(466);
+	var _index = __webpack_require__(469);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(467);
+	var detailsTemplate = __webpack_require__(470);
 
 
 	var viewModel = kendo.observable({
@@ -40628,7 +40791,7 @@ webpackJsonp([0,2],[
 	module.exports = view;
 
 /***/ },
-/* 466 */
+/* 469 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40678,13 +40841,13 @@ webpackJsonp([0,2],[
 	;
 
 /***/ },
-/* 467 */
+/* 470 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-tidkoder\"></div>\r\n";
 
 /***/ },
-/* 468 */
+/* 471 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40697,13 +40860,13 @@ webpackJsonp([0,2],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(469);
+	var _index = __webpack_require__(472);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(470);
+	var detailsTemplate = __webpack_require__(473);
 
 
 	var viewModel = kendo.observable({
@@ -40722,7 +40885,7 @@ webpackJsonp([0,2],[
 	module.exports = view;
 
 /***/ },
-/* 469 */
+/* 472 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40772,13 +40935,13 @@ webpackJsonp([0,2],[
 	;
 
 /***/ },
-/* 470 */
+/* 473 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-arendeKlasser\" >hej</div>\r\n";
 
 /***/ },
-/* 471 */
+/* 474 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40791,13 +40954,13 @@ webpackJsonp([0,2],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(472);
+	var _index = __webpack_require__(475);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(473);
+	var detailsTemplate = __webpack_require__(476);
 
 
 	var viewModel = kendo.observable({
@@ -40816,7 +40979,7 @@ webpackJsonp([0,2],[
 	module.exports = view;
 
 /***/ },
-/* 472 */
+/* 475 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40866,13 +41029,13 @@ webpackJsonp([0,2],[
 	;
 
 /***/ },
-/* 473 */
+/* 476 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-admin\" ></div>\r\n";
 
 /***/ },
-/* 474 */
+/* 477 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40885,13 +41048,13 @@ webpackJsonp([0,2],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(475);
+	var _index = __webpack_require__(478);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(476);
+	var detailsTemplate = __webpack_require__(479);
 
 
 	var viewModel = kendo.observable({
@@ -40910,7 +41073,7 @@ webpackJsonp([0,2],[
 	module.exports = view;
 
 /***/ },
-/* 475 */
+/* 478 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40960,7 +41123,7 @@ webpackJsonp([0,2],[
 	;
 
 /***/ },
-/* 476 */
+/* 479 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-loggaut\" ></div>\r\n";

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-
-export default class ForgotAccountPanel extends Component {
+import Input from './input.js';export default class ForgotAccountPanel extends Component {
     displayName: 'ForgotAccountPanel';
     propTypes: {
        show: React.PropTypes.bool.isRequired
@@ -27,13 +26,13 @@ export default class ForgotAccountPanel extends Component {
                                     <span className="input-group-addon">
                                         <span className="glyphicon glyphicon-envelope"></span>
                                     </span>
-                                    <input className="form-control"
-                                           data-autoajax="true"
-                                           data-val="true"
-                                           data-val-length-min="5"
-                                           data-val-length-max="100"
-                                           data-val-length="E-post måste vara mellan 5 och 100 tecken"
-                                           data-val-required="E-post får inte vara tom"
+                                    <Input className="form-control"
+                                           dataAutoajax="true"
+                                           dataVal="true"
+                                           dataValLengthMin="5"
+                                           dataValLengthMax="100"
+                                           dataValLength="E-post måste vara mellan 5 och 100 tecken"
+                                           dataValRequired="E-post får inte vara tom"
                                            id="email"
                                            name="email"
                                            type="text"

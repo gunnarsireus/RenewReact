@@ -62,3 +62,4 @@ Site.LocalStorage = Site.LocalStorage || {
         }
     }
 };
+module.exports.clearAll = Site.LocalStorage.clearAll;

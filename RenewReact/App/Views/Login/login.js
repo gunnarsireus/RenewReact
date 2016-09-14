@@ -1,7 +1,7 @@
 ﻿var loginTemplate = require('./login.html');
 import React from 'react';
 import ReactDOM from 'react-dom';
-import UIRoot from '../../Jsx/Login/UIRoot.js';
+import Login from '../../Jsx/Login/Login.js';
 var viewModel = kendo.observable({
     title: "Login"
 });
@@ -11,7 +11,7 @@ var view = new kendo.View(loginTemplate, {
     show: function () {
        document.getElementsByTagName("header")[0].classList.add("hidden");
 
-       ReactDOM.render(<UIRoot />,document.getElementById("react-login"));
+       ReactDOM.render(<Login />,document.getElementById("react-login"));
        kendo.fx(this.element).fade('in').duration(500).play();
     }
 });

@@ -1,26 +1,26 @@
 ﻿/* On-screen centered progress spinner */
 
-function siteShowProgress() {
+export function siteShowProgress() {
     $('#progress-indicator').show();
     $.blockUI();
 }
 
-function siteHideProgress() {
+export function siteHideProgress() {
     $('#progress-indicator').hide();
     $.unblockUI();
 }
 
 /* Scrolling */
 
-function siteScrollToTop() {
+export function siteScrollToTop() {
     $(window).scrollTop(0);
 }
 
 /* Navigation */
 
-function siteGoTo(url) {
+export function siteGoTo(url) {
     siteShowProgress();
-    if (url.substring(0, 1) != '/') {
+    if (url.substring(0, 1) !== '/') {
         url = '/' + url;
     }
     window.location.href = url;
@@ -28,11 +28,11 @@ function siteGoTo(url) {
 
 /* Timing */
 
-function siteGetDurationStart() {
+export function siteGetDurationStart() {
     return new Date();
 }
 
-function siteGetDurationSecs(durationstart) {
+export function siteGetDurationSecs(durationstart) {
     var now = new Date();
     return (now - durationstart) / 1000;
 }
@@ -57,7 +57,7 @@ $(document).ajaxError(function (e, xhr) {
 // No progress wheel (runs silent in backgrund).
 // Raw JSON-data expected.
 // Done-callback can optionally receive data from server.
-function siteAjaxGetSilent(url, data, doneCB) {
+export function siteAjaxGetSilent(url, data, doneCB) {
     $.ajax({
         url: url,
         type: 'POST',
@@ -76,7 +76,7 @@ function siteAjaxGetSilent(url, data, doneCB) {
 // Progress wheel on/off.
 // Raw JSON-data expected.
 // Done-callback can optionally receive data from server.
-function siteAjaxGet(url, data, doneCB) {
+export function siteAjaxGet(url, data, doneCB) {
     siteShowProgress();
     $.ajax({
         url: url,
@@ -98,7 +98,7 @@ function siteAjaxGet(url, data, doneCB) {
 // AjaxStatus JSON-data expected.
 // Done-callback can optionally receive data from server.
 // Error-callback is optional to provide.
-function siteAjaxPost(url, data, doneCB, errorCB) {
+export function siteAjaxPost(url, data, doneCB, errorCB) {
     siteShowProgress();
     $.ajax({
         url: url,
@@ -132,7 +132,7 @@ function siteAjaxPost(url, data, doneCB, errorCB) {
 // Progress wheel on/off, targetform will be updated using AutoAjax.
 // Raw JSON-data expected.
 // Done-callback is optional and can optionally receive data from server.
-function siteAjaxReadToForm(url, data, targetform, doneCB) {
+export function siteAjaxReadToForm(url, data, targetform, doneCB) {
     siteShowProgress();
     $.ajax({
         url: url,

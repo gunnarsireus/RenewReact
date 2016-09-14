@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Input from './input.js';
 export default class SecureAccountPanel extends Component {
     displayName: 'SecureAccountPanel';
     propTypes: {
@@ -27,8 +27,8 @@ export default class SecureAccountPanel extends Component {
                                     <span className="input-group-addon">
                                         <span className="glyphicon glyphicon-envelope"></span>
                                     </span>
-                                    <input className="form-control"
-                                           data-autoajax="true"
+                                    <Input className="form-control"
+                                           dataAutoajax={true}
                                            id="email"
                                            name="email"
                                            type="text"
@@ -43,12 +43,12 @@ export default class SecureAccountPanel extends Component {
                                         <span className="glyphicon glyphicon-lock"></span>
                                     </span>
                                     <input className="form-control"
-                                           data-autoajax="true"
-                                           data-val="true"
-                                           data-val-length-min="6"
-                                           data-val-length-max="6"
-                                           data-val-length="PIN-kod måste vara mellan 6 och 6 tecken"
-                                           data-val-required="PIN-kod får inte vara tom"
+                                           dataAutoajax={true}
+                                           dataVal={true}
+                                           dataValLengthMin="6"
+                                           dataValLengthMax="6"
+                                           dataValLength="PIN-kod måste vara mellan 6 och 6 tecken"
+                                           dataValRequired="PIN-kod får inte vara tom"
                                            id="PIN"
                                            name="PIN"
                                           // onKeyPress="return Site.Validation.isNumber(event)"
@@ -64,12 +64,12 @@ export default class SecureAccountPanel extends Component {
                                         <span className="glyphicon glyphicon-lock"></span>
                                     </span>
                                     <input className="form-control"
-                                           data-autoajax="true"
-                                           data-val="true"
-                                           data-val-length-min="6"
-                                           data-val-length-max="45"
-                                           data-val-length="Lösenord måste vara mellan 6 och 45 tecken"
-                                           data-val-required="Lösenord får inte vara tom"
+                                           dataAutoajax="true"
+                                           dataVal="true"
+                                           dataValLength-min="6"
+                                           dataValLength-max="45"
+                                           dataValLength="Lösenord måste vara mellan 6 och 45 tecken"
+                                           dataValRequired="Lösenord får inte vara tom"
                                            id="password1"
                                            name="password1"
                                           // onKeyUp="return Site.Validation.isSecurePassword(event)"
@@ -85,12 +85,12 @@ export default class SecureAccountPanel extends Component {
                                         <span className="glyphicon glyphicon-lock"></span>
                                     </span>
                                     <input className="form-control"
-                                           data-autoajax="true"
-                                           data-val="true"
-                                           data-val-length-min="6"
-                                           data-val-length-max="45"
-                                           data-val-length="Bekräfta måste vara mellan 6 och 45 tecken"
-                                           data-val-required="Bekräfta får inte vara tom"
+                                           dataAutoajax="true"
+                                           dataVal="true"
+                                           dataValLength-min="6"
+                                           dataValLength-max="45"
+                                           dataValLength="Bekräfta måste vara mellan 6 och 45 tecken"
+                                           dataValRequired="Bekräfta får inte vara tom"
                                            id="password2"
                                            name="password2"
                                           // onKeyUp="return Site.Validation.isSecurePassword(event)"

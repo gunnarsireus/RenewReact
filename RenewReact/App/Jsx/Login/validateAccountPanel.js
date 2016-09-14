@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-
+import {hideMessage,validateAccountPassed, validateAccountFailed} from '../../js/site-login.js';
+import {siteAjaxPost,siteGoTo,siteHideProgress} from '../../js/site-base.js';
+import {getFormData} from '../../js/site-components/site-xcomp-inputforms.js';
+import Input from './input.js';
 export default class ValidateAccountPanel extends Component {
     displayName: 'ValidateAccountPanel';
     propTypes: {
@@ -7,6 +10,18 @@ export default class ValidateAccountPanel extends Component {
     };  
     displayStyle() {
         return (this.props.show)?'block':'none';
+    };
+    onRegister () {
+        siteGoTo('/Register');
+    };
+    onLogin () {
+        var validateForm  = $('#validate-account-form');
+        var validatePanel = $('#validate-account-panel');
+        var data = getFormData(validateForm);
+        if (data) {
+            hideMessage(validateForm);
+            siteAjaxPost('/Login/ValidateAccount', data, validateAccountPassed, validateAccountFailed);
+        }
     };
     render() {
         return  <div className="row" id="validate-account-panel" style={{display:this.displayStyle()}}>
@@ -26,13 +41,13 @@ export default class ValidateAccountPanel extends Component {
                                     <span className="input-group-addon">
                                         <span className="glyphicon glyphicon-user"></span>
                                     </span>
-                                    <input className="form-control"
-                                           data-autoajax="true"
-                                           data-val="true"
-                                           data-val-length-min="5"
-                                           data-val-length-max="100"
-                                           data-val-length="Användare måste vara mellan 5 och 100 tecken"
-                                           data-val-required="Användare får inte vara tom"
+                                    <Input className="form-control"
+                                           dataAutoajax="true"
+                                           dataVal="true"
+                                           dataValLengthMin="5"
+                                           dataLalLengthmax="100"
+                                           dataValLength="Användare måste vara mellan 5 och 100 tecken"
+                                           dataValRequired="Användare får inte vara tom"
                                            id="email"
                                            name="email"
                                            type="text"
@@ -46,13 +61,13 @@ export default class ValidateAccountPanel extends Component {
                                     <span className="input-group-addon">
                                         <span className="glyphicon glyphicon-lock"></span>
                                     </span>
-                                    <input className="form-control"
-                                           data-autoajax="true"
-                                           data-val="true"
-                                           data-val-length-min="6"
-                                           data-val-length-max="45"
-                                           data-val-length="Lösenord måste vara mellan 6 och 45 tecken"
-                                           data-val-required="Lösenord får inte vara tom"
+                                    <Input className="form-control"
+                                           dataAutoajax={true}
+                                           dataVal={true}
+                                           dataValLengthMin="6"
+                                           dataValLengthMax="45"
+                                           dataValLength="Lösenord måste vara mellan 6 och 45 tecken"
+                                           dataValRequired="Lösenord får inte vara tom"
                                            id="password"
                                            name="password"
                                            type="password"
@@ -64,10 +79,10 @@ export default class ValidateAccountPanel extends Component {
                     </div>
                     <div className="row">
                         <div className="col-md-6">
-                            <button id="register-button" type="button" className="btn btn-success pull-left ">Registrera</button>
+                            <button id="register-button" onClick={this.onRegister} type="button" className="btn btn-success pull-left ">Registrera</button>
                         </div>
                         <div className="col-md-6">
-                            <button id="validate-button" type="button" className="btn btn-info pull-right ">Logga in</button>
+                            <button id="validate-button" onClick={this.onLogin} type="button" className="btn btn-info pull-right ">Logga in</button>
                         </div>
                     </div>
                     <div className="row">

@@ -1,4 +1,8 @@
-﻿var validateForm  = null;
+﻿/// <reference path="site-components/site-xcomp-localstorage.js" />
+import {getFormData} from './site-components/site-xcomp-inputforms.js';
+import {clearAll} from './site-components/site-xcomp-localstorage.js';
+import {siteAjaxPost,siteGoTo} from './site-base.js';
+var validateForm  = null;
 var validatePanel = null;
 var forgotForm    = null;
 var forgotPanel   = null;
@@ -7,13 +11,13 @@ var securePanel   = null;
 
 /* Helpers */
 
-function hideMessage(form) {
+export function hideMessage(form) {
     var messageField = form.find('#custom-message');
     messageField.html('');
     messageField.hide();
 }
 
-function showMessage(form, message) {
+export function showMessage(form, message) {
     var messageField = form.find('#custom-message');
     messageField.html(message);
     messageField.show();
@@ -21,16 +25,16 @@ function showMessage(form, message) {
 
 /* Ajax callbacks */
 
-function validateAccountPassed(response) {
-    Site.LocalStorage.clearAll();
+export function validateAccountPassed(response) {
+    clearAll();
     siteGoTo(response.nextURL);
 }
 
-function validateAccountFailed(response) {
+export function validateAccountFailed(response) {
     showMessage(validateForm, response.message);
 }
 
-function forgotAccountPassed() {
+export function forgotAccountPassed() {
     var email = forgotForm.find('#email').val();
     secureForm.find('#email').val(email);
     validatePanel.hide();
@@ -38,24 +42,24 @@ function forgotAccountPassed() {
     securePanel.show();
 }
 
-function forgotAccountFailed(response) {
+export function forgotAccountFailed(response) {
     showMessage(forgotForm, response.message);
 }
 
-function resendPinPassed() {
+export function resendPinPassed() {
     showMessage(secureForm, 'Ny PIN-kod för verifiering skickad');
 }
 
-function resendPinFailed(response) {
+export function resendPinFailed(response) {
     showMessage(secureForm, response.message);
 }
 
-function secureAccountPassed(response) {
-    Site.LocalStorage.clearAll();
+export function secureAccountPassed(response) {
+    clearAll();
     siteGoTo(response.nextURL);
 }
 
-function secureAccountFailed(response) {
+export function secureAccountFailed(response) {
     showMessage(secureForm, response.message);
 }
 
@@ -74,7 +78,7 @@ $(function () {
     });
 
     validateForm.find('#validate-button').click(function () {
-        var data = Site.InputForms.getFormData(validateForm);
+        var data = getFormData(validateForm);
         if (data) {
             hideMessage(validateForm);
             siteAjaxPost('/Login/ValidateAccount', data, validateAccountPassed, validateAccountFailed);
@@ -83,7 +87,7 @@ $(function () {
 
     validateForm.on('keydown', function (e) {
         if (e.which == 13) {
-            var data = Site.InputForms.getFormData(validateForm);
+            var data = getFormData(validateForm);
             if (data) {
                 hideMessage(validateForm);
                 siteAjaxPost('/Login/ValidateAccount', data, validateAccountPassed, validateAccountFailed);
@@ -93,21 +97,21 @@ $(function () {
 
     validateForm.find('#forgot-password-link').click(function () {
         hideMessage(validateForm);
-        Site.Validation.clearValidationSummary(forgotForm);
+        SiteInputForms.Validation.clearValidationSummary(forgotForm);
         validatePanel.hide();
         forgotPanel.show();
         securePanel.hide();
     });
 
     forgotForm.find('#go-back-link').click(function () {
-        Site.Validation.clearValidationSummary(validateForm);
+        SiteInputForms.Validation.clearValidationSummary(validateForm);
         validatePanel.show();
         forgotPanel.hide();
         securePanel.hide();
     });
 
     forgotForm.find('#sendpin-button').click(function () {
-        var data = Site.InputForms.getFormData(forgotForm);
+        var data = getFormData(forgotForm);
         if (data) {
             hideMessage(forgotForm);
             siteAjaxPost('/Login/ForgotAccount', data, forgotAccountPassed, forgotAccountFailed);
@@ -116,7 +120,7 @@ $(function () {
 
     forgotForm.on('keydown', function (e) {
         if (e.which == 13) {
-            var data = Site.InputForms.getFormData(forgotForm);
+            var data = getFormData(forgotForm);
             if (data) {
                 hideMessage(forgotForm);
                 siteAjaxPost('/Login/ForgotAccount', data, forgotAccountPassed, forgotAccountFailed);
@@ -132,7 +136,7 @@ $(function () {
     });
 
     secureForm.find('#set-password-button').click(function () {
-        var data = Site.InputForms.getFormData(secureForm);
+        var data = getFormData(secureForm);
         if (data) {
             hideMessage(secureForm);
             siteAjaxPost('/Account/SecureAccount', data, secureAccountPassed, secureAccountFailed);
@@ -141,7 +145,7 @@ $(function () {
 
     secureForm.on('keydown', function (e) {
         if (e.which == 13) {
-            var data = Site.InputForms.getFormData(secureForm);
+            var data = getFormData(secureForm);
             if (data) {
                 hideMessage(secureForm);
                 siteAjaxPost('/Account/SecureAccount', data, secureAccountPassed, secureAccountFailed);
@@ -153,3 +157,4 @@ $(function () {
     forgotPanel.hide();
     securePanel.hide();
 });
+

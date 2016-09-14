@@ -1,4 +1,5 @@
-﻿var path = require('path');
+﻿var webpack = require('webpack');
+var path = require('path');
 var WebpackNotifierPlugin = require('webpack-notifier');
 var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 
@@ -13,7 +14,11 @@ module.exports = {
     },
     plugins: [
         new CommonsChunkPlugin("commons.chunk.js"),
-        new WebpackNotifierPlugin()
+        new WebpackNotifierPlugin(),
+          new webpack.ProvidePlugin({
+              $: "jquery",
+              jQuery: "jquery"
+          })
     ],
     module: {
         loaders: [
@@ -28,6 +33,5 @@ module.exports = {
       $: 'jquery',
       jQuery: 'jquery'
     }
-  }
-    
+  }   
 };

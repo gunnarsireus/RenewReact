@@ -337,10 +337,11 @@
     <Content Include="App\img\view.png" />
     <Content Include="App\Jsx\Admin\Index.js" />
     <Content Include="App\Jsx\Loggaut\Index.js" />
+    <Content Include="App\Jsx\Login\input.js" />
     <Content Include="App\Jsx\Login\secureAccountPanel.js" />
     <Content Include="App\Jsx\Login\validateAccountPanel.js" />
     <Content Include="App\Jsx\Login\forgotAccountPanel.js" />
-    <Content Include="App\Jsx\Login\UIRoot.js" />
+    <Content Include="App\Jsx\Login\login.js" />
     <Content Include="App\js\DataTables-1.10.4\dataTables.autoFill.js" />
     <Content Include="App\js\DataTables-1.10.4\dataTables.autoFill.min.js" />
     <Content Include="App\js\DataTables-1.10.4\dataTables.bootstrap.js" />

@@ -1,4 +1,4 @@
-﻿var layoutTemplate = require('../layout/layout.html');
+﻿import layoutTemplate from './layout.html';
 
 var nav;
 
@@ -52,7 +52,7 @@ $.subscribe('/router/change', function (e) {
         // add the active class to the current link
         active.addClass('active');
     }
-});
 
+});
 
 module.exports = layout;

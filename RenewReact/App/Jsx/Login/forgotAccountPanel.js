@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Input from './input.js';export default class ForgotAccountPanel extends Component {
+import Input from '../Common/input.js';
+export default class ForgotAccountPanel extends Component {
     displayName: 'ForgotAccountPanel';
     propTypes: {
        show: React.PropTypes.bool.isRequired

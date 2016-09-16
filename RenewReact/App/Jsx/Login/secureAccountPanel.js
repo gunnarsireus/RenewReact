@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Input from './input.js';
+import Input from '../Common/input.js';
 export default class SecureAccountPanel extends Component {
     displayName: 'SecureAccountPanel';
     propTypes: {

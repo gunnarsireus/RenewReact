@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
-require('../../img/progress.gif');
+import progress from '../../../App/img/progress.gif';
 export default class Footer extends Component {
     displayName: 'Footer';
+    constructor(props) {
+        super(props);
+        this.state = {
+            show: this.props.show
+        };
+    };
     propTypes: {
             show: React.PropTypes.bool.isRequired
     };  
@@ -14,9 +20,9 @@ export default class Footer extends Component {
                         <hr />
                         <p style={{ textAlign: "center" }}>Renew Service AB</p>
                         <div id="progress-indicator" style={{display:this.displayStyle()}}>
-                            <img className="center-block" src="../../App/img/progress.gif"/>
+                            <img className="center-block" src={progress}/>
                         </div>
                     </div>
                 </footer>
-   ;}
+                                ;}
 };

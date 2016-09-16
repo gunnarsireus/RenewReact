@@ -273,7 +273,7 @@
     <Content Include="App\Jsx\Felanmalan\Index.js" />
     <Content Include="App\Jsx\Home\components\RightPart.js" />
     <Content Include="App\Jsx\Home\components\LeftPart.js" />
-    <Content Include="App\Jsx\Common\Footer.js" />
+    <Content Include="App\Jsx\Common\footer.js" />
     <Content Include="App\Jsx\Home\components\UIRoot.js" />
     <Content Include="App\img\address.png" />
     <Content Include="App\img\camera.png" />
@@ -337,7 +337,7 @@
     <Content Include="App\img\view.png" />
     <Content Include="App\Jsx\Admin\Index.js" />
     <Content Include="App\Jsx\Loggaut\Index.js" />
-    <Content Include="App\Jsx\Login\input.js" />
+    <Content Include="App\Jsx\Common\input.js" />
     <Content Include="App\Jsx\Login\secureAccountPanel.js" />
     <Content Include="App\Jsx\Login\validateAccountPanel.js" />
     <Content Include="App\Jsx\Login\forgotAccountPanel.js" />

@@ -20,11 +20,16 @@ var loggaut = require('../App/Views/Loggaut/loggaut');
 
 var login = require('../App/Views/Login/login');
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Footer from '../App/Jsx/Common/footer.js';
+
 var router = new kendo.Router({
     init: function () {
         
         // render the layout first
         layout.render("#applicationHost");
+        ReactDOM.render(<Footer show={false} />,document.getElementById("footer"));
     },
     routeMissing: function (e) {
         

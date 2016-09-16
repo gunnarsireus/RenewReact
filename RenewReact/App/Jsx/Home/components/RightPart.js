@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-require('../../../img/logotype.png');
-
 export default class Index extends Component {
     displayName: 'RightPart';
     render() {
@@ -8,6 +6,8 @@ export default class Index extends Component {
             <div className="row">
                 <div className="col-md-12">
                     Här kommer dashboard med statistik visas
+              <div>
+            </div>
                 </div>
             </div>
         </div>

@@ -21616,7 +21616,7 @@ webpackJsonp([0],[
 	                'div',
 	                null,
 	                _react2.default.createElement(_Body2.default, null),
-	                _react2.default.createElement(_Footer2.default, null)
+	                _react2.default.createElement(_Footer2.default, { show: false })
 	            );
 	        }
 	    }]);
@@ -39200,8 +39200,6 @@ webpackJsonp([0],[
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	__webpack_require__(434);
-
 	var Index = function (_Component) {
 	    _inherits(Index, _Component);
 
@@ -39223,7 +39221,8 @@ webpackJsonp([0],[
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'col-md-12' },
-	                        'Här kommer dashboard med statistik visas'
+	                        'Här kommer dashboard med statistik visas',
+	                        _react2.default.createElement('div', null)
 	                    )
 	                )
 	            );
@@ -39272,6 +39271,11 @@ webpackJsonp([0],[
 	    }
 
 	    _createClass(Footer, [{
+	        key: 'displayStyle',
+	        value: function displayStyle() {
+	            return this.props.show ? 'block' : 'none';
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -39288,8 +39292,8 @@ webpackJsonp([0],[
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { id: 'progress-indicator', hidden: true },
-	                        _react2.default.createElement('img', { className: 'center-block', src: '../../../App/img/progress.gif' })
+	                        { id: 'progress-indicator', style: { display: this.displayStyle() } },
+	                        _react2.default.createElement('img', { className: 'center-block', src: '../../App/img/progress.gif' })
 	                    )
 	                )
 	            );
@@ -39478,7 +39482,7 @@ webpackJsonp([0],[
 	            var data = (0, _siteXcompInputforms.getFormData)(validateForm);
 	            if (data) {
 	                (0, _siteLogin.hideMessage)(validateForm);
-	                (0, _siteBase.siteAjaxPost)('/Login/ValidateAccount', data, _siteLogin.validateAccountPassed, _siteLogin.validateAccountFailed);
+	                (0, _siteBase.siteAjaxPost)('/Login/ValidateAccount', data, validateAccountPassed, validateAccountFailed);
 	            }
 	        }
 	    }, {

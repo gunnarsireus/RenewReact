@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {hideMessage,validateAccountPassed, validateAccountFailed} from '../../js/site-login.js';
-import {siteAjaxPost,siteGoTo,siteHideProgress} from '../../js/site-base.js';
+import {hideMessage} from '../../js/site-login.js';
+import {siteAjaxPost,siteGoTo} from '../../js/site-base.js';
 import {getFormData} from '../../js/site-components/site-xcomp-inputforms.js';
 import Input from './input.js';
 export default class ValidateAccountPanel extends Component {

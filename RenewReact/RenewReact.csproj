@@ -273,7 +273,7 @@
     <Content Include="App\Jsx\Felanmalan\Index.js" />
     <Content Include="App\Jsx\Home\components\RightPart.js" />
     <Content Include="App\Jsx\Home\components\LeftPart.js" />
-    <Content Include="App\Jsx\Home\components\Footer.js" />
+    <Content Include="App\Jsx\Common\Footer.js" />
     <Content Include="App\Jsx\Home\components\UIRoot.js" />
     <Content Include="App\img\address.png" />
     <Content Include="App\img\camera.png" />

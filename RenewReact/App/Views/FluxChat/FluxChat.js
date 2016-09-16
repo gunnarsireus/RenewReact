@@ -23,7 +23,7 @@ var view = new kendo.View(FluxChatTemplate, {
             <ChatApp />,
             document.getElementById('react-app2')
         );
-        kendo.fx(this.element).fade('in').duration(500).play();
+        kendo.fx(this.element).fade('in').duration(100).play();
     }
 });
 

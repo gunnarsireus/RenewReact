@@ -15,7 +15,7 @@ var view = new kendo.View(detailsTemplate, {
         ReactDOM.render(
             <Index />,
             document.getElementById("react-arendeKlasser"));
-        kendo.fx(this.element).fade('in').duration(500).play();
+        kendo.fx(this.element).fade('in').duration(100).play();
     }
 });
 

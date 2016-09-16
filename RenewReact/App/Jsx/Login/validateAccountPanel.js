@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {hideMessage} from '../../js/site-login.js';
+import {hideMessage,validateAccountFailed,validateAccountPassed} from '../../js/site-login.js';
 import {siteAjaxPost,siteGoTo} from '../../js/site-base.js';
 import {getFormData} from '../../js/site-components/site-xcomp-inputforms.js';
 import Input from '../Common/input.js';
@@ -42,10 +42,10 @@ export default class ValidateAccountPanel extends Component {
                                         <span className="glyphicon glyphicon-user"></span>
                                     </span>
                                     <Input className="form-control"
-                                           dataAutoajax="true"
-                                           dataVal="true"
+                                           dataAutoajax={true}
+                                           dataVal={true}
                                            dataValLengthMin="5"
-                                           dataLalLengthmax="100"
+                                           dataLalLengthMax="100"
                                            dataValLength="Användare måste vara mellan 5 och 100 tecken"
                                            dataValRequired="Användare får inte vara tom"
                                            id="email"

@@ -32,7 +32,7 @@ Input.propTypes=
     className:React.PropTypes.string,
     value: React.PropTypes.string,
     dataAutoajax: React.PropTypes.bool,
-    dataVal:React.PropTypes.number,
+    dataVal:React.PropTypes.bool,
     dataValLengthMin:React.PropTypes.string,
     dataValLengthMax:React.PropTypes.string,
     dataValLength:React.PropTypes.string,

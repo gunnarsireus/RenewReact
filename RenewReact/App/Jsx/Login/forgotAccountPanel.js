@@ -28,8 +28,8 @@ export default class ForgotAccountPanel extends Component {
                                         <span className="glyphicon glyphicon-envelope"></span>
                                     </span>
                                     <Input className="form-control"
-                                           dataAutoajax="true"
-                                           dataVal="true"
+                                           dataAutoajax={true}
+                                           daataVal={true}
                                            dataValLengthMin="5"
                                            dataValLengthMax="100"
                                            dataValLength="E-post måste vara mellan 5 och 100 tecken"

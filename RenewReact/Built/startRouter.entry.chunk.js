@@ -21588,7 +21588,7 @@ webpackJsonp([0],[
 	        list: [[{ title: 'Admin', href: '', icon: '' }, { title: 'Personal', href: '#/personal', icon: '' }, { title: 'Felanmälan', href: '#/felanmalan', icon: '' }], [{ title: 'Ärenden', href: '', icon: '' }, { title: 'Pågående', href: '#/pagaende', icon: '' }, { title: 'Arkiverade', href: '#/arkiverade', icon: '' }], [{ title: 'Meddelanden', href: '', icon: '' }, { title: 'Nyheter', href: '#/nyheter', icon: '' }, { title: 'Erbjudanden', href: '#/erbjudanden', icon: '' }], [{ title: 'Register', href: '', icon: '' }, { title: 'Kunder', href: '#/kunder', icon: '' }, { title: 'Boende', href: '#/boende', icon: '' }, { title: 'Tidkoder', href: '#/tidkoder', icon: '' }, { title: 'Ärendeklasser', href: '#/arendeKlasser', icon: '' }, { title: 'Login', href: '#/login', icon: '' }]]
 	    },
 	    linksRight: {
-	        list: [[{ title: 'Admin Admin', href: '#/admin', icon: '' }], [{ title: 'Logga ut', href: '#/loggaut', icon: '' }]]
+	        list: [[{ title: 'Admin Admin', href: '#/admin', icon: '' }], [{ title: 'Logga ut', href: '/Home/Logout', icon: '' }]]
 	    }
 
 	});
@@ -21660,7 +21660,7 @@ webpackJsonp([0],[
 	        if (document.getElementById("isUserAuthorized").innerHTML === 'UserAuthorized') {
 	            document.getElementsByTagName("header")[0].classList.remove("hidden");
 	            _reactDom2.default.render(_react2.default.createElement(_UIRoot2.default, null), document.getElementById("react-home"));
-	            kendo.fx(this.element).fade('in').duration(500).play();
+	            kendo.fx(this.element).fade('in').duration(100).play();
 	        } else {
 	            layout.showIn("#content", login);
 	        }
@@ -39371,7 +39371,7 @@ webpackJsonp([0],[
 	        document.getElementsByTagName("header")[0].classList.add("hidden");
 
 	        _reactDom2.default.render(_react2.default.createElement(_Login2.default, null), document.getElementById("react-login"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
+	        kendo.fx(this.element).fade('in').duration(100).play();
 	    }
 	});
 
@@ -39502,7 +39502,7 @@ webpackJsonp([0],[
 	            var data = (0, _siteXcompInputforms.getFormData)(validateForm);
 	            if (data) {
 	                (0, _siteLogin.hideMessage)(validateForm);
-	                (0, _siteBase.siteAjaxPost)('/Login/ValidateAccount', data, validateAccountPassed, validateAccountFailed);
+	                (0, _siteBase.siteAjaxPost)('/Login/ValidateAccount', data, _siteLogin.validateAccountPassed, _siteLogin.validateAccountFailed);
 	            }
 	        }
 	    }, {
@@ -39553,10 +39553,10 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-user' })
 	                                            ),
 	                                            _react2.default.createElement(_input2.default, { className: 'form-control',
-	                                                dataAutoajax: 'true',
-	                                                dataVal: 'true',
+	                                                dataAutoajax: true,
+	                                                dataVal: true,
 	                                                dataValLengthMin: '5',
-	                                                dataLalLengthmax: '100',
+	                                                dataLalLengthMax: '100',
 	                                                dataValLength: 'Användare måste vara mellan 5 och 100 tecken',
 	                                                dataValRequired: 'Användare får inte vara tom',
 	                                                id: 'email',
@@ -40080,7 +40080,7 @@ webpackJsonp([0],[
 	    className: _react2.default.PropTypes.string,
 	    value: _react2.default.PropTypes.string,
 	    dataAutoajax: _react2.default.PropTypes.bool,
-	    dataVal: _react2.default.PropTypes.number,
+	    dataVal: _react2.default.PropTypes.bool,
 	    dataValLengthMin: _react2.default.PropTypes.string,
 	    dataValLengthMax: _react2.default.PropTypes.string,
 	    dataValLength: _react2.default.PropTypes.string,
@@ -40207,7 +40207,7 @@ webpackJsonp([0],[
 	                                                id: 'email',
 	                                                name: 'email',
 	                                                type: 'text',
-	                                                value: '', readOnly: '' })
+	                                                value: '', readonly: true })
 	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
@@ -40226,7 +40226,7 @@ webpackJsonp([0],[
 	                                                { className: 'input-group-addon' },
 	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-lock' })
 	                                            ),
-	                                            _react2.default.createElement('input', { className: 'form-control',
+	                                            _react2.default.createElement(_input2.default, { className: 'form-control',
 	                                                dataAutoajax: true,
 	                                                dataVal: true,
 	                                                dataValLengthMin: '6',
@@ -40256,11 +40256,11 @@ webpackJsonp([0],[
 	                                                { className: 'input-group-addon' },
 	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-lock' })
 	                                            ),
-	                                            _react2.default.createElement('input', { className: 'form-control',
-	                                                dataAutoajax: 'true',
-	                                                dataVal: 'true',
-	                                                'dataValLength-min': '6',
-	                                                'dataValLength-max': '45',
+	                                            _react2.default.createElement(_input2.default, { className: 'form-control',
+	                                                dataAutoajax: true,
+	                                                dataVal: true,
+	                                                dataValLengthMin: '6',
+	                                                dataValLengthMax: '45',
 	                                                dataValLength: 'Lösenord måste vara mellan 6 och 45 tecken',
 	                                                dataValRequired: 'Lösenord får inte vara tom',
 	                                                id: 'password1',
@@ -40286,11 +40286,11 @@ webpackJsonp([0],[
 	                                                { className: 'input-group-addon' },
 	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-lock' })
 	                                            ),
-	                                            _react2.default.createElement('input', { className: 'form-control',
-	                                                dataAutoajax: 'true',
-	                                                dataVal: 'true',
-	                                                'dataValLength-min': '6',
-	                                                'dataValLength-max': '45',
+	                                            _react2.default.createElement(_input2.default, { className: 'form-control',
+	                                                dataAutoajax: true,
+	                                                dataVal: true,
+	                                                dataValLengthMin: '6',
+	                                                dataValLengthMax: '45',
 	                                                dataValLength: 'Bekräfta måste vara mellan 6 och 45 tecken',
 	                                                dataValRequired: 'Bekräfta får inte vara tom',
 	                                                id: 'password2',
@@ -40446,8 +40446,8 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-envelope' })
 	                                            ),
 	                                            _react2.default.createElement(_input2.default, { className: 'form-control',
-	                                                dataAutoajax: 'true',
-	                                                dataVal: 'true',
+	                                                dataAutoajax: true,
+	                                                daataVal: true,
 	                                                dataValLengthMin: '5',
 	                                                dataValLengthMax: '100',
 	                                                dataValLength: 'E-post måste vara mellan 5 och 100 tecken',
@@ -40543,7 +40543,7 @@ webpackJsonp([0],[
 	    show: function show() {
 
 	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-personal"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
+	        kendo.fx(this.element).fade('in').duration(100).play();
 	    }
 	});
 
@@ -40637,7 +40637,7 @@ webpackJsonp([0],[
 	    show: function show() {
 
 	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-felanmalan"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
+	        kendo.fx(this.element).fade('in').duration(100).play();
 	    }
 	});
 
@@ -40731,7 +40731,7 @@ webpackJsonp([0],[
 	    show: function show() {
 
 	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-pagaende"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
+	        kendo.fx(this.element).fade('in').duration(100).play();
 	    }
 	});
 
@@ -40825,7 +40825,7 @@ webpackJsonp([0],[
 	    show: function show() {
 
 	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-arkiverade"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
+	        kendo.fx(this.element).fade('in').duration(100).play();
 	    }
 	});
 
@@ -40919,7 +40919,7 @@ webpackJsonp([0],[
 	    show: function show() {
 
 	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-nyheter"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
+	        kendo.fx(this.element).fade('in').duration(100).play();
 	    }
 	});
 
@@ -41013,7 +41013,7 @@ webpackJsonp([0],[
 	    show: function show() {
 
 	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-erbjudanden"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
+	        kendo.fx(this.element).fade('in').duration(100).play();
 	    }
 	});
 
@@ -41107,7 +41107,7 @@ webpackJsonp([0],[
 	    show: function show() {
 
 	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-kunder"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
+	        kendo.fx(this.element).fade('in').duration(100).play();
 	    }
 	});
 
@@ -41201,7 +41201,7 @@ webpackJsonp([0],[
 	    show: function show() {
 
 	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-boende"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
+	        kendo.fx(this.element).fade('in').duration(100).play();
 	    }
 	});
 
@@ -41295,7 +41295,7 @@ webpackJsonp([0],[
 	    show: function show() {
 
 	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-tidkoder"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
+	        kendo.fx(this.element).fade('in').duration(100).play();
 	    }
 	});
 
@@ -41389,7 +41389,7 @@ webpackJsonp([0],[
 	    show: function show() {
 
 	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-arendeKlasser"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
+	        kendo.fx(this.element).fade('in').duration(100).play();
 	    }
 	});
 
@@ -41483,7 +41483,7 @@ webpackJsonp([0],[
 	    show: function show() {
 
 	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-admin"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
+	        kendo.fx(this.element).fade('in').duration(100).play();
 	    }
 	});
 
@@ -41577,7 +41577,7 @@ webpackJsonp([0],[
 	    show: function show() {
 
 	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-loggaut"));
-	        kendo.fx(this.element).fade('in').duration(500).play();
+	        kendo.fx(this.element).fade('in').duration(100).play();
 	    }
 	});
 

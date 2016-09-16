@@ -12,7 +12,7 @@ var view = new kendo.View(loginTemplate, {
        document.getElementsByTagName("header")[0].classList.add("hidden");
 
        ReactDOM.render(<Login />,document.getElementById("react-login"));
-       kendo.fx(this.element).fade('in').duration(500).play();
+       kendo.fx(this.element).fade('in').duration(100).play();
     }
 });
 

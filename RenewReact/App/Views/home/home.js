@@ -17,7 +17,7 @@ var view = new kendo.View(homeTemplate, {
             ReactDOM.render(
                 <UIRoot />,
                 document.getElementById("react-home"));
-            kendo.fx(this.element).fade('in').duration(500).play();
+            kendo.fx(this.element).fade('in').duration(100).play();
         }
         else{
             layout.showIn("#content", login);

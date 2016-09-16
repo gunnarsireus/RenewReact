@@ -32,7 +32,7 @@ export default class SecureAccountPanel extends Component {
                                            id="email"
                                            name="email"
                                            type="text"
-                                           value="" readOnly=""/>
+                                           value="" readonly/>
                                 </div>
                             </div>
 
@@ -42,7 +42,7 @@ export default class SecureAccountPanel extends Component {
                                     <span className="input-group-addon">
                                         <span className="glyphicon glyphicon-lock"></span>
                                     </span>
-                                    <input className="form-control"
+                                    <Input className="form-control"
                                            dataAutoajax={true}
                                            dataVal={true}
                                            dataValLengthMin="6"
@@ -63,11 +63,11 @@ export default class SecureAccountPanel extends Component {
                                     <span className="input-group-addon">
                                         <span className="glyphicon glyphicon-lock"></span>
                                     </span>
-                                    <input className="form-control"
-                                           dataAutoajax="true"
-                                           dataVal="true"
-                                           dataValLength-min="6"
-                                           dataValLength-max="45"
+                                    <Input className="form-control"
+                                           dataAutoajax={true}
+                                           dataVal={true}
+                                           dataValLengthMin="6"
+                                           dataValLengthMax="45"
                                            dataValLength="Lösenord måste vara mellan 6 och 45 tecken"
                                            dataValRequired="Lösenord får inte vara tom"
                                            id="password1"
@@ -84,11 +84,11 @@ export default class SecureAccountPanel extends Component {
                                     <span className="input-group-addon">
                                         <span className="glyphicon glyphicon-lock"></span>
                                     </span>
-                                    <input className="form-control"
-                                           dataAutoajax="true"
-                                           dataVal="true"
-                                           dataValLength-min="6"
-                                           dataValLength-max="45"
+                                    <Input className="form-control"
+                                           dataAutoajax={true}
+                                           dataVal={true}
+                                           dataValLengthMin="6"
+                                           dataValLengthMax="45"
                                            dataValLength="Bekräfta måste vara mellan 6 och 45 tecken"
                                            dataValRequired="Bekräfta får inte vara tom"
                                            id="password2"

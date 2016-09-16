@@ -77,13 +77,13 @@ $(function () {
         siteGoTo('/Register');
     });
 
-    validateForm.find('#validate-button').click(function () {
-        var data = getFormData(validateForm);
-        if (data) {
-            hideMessage(validateForm);
-            siteAjaxPost('/Login/ValidateAccount', data, validateAccountPassed, validateAccountFailed);
-        }
-    });
+    //validateForm.find('#validate-button').click(function () {
+    //    var data = getFormData(validateForm);
+    //    if (data) {
+    //        hideMessage(validateForm);
+    //        siteAjaxPost('/Login/ValidateAccount', data, validateAccountPassed, validateAccountFailed);
+    //    }
+    //});
 
     validateForm.on('keydown', function (e) {
         if (e.which == 13) {

@@ -39478,10 +39478,14 @@ webpackJsonp([0],[
 	var ValidateAccountPanel = function (_Component) {
 	    _inherits(ValidateAccountPanel, _Component);
 
-	    function ValidateAccountPanel() {
+	    function ValidateAccountPanel(props) {
 	        _classCallCheck(this, ValidateAccountPanel);
 
-	        return _possibleConstructorReturn(this, (ValidateAccountPanel.__proto__ || Object.getPrototypeOf(ValidateAccountPanel)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (ValidateAccountPanel.__proto__ || Object.getPrototypeOf(ValidateAccountPanel)).call(this, props));
+
+	        _this.onLogin = _this.onLogin.bind(_this);
+	        _this.onRegister = _this.onRegister.bind(_this);
+	        return _this;
 	    }
 
 	    _createClass(ValidateAccountPanel, [{
@@ -39613,7 +39617,7 @@ webpackJsonp([0],[
 	                                    { className: 'col-md-6' },
 	                                    _react2.default.createElement(
 	                                        'button',
-	                                        { id: 'validate-button', onClick: this.onLogin, type: 'button', className: 'btn btn-info pull-right ' },
+	                                        { id: 'validate-button', onClick: this.onLogin, onKeyDown: this.onLogin, type: 'button', className: 'btn btn-info pull-right ' },
 	                                        'Logga in'
 	                                    )
 	                                )
@@ -39653,6 +39657,9 @@ webpackJsonp([0],[
 
 	exports.default = ValidateAccountPanel;
 	;
+	ValidateAccountPanel.propTypes = {
+	    show: _react2.default.PropTypes.bool.isRequired
+	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
@@ -39757,23 +39764,23 @@ webpackJsonp([0],[
 	        (0, _siteBase.siteGoTo)('/Register');
 	    });
 
-	    validateForm.find('#validate-button').click(function () {
-	        var data = (0, _siteXcompInputforms.getFormData)(validateForm);
-	        if (data) {
-	            hideMessage(validateForm);
-	            (0, _siteBase.siteAjaxPost)('/Login/ValidateAccount', data, validateAccountPassed, validateAccountFailed);
-	        }
-	    });
+	    //validateForm.find('#validate-button').click(function () {
+	    //    var data = getFormData(validateForm);
+	    //    if (data) {
+	    //        hideMessage(validateForm);
+	    //        siteAjaxPost('/Login/ValidateAccount', data, validateAccountPassed, validateAccountFailed);
+	    //    }
+	    //});
 
-	    validateForm.on('keydown', function (e) {
-	        if (e.which == 13) {
-	            var data = (0, _siteXcompInputforms.getFormData)(validateForm);
-	            if (data) {
-	                hideMessage(validateForm);
-	                (0, _siteBase.siteAjaxPost)('/Login/ValidateAccount', data, validateAccountPassed, validateAccountFailed);
-	            }
-	        }
-	    });
+	    //validateForm.on('keydown', function (e) {
+	    //    if (e.which == 13) {
+	    //        var data = getFormData(validateForm);
+	    //        if (data) {
+	    //            hideMessage(validateForm);
+	    //            siteAjaxPost('/Login/ValidateAccount', data, validateAccountPassed, validateAccountFailed);
+	    //        }
+	    //    }
+	    //});
 
 	    validateForm.find('#forgot-password-link').click(function () {
 	        hideMessage(validateForm);

@@ -5,16 +5,18 @@ import {getFormData} from '../../js/site-components/site-xcomp-inputforms.js';
 import Input from '../Common/input.js';
 export default class ValidateAccountPanel extends Component {
     displayName: 'ValidateAccountPanel';
-    propTypes: {
-       show: React.PropTypes.bool.isRequired
-    };  
+    constructor(props) {
+        super(props);
+        this.onLogin = this.onLogin.bind(this);
+        this.onRegister = this.onRegister.bind(this);
+    };
     displayStyle() {
         return (this.props.show)?'block':'none';
     };
-    onRegister () {
+    onRegister() {
         siteGoTo('/Register');
     };
-    onLogin () {
+    onLogin() {
         var validateForm  = $('#validate-account-form');
         var validatePanel = $('#validate-account-panel');
         var data = getFormData(validateForm);
@@ -82,7 +84,7 @@ export default class ValidateAccountPanel extends Component {
                             <button id="register-button" onClick={this.onRegister} type="button" className="btn btn-success pull-left ">Registrera</button>
                         </div>
                         <div className="col-md-6">
-                            <button id="validate-button" onClick={this.onLogin} type="button" className="btn btn-info pull-right ">Logga in</button>
+                            <button id="validate-button" onClick={this.onLogin} onKeyDown={this.onLogin} type="button" className="btn btn-info pull-right ">Logga in</button>
                         </div>
                     </div>
                     <div className="row">
@@ -103,3 +105,6 @@ export default class ValidateAccountPanel extends Component {
    
 ;}
 };
+ValidateAccountPanel.propTypes= {
+    show: React.PropTypes.bool.isRequired
+};  

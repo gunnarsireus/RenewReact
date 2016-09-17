@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Grid, Jumbotron } from 'react-bootstrap';
 export default class Index extends Component {
     displayName: 'RightPart';
     render() {

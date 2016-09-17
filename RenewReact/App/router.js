@@ -1,5 +1,5 @@
-﻿var layout = require('../App/Views/layout/layout');
-var home = require('../App/Views/home/home');
+﻿var layout = require('../App/Views/Layout/layout');
+var home = require('../App/Views/Home/home');
 
 var personal = require('../App/Views/Personal/personal');
 var felanmalan = require('../App/Views/Felanmalan/felanmalan');

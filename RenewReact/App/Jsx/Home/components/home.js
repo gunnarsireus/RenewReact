@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import LeftPart from './LeftPart';
-import RightPart from './RightPart';
+import LeftPart from './leftpart';
+import RightPart from './rightpart';
 export default class Index extends Component {
-    displayName: 'Body';
+    displayName: 'Home';
     render() {
        return <div className="row">
                 <LeftPart />

@@ -1,9 +1,9 @@
 ﻿var homeTemplate = require('./home.html');
-var layout = require('../layout/layout.js');
+var layout = require('../Layout/layout.js');
 var login = require('../Login/login.js');
 import React from 'react';
 import ReactDOM from 'react-dom';
-import UIRoot from '../../Jsx/Home/components/UIRoot.js';
+import Home from '../../Jsx/Home/components/home.js';
 var viewModel = kendo.observable({
     title: "Home"
 });
@@ -15,7 +15,7 @@ var view = new kendo.View(homeTemplate, {
         {
             document.getElementsByTagName("header")[0].classList.remove("hidden");
             ReactDOM.render(
-                <UIRoot />,
+                <Home />,
                 document.getElementById("react-home"));
             kendo.fx(this.element).fade('in').duration(100).play();
         }

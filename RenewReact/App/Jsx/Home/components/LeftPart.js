@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Grid, Jumbotron } from 'react-bootstrap';
 require('../../../img/logotype.png');
 
 export default class Index extends Component {

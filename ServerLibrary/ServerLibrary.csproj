@@ -158,14 +158,13 @@
     <Compile Include="Utils\StringUtils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Database\database.sql">
-      <Link>database.sql</Link>
-    </None>
+    <Content Include="database.sql" />
     <Content Include="Libs\EntityFramework.dll" />
     <Content Include="Libs\EntityFramework.xml" />
     <Content Include="Libs\MySql.Data.dll" />
     <Content Include="Libs\MySql.Data.Entity.EF6.dll" />
     <Content Include="Libs\MySql.Web.dll" />
+    <None Include=".gitignore" />
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>

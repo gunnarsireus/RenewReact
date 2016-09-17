@@ -39772,15 +39772,15 @@ webpackJsonp([0],[
 	    //    }
 	    //});
 
-	    //validateForm.on('keydown', function (e) {
-	    //    if (e.which == 13) {
-	    //        var data = getFormData(validateForm);
-	    //        if (data) {
-	    //            hideMessage(validateForm);
-	    //            siteAjaxPost('/Login/ValidateAccount', data, validateAccountPassed, validateAccountFailed);
-	    //        }
-	    //    }
-	    //});
+	    validateForm.on('keydown', function (e) {
+	        if (e.which == 13) {
+	            var data = (0, _siteXcompInputforms.getFormData)(validateForm);
+	            if (data) {
+	                hideMessage(validateForm);
+	                (0, _siteBase.siteAjaxPost)('/Login/ValidateAccount', data, validateAccountPassed, validateAccountFailed);
+	            }
+	        }
+	    });
 
 	    validateForm.find('#forgot-password-link').click(function () {
 	        hideMessage(validateForm);

@@ -62,7 +62,7 @@ webpackJsonp([0],[
 	        _reactDom2.default.render(_react2.default.createElement(_footer2.default, { show: false }), document.getElementById("footer"));
 	    },
 	    routeMissing: function routeMissing(e) {
-
+	        console.log(e.url);
 	        // debug shim writes console errors to the browser dev tools
 	        debug.error('No Route Found', e.url);
 	    },
@@ -119,6 +119,7 @@ webpackJsonp([0],[
 	router.route('/', function (e) {
 	    layout.showIn("#content", home);
 	});
+
 	module.exports = router;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
@@ -21593,7 +21594,7 @@ webpackJsonp([0],[
 	        list: [[{ title: 'Admin', href: '', icon: '' }, { title: 'Personal', href: '#/personal', icon: '' }, { title: 'Felanmälan', href: '#/felanmalan', icon: '' }], [{ title: 'Ärenden', href: '', icon: '' }, { title: 'Pågående', href: '#/pagaende', icon: '' }, { title: 'Arkiverade', href: '#/arkiverade', icon: '' }], [{ title: 'Meddelanden', href: '', icon: '' }, { title: 'Nyheter', href: '#/nyheter', icon: '' }, { title: 'Erbjudanden', href: '#/erbjudanden', icon: '' }], [{ title: 'Register', href: '', icon: '' }, { title: 'Kunder', href: '#/kunder', icon: '' }, { title: 'Boende', href: '#/boende', icon: '' }, { title: 'Tidkoder', href: '#/tidkoder', icon: '' }, { title: 'Ärendeklasser', href: '#/arendeKlasser', icon: '' }, { title: 'Login', href: '#/login', icon: '' }]]
 	    },
 	    linksRight: {
-	        list: [[{ title: 'Admin Admin', href: '#/admin', icon: '' }], [{ title: 'Logga ut', href: '/Home/Logout', icon: '' }]]
+	        list: [[{ title: 'Admin Admin', href: '#/admin', icon: '' }], [{ title: 'Logga ut', href: '#/loggaut', icon: '' }]]
 	    }
 
 	});
@@ -21662,7 +21663,8 @@ webpackJsonp([0],[
 	var view = new kendo.View(homeTemplate, {
 	    model: viewModel,
 	    show: function show() {
-	        if (document.getElementById("isUserAuthorized").innerHTML === 'UserAuthorized') {
+	        var isUserAuthorized = localStorage.getItem("isUserAuthorized");
+	        if (document.getElementById("isUserAuthorized").innerHTML === 'UserAuthorized' || isUserAuthorized === 'UserAuthorized') {
 	            document.getElementsByTagName("header")[0].classList.remove("hidden");
 	            _reactDom2.default.render(_react2.default.createElement(_home2.default, null), document.getElementById("react-home"));
 	            kendo.fx(this.element).fade('in').duration(100).play();
@@ -40762,8 +40764,13 @@ webpackJsonp([0],[
 	        value: function onLogin() {
 	            function navigateToHome() {
 	                (0, _siteXcompLocalstorage.clearAll)();
-	                $('#isUserAuthorized').text('UserAuthorized');
-	                window.location.href = "/home";
+	                var isUserAuthorized = "UserAuthorized";
+	                localStorage.setItem("isUserAuthorized", isUserAuthorized);
+	                var host = window.location.href + "#/";
+	                host = host.replace("Login", ""); //Remove Login from browser url
+	                window.location.href = host;
+	                window.location.href = window.location.href;
+	                window.location.replace(host); //Make visible removed Login from browser url
 	            };
 	            var validateForm = $('#validate-account-form');
 	            var validatePanel = $('#validate-account-panel');
@@ -42818,97 +42825,24 @@ webpackJsonp([0],[
 
 /***/ },
 /* 481 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	'use strict';
-
-	var _react = __webpack_require__(3);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(36);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _index = __webpack_require__(482);
-
-	var _index2 = _interopRequireDefault(_index);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var detailsTemplate = __webpack_require__(483);
-
+	"use strict";
 
 	var viewModel = kendo.observable({
-	    title: "Loggaut"
+	    title: "Logga ut"
 	});
 
-	var view = new kendo.View(detailsTemplate, {
+	var view = new kendo.View(null, {
 	    model: viewModel,
 	    show: function show() {
-
-	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-loggaut"));
-	        kendo.fx(this.element).fade('in').duration(100).play();
+	        var isUserAuthorized = "";
+	        localStorage.setItem("isUserAuthorized", isUserAuthorized);
+	        window.location.href = '/Home/Logout';
 	    }
 	});
 
 	module.exports = view;
-
-/***/ },
-/* 482 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(3);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Index = function (_Component) {
-	    _inherits(Index, _Component);
-
-	    function Index() {
-	        _classCallCheck(this, Index);
-
-	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
-	    }
-
-	    _createClass(Index, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'h1',
-	                null,
-	                'This is Logga ut page'
-	            );
-	        }
-	    }]);
-
-	    return Index;
-	}(_react.Component);
-
-	exports.default = Index;
-	;
-
-/***/ },
-/* 483 */
-/***/ function(module, exports) {
-
-	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-loggaut\" ></div>\r\n";
 
 /***/ }
 ]);

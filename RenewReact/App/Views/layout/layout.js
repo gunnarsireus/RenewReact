@@ -24,7 +24,7 @@ var viewModel = kendo.observable({
     },
     linksRight: {
         list: [[{ title: 'Admin Admin', href: '#/admin', icon: '' }],
-           [{ title: 'Logga ut', href: '/Home/Logout', icon: '' }]
+           [{ title: 'Logga ut', href: '#/loggaut', icon: '' }]
         ]
     }
 

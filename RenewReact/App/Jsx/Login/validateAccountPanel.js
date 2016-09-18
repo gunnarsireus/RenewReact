@@ -21,8 +21,13 @@ export default class ValidateAccountPanel extends Component {
     onLogin() {
         function navigateToHome() {
             clearAll();   
-            $('#isUserAuthorized').text('UserAuthorized');
-            window.location.href = "/home";
+            var isUserAuthorized = "UserAuthorized";
+            localStorage.setItem("isUserAuthorized", isUserAuthorized);
+            var host = window.location.href + "#/";
+            host = host.replace("Login", ""); //Remove Login from browser url
+            window.location.href = host;
+            window.location.href = window.location.href;
+            window.location.replace(host); //Make visible removed Login from browser url
         };
         var validateForm  = $('#validate-account-form');
         var validatePanel = $('#validate-account-panel');

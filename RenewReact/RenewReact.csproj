@@ -335,7 +335,6 @@
     <Content Include="App\img\statusrejectedto.png" />
     <Content Include="App\img\view.png" />
     <Content Include="App\Jsx\Admin\Index.js" />
-    <Content Include="App\Jsx\Loggaut\Index.js" />
     <Content Include="App\Jsx\Common\input.js" />
     <Content Include="App\Jsx\Login\secureAccountPanel.js" />
     <Content Include="App\Jsx\Login\validateAccountPanel.js" />
@@ -461,7 +460,6 @@
     <Content Include="App\Views\Kunder\kunder.js" />
     <Content Include="App\Views\Layout\layout.html" />
     <Content Include="App\Views\Layout\layout.js" />
-    <Content Include="App\Views\Loggaut\loggaut.html" />
     <Content Include="App\Views\Loggaut\loggaut.js" />
     <Content Include="App\Views\Login\login.html" />
     <Content Include="App\Views\Login\login.js" />

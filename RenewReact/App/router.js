@@ -32,7 +32,7 @@ var router = new kendo.Router({
         ReactDOM.render(<Footer show={false} />,document.getElementById("footer"));
     },
     routeMissing: function (e) {
-        
+        console.log(e.url)
         // debug shim writes console errors to the browser dev tools
         debug.error('No Route Found', e.url);
     },
@@ -89,4 +89,5 @@ router.route('/login', function (e) {
 router.route('/', function (e) {
     layout.showIn("#content", home);
 });
+
 module.exports = router;

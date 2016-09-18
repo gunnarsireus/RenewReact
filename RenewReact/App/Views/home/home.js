@@ -11,7 +11,8 @@ var viewModel = kendo.observable({
 var view = new kendo.View(homeTemplate, {
     model: viewModel,
     show: function () {
-        if (document.getElementById("isUserAuthorized").innerHTML==='UserAuthorized') 
+        var isUserAuthorized = localStorage.getItem("isUserAuthorized");
+        if (document.getElementById("isUserAuthorized").innerHTML==='UserAuthorized' || isUserAuthorized==='UserAuthorized') 
         {
             document.getElementsByTagName("header")[0].classList.remove("hidden");
             ReactDOM.render(

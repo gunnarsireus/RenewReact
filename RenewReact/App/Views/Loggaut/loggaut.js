@@ -1,21 +1,13 @@
-﻿var detailsTemplate = require('./loggaut.html');
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Index from '../../Jsx/Loggaut/index.js';
+﻿var viewModel = kendo.observable({
+    title: "Logga ut"
+});
 
-
-var viewModel = kendo.observable({
-    title: "Loggaut"
-})
-
-var view = new kendo.View(detailsTemplate, {
+var view = new kendo.View(null, {
     model: viewModel,
     show: function () {
-
-        ReactDOM.render(
-            <Index />,
-            document.getElementById("react-loggaut"));
-        kendo.fx(this.element).fade('in').duration(100).play();
+      var isUserAuthorized = "";
+      localStorage.setItem("isUserAuthorized", isUserAuthorized);
+      window.location.href = '/Home/Logout';
     }
 });
 

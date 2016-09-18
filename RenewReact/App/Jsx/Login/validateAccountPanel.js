@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import {hideMessage,validateAccountFailed,validateAccountPassed} from '../../js/site-login.js';
+import {hideMessage,validateAccountFailed} from '../../js/site-login.js';
 import {siteAjaxPost,siteGoTo} from '../../js/site-base.js';
 import {getFormData} from '../../js/site-components/site-xcomp-inputforms.js';
 import {clearAll} from '../../js/site-components/site-xcomp-localstorage.js';
 import Input from '../Common/input.js';
+import { Grid, Row, Col, Glyphicon } from 'react-bootstrap';
 export default class ValidateAccountPanel extends Component {
     displayName: 'ValidateAccountPanel';
     constructor(props) {
         super(props);
         this.onLogin = this.onLogin.bind(this);
+        this.onKeyDown = this.onKeyDown.bind(this);  //Not working
         this.onRegister = this.onRegister.bind(this);
     };
     displayStyle() {
@@ -17,7 +19,9 @@ export default class ValidateAccountPanel extends Component {
     onRegister() {
         siteGoTo('/Register');
     };
-
+    onKeyDown() {
+        onLogin();  //Not working
+    }
     onLogin() {
         function navigateToHome() {
             clearAll();   
@@ -38,8 +42,8 @@ export default class ValidateAccountPanel extends Component {
         }
     };
     render() {
-        return  <div className="row" id="validate-account-panel" style={{display:this.displayStyle()}}>
-        <div className="col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4 site-form-border">
+        return  <Row id="validate-account-panel" style={{display:this.displayStyle()}}>
+         <Col xsOffset={2} xs={8} smOffset={3} sm={6} mdOffset={3} md={6} lgOffset={4} lg={4} className="site-form-border">
             <fieldset>
                 <center>
                     <h3>Renew Service</h3>
@@ -47,11 +51,11 @@ export default class ValidateAccountPanel extends Component {
                 <br />
 
                 <form id="validate-account-form">
-                    <div className="row">
-                        <div className="col-md-12">
+                    <Row>
+                        <Col md={12}>
                             <div className="form-group">
                                 <label className="control-label col-md-3" style={{marginLeft:"-15px",marginRight:"15px"}} htmlFor="email">Användare</label>
-                                <div className="col-md-9 input-group">
+                                <Col md={9} className="input-group">
                                     <span className="input-group-addon">
                                         <span className="glyphicon glyphicon-user"></span>
                                     </span>
@@ -66,12 +70,12 @@ export default class ValidateAccountPanel extends Component {
                                            name="email"
                                            type="text"
                                            value="" />
-                                </div>
+                                </Col>
                             </div>
 
                             <div className="form-group">
                                 <label className="control-label col-md-3" style={{marginLeft:"-15px",marginRight:"15px"}} htmlFor="password">Lösenord</label>
-                                <div className="col-md-9 input-group">
+                                <Col md={9} className="input-group">
                                     <span className="input-group-addon">
                                         <span className="glyphicon glyphicon-lock"></span>
                                     </span>
@@ -86,34 +90,34 @@ export default class ValidateAccountPanel extends Component {
                                            name="password"
                                            type="password"
                                            value="" />
-                                </div>
+                                </Col>
                             </div>
 
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-6">
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={6}>
                             <button id="register-button" onClick={this.onRegister} type="button" className="btn btn-success pull-left ">Registrera</button>
-                        </div>
-                        <div className="col-md-6">
-                            <button id="validate-button" onClick={this.onLogin} onKeyDown={this.onLogin} type="button" className="btn btn-info pull-right ">Logga in</button>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-12">
+                        </Col>
+                         <Col md={6}>
+                            <button id="validate-button" onClick={this.onLogin} onKeyDown={this.onKeyDown} type="button" className="btn btn-info pull-right ">Logga in</button>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={12}>
                             <div id="forgot-password-link" className="text-info text-right site-row-spacing" style={{cursor:"pointer"}}>Glömt lösenord?</div>
-                        </div>
-                    </div>
+                        </Col>
+                    </Row>
                     <br />
-                    <div className="row">
-                        <div className="col-md-12">
+                    <Row>
+                        <Col md={12}>
                             <div id="custom-message" className="alert alert-warning" hidden></div>
-                        </div>
-                    </div>
+                        </Col>
+                    </Row>
                 </form>
             </fieldset>
-        </div>
-    </div>
+        </Col>
+    </Row>
    
 ;}
 };

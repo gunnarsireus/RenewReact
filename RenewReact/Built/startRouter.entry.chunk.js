@@ -40728,6 +40728,8 @@ webpackJsonp([0],[
 
 	var _input2 = _interopRequireDefault(_input);
 
+	var _reactBootstrap = __webpack_require__(180);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -40745,6 +40747,7 @@ webpackJsonp([0],[
 	        var _this = _possibleConstructorReturn(this, (ValidateAccountPanel.__proto__ || Object.getPrototypeOf(ValidateAccountPanel)).call(this, props));
 
 	        _this.onLogin = _this.onLogin.bind(_this);
+	        _this.onKeyDown = _this.onKeyDown.bind(_this);
 	        _this.onRegister = _this.onRegister.bind(_this);
 	        return _this;
 	    }
@@ -40758,6 +40761,11 @@ webpackJsonp([0],[
 	        key: 'onRegister',
 	        value: function onRegister() {
 	            (0, _siteBase.siteGoTo)('/Register');
+	        }
+	    }, {
+	        key: 'onKeyDown',
+	        value: function onKeyDown() {
+	            onLogin();
 	        }
 	    }, {
 	        key: 'onLogin',
@@ -40784,11 +40792,11 @@ webpackJsonp([0],[
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                'div',
-	                { className: 'row', id: 'validate-account-panel', style: { display: this.displayStyle() } },
+	                _reactBootstrap.Row,
+	                { id: 'validate-account-panel', style: { display: this.displayStyle() } },
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4 site-form-border' },
+	                    _reactBootstrap.Col,
+	                    { xsOffset: 2, xs: 8, smOffset: 3, sm: 6, mdOffset: 3, md: 6, lgOffset: 4, lg: 4, className: 'site-form-border' },
 	                    _react2.default.createElement(
 	                        'fieldset',
 	                        null,
@@ -40806,11 +40814,11 @@ webpackJsonp([0],[
 	                            'form',
 	                            { id: 'validate-account-form' },
 	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'row' },
+	                                _reactBootstrap.Row,
+	                                null,
 	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col-md-12' },
+	                                    _reactBootstrap.Col,
+	                                    { md: 12 },
 	                                    _react2.default.createElement(
 	                                        'div',
 	                                        { className: 'form-group' },
@@ -40820,8 +40828,8 @@ webpackJsonp([0],[
 	                                            'Användare'
 	                                        ),
 	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'col-md-9 input-group' },
+	                                            _reactBootstrap.Col,
+	                                            { md: 9, className: 'input-group' },
 	                                            _react2.default.createElement(
 	                                                'span',
 	                                                { className: 'input-group-addon' },
@@ -40849,8 +40857,8 @@ webpackJsonp([0],[
 	                                            'Lösenord'
 	                                        ),
 	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'col-md-9 input-group' },
+	                                            _reactBootstrap.Col,
+	                                            { md: 9, className: 'input-group' },
 	                                            _react2.default.createElement(
 	                                                'span',
 	                                                { className: 'input-group-addon' },
@@ -40872,11 +40880,11 @@ webpackJsonp([0],[
 	                                )
 	                            ),
 	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'row' },
+	                                _reactBootstrap.Row,
+	                                null,
 	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col-md-6' },
+	                                    _reactBootstrap.Col,
+	                                    { md: 6 },
 	                                    _react2.default.createElement(
 	                                        'button',
 	                                        { id: 'register-button', onClick: this.onRegister, type: 'button', className: 'btn btn-success pull-left ' },
@@ -40884,21 +40892,21 @@ webpackJsonp([0],[
 	                                    )
 	                                ),
 	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col-md-6' },
+	                                    _reactBootstrap.Col,
+	                                    { md: 6 },
 	                                    _react2.default.createElement(
 	                                        'button',
-	                                        { id: 'validate-button', onClick: this.onLogin, onKeyDown: this.onLogin, type: 'button', className: 'btn btn-info pull-right ' },
+	                                        { id: 'validate-button', onClick: this.onLogin, onKeyDown: this.onKeyDown, type: 'button', className: 'btn btn-info pull-right ' },
 	                                        'Logga in'
 	                                    )
 	                                )
 	                            ),
 	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'row' },
+	                                _reactBootstrap.Row,
+	                                null,
 	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col-md-12' },
+	                                    _reactBootstrap.Col,
+	                                    { md: 12 },
 	                                    _react2.default.createElement(
 	                                        'div',
 	                                        { id: 'forgot-password-link', className: 'text-info text-right site-row-spacing', style: { cursor: "pointer" } },
@@ -40908,11 +40916,11 @@ webpackJsonp([0],[
 	                            ),
 	                            _react2.default.createElement('br', null),
 	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'row' },
+	                                _reactBootstrap.Row,
+	                                null,
 	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col-md-12' },
+	                                    _reactBootstrap.Col,
+	                                    { md: 12 },
 	                                    _react2.default.createElement('div', { id: 'custom-message', className: 'alert alert-warning', hidden: true })
 	                                )
 	                            )
@@ -41043,15 +41051,15 @@ webpackJsonp([0],[
 	    //    }
 	    //});
 
-	    validateForm.on('keydown', function (e) {
-	        if (e.which == 13) {
-	            var data = (0, _siteXcompInputforms.getFormData)(validateForm);
-	            if (data) {
-	                hideMessage(validateForm);
-	                (0, _siteBase.siteAjaxPost)('/Login/ValidateAccount', data, validateAccountPassed, validateAccountFailed);
-	            }
-	        }
-	    });
+	    //validateForm.on('keydown', function (e) {
+	    //    if (e.which == 13) {
+	    //        var data = getFormData(validateForm);
+	    //        if (data) {
+	    //            hideMessage(validateForm);
+	    //            siteAjaxPost('/Login/ValidateAccount', data, validateAccountPassed, validateAccountFailed);
+	    //        }
+	    //    }
+	    //});
 
 	    validateForm.find('#forgot-password-link').click(function () {
 	        hideMessage(validateForm);

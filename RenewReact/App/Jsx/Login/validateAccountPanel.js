@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {hideMessage,validateAccountFailed,validateAccountPassed} from '../../js/site-login.js';
 import {siteAjaxPost,siteGoTo} from '../../js/site-base.js';
 import {getFormData} from '../../js/site-components/site-xcomp-inputforms.js';
+import {clearAll} from '../../js/site-components/site-xcomp-localstorage.js';
 import Input from '../Common/input.js';
 export default class ValidateAccountPanel extends Component {
     displayName: 'ValidateAccountPanel';
@@ -16,13 +17,19 @@ export default class ValidateAccountPanel extends Component {
     onRegister() {
         siteGoTo('/Register');
     };
+
     onLogin() {
+        function navigateToHome() {
+            clearAll();   
+            $('#isUserAuthorized').text('UserAuthorized');
+            window.location.href = "/home";
+        };
         var validateForm  = $('#validate-account-form');
         var validatePanel = $('#validate-account-panel');
         var data = getFormData(validateForm);
         if (data) {
             hideMessage(validateForm);
-            siteAjaxPost('/Login/ValidateAccount', data, validateAccountPassed, validateAccountFailed);
+            siteAjaxPost('/Login/ValidateAccount', data, navigateToHome, validateAccountFailed);
         }
     };
     render() {

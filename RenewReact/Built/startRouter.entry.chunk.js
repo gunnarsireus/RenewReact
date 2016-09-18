@@ -4,8 +4,13 @@ webpackJsonp([0],[
 
 	'use strict';
 
-	var router = __webpack_require__(1);
-	router.start();
+	var _router = __webpack_require__(1);
+
+	var _router2 = _interopRequireDefault(_router);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	_router2.default.start();
 
 /***/ },
 /* 1 */
@@ -40715,6 +40720,8 @@ webpackJsonp([0],[
 
 	var _siteXcompInputforms = __webpack_require__(441);
 
+	var _siteXcompLocalstorage = __webpack_require__(442);
+
 	var _input = __webpack_require__(444);
 
 	var _input2 = _interopRequireDefault(_input);
@@ -40753,12 +40760,17 @@ webpackJsonp([0],[
 	    }, {
 	        key: 'onLogin',
 	        value: function onLogin() {
+	            function navigateToHome() {
+	                (0, _siteXcompLocalstorage.clearAll)();
+	                $('#isUserAuthorized').text('UserAuthorized');
+	                window.location.href = "/home";
+	            };
 	            var validateForm = $('#validate-account-form');
 	            var validatePanel = $('#validate-account-panel');
 	            var data = (0, _siteXcompInputforms.getFormData)(validateForm);
 	            if (data) {
 	                (0, _siteLogin.hideMessage)(validateForm);
-	                (0, _siteBase.siteAjaxPost)('/Login/ValidateAccount', data, _siteLogin.validateAccountPassed, _siteLogin.validateAccountFailed);
+	                (0, _siteBase.siteAjaxPost)('/Login/ValidateAccount', data, navigateToHome, _siteLogin.validateAccountFailed);
 	            }
 	        }
 	    }, {

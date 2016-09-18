@@ -1,2 +1,2 @@
-﻿var router = require('../app/router');
+﻿import router from '../App/router';
 router.start();

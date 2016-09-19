@@ -1,4 +1,6 @@
-﻿
+﻿.container {
+  padding-left: 0px !important;  /*Compensate for KendoUI*/
+}
 /* Margins */
 
 .site-pagemargin-top {

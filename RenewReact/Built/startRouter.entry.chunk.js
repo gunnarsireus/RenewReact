@@ -21683,7 +21683,7 @@ webpackJsonp([0],[
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -21711,31 +21711,27 @@ webpackJsonp([0],[
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Index = function (_Component) {
-	  _inherits(Index, _Component);
+	    _inherits(Index, _Component);
 
-	  function Index() {
-	    _classCallCheck(this, Index);
+	    function Index() {
+	        _classCallCheck(this, Index);
 
-	    return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
-	  }
-
-	  _createClass(Index, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        _reactBootstrap.Grid,
-	        null,
-	        _react2.default.createElement(
-	          _reactBootstrap.Row,
-	          { className: 'show-grid' },
-	          _react2.default.createElement(_leftpart2.default, null),
-	          _react2.default.createElement(_rightpart2.default, null)
-	        )
-	      );
+	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).apply(this, arguments));
 	    }
-	  }]);
 
-	  return Index;
+	    _createClass(Index, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                _reactBootstrap.Row,
+	                null,
+	                _react2.default.createElement(_leftpart2.default, null),
+	                _react2.default.createElement(_rightpart2.default, null)
+	            );
+	        }
+	    }]);
+
+	    return Index;
 	}(_react.Component);
 
 	exports.default = Index;
@@ -40485,15 +40481,15 @@ webpackJsonp([0],[
 	                    _react2.default.createElement(
 	                        _reactBootstrap.Col,
 	                        { md: 12 },
-	                        _react2.default.createElement('img', { className: 'site-item margin-top', src: _logotype2.default }),
+	                        _react2.default.createElement('img', { className: 'site-itemmargin-top', src: _logotype2.default }),
 	                        _react2.default.createElement(
 	                            'p',
-	                            { className: 'site-item margin-top' },
+	                            { className: 'site-itemmargin-top' },
 	                            'Fastighetsförvaltning'
 	                        ),
 	                        _react2.default.createElement(
 	                            'p',
-	                            { className: 'site-item margin-top' },
+	                            { className: 'site-itemmargin-top' },
 	                            'Renew Service AB',
 	                            _react2.default.createElement('br', null),
 	                            'Org.nr 556818-8873',
@@ -40747,7 +40743,7 @@ webpackJsonp([0],[
 	        var _this = _possibleConstructorReturn(this, (ValidateAccountPanel.__proto__ || Object.getPrototypeOf(ValidateAccountPanel)).call(this, props));
 
 	        _this.onLogin = _this.onLogin.bind(_this);
-	        _this.onKeyDown = _this.onKeyDown.bind(_this);
+	        _this.onKeyDown = _this.onKeyDown.bind(_this); //Not working
 	        _this.onRegister = _this.onRegister.bind(_this);
 	        return _this;
 	    }
@@ -40765,7 +40761,7 @@ webpackJsonp([0],[
 	    }, {
 	        key: 'onKeyDown',
 	        value: function onKeyDown() {
-	            onLogin();
+	            onLogin(); //Not working
 	        }
 	    }, {
 	        key: 'onLogin',
@@ -41051,15 +41047,15 @@ webpackJsonp([0],[
 	    //    }
 	    //});
 
-	    //validateForm.on('keydown', function (e) {
-	    //    if (e.which == 13) {
-	    //        var data = getFormData(validateForm);
-	    //        if (data) {
-	    //            hideMessage(validateForm);
-	    //            siteAjaxPost('/Login/ValidateAccount', data, validateAccountPassed, validateAccountFailed);
-	    //        }
-	    //    }
-	    //});
+	    validateForm.on('keydown', function (e) {
+	        if (e.which == 13) {
+	            var data = (0, _siteXcompInputforms.getFormData)(validateForm);
+	            if (data) {
+	                hideMessage(validateForm);
+	                (0, _siteBase.siteAjaxPost)('/Login/ValidateAccount', data, validateAccountPassed, validateAccountFailed);
+	            }
+	        }
+	    });
 
 	    validateForm.find('#forgot-password-link').click(function () {
 	        hideMessage(validateForm);

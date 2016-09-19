@@ -9,11 +9,11 @@ export default class Index extends Component {
             <h3 className="site-page-header">Renew Service</h3>
             <Row className="hidden-sm hidden-xs">
                <Col md={12}>
-                  <img className="site-item margin-top" src={Logotype} />
-                    <p className="site-item margin-top">
+                  <img className="site-itemmargin-top" src={Logotype} />
+                    <p className="site-itemmargin-top">
                         Fastighetsförvaltning
                     </p>
-                    <p className="site-item margin-top">
+                    <p className="site-itemmargin-top">
                         Renew Service AB<br />
                         Org.nr 556818-8873<br />
                         Box 936<br />

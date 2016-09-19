@@ -5,12 +5,10 @@ import RightPart from './rightpart';
 export default class Index extends Component {
     displayName: 'Home';
     render() {
-        return <Grid>
-                  <Row className="show-grid">
+        return  <Row>
                     <LeftPart />
                     <RightPart />
-                  </Row>
-               </Grid>
+                </Row>
 
  ;}
 };

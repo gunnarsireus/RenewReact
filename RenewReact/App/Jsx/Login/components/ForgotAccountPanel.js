@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Input from '../Common/input.js';
+import Input from '../../Common/Input.js';
 export default class ForgotAccountPanel extends Component {
     displayName: 'ForgotAccountPanel';
     propTypes: {

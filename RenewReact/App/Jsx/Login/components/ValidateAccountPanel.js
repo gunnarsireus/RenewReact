@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import {hideMessage,validateAccountFailed} from '../../js/site-login.js';
-import {siteAjaxPost,siteGoTo} from '../../js/site-base.js';
-import {getFormData} from '../../js/site-components/site-xcomp-inputforms.js';
-import {clearAll} from '../../js/site-components/site-xcomp-localstorage.js';
-import Input from '../Common/input.js';
-import { Grid, Row, Col, Glyphicon } from 'react-bootstrap';
+import {hideMessage,validateAccountFailed} from '../../../js/site-login.js';
+import {siteAjaxPost,siteGoTo} from '../../../js/site-base.js';
+import {getFormData} from '../../../js/site-components/site-xcomp-inputforms.js';
+import {clearAll} from '../../../js/site-components/site-xcomp-localstorage.js';
+import Input from '../../Common/Input.js';
+import { Grid, Row, Col, Glyphicon, Button } from 'react-bootstrap';
+
+import LoginActions from '../actions/LoginActions';
+
 export default class ValidateAccountPanel extends Component {
     displayName: 'ValidateAccountPanel';
     constructor(props) {
@@ -24,7 +27,8 @@ export default class ValidateAccountPanel extends Component {
     }
     onLogin() {
         function navigateToHome() {
-            clearAll();   
+            //clearAll();   
+            LoginActions.inactivateAll();
             var isUserAuthorized = "UserAuthorized";
             localStorage.setItem("isUserAuthorized", isUserAuthorized);
             var host = window.location.href + "#/";
@@ -97,10 +101,10 @@ export default class ValidateAccountPanel extends Component {
                     </Row>
                     <Row>
                         <Col md={6}>
-                            <button id="register-button" onClick={this.onRegister} type="button" className="btn btn-success pull-left ">Registrera</button>
+                            <Button id="register-Button" onClick={this.onRegister}  className="btn btn-success pull-left ">Registrera</Button>
                         </Col>
                          <Col md={6}>
-                            <button id="validate-button" onClick={this.onLogin} onKeyDown={this.onKeyDown} type="button" className="btn btn-info pull-right ">Logga in</button>
+                            <Button id="validate-Button" onClick={this.onLogin} onKeyDown={this.onKeyDown} className="btn btn-info pull-right ">Logga in</Button>
                         </Col>
                     </Row>
                     <Row>

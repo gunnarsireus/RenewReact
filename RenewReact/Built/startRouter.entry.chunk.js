@@ -35,22 +35,22 @@ webpackJsonp([0],[
 	var layout = __webpack_require__(176);
 	var home = __webpack_require__(178);
 
-	var personal = __webpack_require__(448);
-	var felanmalan = __webpack_require__(451);
+	var personal = __webpack_require__(457);
+	var felanmalan = __webpack_require__(460);
 
-	var pagaende = __webpack_require__(454);
-	var arkiverade = __webpack_require__(457);
+	var pagaende = __webpack_require__(463);
+	var arkiverade = __webpack_require__(466);
 
-	var nyheter = __webpack_require__(460);
-	var erbjudanden = __webpack_require__(463);
+	var nyheter = __webpack_require__(469);
+	var erbjudanden = __webpack_require__(472);
 
-	var kunder = __webpack_require__(466);
-	var boende = __webpack_require__(469);
-	var tidkoder = __webpack_require__(472);
-	var arendeKlasser = __webpack_require__(475);
+	var kunder = __webpack_require__(475);
+	var boende = __webpack_require__(478);
+	var tidkoder = __webpack_require__(481);
+	var arendeKlasser = __webpack_require__(484);
 
-	var admin = __webpack_require__(478);
-	var loggaut = __webpack_require__(481);
+	var admin = __webpack_require__(487);
+	var loggaut = __webpack_require__(490);
 
 	var login = __webpack_require__(437);
 
@@ -40614,7 +40614,7 @@ webpackJsonp([0],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var loginTemplate = __webpack_require__(447);
+	var loginTemplate = __webpack_require__(456);
 
 	var viewModel = kendo.observable({
 	    title: "Login"
@@ -40648,17 +40648,25 @@ webpackJsonp([0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _validateAccountPanel = __webpack_require__(439);
+	var _ValidateAccountPanel = __webpack_require__(439);
 
-	var _validateAccountPanel2 = _interopRequireDefault(_validateAccountPanel);
+	var _ValidateAccountPanel2 = _interopRequireDefault(_ValidateAccountPanel);
 
-	var _secureAccountPanel = __webpack_require__(445);
+	var _SecureAccountPanel = __webpack_require__(452);
 
-	var _secureAccountPanel2 = _interopRequireDefault(_secureAccountPanel);
+	var _SecureAccountPanel2 = _interopRequireDefault(_SecureAccountPanel);
 
-	var _forgotAccountPanel = __webpack_require__(446);
+	var _ForgotAccountPanel = __webpack_require__(453);
 
-	var _forgotAccountPanel2 = _interopRequireDefault(_forgotAccountPanel);
+	var _ForgotAccountPanel2 = _interopRequireDefault(_ForgotAccountPanel);
+
+	var _LoginActions = __webpack_require__(445);
+
+	var _LoginActions2 = _interopRequireDefault(_LoginActions);
+
+	var _LoginStore = __webpack_require__(454);
+
+	var _LoginStore2 = _interopRequireDefault(_LoginStore);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40671,21 +40679,45 @@ webpackJsonp([0],[
 	var Login = function (_Component) {
 	    _inherits(Login, _Component);
 
-	    function Login() {
+	    function Login(props) {
 	        _classCallCheck(this, Login);
 
-	        return _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
+
+	        _this.state = {
+	            panelList: _LoginStore2.default.getPanels(),
+	            activeId: _LoginStore2.default.getActiveId
+	        };
+	        return _this;
 	    }
 
 	    _createClass(Login, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            _LoginStore2.default.addChangeListener(this.onChange);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            _LoginStore2.default.removeChangeListener(this.onChange);
+	        }
+	    }, {
+	        key: 'onChange',
+	        value: function onChange() {
+	            this.setState({
+	                panelList: _LoginStore2.default.getPanels(),
+	                activeId: _LoginStore2.default.getActiveId()
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement(_validateAccountPanel2.default, { show: true }),
-	                _react2.default.createElement(_secureAccountPanel2.default, { show: false }),
-	                _react2.default.createElement(_forgotAccountPanel2.default, { show: false })
+	                _react2.default.createElement(_ValidateAccountPanel2.default, { show: true }),
+	                _react2.default.createElement(_SecureAccountPanel2.default, { show: false }),
+	                _react2.default.createElement(_ForgotAccountPanel2.default, { show: false })
 	            );
 	        }
 	    }]);
@@ -40720,11 +40752,15 @@ webpackJsonp([0],[
 
 	var _siteXcompLocalstorage = __webpack_require__(442);
 
-	var _input = __webpack_require__(444);
+	var _Input = __webpack_require__(444);
 
-	var _input2 = _interopRequireDefault(_input);
+	var _Input2 = _interopRequireDefault(_Input);
 
 	var _reactBootstrap = __webpack_require__(180);
+
+	var _LoginActions = __webpack_require__(445);
+
+	var _LoginActions2 = _interopRequireDefault(_LoginActions);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40767,7 +40803,8 @@ webpackJsonp([0],[
 	        key: 'onLogin',
 	        value: function onLogin() {
 	            function navigateToHome() {
-	                (0, _siteXcompLocalstorage.clearAll)();
+	                //clearAll();   
+	                _LoginActions2.default.inactivateAll();
 	                var isUserAuthorized = "UserAuthorized";
 	                localStorage.setItem("isUserAuthorized", isUserAuthorized);
 	                var host = window.location.href + "#/";
@@ -40831,7 +40868,7 @@ webpackJsonp([0],[
 	                                                { className: 'input-group-addon' },
 	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-user' })
 	                                            ),
-	                                            _react2.default.createElement(_input2.default, { className: 'form-control',
+	                                            _react2.default.createElement(_Input2.default, { className: 'form-control',
 	                                                dataAutoajax: true,
 	                                                dataVal: true,
 	                                                dataValLengthMin: '5',
@@ -40860,7 +40897,7 @@ webpackJsonp([0],[
 	                                                { className: 'input-group-addon' },
 	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-lock' })
 	                                            ),
-	                                            _react2.default.createElement(_input2.default, { className: 'form-control',
+	                                            _react2.default.createElement(_Input2.default, { className: 'form-control',
 	                                                dataAutoajax: true,
 	                                                dataVal: true,
 	                                                dataValLengthMin: '6',
@@ -40882,8 +40919,8 @@ webpackJsonp([0],[
 	                                    _reactBootstrap.Col,
 	                                    { md: 6 },
 	                                    _react2.default.createElement(
-	                                        'button',
-	                                        { id: 'register-button', onClick: this.onRegister, type: 'button', className: 'btn btn-success pull-left ' },
+	                                        _reactBootstrap.Button,
+	                                        { id: 'register-Button', onClick: this.onRegister, className: 'btn btn-success pull-left ' },
 	                                        'Registrera'
 	                                    )
 	                                ),
@@ -40891,8 +40928,8 @@ webpackJsonp([0],[
 	                                    _reactBootstrap.Col,
 	                                    { md: 6 },
 	                                    _react2.default.createElement(
-	                                        'button',
-	                                        { id: 'validate-button', onClick: this.onLogin, onKeyDown: this.onKeyDown, type: 'button', className: 'btn btn-info pull-right ' },
+	                                        _reactBootstrap.Button,
+	                                        { id: 'validate-Button', onClick: this.onLogin, onKeyDown: this.onKeyDown, className: 'btn btn-info pull-right ' },
 	                                        'Logga in'
 	                                    )
 	                                )
@@ -41396,15 +41433,456 @@ webpackJsonp([0],[
 	    value: true
 	});
 
+	var _LoginDispatcher = __webpack_require__(446);
+
+	var _LoginDispatcher2 = _interopRequireDefault(_LoginDispatcher);
+
+	var _LoginConstants = __webpack_require__(450);
+
+	var _LoginConstants2 = _interopRequireDefault(_LoginConstants);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var LoginActions = {
+	    setActive: function setActive(id) {
+	        _LoginDispatcher2.default.dispatch({
+	            actionType: _LoginConstants2.default.SET_ACTIVE,
+	            id: id
+	        });
+	    },
+	    inactivateAll: function inactivateAll() {
+	        _LoginDispatcher2.default.dispatch({
+	            actionType: _LoginConstants2.default.INACTIVATE_ALL
+	        });
+	    }
+	};
+
+	exports.default = LoginActions;
+
+/***/ },
+/* 446 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _flux = __webpack_require__(447);
+
+	exports.default = new _flux.Dispatcher();
+
+/***/ },
+/* 447 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright (c) 2014-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+
+	module.exports.Dispatcher = __webpack_require__(448);
+
+/***/ },
+/* 448 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright (c) 2014-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule Dispatcher
+	 * 
+	 * @preventMunge
+	 */
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	function _classCallCheck(instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError('Cannot call a class as a function');
+	  }
+	}
+
+	var invariant = __webpack_require__(449);
+
+	var _prefix = 'ID_';
+
+	/**
+	 * Dispatcher is used to broadcast payloads to registered callbacks. This is
+	 * different from generic pub-sub systems in two ways:
+	 *
+	 *   1) Callbacks are not subscribed to particular events. Every payload is
+	 *      dispatched to every registered callback.
+	 *   2) Callbacks can be deferred in whole or part until other callbacks have
+	 *      been executed.
+	 *
+	 * For example, consider this hypothetical flight destination form, which
+	 * selects a default city when a country is selected:
+	 *
+	 *   var flightDispatcher = new Dispatcher();
+	 *
+	 *   // Keeps track of which country is selected
+	 *   var CountryStore = {country: null};
+	 *
+	 *   // Keeps track of which city is selected
+	 *   var CityStore = {city: null};
+	 *
+	 *   // Keeps track of the base flight price of the selected city
+	 *   var FlightPriceStore = {price: null}
+	 *
+	 * When a user changes the selected city, we dispatch the payload:
+	 *
+	 *   flightDispatcher.dispatch({
+	 *     actionType: 'city-update',
+	 *     selectedCity: 'paris'
+	 *   });
+	 *
+	 * This payload is digested by `CityStore`:
+	 *
+	 *   flightDispatcher.register(function(payload) {
+	 *     if (payload.actionType === 'city-update') {
+	 *       CityStore.city = payload.selectedCity;
+	 *     }
+	 *   });
+	 *
+	 * When the user selects a country, we dispatch the payload:
+	 *
+	 *   flightDispatcher.dispatch({
+	 *     actionType: 'country-update',
+	 *     selectedCountry: 'australia'
+	 *   });
+	 *
+	 * This payload is digested by both stores:
+	 *
+	 *   CountryStore.dispatchToken = flightDispatcher.register(function(payload) {
+	 *     if (payload.actionType === 'country-update') {
+	 *       CountryStore.country = payload.selectedCountry;
+	 *     }
+	 *   });
+	 *
+	 * When the callback to update `CountryStore` is registered, we save a reference
+	 * to the returned token. Using this token with `waitFor()`, we can guarantee
+	 * that `CountryStore` is updated before the callback that updates `CityStore`
+	 * needs to query its data.
+	 *
+	 *   CityStore.dispatchToken = flightDispatcher.register(function(payload) {
+	 *     if (payload.actionType === 'country-update') {
+	 *       // `CountryStore.country` may not be updated.
+	 *       flightDispatcher.waitFor([CountryStore.dispatchToken]);
+	 *       // `CountryStore.country` is now guaranteed to be updated.
+	 *
+	 *       // Select the default city for the new country
+	 *       CityStore.city = getDefaultCityForCountry(CountryStore.country);
+	 *     }
+	 *   });
+	 *
+	 * The usage of `waitFor()` can be chained, for example:
+	 *
+	 *   FlightPriceStore.dispatchToken =
+	 *     flightDispatcher.register(function(payload) {
+	 *       switch (payload.actionType) {
+	 *         case 'country-update':
+	 *         case 'city-update':
+	 *           flightDispatcher.waitFor([CityStore.dispatchToken]);
+	 *           FlightPriceStore.price =
+	 *             getFlightPriceStore(CountryStore.country, CityStore.city);
+	 *           break;
+	 *     }
+	 *   });
+	 *
+	 * The `country-update` payload will be guaranteed to invoke the stores'
+	 * registered callbacks in order: `CountryStore`, `CityStore`, then
+	 * `FlightPriceStore`.
+	 */
+
+	var Dispatcher = function () {
+	  function Dispatcher() {
+	    _classCallCheck(this, Dispatcher);
+
+	    this._callbacks = {};
+	    this._isDispatching = false;
+	    this._isHandled = {};
+	    this._isPending = {};
+	    this._lastID = 1;
+	  }
+
+	  /**
+	   * Registers a callback to be invoked with every dispatched payload. Returns
+	   * a token that can be used with `waitFor()`.
+	   */
+
+	  Dispatcher.prototype.register = function register(callback) {
+	    var id = _prefix + this._lastID++;
+	    this._callbacks[id] = callback;
+	    return id;
+	  };
+
+	  /**
+	   * Removes a callback based on its token.
+	   */
+
+	  Dispatcher.prototype.unregister = function unregister(id) {
+	    !this._callbacks[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.unregister(...): `%s` does not map to a registered callback.', id) : invariant(false) : undefined;
+	    delete this._callbacks[id];
+	  };
+
+	  /**
+	   * Waits for the callbacks specified to be invoked before continuing execution
+	   * of the current callback. This method should only be used by a callback in
+	   * response to a dispatched payload.
+	   */
+
+	  Dispatcher.prototype.waitFor = function waitFor(ids) {
+	    !this._isDispatching ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): Must be invoked while dispatching.') : invariant(false) : undefined;
+	    for (var ii = 0; ii < ids.length; ii++) {
+	      var id = ids[ii];
+	      if (this._isPending[id]) {
+	        !this._isHandled[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): Circular dependency detected while ' + 'waiting for `%s`.', id) : invariant(false) : undefined;
+	        continue;
+	      }
+	      !this._callbacks[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): `%s` does not map to a registered callback.', id) : invariant(false) : undefined;
+	      this._invokeCallback(id);
+	    }
+	  };
+
+	  /**
+	   * Dispatches a payload to all registered callbacks.
+	   */
+
+	  Dispatcher.prototype.dispatch = function dispatch(payload) {
+	    !!this._isDispatching ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatch.dispatch(...): Cannot dispatch in the middle of a dispatch.') : invariant(false) : undefined;
+	    this._startDispatching(payload);
+	    try {
+	      for (var id in this._callbacks) {
+	        if (this._isPending[id]) {
+	          continue;
+	        }
+	        this._invokeCallback(id);
+	      }
+	    } finally {
+	      this._stopDispatching();
+	    }
+	  };
+
+	  /**
+	   * Is this Dispatcher currently dispatching.
+	   */
+
+	  Dispatcher.prototype.isDispatching = function isDispatching() {
+	    return this._isDispatching;
+	  };
+
+	  /**
+	   * Call the callback stored with the given id. Also do some internal
+	   * bookkeeping.
+	   *
+	   * @internal
+	   */
+
+	  Dispatcher.prototype._invokeCallback = function _invokeCallback(id) {
+	    this._isPending[id] = true;
+	    this._callbacks[id](this._pendingPayload);
+	    this._isHandled[id] = true;
+	  };
+
+	  /**
+	   * Set up bookkeeping needed when dispatching.
+	   *
+	   * @internal
+	   */
+
+	  Dispatcher.prototype._startDispatching = function _startDispatching(payload) {
+	    for (var id in this._callbacks) {
+	      this._isPending[id] = false;
+	      this._isHandled[id] = false;
+	    }
+	    this._pendingPayload = payload;
+	    this._isDispatching = true;
+	  };
+
+	  /**
+	   * Clear bookkeeping used for dispatching.
+	   *
+	   * @internal
+	   */
+
+	  Dispatcher.prototype._stopDispatching = function _stopDispatching() {
+	    delete this._pendingPayload;
+	    this._isDispatching = false;
+	  };
+
+	  return Dispatcher;
+	}();
+
+	module.exports = Dispatcher;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+/* 449 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule invariant
+	 */
+
+	"use strict";
+
+	/**
+	 * Use invariant() to assert state which your program assumes to be true.
+	 *
+	 * Provide sprintf-style format (only %s is supported) and arguments
+	 * to provide information about what broke and what you were
+	 * expecting.
+	 *
+	 * The invariant message will be stripped in production, but the invariant
+	 * will remain to ensure logic does not differ in production.
+	 */
+
+	var invariant = function (condition, format, a, b, c, d, e, f) {
+	  if (process.env.NODE_ENV !== 'production') {
+	    if (format === undefined) {
+	      throw new Error('invariant requires an error message argument');
+	    }
+	  }
+
+	  if (!condition) {
+	    var error;
+	    if (format === undefined) {
+	      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
+	    } else {
+	      var args = [a, b, c, d, e, f];
+	      var argIndex = 0;
+	      error = new Error('Invariant Violation: ' + format.replace(/%s/g, function () {
+	        return args[argIndex++];
+	      }));
+	    }
+
+	    error.framesToPop = 1; // we don't care about invariant's own frame
+	    throw error;
+	  }
+	};
+
+	module.exports = invariant;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+/* 450 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _keymirror = __webpack_require__(451);
+
+	var _keymirror2 = _interopRequireDefault(_keymirror);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = (0, _keymirror2.default)({
+	    SET_ACTIVE: null,
+	    INACTIVATE_ALL: null
+	});
+
+/***/ },
+/* 451 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2013-2014 Facebook, Inc.
+	 *
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 * http://www.apache.org/licenses/LICENSE-2.0
+	 *
+	 * Unless required by applicable law or agreed to in writing, software
+	 * distributed under the License is distributed on an "AS IS" BASIS,
+	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 * See the License for the specific language governing permissions and
+	 * limitations under the License.
+	 *
+	 */
+
+	"use strict";
+
+	/**
+	 * Constructs an enumeration with keys equal to their value.
+	 *
+	 * For example:
+	 *
+	 *   var COLORS = keyMirror({blue: null, red: null});
+	 *   var myColor = COLORS.blue;
+	 *   var isColorValid = !!COLORS[myColor];
+	 *
+	 * The last line could not be performed if the values of the generated enum were
+	 * not equal to their keys.
+	 *
+	 *   Input:  {key1: val1, key2: val2}
+	 *   Output: {key1: key1, key2: key2}
+	 *
+	 * @param {object} obj
+	 * @return {object}
+	 */
+
+	var keyMirror = function (obj) {
+	  var ret = {};
+	  var key;
+	  if (!(obj instanceof Object && !Array.isArray(obj))) {
+	    throw new Error('keyMirror(...): Argument must be an object.');
+	  }
+	  for (key in obj) {
+	    if (!obj.hasOwnProperty(key)) {
+	      continue;
+	    }
+	    ret[key] = key;
+	  }
+	  return ret;
+	};
+
+	module.exports = keyMirror;
+
+/***/ },
+/* 452 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(3);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _input = __webpack_require__(444);
+	var _Input = __webpack_require__(444);
 
-	var _input2 = _interopRequireDefault(_input);
+	var _Input2 = _interopRequireDefault(_Input);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41484,7 +41962,7 @@ webpackJsonp([0],[
 	                                                { className: 'input-group-addon' },
 	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-envelope' })
 	                                            ),
-	                                            _react2.default.createElement(_input2.default, { className: 'form-control',
+	                                            _react2.default.createElement(_Input2.default, { className: 'form-control',
 	                                                dataAutoajax: true,
 	                                                id: 'email',
 	                                                name: 'email',
@@ -41508,7 +41986,7 @@ webpackJsonp([0],[
 	                                                { className: 'input-group-addon' },
 	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-lock' })
 	                                            ),
-	                                            _react2.default.createElement(_input2.default, { className: 'form-control',
+	                                            _react2.default.createElement(_Input2.default, { className: 'form-control',
 	                                                dataAutoajax: true,
 	                                                dataVal: true,
 	                                                dataValLengthMin: '6',
@@ -41538,7 +42016,7 @@ webpackJsonp([0],[
 	                                                { className: 'input-group-addon' },
 	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-lock' })
 	                                            ),
-	                                            _react2.default.createElement(_input2.default, { className: 'form-control',
+	                                            _react2.default.createElement(_Input2.default, { className: 'form-control',
 	                                                dataAutoajax: true,
 	                                                dataVal: true,
 	                                                dataValLengthMin: '6',
@@ -41568,7 +42046,7 @@ webpackJsonp([0],[
 	                                                { className: 'input-group-addon' },
 	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-lock' })
 	                                            ),
-	                                            _react2.default.createElement(_input2.default, { className: 'form-control',
+	                                            _react2.default.createElement(_Input2.default, { className: 'form-control',
 	                                                dataAutoajax: true,
 	                                                dataVal: true,
 	                                                dataValLengthMin: '6',
@@ -41630,7 +42108,7 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 446 */
+/* 453 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41645,9 +42123,9 @@ webpackJsonp([0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _input = __webpack_require__(444);
+	var _Input = __webpack_require__(444);
 
-	var _input2 = _interopRequireDefault(_input);
+	var _Input2 = _interopRequireDefault(_Input);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41727,7 +42205,7 @@ webpackJsonp([0],[
 	                                                { className: 'input-group-addon' },
 	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-envelope' })
 	                                            ),
-	                                            _react2.default.createElement(_input2.default, { className: 'form-control',
+	                                            _react2.default.createElement(_Input2.default, { className: 'form-control',
 	                                                dataAutoajax: true,
 	                                                daataVal: true,
 	                                                dataValLengthMin: '5',
@@ -41788,13 +42266,364 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 447 */
+/* 454 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _events = __webpack_require__(455);
+
+	var _LoginDispatcher = __webpack_require__(446);
+
+	var _LoginDispatcher2 = _interopRequireDefault(_LoginDispatcher);
+
+	var _LoginConstants = __webpack_require__(450);
+
+	var _LoginConstants2 = _interopRequireDefault(_LoginConstants);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var _panelList = [{ id: 0, panel: "ValidateAccountPanel", active: true }, { id: 1, panel: "ForgetAccountPanel", active: false }, { id: 2, panel: "SecureAccountPanel", active: false }];
+
+	var CHANGE_EVENT = 'change';
+	var LoginStore = Object.assign({}, _events.EventEmitter.prototype, {
+	    getPanels: function getPanels() {
+	        return _panelList;
+	    },
+	    getActiveId: function getActiveId() {
+	        var id = -1;
+	        _panelList.forEach(function (item, index, array) {
+	            if (item.active === true) {
+	                id = index;
+	            }
+	        });
+	        return id;
+	    },
+	    emitChange: function emitChange() {
+	        this.emit(CHANGE_EVENT);
+	    },
+	    addChangeListener: function addChangeListener(callback) {
+	        this.on(CHANGE_EVENT, callback);
+	    },
+	    removeChangeListener: function removeChangeListener(callback) {
+	        this.removeListener(CHANGE_EVENT, callback);
+	    }
+	});
+
+	function _setActive(id) {
+	    _panelList.forEach(function (item, index, array) {
+	        if (item.id === id) {
+	            item.active = true;
+	        } else {
+	            item.active = false;
+	        }
+	    });
+	}
+
+	function _inactivateAll() {
+	    _panelList.forEach(function (item, index, array) {
+	        item.active = false;
+	    });
+	}
+
+	_LoginDispatcher2.default.register(function (action) {
+	    switch (action.actionType) {
+	        case _LoginConstants2.default.SET_ACTIVE:
+	            _setActive(action.data);
+	            LoginStore.emitChange();
+	            break;
+	        case _LoginConstants2.default.INACTIVE_ALL:
+	            _inactivateAll();
+	            LoginStore.emitChange();
+	            break;
+	        default:
+	    }
+	});
+
+	exports.default = LoginStore;
+
+/***/ },
+/* 455 */
+/***/ function(module, exports) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+	function EventEmitter() {
+	  this._events = this._events || {};
+	  this._maxListeners = this._maxListeners || undefined;
+	}
+	module.exports = EventEmitter;
+
+	// Backwards-compat with node 0.10.x
+	EventEmitter.EventEmitter = EventEmitter;
+
+	EventEmitter.prototype._events = undefined;
+	EventEmitter.prototype._maxListeners = undefined;
+
+	// By default EventEmitters will print a warning if more than 10 listeners are
+	// added to it. This is a useful default which helps finding memory leaks.
+	EventEmitter.defaultMaxListeners = 10;
+
+	// Obviously not all Emitters should be limited to 10. This function allows
+	// that to be increased. Set to zero for unlimited.
+	EventEmitter.prototype.setMaxListeners = function (n) {
+	  if (!isNumber(n) || n < 0 || isNaN(n)) throw TypeError('n must be a positive number');
+	  this._maxListeners = n;
+	  return this;
+	};
+
+	EventEmitter.prototype.emit = function (type) {
+	  var er, handler, len, args, i, listeners;
+
+	  if (!this._events) this._events = {};
+
+	  // If there is no 'error' event listener then throw.
+	  if (type === 'error') {
+	    if (!this._events.error || isObject(this._events.error) && !this._events.error.length) {
+	      er = arguments[1];
+	      if (er instanceof Error) {
+	        throw er; // Unhandled 'error' event
+	      } else {
+	        // At least give some kind of context to the user
+	        var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
+	        err.context = er;
+	        throw err;
+	      }
+	    }
+	  }
+
+	  handler = this._events[type];
+
+	  if (isUndefined(handler)) return false;
+
+	  if (isFunction(handler)) {
+	    switch (arguments.length) {
+	      // fast cases
+	      case 1:
+	        handler.call(this);
+	        break;
+	      case 2:
+	        handler.call(this, arguments[1]);
+	        break;
+	      case 3:
+	        handler.call(this, arguments[1], arguments[2]);
+	        break;
+	      // slower
+	      default:
+	        args = Array.prototype.slice.call(arguments, 1);
+	        handler.apply(this, args);
+	    }
+	  } else if (isObject(handler)) {
+	    args = Array.prototype.slice.call(arguments, 1);
+	    listeners = handler.slice();
+	    len = listeners.length;
+	    for (i = 0; i < len; i++) listeners[i].apply(this, args);
+	  }
+
+	  return true;
+	};
+
+	EventEmitter.prototype.addListener = function (type, listener) {
+	  var m;
+
+	  if (!isFunction(listener)) throw TypeError('listener must be a function');
+
+	  if (!this._events) this._events = {};
+
+	  // To avoid recursion in the case that type === "newListener"! Before
+	  // adding it to the listeners, first emit "newListener".
+	  if (this._events.newListener) this.emit('newListener', type, isFunction(listener.listener) ? listener.listener : listener);
+
+	  if (!this._events[type])
+	    // Optimize the case of one listener. Don't need the extra array object.
+	    this._events[type] = listener;else if (isObject(this._events[type]))
+	    // If we've already got an array, just append.
+	    this._events[type].push(listener);else
+	    // Adding the second element, need to change to array.
+	    this._events[type] = [this._events[type], listener];
+
+	  // Check for listener leak
+	  if (isObject(this._events[type]) && !this._events[type].warned) {
+	    if (!isUndefined(this._maxListeners)) {
+	      m = this._maxListeners;
+	    } else {
+	      m = EventEmitter.defaultMaxListeners;
+	    }
+
+	    if (m && m > 0 && this._events[type].length > m) {
+	      this._events[type].warned = true;
+	      console.error('(node) warning: possible EventEmitter memory ' + 'leak detected. %d listeners added. ' + 'Use emitter.setMaxListeners() to increase limit.', this._events[type].length);
+	      if (typeof console.trace === 'function') {
+	        // not supported in IE 10
+	        console.trace();
+	      }
+	    }
+	  }
+
+	  return this;
+	};
+
+	EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+
+	EventEmitter.prototype.once = function (type, listener) {
+	  if (!isFunction(listener)) throw TypeError('listener must be a function');
+
+	  var fired = false;
+
+	  function g() {
+	    this.removeListener(type, g);
+
+	    if (!fired) {
+	      fired = true;
+	      listener.apply(this, arguments);
+	    }
+	  }
+
+	  g.listener = listener;
+	  this.on(type, g);
+
+	  return this;
+	};
+
+	// emits a 'removeListener' event iff the listener was removed
+	EventEmitter.prototype.removeListener = function (type, listener) {
+	  var list, position, length, i;
+
+	  if (!isFunction(listener)) throw TypeError('listener must be a function');
+
+	  if (!this._events || !this._events[type]) return this;
+
+	  list = this._events[type];
+	  length = list.length;
+	  position = -1;
+
+	  if (list === listener || isFunction(list.listener) && list.listener === listener) {
+	    delete this._events[type];
+	    if (this._events.removeListener) this.emit('removeListener', type, listener);
+	  } else if (isObject(list)) {
+	    for (i = length; i-- > 0;) {
+	      if (list[i] === listener || list[i].listener && list[i].listener === listener) {
+	        position = i;
+	        break;
+	      }
+	    }
+
+	    if (position < 0) return this;
+
+	    if (list.length === 1) {
+	      list.length = 0;
+	      delete this._events[type];
+	    } else {
+	      list.splice(position, 1);
+	    }
+
+	    if (this._events.removeListener) this.emit('removeListener', type, listener);
+	  }
+
+	  return this;
+	};
+
+	EventEmitter.prototype.removeAllListeners = function (type) {
+	  var key, listeners;
+
+	  if (!this._events) return this;
+
+	  // not listening for removeListener, no need to emit
+	  if (!this._events.removeListener) {
+	    if (arguments.length === 0) this._events = {};else if (this._events[type]) delete this._events[type];
+	    return this;
+	  }
+
+	  // emit removeListener for all listeners on all events
+	  if (arguments.length === 0) {
+	    for (key in this._events) {
+	      if (key === 'removeListener') continue;
+	      this.removeAllListeners(key);
+	    }
+	    this.removeAllListeners('removeListener');
+	    this._events = {};
+	    return this;
+	  }
+
+	  listeners = this._events[type];
+
+	  if (isFunction(listeners)) {
+	    this.removeListener(type, listeners);
+	  } else if (listeners) {
+	    // LIFO order
+	    while (listeners.length) this.removeListener(type, listeners[listeners.length - 1]);
+	  }
+	  delete this._events[type];
+
+	  return this;
+	};
+
+	EventEmitter.prototype.listeners = function (type) {
+	  var ret;
+	  if (!this._events || !this._events[type]) ret = [];else if (isFunction(this._events[type])) ret = [this._events[type]];else ret = this._events[type].slice();
+	  return ret;
+	};
+
+	EventEmitter.prototype.listenerCount = function (type) {
+	  if (this._events) {
+	    var evlistener = this._events[type];
+
+	    if (isFunction(evlistener)) return 1;else if (evlistener) return evlistener.length;
+	  }
+	  return 0;
+	};
+
+	EventEmitter.listenerCount = function (emitter, type) {
+	  return emitter.listenerCount(type);
+	};
+
+	function isFunction(arg) {
+	  return typeof arg === 'function';
+	}
+
+	function isNumber(arg) {
+	  return typeof arg === 'number';
+	}
+
+	function isObject(arg) {
+	  return typeof arg === 'object' && arg !== null;
+	}
+
+	function isUndefined(arg) {
+	  return arg === void 0;
+	}
+
+/***/ },
+/* 456 */
 /***/ function(module, exports) {
 
 	module.exports = "<div id=\"react-login\"></div>\r\n";
 
 /***/ },
-/* 448 */
+/* 457 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41807,13 +42636,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(449);
+	var _index = __webpack_require__(458);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(450);
+	var detailsTemplate = __webpack_require__(459);
 
 
 	var viewModel = kendo.observable({
@@ -41832,7 +42661,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 449 */
+/* 458 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41882,13 +42711,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 450 */
+/* 459 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1   style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-personal\"></div>\r\n";
 
 /***/ },
-/* 451 */
+/* 460 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41901,13 +42730,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(452);
+	var _index = __webpack_require__(461);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(453);
+	var detailsTemplate = __webpack_require__(462);
 
 
 	var viewModel = kendo.observable({
@@ -41926,7 +42755,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 452 */
+/* 461 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41976,13 +42805,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 453 */
+/* 462 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-felanmalan\"></div>\r\n";
 
 /***/ },
-/* 454 */
+/* 463 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41995,13 +42824,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(455);
+	var _index = __webpack_require__(464);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(456);
+	var detailsTemplate = __webpack_require__(465);
 
 
 	var viewModel = kendo.observable({
@@ -42020,7 +42849,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 455 */
+/* 464 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42070,13 +42899,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 456 */
+/* 465 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-pagaende\" ></div>\r\n";
 
 /***/ },
-/* 457 */
+/* 466 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42089,13 +42918,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(458);
+	var _index = __webpack_require__(467);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(459);
+	var detailsTemplate = __webpack_require__(468);
 
 
 	var viewModel = kendo.observable({
@@ -42114,7 +42943,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 458 */
+/* 467 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42164,13 +42993,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 459 */
+/* 468 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-arkiverade\" ></div>\r\n";
 
 /***/ },
-/* 460 */
+/* 469 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42183,13 +43012,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(461);
+	var _index = __webpack_require__(470);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(462);
+	var detailsTemplate = __webpack_require__(471);
 
 
 	var viewModel = kendo.observable({
@@ -42208,7 +43037,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 461 */
+/* 470 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42258,13 +43087,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 462 */
+/* 471 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-nyheter\" ></div>\r\n";
 
 /***/ },
-/* 463 */
+/* 472 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42277,13 +43106,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(464);
+	var _index = __webpack_require__(473);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(465);
+	var detailsTemplate = __webpack_require__(474);
 
 
 	var viewModel = kendo.observable({
@@ -42302,7 +43131,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 464 */
+/* 473 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42352,13 +43181,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 465 */
+/* 474 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-erbjudanden\"></div>\r\n";
 
 /***/ },
-/* 466 */
+/* 475 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42371,13 +43200,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(467);
+	var _index = __webpack_require__(476);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(468);
+	var detailsTemplate = __webpack_require__(477);
 
 
 	var viewModel = kendo.observable({
@@ -42396,7 +43225,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 467 */
+/* 476 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42446,13 +43275,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 468 */
+/* 477 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-kunder\" ></div>\r\n";
 
 /***/ },
-/* 469 */
+/* 478 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42465,13 +43294,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(470);
+	var _index = __webpack_require__(479);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(471);
+	var detailsTemplate = __webpack_require__(480);
 
 
 	var viewModel = kendo.observable({
@@ -42490,7 +43319,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 470 */
+/* 479 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42540,13 +43369,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 471 */
+/* 480 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-boende\" ></div>\r\n";
 
 /***/ },
-/* 472 */
+/* 481 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42559,13 +43388,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(473);
+	var _index = __webpack_require__(482);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(474);
+	var detailsTemplate = __webpack_require__(483);
 
 
 	var viewModel = kendo.observable({
@@ -42584,7 +43413,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 473 */
+/* 482 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42634,13 +43463,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 474 */
+/* 483 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-tidkoder\"></div>\r\n";
 
 /***/ },
-/* 475 */
+/* 484 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42653,13 +43482,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(476);
+	var _index = __webpack_require__(485);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(477);
+	var detailsTemplate = __webpack_require__(486);
 
 
 	var viewModel = kendo.observable({
@@ -42678,7 +43507,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 476 */
+/* 485 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42728,13 +43557,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 477 */
+/* 486 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-arendeKlasser\" >hej</div>\r\n";
 
 /***/ },
-/* 478 */
+/* 487 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42747,13 +43576,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(479);
+	var _index = __webpack_require__(488);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(480);
+	var detailsTemplate = __webpack_require__(489);
 
 
 	var viewModel = kendo.observable({
@@ -42772,7 +43601,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 479 */
+/* 488 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42822,13 +43651,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 480 */
+/* 489 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-admin\" ></div>\r\n";
 
 /***/ },
-/* 481 */
+/* 490 */
 /***/ function(module, exports) {
 
 	"use strict";

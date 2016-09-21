@@ -390,7 +390,12 @@
     <Content Include="App\img\view.png" />
     <Content Include="App\Jsx\Admin\Index.js" />
     <Content Include="App\Jsx\Common\input.js" />
+    <Content Include="App\Jsx\Login\actions\LoginActions.js" />
+    <Content Include="App\Jsx\Login\components\Bot.js" />
+    <Content Include="App\Jsx\Login\constants\LoginConstants.js" />
+    <Content Include="App\Jsx\Login\dispatcher\LoginDispatcher.js" />
     <Content Include="App\Jsx\Login\secureAccountPanel.js" />
+    <Content Include="App\Jsx\Login\stores\LoginStore.js" />
     <Content Include="App\Jsx\Login\validateAccountPanel.js" />
     <Content Include="App\Jsx\Login\forgotAccountPanel.js" />
     <Content Include="App\Jsx\Login\login.js" />

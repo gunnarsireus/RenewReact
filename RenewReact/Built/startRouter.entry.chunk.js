@@ -41183,7 +41183,7 @@ webpackJsonp([0],[
 
 	function siteShowProgress() {
 	    $('#progress-indicator').show();
-	    $.blockUI();
+	    $.blockUI({ message: '' });
 	}
 
 	function siteHideProgress() {

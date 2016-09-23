@@ -2,7 +2,7 @@
 
 export function siteShowProgress() {
     $('#progress-indicator').show();
-    $.blockUI();
+    $.blockUI({ message: '' });
 }
 
 export function siteHideProgress() {

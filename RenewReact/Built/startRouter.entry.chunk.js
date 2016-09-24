@@ -40716,8 +40716,8 @@ webpackJsonp([0],[
 	                'div',
 	                null,
 	                _react2.default.createElement(_ValidateAccountPanel2.default, { show: true }),
-	                _react2.default.createElement(_SecureAccountPanel2.default, { show: false }),
-	                _react2.default.createElement(_ForgotAccountPanel2.default, { show: false })
+	                _react2.default.createElement(_SecureAccountPanel2.default, { show: true }),
+	                _react2.default.createElement(_ForgotAccountPanel2.default, { show: true })
 	            );
 	        }
 	    }]);
@@ -41152,9 +41152,9 @@ webpackJsonp([0],[
 	        }
 	    });
 
-	    validatePanel.show();
-	    forgotPanel.hide();
-	    securePanel.hide();
+	    //validatePanel.show();
+	    //forgotPanel.hide();
+	    //securePanel.hide();
 	});
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
@@ -41884,6 +41884,8 @@ webpackJsonp([0],[
 
 	var _Input2 = _interopRequireDefault(_Input);
 
+	var _reactBootstrap = __webpack_require__(180);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41895,10 +41897,10 @@ webpackJsonp([0],[
 	var SecureAccountPanel = function (_Component) {
 	    _inherits(SecureAccountPanel, _Component);
 
-	    function SecureAccountPanel() {
+	    function SecureAccountPanel(props) {
 	        _classCallCheck(this, SecureAccountPanel);
 
-	        return _possibleConstructorReturn(this, (SecureAccountPanel.__proto__ || Object.getPrototypeOf(SecureAccountPanel)).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (SecureAccountPanel.__proto__ || Object.getPrototypeOf(SecureAccountPanel)).call(this, props));
 	    }
 
 	    _createClass(SecureAccountPanel, [{
@@ -41910,11 +41912,11 @@ webpackJsonp([0],[
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                'div',
-	                { className: 'row', id: 'secure-account-panel', style: { display: this.displayStyle() } },
+	                _reactBootstrap.Row,
+	                { id: 'secure-account-panel', style: { display: this.displayStyle() } },
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4 site-form-border' },
+	                    _reactBootstrap.Col,
+	                    { xsOffset: 2, xs: 8, smOffset: 3, sm: 6, mdOffset: 3, md: 6, lgOffset: 4, lg: 4, className: 'site-form-border' },
 	                    _react2.default.createElement(
 	                        'fieldset',
 	                        null,
@@ -41941,13 +41943,13 @@ webpackJsonp([0],[
 	                            'form',
 	                            { id: 'secure-account-form' },
 	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'row' },
+	                                _reactBootstrap.Row,
+	                                null,
 	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col-md-12' },
+	                                    _reactBootstrap.Col,
+	                                    { md: 12 },
 	                                    _react2.default.createElement(
-	                                        'div',
+	                                        _reactBootstrap.Col,
 	                                        { className: 'form-group' },
 	                                        _react2.default.createElement(
 	                                            'label',
@@ -41955,8 +41957,8 @@ webpackJsonp([0],[
 	                                            'E-post'
 	                                        ),
 	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'col-md-9 input-group' },
+	                                            _reactBootstrap.Col,
+	                                            { md: 9, className: 'input-group' },
 	                                            _react2.default.createElement(
 	                                                'span',
 	                                                { className: 'input-group-addon' },
@@ -41971,7 +41973,7 @@ webpackJsonp([0],[
 	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        'div',
+	                                        _reactBootstrap.Col,
 	                                        { className: 'form-group' },
 	                                        _react2.default.createElement(
 	                                            'label',
@@ -41979,8 +41981,8 @@ webpackJsonp([0],[
 	                                            'PIN-kod'
 	                                        ),
 	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'col-md-9 input-group' },
+	                                            _reactBootstrap.Col,
+	                                            { md: 9, className: 'input-group' },
 	                                            _react2.default.createElement(
 	                                                'span',
 	                                                { className: 'input-group-addon' },
@@ -42001,7 +42003,7 @@ webpackJsonp([0],[
 	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        'div',
+	                                        _reactBootstrap.Col,
 	                                        { className: 'form-group' },
 	                                        _react2.default.createElement(
 	                                            'label',
@@ -42009,8 +42011,8 @@ webpackJsonp([0],[
 	                                            'Lösenord'
 	                                        ),
 	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'col-md-9 input-group' },
+	                                            _reactBootstrap.Col,
+	                                            { md: 9, className: 'input-group' },
 	                                            _react2.default.createElement(
 	                                                'span',
 	                                                { className: 'input-group-addon' },
@@ -42031,7 +42033,7 @@ webpackJsonp([0],[
 	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        'div',
+	                                        _reactBootstrap.Col,
 	                                        { className: 'form-group' },
 	                                        _react2.default.createElement(
 	                                            'label',
@@ -42039,8 +42041,8 @@ webpackJsonp([0],[
 	                                            'Bekräfta'
 	                                        ),
 	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'col-md-9 input-group' },
+	                                            _reactBootstrap.Col,
+	                                            { md: 9, className: 'input-group' },
 	                                            _react2.default.createElement(
 	                                                'span',
 	                                                { className: 'input-group-addon' },
@@ -42063,34 +42065,34 @@ webpackJsonp([0],[
 	                                )
 	                            ),
 	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'row' },
+	                                _reactBootstrap.Row,
+	                                null,
 	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col-md-6' },
+	                                    _reactBootstrap.Col,
+	                                    { md: 6 },
 	                                    _react2.default.createElement(
-	                                        'button',
-	                                        { id: 'resend-pin-button', type: 'button', className: 'btn btn-default pull-left ' },
+	                                        _reactBootstrap.Button,
+	                                        { id: 'resend-pin-button', className: 'btn btn-default pull-left ' },
 	                                        'Ny PIN-kod'
 	                                    )
 	                                ),
 	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col-md-6' },
+	                                    _reactBootstrap.Col,
+	                                    { md: 6 },
 	                                    _react2.default.createElement(
-	                                        'button',
-	                                        { id: 'set-password-button', type: 'button', className: 'btn btn-info pull-right ' },
+	                                        _reactBootstrap.Button,
+	                                        { id: 'set-password-button', className: 'btn btn-info pull-right ' },
 	                                        'Sätt lösenord'
 	                                    )
 	                                )
 	                            ),
 	                            _react2.default.createElement('br', null),
 	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'row' },
+	                                _reactBootstrap.Row,
+	                                null,
 	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col-md-12' },
+	                                    _reactBootstrap.Col,
+	                                    { md: 12 },
 	                                    _react2.default.createElement('div', { id: 'custom-message', className: 'alert alert-warning', hidden: true })
 	                                )
 	                            )
@@ -42106,6 +42108,9 @@ webpackJsonp([0],[
 
 	exports.default = SecureAccountPanel;
 	;
+	SecureAccountPanel.propTypes = {
+	    show: _react2.default.PropTypes.bool.isRequired
+	};
 
 /***/ },
 /* 453 */
@@ -42127,6 +42132,8 @@ webpackJsonp([0],[
 
 	var _Input2 = _interopRequireDefault(_Input);
 
+	var _reactBootstrap = __webpack_require__(180);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42138,10 +42145,10 @@ webpackJsonp([0],[
 	var ForgotAccountPanel = function (_Component) {
 	    _inherits(ForgotAccountPanel, _Component);
 
-	    function ForgotAccountPanel() {
+	    function ForgotAccountPanel(props) {
 	        _classCallCheck(this, ForgotAccountPanel);
 
-	        return _possibleConstructorReturn(this, (ForgotAccountPanel.__proto__ || Object.getPrototypeOf(ForgotAccountPanel)).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (ForgotAccountPanel.__proto__ || Object.getPrototypeOf(ForgotAccountPanel)).call(this, props));
 	    }
 
 	    _createClass(ForgotAccountPanel, [{
@@ -42153,11 +42160,11 @@ webpackJsonp([0],[
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                'div',
-	                { className: 'row', id: 'forgot-account-panel', style: { display: this.displayStyle() } },
+	                _reactBootstrap.Row,
+	                { id: 'forgot-account-panel', style: { display: this.displayStyle() } },
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-xs-offset-2 col-xs-8 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4 site-form-border' },
+	                    _reactBootstrap.Col,
+	                    { xsOffset: 2, xs: 8, smOffset: 3, sm: 6, mdOffset: 3, md: 6, lgOffset: 4, lg: 4, className: 'site-form-border' },
 	                    _react2.default.createElement(
 	                        'fieldset',
 	                        null,
@@ -42184,11 +42191,11 @@ webpackJsonp([0],[
 	                            'form',
 	                            { id: 'forgot-account-form' },
 	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'row' },
+	                                _reactBootstrap.Row,
+	                                null,
 	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col-md-12' },
+	                                    _reactBootstrap.Col,
+	                                    { md: 12 },
 	                                    _react2.default.createElement(
 	                                        'div',
 	                                        { className: 'form-group' },
@@ -42198,8 +42205,8 @@ webpackJsonp([0],[
 	                                            'E-post'
 	                                        ),
 	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'col-md-9 input-group' },
+	                                            _reactBootstrap.Col,
+	                                            { md: 9, className: 'input-group' },
 	                                            _react2.default.createElement(
 	                                                'span',
 	                                                { className: 'input-group-addon' },
@@ -42221,11 +42228,11 @@ webpackJsonp([0],[
 	                                )
 	                            ),
 	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'row' },
+	                                _reactBootstrap.Row,
+	                                null,
 	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col-md-6' },
+	                                    _reactBootstrap.Col,
+	                                    { md: 6 },
 	                                    _react2.default.createElement(
 	                                        'div',
 	                                        { id: 'go-back-link', className: 'text-info text-left site-half-row-spacing', style: { cursor: "pointer" } },
@@ -42233,22 +42240,22 @@ webpackJsonp([0],[
 	                                    )
 	                                ),
 	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col-md-6' },
+	                                    _reactBootstrap.Col,
+	                                    { md: 6 },
 	                                    _react2.default.createElement(
-	                                        'button',
-	                                        { id: 'sendpin-button', type: 'button', className: 'btn btn-info pull-right ' },
+	                                        _reactBootstrap.Button,
+	                                        { id: 'sendpin-button', className: 'btn btn-info pull-right ' },
 	                                        'Skicka'
 	                                    )
 	                                )
 	                            ),
 	                            _react2.default.createElement('br', null),
 	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'row' },
+	                                _reactBootstrap.Row,
+	                                null,
 	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col-md-12' },
+	                                    _reactBootstrap.Col,
+	                                    { md: 12 },
 	                                    _react2.default.createElement('div', { id: 'custom-message', className: 'alert alert-warning', hidden: true })
 	                                )
 	                            )
@@ -42264,6 +42271,9 @@ webpackJsonp([0],[
 
 	exports.default = ForgotAccountPanel;
 	;
+	ForgotAccountPanel.propTypes = {
+	    show: _react2.default.PropTypes.bool.isRequired
+	};
 
 /***/ },
 /* 454 */

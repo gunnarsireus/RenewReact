@@ -29,8 +29,8 @@ export default class Login extends Component {
     render() {
         return <div>
                     <ValidateAccountPanel show={true} />
-                    <SecureAccountPanel show={false} />
-                    <ForgotAccountPanel show={false} />
+                    <SecureAccountPanel show={true} />
+                    <ForgotAccountPanel show={true} />
                 </div>
         ;}
 };

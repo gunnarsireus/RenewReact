@@ -153,8 +153,8 @@ $(function () {
         }
     });
 
-    validatePanel.show();
-    forgotPanel.hide();
-    securePanel.hide();
+    //validatePanel.show();
+    //forgotPanel.hide();
+    //securePanel.hide();
 });
 

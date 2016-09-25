@@ -35,22 +35,22 @@ webpackJsonp([0],[
 	var layout = __webpack_require__(176);
 	var home = __webpack_require__(178);
 
-	var personal = __webpack_require__(457);
-	var felanmalan = __webpack_require__(460);
+	var personal = __webpack_require__(458);
+	var felanmalan = __webpack_require__(461);
 
-	var pagaende = __webpack_require__(463);
-	var arkiverade = __webpack_require__(466);
+	var pagaende = __webpack_require__(464);
+	var arkiverade = __webpack_require__(467);
 
-	var nyheter = __webpack_require__(469);
-	var erbjudanden = __webpack_require__(472);
+	var nyheter = __webpack_require__(470);
+	var erbjudanden = __webpack_require__(473);
 
-	var kunder = __webpack_require__(475);
-	var boende = __webpack_require__(478);
-	var tidkoder = __webpack_require__(481);
-	var arendeKlasser = __webpack_require__(484);
+	var kunder = __webpack_require__(476);
+	var boende = __webpack_require__(479);
+	var tidkoder = __webpack_require__(482);
+	var arendeKlasser = __webpack_require__(485);
 
-	var admin = __webpack_require__(487);
-	var loggaut = __webpack_require__(490);
+	var admin = __webpack_require__(488);
+	var loggaut = __webpack_require__(491);
 
 	var login = __webpack_require__(437);
 
@@ -40614,7 +40614,7 @@ webpackJsonp([0],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var loginTemplate = __webpack_require__(456);
+	var loginTemplate = __webpack_require__(457);
 
 	var viewModel = kendo.observable({
 	    title: "Login"
@@ -40652,11 +40652,15 @@ webpackJsonp([0],[
 
 	var _ValidateAccountPanel2 = _interopRequireDefault(_ValidateAccountPanel);
 
-	var _SecureAccountPanel = __webpack_require__(452);
+	var _CreateAccountPanel = __webpack_require__(452);
+
+	var _CreateAccountPanel2 = _interopRequireDefault(_CreateAccountPanel);
+
+	var _SecureAccountPanel = __webpack_require__(453);
 
 	var _SecureAccountPanel2 = _interopRequireDefault(_SecureAccountPanel);
 
-	var _ForgotAccountPanel = __webpack_require__(453);
+	var _ForgotAccountPanel = __webpack_require__(454);
 
 	var _ForgotAccountPanel2 = _interopRequireDefault(_ForgotAccountPanel);
 
@@ -40664,7 +40668,7 @@ webpackJsonp([0],[
 
 	var _LoginActions2 = _interopRequireDefault(_LoginActions);
 
-	var _LoginStore = __webpack_require__(454);
+	var _LoginStore = __webpack_require__(455);
 
 	var _LoginStore2 = _interopRequireDefault(_LoginStore);
 
@@ -40688,6 +40692,11 @@ webpackJsonp([0],[
 	            panelList: _LoginStore2.default.getPanels(),
 	            activeId: _LoginStore2.default.getActiveId
 	        };
+	        alert(_this.state.panelList[0].active);
+	        alert(_this.state.panelList[1].active);
+	        alert(_this.state.panelList[2].active);
+	        alert(_this.state.panelList[3].active);
+	        alert(_this.state.activeId());
 	        return _this;
 	    }
 
@@ -40715,9 +40724,10 @@ webpackJsonp([0],[
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement(_ValidateAccountPanel2.default, { show: true }),
-	                _react2.default.createElement(_SecureAccountPanel2.default, { show: true }),
-	                _react2.default.createElement(_ForgotAccountPanel2.default, { show: true })
+	                _react2.default.createElement(_ValidateAccountPanel2.default, { show: this.state.panelList[0].active }),
+	                _react2.default.createElement(_CreateAccountPanel2.default, { show: this.state.panelList[1].active }),
+	                _react2.default.createElement(_ForgotAccountPanel2.default, { show: this.state.panelList[2].active }),
+	                _react2.default.createElement(_SecureAccountPanel2.default, { show: this.state.panelList[3].active })
 	            );
 	        }
 	    }]);
@@ -41868,6 +41878,406 @@ webpackJsonp([0],[
 /* 452 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _siteLogin = __webpack_require__(440);
+
+	var _siteBase = __webpack_require__(443);
+
+	var _siteXcompInputforms = __webpack_require__(441);
+
+	var _siteXcompLocalstorage = __webpack_require__(442);
+
+	var _Input = __webpack_require__(444);
+
+	var _Input2 = _interopRequireDefault(_Input);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _LoginActions = __webpack_require__(445);
+
+	var _LoginActions2 = _interopRequireDefault(_LoginActions);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CreateAccountPanel = function (_Component) {
+	    _inherits(CreateAccountPanel, _Component);
+
+	    function CreateAccountPanel(props) {
+	        _classCallCheck(this, CreateAccountPanel);
+
+	        var _this = _possibleConstructorReturn(this, (CreateAccountPanel.__proto__ || Object.getPrototypeOf(CreateAccountPanel)).call(this, props));
+
+	        _this.onLogin = _this.onLogin.bind(_this);
+	        _this.onKeyDown = _this.onKeyDown.bind(_this); //Not working
+	        _this.onRegister = _this.onRegister.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(CreateAccountPanel, [{
+	        key: 'displayStyle',
+	        value: function displayStyle() {
+	            return this.props.show ? 'block' : 'none';
+	        }
+	    }, {
+	        key: 'onRegister',
+	        value: function onRegister() {
+	            (0, _siteBase.siteGoTo)('/Register');
+	        }
+	    }, {
+	        key: 'onKeyDown',
+	        value: function onKeyDown() {
+	            onLogin(); //Not working
+	        }
+	    }, {
+	        key: 'onLogin',
+	        value: function onLogin() {
+	            function navigateToHome() {
+	                //clearAll();
+	                _LoginActions2.default.inactivateAll();
+	                var isUserAuthorized = "UserAuthorized";
+	                localStorage.setItem("isUserAuthorized", isUserAuthorized);
+	                var host = window.location.href + "#/";
+	                host = host.replace("Login", ""); //Remove Login from browser url
+	                window.location.href = host;
+	                window.location.href = window.location.href;
+	                window.location.replace(host); //Make visible removed Login from browser url
+	            };
+	            var validateForm = $('#validate-account-form');
+	            var validatePanel = $('#validate-account-panel');
+	            var data = (0, _siteXcompInputforms.getFormData)(validateForm);
+	            if (data) {
+	                (0, _siteLogin.hideMessage)(validateForm);
+	                (0, _siteBase.siteAjaxPost)('/Login/ValidateAccount', data, navigateToHome, _siteLogin.validateAccountFailed);
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                _reactBootstrap.Row,
+	                { id: 'create-account-panel', style: { display: this.displayStyle() } },
+	                _react2.default.createElement(
+	                    _reactBootstrap.Col,
+	                    { xsOffset: 2, xs: 8, smOffset: 3, sm: 6, mdOffset: 3, md: 6, lgOffset: 4, lg: 4, className: 'site-form-border' },
+	                    _react2.default.createElement(
+	                        'fieldset',
+	                        null,
+	                        _react2.default.createElement(
+	                            'center',
+	                            null,
+	                            _react2.default.createElement(
+	                                'h3',
+	                                null,
+	                                'Registrering'
+	                            ),
+	                            _react2.default.createElement(
+	                                'i',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'small',
+	                                    null,
+	                                    'PIN-kod för verifiering skickas till e-postadressen'
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement(
+	                            'form',
+	                            { id: 'create-account-form' },
+	                            _react2.default.createElement(
+	                                _reactBootstrap.Row,
+	                                null,
+	                                _react2.default.createElement(
+	                                    _reactBootstrap.Col,
+	                                    { md: 12 },
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'email' },
+	                                            'E-post'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            _reactBootstrap.Col,
+	                                            { md: 9, className: 'input-group' },
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { className: 'input-group-addon' },
+	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-envelope' })
+	                                            ),
+	                                            _react2.default.createElement(_Input2.default, { className: 'form-control',
+	                                                dataAutoajax: true,
+	                                                dataVal: true,
+	                                                dataValLengthMin: '5',
+	                                                dataLalLengthMax: '100',
+	                                                dataValLength: 'E-post måste vara mellan 5 och 100 tecken',
+	                                                dataValRequired: 'E-psot får inte vara tom',
+	                                                id: 'email',
+	                                                name: 'email',
+	                                                type: 'text',
+	                                                value: '' })
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'firstname' },
+	                                            'Förnamn'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            _reactBootstrap.Col,
+	                                            { md: 9, className: 'input-group' },
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { className: 'input-group-addon' },
+	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-user' })
+	                                            ),
+	                                            _react2.default.createElement(_Input2.default, { className: 'form-control',
+	                                                dataAutoajax: true,
+	                                                dataVal: true,
+	                                                dataValLengthMin: '2',
+	                                                dataValLengthMax: '45',
+	                                                dataValLength: 'Förnamn måste vara mellan 2 och 45 tecken',
+	                                                dataValRequired: 'Förnamn får inte vara tom',
+	                                                id: 'firstname',
+	                                                name: 'firstname',
+	                                                type: 'text',
+	                                                value: '' })
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'lastname' },
+	                                            'Efternamn'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            _reactBootstrap.Col,
+	                                            { md: 9, className: 'input-group' },
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { className: 'input-group-addon' },
+	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-user' })
+	                                            ),
+	                                            _react2.default.createElement(_Input2.default, { className: 'form-control',
+	                                                dataAutoajax: true,
+	                                                dataVal: true,
+	                                                dataValLengthMin: '2',
+	                                                dataValLengthMax: '45',
+	                                                dataValLength: 'Efternamn måste vara mellan 2 och 45 tecken',
+	                                                dataValRequired: 'Efternamn får inte vara tom',
+	                                                id: 'lastname',
+	                                                name: 'lastname',
+	                                                type: 'lastname',
+	                                                value: '' })
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'phone' },
+	                                            'Telefonnr.'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            _reactBootstrap.Col,
+	                                            { md: 9, className: 'input-group' },
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { className: 'input-group-addon' },
+	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-phone-alt' })
+	                                            ),
+	                                            _react2.default.createElement(_Input2.default, { className: 'form-control',
+	                                                dataAutoajax: true,
+	                                                dataVal: true,
+	                                                dataValLengthMin: '2',
+	                                                dataValLengthMax: '45',
+	                                                dataValLength: 'Telefonnr. får inte överstiga 45 tecken',
+	                                                id: 'phone',
+	                                                name: 'phone'
+	                                                //onkeypress = "return Site.Validation.isPhoneNumber(event)"
+	                                                , type: 'text',
+	                                                value: '' })
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'address' },
+	                                            'Adress'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            _reactBootstrap.Col,
+	                                            { md: 9, className: 'input-group' },
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { className: 'input-group-addon' },
+	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-map-marker' })
+	                                            ),
+	                                            _react2.default.createElement(_Input2.default, { className: 'form-control',
+	                                                dataAutoajax: true,
+	                                                dataVal: true,
+	                                                dataValLengthMax: '45',
+	                                                dataValLength: 'Adress får inte överstiga 45 tecken',
+	                                                id: 'phone',
+	                                                name: 'phone',
+	                                                type: 'text',
+	                                                value: '' })
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'floor' },
+	                                            'Våning'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            _reactBootstrap.Col,
+	                                            { md: 9, className: 'input-group' },
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { className: 'input-group-addon' },
+	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-align-justify' })
+	                                            ),
+	                                            _react2.default.createElement(_Input2.default, { className: 'form-control',
+	                                                dataAutoajax: true,
+	                                                dataVal: true,
+	                                                dataValLengthMax: '45',
+	                                                dataValLength: 'Våning får inte överstiga 45 tecken',
+	                                                id: 'floor',
+	                                                name: 'floor',
+	                                                type: 'text',
+	                                                value: '' })
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'apartment' },
+	                                            'Lägenhet'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            _reactBootstrap.Col,
+	                                            { md: 9, className: 'input-group' },
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { className: 'input-group-addon' },
+	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-align-justify' })
+	                                            ),
+	                                            _react2.default.createElement(_Input2.default, { className: 'form-control',
+	                                                dataAutoajax: true,
+	                                                dataVal: true,
+	                                                dataValLengthMax: '45',
+	                                                dataValLength: 'Lägenhet får inte överstiga 45 tecken',
+	                                                id: 'apartment',
+	                                                name: 'apartment',
+	                                                type: 'text',
+	                                                value: '' })
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'customerid' },
+	                                            'Förening'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            _reactBootstrap.Col,
+	                                            { md: 9, className: 'input-group' },
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                { className: 'input-group-addon' },
+	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-unchecked' })
+	                                            ),
+	                                            _react2.default.createElement('select', { 'data-autoajax': 'true', 'data-width': '100%', id: 'customerid', name: 'customerid' })
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        _reactBootstrap.Row,
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            _reactBootstrap.Col,
+	                                            { md: 6 },
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { id: 'go-back-link', className: 'text-info text-left site-half-row-spacing', style: { cursor: "pointer" } },
+	                                                'Tillbaka'
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            _reactBootstrap.Col,
+	                                            { md: 6 },
+	                                            _react2.default.createElement(
+	                                                _reactBootstrap.Button,
+	                                                { id: 'register-button', className: 'btn btn-info pull-right ' },
+	                                                'Registrera'
+	                                            )
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement('br', null),
+	                                    _react2.default.createElement(
+	                                        _reactBootstrap.Row,
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            _reactBootstrap.Col,
+	                                            { md: 12 },
+	                                            _react2.default.createElement('div', { id: 'custom-message', className: 'alert alert-warning', hidden: true })
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return CreateAccountPanel;
+	}(_react.Component);
+
+	exports.default = CreateAccountPanel;
+	;
+	CreateAccountPanel.propTypes = {
+	    show: _react2.default.PropTypes.bool.isRequired
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ },
+/* 453 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -42113,7 +42523,7 @@ webpackJsonp([0],[
 	};
 
 /***/ },
-/* 453 */
+/* 454 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42276,7 +42686,7 @@ webpackJsonp([0],[
 	};
 
 /***/ },
-/* 454 */
+/* 455 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42285,7 +42695,7 @@ webpackJsonp([0],[
 	    value: true
 	});
 
-	var _events = __webpack_require__(455);
+	var _events = __webpack_require__(456);
 
 	var _LoginDispatcher = __webpack_require__(446);
 
@@ -42297,7 +42707,7 @@ webpackJsonp([0],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _panelList = [{ id: 0, panel: "ValidateAccountPanel", active: true }, { id: 1, panel: "ForgetAccountPanel", active: false }, { id: 2, panel: "SecureAccountPanel", active: false }];
+	var _panelList = [{ id: 0, panel: "ValidateAccountPanel", active: true }, { id: 1, panel: "CreateAccountPanel", active: true }, { id: 2, panel: "ForgetAccountPanel", active: true }, { id: 3, panel: "SecureAccountPanel", active: true }];
 
 	var CHANGE_EVENT = 'change';
 	var LoginStore = Object.assign({}, _events.EventEmitter.prototype, {
@@ -42357,7 +42767,7 @@ webpackJsonp([0],[
 	exports.default = LoginStore;
 
 /***/ },
-/* 455 */
+/* 456 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -42627,13 +43037,13 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 456 */
+/* 457 */
 /***/ function(module, exports) {
 
 	module.exports = "<div id=\"react-login\"></div>\r\n";
 
 /***/ },
-/* 457 */
+/* 458 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42646,13 +43056,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(458);
+	var _index = __webpack_require__(459);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(459);
+	var detailsTemplate = __webpack_require__(460);
 
 
 	var viewModel = kendo.observable({
@@ -42671,7 +43081,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 458 */
+/* 459 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42721,13 +43131,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 459 */
+/* 460 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1   style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-personal\"></div>\r\n";
 
 /***/ },
-/* 460 */
+/* 461 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42740,13 +43150,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(461);
+	var _index = __webpack_require__(462);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(462);
+	var detailsTemplate = __webpack_require__(463);
 
 
 	var viewModel = kendo.observable({
@@ -42765,7 +43175,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 461 */
+/* 462 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42815,13 +43225,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 462 */
+/* 463 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-felanmalan\"></div>\r\n";
 
 /***/ },
-/* 463 */
+/* 464 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42834,13 +43244,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(464);
+	var _index = __webpack_require__(465);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(465);
+	var detailsTemplate = __webpack_require__(466);
 
 
 	var viewModel = kendo.observable({
@@ -42859,7 +43269,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 464 */
+/* 465 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42909,13 +43319,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 465 */
+/* 466 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-pagaende\" ></div>\r\n";
 
 /***/ },
-/* 466 */
+/* 467 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42928,13 +43338,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(467);
+	var _index = __webpack_require__(468);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(468);
+	var detailsTemplate = __webpack_require__(469);
 
 
 	var viewModel = kendo.observable({
@@ -42953,7 +43363,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 467 */
+/* 468 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43003,13 +43413,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 468 */
+/* 469 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-arkiverade\" ></div>\r\n";
 
 /***/ },
-/* 469 */
+/* 470 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43022,13 +43432,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(470);
+	var _index = __webpack_require__(471);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(471);
+	var detailsTemplate = __webpack_require__(472);
 
 
 	var viewModel = kendo.observable({
@@ -43047,7 +43457,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 470 */
+/* 471 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43097,13 +43507,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 471 */
+/* 472 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-nyheter\" ></div>\r\n";
 
 /***/ },
-/* 472 */
+/* 473 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43116,13 +43526,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(473);
+	var _index = __webpack_require__(474);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(474);
+	var detailsTemplate = __webpack_require__(475);
 
 
 	var viewModel = kendo.observable({
@@ -43141,7 +43551,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 473 */
+/* 474 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43191,13 +43601,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 474 */
+/* 475 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-erbjudanden\"></div>\r\n";
 
 /***/ },
-/* 475 */
+/* 476 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43210,13 +43620,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(476);
+	var _index = __webpack_require__(477);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(477);
+	var detailsTemplate = __webpack_require__(478);
 
 
 	var viewModel = kendo.observable({
@@ -43235,7 +43645,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 476 */
+/* 477 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43285,13 +43695,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 477 */
+/* 478 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-kunder\" ></div>\r\n";
 
 /***/ },
-/* 478 */
+/* 479 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43304,13 +43714,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(479);
+	var _index = __webpack_require__(480);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(480);
+	var detailsTemplate = __webpack_require__(481);
 
 
 	var viewModel = kendo.observable({
@@ -43329,7 +43739,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 479 */
+/* 480 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43379,13 +43789,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 480 */
+/* 481 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-boende\" ></div>\r\n";
 
 /***/ },
-/* 481 */
+/* 482 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43398,13 +43808,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(482);
+	var _index = __webpack_require__(483);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(483);
+	var detailsTemplate = __webpack_require__(484);
 
 
 	var viewModel = kendo.observable({
@@ -43423,7 +43833,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 482 */
+/* 483 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43473,13 +43883,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 483 */
+/* 484 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-tidkoder\"></div>\r\n";
 
 /***/ },
-/* 484 */
+/* 485 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43492,13 +43902,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(485);
+	var _index = __webpack_require__(486);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(486);
+	var detailsTemplate = __webpack_require__(487);
 
 
 	var viewModel = kendo.observable({
@@ -43517,7 +43927,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 485 */
+/* 486 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43567,13 +43977,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 486 */
+/* 487 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-arendeKlasser\" >hej</div>\r\n";
 
 /***/ },
-/* 487 */
+/* 488 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43586,13 +43996,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(488);
+	var _index = __webpack_require__(489);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(489);
+	var detailsTemplate = __webpack_require__(490);
 
 
 	var viewModel = kendo.observable({
@@ -43611,7 +44021,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 488 */
+/* 489 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43661,13 +44071,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 489 */
+/* 490 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-admin\" ></div>\r\n";
 
 /***/ },
-/* 490 */
+/* 491 */
 /***/ function(module, exports) {
 
 	"use strict";

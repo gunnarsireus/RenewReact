@@ -393,6 +393,7 @@
     <Content Include="App\Jsx\Login\actions\LoginActions.js" />
     <Content Include="App\Jsx\Login\components\Bot.js" />
     <Content Include="App\Jsx\Login\components\Login.js" />
+    <Content Include="App\Jsx\Login\components\CreateAccountPanel.js" />
     <Content Include="App\Jsx\Login\constants\LoginConstants.js" />
     <Content Include="App\Jsx\Login\dispatcher\LoginDispatcher.js" />
     <Content Include="App\Jsx\Login\components\SecureAccountPanel.js" />

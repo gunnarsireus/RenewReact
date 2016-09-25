@@ -5,9 +5,9 @@ import LoginConstants from '../constants/LoginConstants';
 
 let _panelList = [
     {id: 0, panel: "ValidateAccountPanel", active: true},
-    {id: 1, panel: "CreateAccountPanel", active: true},
-    {id: 2, panel: "ForgetAccountPanel", active: true},
-    {id: 3, panel: "SecureAccountPanel", active: true}
+    {id: 1, panel: "CreateAccountPanel", active: false},
+    {id: 2, panel: "ForgetAccountPanel", active: false},
+    {id: 3, panel: "SecureAccountPanel", active: false}
  ];
 
 const CHANGE_EVENT = 'change';
@@ -56,7 +56,7 @@ function _inactivateAll() {
 LoginDispatcher.register(function (action) {
     switch (action.actionType) {
         case LoginConstants.SET_ACTIVE:
-            _setActive(action.data);
+            _setActive(action.id);
             LoginStore.emitChange();
             break;
         case LoginConstants.INACTIVE_ALL:

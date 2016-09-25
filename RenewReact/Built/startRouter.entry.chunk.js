@@ -40692,11 +40692,7 @@ webpackJsonp([0],[
 	            panelList: _LoginStore2.default.getPanels(),
 	            activeId: _LoginStore2.default.getActiveId
 	        };
-	        alert(_this.state.panelList[0].active);
-	        alert(_this.state.panelList[1].active);
-	        alert(_this.state.panelList[2].active);
-	        alert(_this.state.panelList[3].active);
-	        alert(_this.state.activeId());
+	        _this.onChange = _this.onChange.bind(_this);
 	        return _this;
 	    }
 
@@ -40802,7 +40798,8 @@ webpackJsonp([0],[
 	    }, {
 	        key: 'onRegister',
 	        value: function onRegister() {
-	            (0, _siteBase.siteGoTo)('/Register');
+	            //siteGoTo('/Register');
+	            _LoginActions2.default.setActive(1);
 	        }
 	    }, {
 	        key: 'onKeyDown',
@@ -42707,7 +42704,7 @@ webpackJsonp([0],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _panelList = [{ id: 0, panel: "ValidateAccountPanel", active: true }, { id: 1, panel: "CreateAccountPanel", active: true }, { id: 2, panel: "ForgetAccountPanel", active: true }, { id: 3, panel: "SecureAccountPanel", active: true }];
+	var _panelList = [{ id: 0, panel: "ValidateAccountPanel", active: true }, { id: 1, panel: "CreateAccountPanel", active: false }, { id: 2, panel: "ForgetAccountPanel", active: false }, { id: 3, panel: "SecureAccountPanel", active: false }];
 
 	var CHANGE_EVENT = 'change';
 	var LoginStore = Object.assign({}, _events.EventEmitter.prototype, {
@@ -42753,7 +42750,7 @@ webpackJsonp([0],[
 	_LoginDispatcher2.default.register(function (action) {
 	    switch (action.actionType) {
 	        case _LoginConstants2.default.SET_ACTIVE:
-	            _setActive(action.data);
+	            _setActive(action.id);
 	            LoginStore.emitChange();
 	            break;
 	        case _LoginConstants2.default.INACTIVE_ALL:

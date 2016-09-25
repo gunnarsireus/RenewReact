@@ -20,7 +20,8 @@ export default class ValidateAccountPanel extends Component {
         return (this.props.show)?'block':'none';
     };
     onRegister() {
-        siteGoTo('/Register');
+        //siteGoTo('/Register');
+        LoginActions.setActive(1);
     };
     onKeyDown() {
         onLogin();  //Not working

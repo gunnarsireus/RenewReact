@@ -14,6 +14,7 @@ export default class Login extends Component {
             panelList: LoginStore.getPanels(),
             activeId :LoginStore.getActiveId
         };
+        this.onChange = this.onChange.bind(this);
     };
     componentDidMount() {
         LoginStore.addChangeListener(this.onChange);

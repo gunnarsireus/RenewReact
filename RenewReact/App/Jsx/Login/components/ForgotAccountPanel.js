@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import Input from '../../Common/Input.js';
 import { Grid, Row, Col, Glyphicon, Button } from 'react-bootstrap';
+
+import LoginActions from '../actions/LoginActions';
+
 export default class ForgotAccountPanel extends Component {
     displayName: 'ForgotAccountPanel';
     constructor(props) {
         super(props);
+        this.onGoBack = this.onGoBack.bind(this);
     };
     displayStyle() {
         return (this.props.show)?'block':'none';
+    };
+    onGoBack() {
+        LoginActions.setActive(0);
     };
     render() {
         return <Row id="forgot-account-panel" style={{display:this.displayStyle()}}>
@@ -46,7 +53,7 @@ export default class ForgotAccountPanel extends Component {
                     </Row>
                     <Row >
                         <Col md={6}>
-                            <div id="go-back-link" className="text-info text-left site-half-row-spacing" style={{cursor:"pointer"}}>Tillbaka</div>
+                            <div id="go-back-link"  onClick={this.onGoBack}  className="text-info text-left site-half-row-spacing" style={{cursor:"pointer"}}>Tillbaka</div>
                         </Col>
                         <Col md={6}>
                             <Button id="sendpin-button" className="btn btn-info pull-right ">Skicka</Button>

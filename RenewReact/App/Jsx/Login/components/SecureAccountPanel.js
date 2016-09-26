@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Input from '../../Common/Input.js';
 import { Grid, Row, Col, Glyphicon, Button } from 'react-bootstrap';
+
+import LoginActions from '../actions/LoginActions';
+
 export default class SecureAccountPanel extends Component {
     displayName: 'SecureAccountPanel';
     constructor(props) {

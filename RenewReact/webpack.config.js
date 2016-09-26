@@ -3,6 +3,8 @@ var path = require('path');
 var WebpackNotifierPlugin = require('webpack-notifier');
 var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 
+var PROD = JSON.parse(process.env.PROD_ENV || '0');
+
 module.exports = {
     context: path.join(__dirname, 'App'),
     entry: {vendor: './vendor.js',
@@ -15,9 +17,12 @@ module.exports = {
     plugins: [
         new CommonsChunkPlugin("commons.chunk.js"),
         new WebpackNotifierPlugin(),
-          new webpack.ProvidePlugin({
+        new webpack.ProvidePlugin({
               $: "jquery",
               jQuery: "jquery"
+          }),
+          new webpack.optimize.UglifyJsPlugin({
+              compress: { warnings: false }
           })
     ],
     module: {

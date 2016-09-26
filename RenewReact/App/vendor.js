@@ -19,17 +19,17 @@ require('../Scripts/kendo/2015.1.318/kendo.fx.min');
 
 // Bootstrap
 //require('../App/css/jquery-ui-1.11.2.css');
-require('../App/css/DataTables-1.10.4/css/jquery.dataTables.css');
-require('../App/css/DataTables-1.10.4/css/dataTables.bootstrap.css');
+//require('../App/css/DataTables-1.10.4/css/jquery.dataTables.css');
+//require('../App/css/DataTables-1.10.4/css/dataTables.bootstrap.css');
 require('../App/css/bootstrap.css');
 //require('../App/css/bootstrap-clockpicker.css');
-require('../App/css/bootstrap-datepicker.css');
-require('../App/css/bootstrap-select.css');
-require('../App/css/select2/select2.css');
-require('../App/css/select2/bootstrap-select2.css');
-require('../App/css/FullCalendar-2.6.1/fullcalendar.css');
-require('../App/css/FullCalendar-2.6.1/fullscheduler.css');
-require('../App/css/select2/site.css');
+//require('../App/css/bootstrap-datepicker.css');
+//require('../App/css/bootstrap-select.css');
+//require('../App/css/select2/select2.css');
+//require('../App/css/select2/bootstrap-select2.css');
+//require('../App/css/FullCalendar-2.6.1/fullcalendar.css');
+//require('../App/css/FullCalendar-2.6.1/fullscheduler.css');
+//require('../App/css/select2/site.css');
 require('../App/css/site.css');
 
 
@@ -48,9 +48,9 @@ require('../App/css/site.css');
 
 //bootstrap.js
 require('../App/js/platform/bootstrap.js');
-require('../App/js/platform/bootstrap-select.js');
+//require('../App/js/platform/bootstrap-select.js');
 //require('../App/js/platform/bootstrap-clockpicker.js');
-require('../App/js/platform/bootstrap-datepicker.js');
+//require('../App/js/platform/bootstrap-datepicker.js');
 //"~/App/js/platform/bootstrap-duallistbox.js",
 //require('../App/js/DataTables-1.10.4/jquery.dataTables.js');
 //require('../App/js/DataTables-1.10.4/dataTables.bootstrap.js');
@@ -70,9 +70,9 @@ require('../App/js/site-components/site-xcomp-popover.js');
 require('../App/js/site-components/site-xcomp-datatables.js');
 require('../App/js/site-components/site-xcomp-datepicker.js');
 //require('../App/js/site-components/site-xcomp-dialogs.js');
-require('../App/js/site-components/site-xcomp-tabmenu.js');
+//require('../App/js/site-components/site-xcomp-tabmenu.js');
 
 
 //site-login
-require('../App/js/site-components/site-xcomp-localstorage.js');
+//require('../App/js/site-components/site-xcomp-localstorage.js');
 //require('../App/js/site-login.js');

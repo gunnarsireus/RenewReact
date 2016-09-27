@@ -494,7 +494,7 @@
     <Content Include="App\js\site-timetype.js" />
     <Content Include="App\Jsx\Kunder\Index.js" />
     <Content Include="App\Jsx\Nyheter\Index.js" />
-    <Content Include="App\Jsx\Pagaende\Index.js" />
+    <Content Include="App\Jsx\Pagaende\Index.html" />
     <Content Include="App\Jsx\Personal\Index.js" />
     <Content Include="App\router.js" />
     <Content Include="App\startRouter.js" />

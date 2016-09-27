@@ -12,7 +12,7 @@ export default class CreateAccountPanel extends Component {
     displayName: 'CreateAccountPanel';
     constructor(props) {
         super(props);
-        this.onLogin = this.onLogin.bind(this);
+        this.onGoBack = this.onGoBack.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);  //Not working
         this.onRegister = this.onRegister.bind(this);
     };
@@ -23,27 +23,10 @@ export default class CreateAccountPanel extends Component {
         siteGoTo('/Register');
     };
     onKeyDown() {
-        onLogin();  //Not working
+        siteGoTo('/Register');  //Not working
     }
-    onLogin() {
-        function navigateToHome() {
-            //clearAll();
-            LoginActions.inactivateAll();
-            var isUserAuthorized = "UserAuthorized";
-            localStorage.setItem("isUserAuthorized", isUserAuthorized);
-            var host = window.location.href + "#/";
-            host = host.replace("Login", ""); //Remove Login from browser url
-            window.location.href = host;
-            window.location.href = window.location.href;
-            window.location.replace(host); //Make visible removed Login from browser url
-        };
-        var validateForm  = $('#validate-account-form');
-        var validatePanel = $('#validate-account-panel');
-        var data = getFormData(validateForm);
-        if (data) {
-            hideMessage(validateForm);
-            siteAjaxPost('/Login/ValidateAccount', data, navigateToHome, validateAccountFailed);
-        }
+    onGoBack() {
+        LoginActions.setActive(0);
     };
     render() {
         return  <Row id="create-account-panel" style={{display:this.displayStyle()}}>
@@ -198,7 +181,7 @@ export default class CreateAccountPanel extends Component {
                 </div>
                 <Row>
                     <Col md={6}>
-                    <div id="go-back-link" className="text-info text-left site-half-row-spacing" style={{cursor:"pointer"}}>Tillbaka</div>
+                    <div id="go-back-link" onClick={this.onGoBack} className="text-info text-left site-half-row-spacing" style={{cursor:"pointer"}}>Tillbaka</div>
                     </Col>
                     <Col md={6}>
                     <Button id="register-button" className="btn btn-info pull-right ">Registrera</Button>

@@ -13,6 +13,7 @@ export default class ValidateAccountPanel extends Component {
     constructor(props) {
         super(props);
         this.onLogin = this.onLogin.bind(this);
+        this.onForgot = this.onForgot.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);  //Not working
         this.onRegister = this.onRegister.bind(this);
     };
@@ -20,8 +21,10 @@ export default class ValidateAccountPanel extends Component {
         return (this.props.show)?'block':'none';
     };
     onRegister() {
-        //siteGoTo('/Register');
         LoginActions.setActive(1);
+    };
+    onForgot() {
+        LoginActions.setActive(2);
     };
     onKeyDown() {
         onLogin();  //Not working
@@ -110,7 +113,7 @@ export default class ValidateAccountPanel extends Component {
                     </Row>
                     <Row>
                         <Col md={12}>
-                            <div id="forgot-password-link" className="text-info text-right site-row-spacing" style={{cursor:"pointer"}}>Glömt lösenord?</div>
+                            <div id="forgot-password-link" onClick={this.onForgot} className="text-info text-right site-row-spacing" style={{cursor:"pointer"}}>Glömt lösenord?</div>
                         </Col>
                     </Row>
                     <br />

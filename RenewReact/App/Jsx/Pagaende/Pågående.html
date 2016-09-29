@@ -1,0 +1,1036 @@
+﻿
+
+
+
+
+
+    <!-- Page layout -->
+
+    <div class="row" id="page-issue-all">
+        <div class="col-md-2 site-page-control">
+            <h3 class="site-page-header">Ärenden <img alt="" src="/img/help.png" id="page-description-tooltip" class="site-clickable" /></h3>
+            <div class="row" id="filter-issue-panel">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12 btn-group btn-group-justified" role="group" aria-label="...">
+                            <div class="btn-group" role="group">
+                                <button type="button" id="calendar-view-select" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button type="button" id="schedule-view-select" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button type="button" id="list-view-select" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row site-row-spacing">
+                        <div class="col-md-12">
+                            <h4>Kund</h4>
+                        </div>
+                    </div>
+                    <div class="row site-row-spacing">
+                        <div class="col-md-12">
+                            <select class="selectpicker"
+                                    data-autoajax="false"
+                                    data-width="100%"
+                                    id="customer-select"
+                                    name="customer-select">
+                                <option value="0">--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row site-row-spacing">
+                        <div class="col-md-12">
+                            <h4>Status</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <select class="selectpicker"
+                                    data-autoajax="false"
+                                    data-width="100%"
+                                    id="status-select"
+                                    name="status-select">
+                                <option value="0">--</option>
+                                <option value="10">Preliminär</option>
+                                <option value="20">Öppen</option>
+                                <option value="30">Påbörjad</option>
+                                <option value="40">Stängd</option>
+                                <option value="50">Godkänd</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row site-row-spacing">
+                        <div class="col-md-12">
+                            <h4>Prioritet</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <select class="selectpicker"
+                                    data-autoajax="false"
+                                    data-width="100%"
+                                    id="priority-select"
+                                    name="priority-select">
+                                <option value="0">--</option>
+                                <option value="1">Låg</option>
+                                <option value="2">Normal</option>
+                                <option value="3">Hög</option>
+                                <option value="4">Akut</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row site-row-spacing">
+                        <div class="col-md-12">
+                            <h4>Utrymme</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <select class="selectpicker"
+                                    data-autoajax="false"
+                                    data-width="100%"
+                                    id="areatype-select"
+                                    name="areatype-select">
+                                <option value="0">--</option>
+                                <option value="10">Gemensamhet</option>
+                                <option value="20">Lägenhet</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row site-row-spacing">
+                        <div class="col-md-12">
+                            <h4>Nytt ärende</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button id="create-issue-button" type="button" class="btn btn-default pull-left ">Skapa</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10 site-page-content">
+            <div class="row" id="create-issue-panel" hidden>
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title" id="title">Skapa &#228;rende</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form id="create-issue-form">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input data-autoajax="false"
+                                               id="customerid"
+                                               name="customerid"
+                                               type="hidden"
+                                               value="" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="name">Titel</label>
+                                            <div class="col-md-9 input-group">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-header"></span>
+                                                </span>
+                                                <input class="form-control"
+                                                       data-autoajax="true"
+                                                       data-val="true"
+                                                       data-val-length-min="2"
+                                                       data-val-length-max="45"
+                                                       data-val-length="Titel måste vara mellan 2 och 45 tecken"
+                                                       data-val-required="Titel får inte vara tom"
+                                                       id="name"
+                                                       name="name"
+                                                       type="text"
+                                                       value="" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="assignedid">Tilldelad</label>
+                                            <div class="col-md-9 input-group">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-ban-circle"></span>
+                                                </span>
+                                                <select class="selectpicker"
+                                                        data-autoajax="true"
+                                                        data-width="100%"
+                                                        id="assignedid"
+                                                        name="assignedid">
+                                                    <option value="128">Admin</option>
+                                                    <option value="16">Ledning</option>
+                                                    <option value="4">Tekniker</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="startdatestring">Startdatum</label>
+                                            <div class="col-md-9 input-group date clockpicker" id="date-container-for-startdatestring-0">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                                <input class="form-control"
+                                                       data-autoajax="true"
+                                                       data-date="2016-09-28"
+                                                       data-date-autoclose="true"
+                                                       data-date-calendar-weeks="true"
+                                                       data-date-container="#date-container-for-startdatestring-0"
+                                                       data-date-format="yyyy-mm-dd"
+                                                       data-date-language="sv"
+                                                       data-date-orientation="bottom left"
+                                                       data-date-today-btn="linked"
+                                                       data-date-today-highlight="true"
+                                                       data-date-week-start="1"
+                                                       data-provide="datepicker"
+                                                       data-val="true"
+                                                       data-val-required="Datum får inte vara tomt"
+                                                       id="startdatestring"
+                                                       name="startdatestring"
+                                                       type="text"
+                                                       value="" />
+                                                <span class="input-group-btn" style="width:0px;"></span>
+                                                <input class="form-control"
+                                                       data-autoajax="true"
+                                                       data-val="true"
+                                                       data-val-required="Klockslag får inte vara tomt"
+                                                       id="starttimestring"
+                                                       name="starttimestring"
+                                                       type="text"
+                                                       placeholder="19:57"
+                                                       value="" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="enddatestring">Slutdatum</label>
+                                            <div class="col-md-9 input-group date clockpicker" id="date-container-for-enddatestring-1">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                                <input class="form-control"
+                                                       data-autoajax="true"
+                                                       data-date="2016-09-28"
+                                                       data-date-autoclose="true"
+                                                       data-date-calendar-weeks="true"
+                                                       data-date-container="#date-container-for-enddatestring-1"
+                                                       data-date-format="yyyy-mm-dd"
+                                                       data-date-language="sv"
+                                                       data-date-orientation="bottom left"
+                                                       data-date-today-btn="linked"
+                                                       data-date-today-highlight="true"
+                                                       data-date-week-start="1"
+                                                       data-provide="datepicker"
+                                                       data-val="true"
+                                                       data-val-required="Datum får inte vara tomt"
+                                                       id="enddatestring"
+                                                       name="enddatestring"
+                                                       type="text"
+                                                       value="" />
+                                                <span class="input-group-btn" style="width:0px;"></span>
+                                                <input class="form-control"
+                                                       data-autoajax="true"
+                                                       data-val="true"
+                                                       data-val-required="Klockslag får inte vara tomt"
+                                                       id="endtimestring"
+                                                       name="endtimestring"
+                                                       type="text"
+                                                       placeholder="19:57"
+                                                       value="" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="issueclassid">Ärendeklass</label>
+                                            <div class="col-md-9 input-group">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-sort-by-attributes"></span>
+                                                </span>
+                                                <select class="selectpicker"
+                                                        data-autoajax="true"
+                                                        data-width="100%"
+                                                        id="issueclassid"
+                                                        name="issueclassid">
+                                                    <option value="0">--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="prio">Prioritet</label>
+                                            <div class="col-md-9 input-group">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                                                </span>
+                                                <select class="selectpicker"
+                                                        data-autoajax="true"
+                                                        data-width="100%"
+                                                        id="prio"
+                                                        name="prio">
+                                                    <option value="0">--</option>
+                                                    <option value="1">Låg</option>
+                                                    <option value="2">Normal</option>
+                                                    <option value="3">Hög</option>
+                                                    <option value="4">Akut</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="responsible">Utförare</label>
+                                            <div class="col-md-9 input-group">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-user"></span>
+                                                </span>
+                                                <select class="selectpicker"
+                                                        data-autoajax="true"
+                                                        data-width="100%"
+                                                        id="responsible"
+                                                        name="responsible">
+                                                    <option value="0">--</option>
+                                                    <option value="41">Renew</option>
+                                                    <option value="42">Kund</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="description">Beskrivning</label>
+                                            <div class="col-md-9 input-group">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                </span>
+                                                <textarea class="form-control" rows="4"
+                                                          data-autoajax="true"
+                                                          data-val="true"
+                                                          data-val-length-max="400"
+                                                          data-val-length="Beskrivning får inte överstiga 400 tecken"
+                                                          id="description"
+                                                          name="description"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="areatype">Utrymme</label>
+                                            <div class="col-md-9 input-group">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-map-marker"></span>
+                                                </span>
+                                                <select class="selectpicker"
+                                                        data-autoajax="true"
+                                                        data-width="100%"
+                                                        id="areatype"
+                                                        name="areatype">
+                                                    <option value="0">--</option>
+                                                    <option value="10">Gemensamhet</option>
+                                                    <option value="20">Lägenhet</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group"><label class="control-label col-md-3" for="residentid" style="margin-left:-15px;margin-right:15px;">Boende</label>
+                                        <div class="col-md-9 input-group">
+                                            <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-unchecked">
+                                                </span></span>
+                                            <select data-autoajax="true" data-width="100%" id="residentid" name="residentid">
+                                            </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="firstname">Förnamn</label>
+                                            <div class="col-md-9 input-group">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-user"></span>
+                                                </span>
+                                                <input class="form-control"
+                                                       data-autoajax="true"
+                                                       data-val="true"
+                                                       data-val-length-max="45"
+                                                       data-val-length="Förnamn får inte överstiga 45 tecken"
+                                                       id="firstname"
+                                                       name="firstname"
+                                                       type="text"
+                                                       value="" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="lastname">Efternamn</label>
+                                            <div class="col-md-9 input-group">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-user"></span>
+                                                </span>
+                                                <input class="form-control"
+                                                       data-autoajax="true"
+                                                       data-val="true"
+                                                       data-val-length-max="45"
+                                                       data-val-length="Efternamn får inte överstiga 45 tecken"
+                                                       id="lastname"
+                                                       name="lastname"
+                                                       type="text"
+                                                       value="" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="phone">Telefon</label>
+                                            <div class="col-md-9 input-group">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-phone-alt"></span>
+                                                </span>
+                                                <input class="form-control"
+                                                       data-autoajax="true"
+                                                       data-val="true"
+                                                       data-val-length-max="20"
+                                                       data-val-length="Telefon får inte överstiga 20 tecken"
+                                                       id="phone"
+                                                       name="phone"
+                                                       onkeypress="return Site.Validation.isPhoneNumber(event)"
+                                                       type="text"
+                                                       value="" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="email">E-post</label>
+                                            <div class="col-md-9 input-group">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-envelope"></span>
+                                                </span>
+                                                <input class="form-control"
+                                                       data-autoajax="true"
+                                                       data-val="true"
+                                                       data-val-length-max="60"
+                                                       data-val-length="E-post får inte överstiga 60 tecken"
+                                                       id="email"
+                                                       name="email"
+                                                       type="text"
+                                                       value="" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="address">Adress</label>
+                                            <div class="col-md-9 input-group">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-map-marker"></span>
+                                                </span>
+                                                <input class="form-control"
+                                                       data-autoajax="true"
+                                                       data-val="true"
+                                                       data-val-length-max="45"
+                                                       data-val-length="Adress får inte överstiga 45 tecken"
+                                                       id="address"
+                                                       name="address"
+                                                       type="text"
+                                                       value="" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="floor">Våningsplan</label>
+                                            <div class="col-md-9 input-group">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-align-justify"></span>
+                                                </span>
+                                                <input class="form-control"
+                                                       data-autoajax="true"
+                                                       data-val="true"
+                                                       data-val-length-max="10"
+                                                       data-val-length="Våningsplan får inte överstiga 10 tecken"
+                                                       id="floor"
+                                                       name="floor"
+                                                       type="text"
+                                                       value="" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="apartment">Lägenhet</label>
+                                            <div class="col-md-9 input-group">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-home"></span>
+                                                </span>
+                                                <input class="form-control"
+                                                       data-autoajax="true"
+                                                       data-val="true"
+                                                       data-val-length-max="10"
+                                                       data-val-length="Lägenhet får inte överstiga 10 tecken"
+                                                       id="apartment"
+                                                       name="apartment"
+                                                       type="text"
+                                                       value="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button class="site-buttonmargin-left pull-right btn-success btn create-issue-form-buttons" data-action="4" type="button">Skapa</button>
+                                        <button class="site-buttonmargin-left pull-right btn-default btn create-issue-form-buttons" data-action="2" type="button">Stäng</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="issue-calendar-view">
+                <div class="col-md-12">
+                    <div id="issuecalendar-div"></div>
+                </div>
+            </div>
+            <div class="row" id="issue-schedule-view">
+                <div class="col-md-12">
+                    <div id="issueschedule-div"></div>
+                </div>
+            </div>
+            <div class="row" id="issue-list-view">
+                <div class="col-md-12">
+                    <table id="issuelist-table" class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th><!-- editcmdlink --></th>
+                                <th>ID</th>
+                                <th><!-- statusicon --></th>
+                                <th>Prio</th>
+                                <th>Titel</th>
+                                <th><!-- descriptionicon --></th>
+                                <th>Adress</th>
+                                <th><!-- responsibleicon --></th>
+                                <th>Tilldelad</th>
+                                <th><!-- statuscmdlink --></th>
+                                <th><!-- areatype --></th>
+                                <th><!-- startdate --></th>
+                                <th><!-- enddate --></th>
+                                <th><!-- status --></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot>
+                            <tr>
+                                <th><!-- editcmdlink --></th>
+                                <th>ID</th>
+                                <th><!-- statusicon --></th>
+                                <th>Prio</th>
+                                <th>Titel</th>
+                                <th><!-- descriptionicon --></th>
+                                <th>Adress</th>
+                                <th><!-- responsibleicon --></th>
+                                <th>Tilldelad</th>
+                                <th><!-- statuscmdlink --></th>
+                                <th><!-- areatype --></th>
+                                <th><!-- startdate --></th>
+                                <th><!-- enddate --></th>
+                                <th><!-- status --></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="page-issue-one" hidden>
+        <div class="col-md-2 site-page-control">
+            <h3 class="site-page-header">Ärende <span id="issue-page-one-number"></span> <img alt="" src="/img/help.png" id="page-description-tooltip" class="site-clickable" /></h3>
+
+            <div class="row" id="command-issue-panel">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>Status</h4>
+                            <span id="command-issue-panel-curr-status-10" hidden>
+                                <img alt="" src="/img/status10.png" /> Prelimin&#228;r
+                            </span>
+                            <span id="command-issue-panel-curr-status-20" hidden>
+                                <img alt="" src="/img/status20.png" /> &#214;ppen
+                            </span>
+                            <span id="command-issue-panel-curr-status-30" hidden>
+                                <img alt="" src="/img/status30.png" /> P&#229;b&#246;rjad
+                            </span>
+                            <span id="command-issue-panel-curr-status-40" hidden>
+                                <img alt="" src="/img/status40.png" /> St&#228;ngd
+                            </span>
+                            <span id="command-issue-panel-curr-status-50" hidden>
+                                <img alt="" src="/img/status50.png" /> Godk&#228;nd
+                            </span>
+                            <span id="command-issue-panel-curr-status-60" hidden>
+                                <img alt="" src="/img/status60.png" /> Slutf&#246;rd
+                            </span>
+                            <span id="command-issue-panel-curr-status-61" hidden>
+                                <img alt="" src="/img/status61.png" /> Fakturerad
+                            </span>
+                            <span id="command-issue-panel-curr-status-70" hidden>
+                                <img alt="" src="/img/status70.png" /> Avslagen
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row site-row-spacing">
+                        <div class="col-md-12">
+                            <h4>Åtgärder</h4>
+                        </div>
+                    </div>
+                    <div class="row" id="command-issue-panel-next-status-for-10" hidden>
+                        <div class="col-md-12">
+                            <p>
+                                <img alt="" class="command-issue-panel-nextstatus site-clickable" data-tostatus="20" data-tostatusname="&#214;ppen" src="/img/status20asnext.png" /> Till &#214;ppen
+                            </p>
+                            <p>
+                                <img alt="" class="command-issue-panel-nextstatus site-clickable" data-tostatus="70" data-tostatusname="Avslagen" src="/img/status70asnext.png" /> Till Avslagen
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row" id="command-issue-panel-next-status-for-20" hidden>
+                        <div class="col-md-12">
+                            <p>
+                                <img alt="" class="command-issue-panel-nextstatus site-clickable" data-tostatus="30" data-tostatusname="P&#229;b&#246;rjad" src="/img/status30asnext.png" /> Till P&#229;b&#246;rjad
+                            </p>
+                            <p>
+                                <img alt="" class="command-issue-panel-nextstatus site-clickable" data-tostatus="70" data-tostatusname="Avslagen" src="/img/status70asnext.png" /> Till Avslagen
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row" id="command-issue-panel-next-status-for-30" hidden>
+                        <div class="col-md-12">
+                            <p>
+                                <img alt="" class="command-issue-panel-nextstatus site-clickable" data-tostatus="40" data-tostatusname="St&#228;ngd" src="/img/status40asnext.png" /> Till St&#228;ngd
+                            </p>
+                            <p>
+                                <img alt="" class="command-issue-panel-nextstatus site-clickable" data-tostatus="70" data-tostatusname="Avslagen" src="/img/status70asnext.png" /> Till Avslagen
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row" id="command-issue-panel-next-status-for-40" hidden>
+                        <div class="col-md-12">
+                            <p>
+                                <img alt="" class="command-issue-panel-nextstatus site-clickable" data-tostatus="30" data-tostatusname="P&#229;b&#246;rjad" src="/img/status30asnext.png" /> Till P&#229;b&#246;rjad
+                            </p>
+                            <p>
+                                <img alt="" class="command-issue-panel-nextstatus site-clickable" data-tostatus="50" data-tostatusname="Godk&#228;nd" src="/img/status50asnext.png" /> Till Godk&#228;nd
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row" id="command-issue-panel-next-status-for-50" hidden>
+                        <div class="col-md-12">
+                            <p>
+                                <img alt="" class="command-issue-panel-nextstatus site-clickable" data-tostatus="60" data-tostatusname="Slutf&#246;rd" src="/img/status60asnext.png" /> Till Slutf&#246;rd
+                            </p>
+                            <p>
+                                <img alt="" class="command-issue-panel-nextstatus site-clickable" data-tostatus="61" data-tostatusname="Fakturerad" src="/img/status61asnext.png" /> Till Fakturerad
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row" id="command-issue-panel-next-status-for-60" hidden>
+                        <div class="col-md-12">
+                        </div>
+                    </div>
+                    <div class="row" id="command-issue-panel-next-status-for-61" hidden>
+                        <div class="col-md-12">
+                        </div>
+                    </div>
+                    <div class="row" id="command-issue-panel-next-status-for-70" hidden>
+                        <div class="col-md-12">
+                        </div>
+                    </div>
+                    <div class="row site-pagemargin-top">
+                        <div class="col-md-12">
+                            <img alt="" src="/img/return.png" id="command-issue-panel-exit" class="site-clickable" /> Tillbaka
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10 site-page-content">
+            <div class="row" id="issue-tabs-page">
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" class="active tabmenu"><a href="#">Uppgift</a></li>
+                        <li role="presentation" class=" tabmenu"><a href="#">Kommentarer</a></li>
+                        <li role="presentation" class=" tabmenu"><a href="#">Historik</a></li>
+                    </ul>
+                </div>
+            </div>
+            <br />
+            <div class="row" id="issue-tabproblem-page" hidden>
+                <div class="col-md-10 col-md-offset-1">
+                    <form id="issue-tabproblem-form">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input data-autoajax="true"
+                                       id="issueid"
+                                       name="issueid"
+                                       type="hidden"
+                                       value="" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="name">Titel</label>
+                                    <div class="col-md-9 input-group">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-header"></span>
+                                        </span>
+                                        <input class="form-control"
+                                               data-autoajax="true"
+                                               data-val="true"
+                                               data-val-length-min="2"
+                                               data-val-length-max="45"
+                                               data-val-length="Titel måste vara mellan 2 och 45 tecken"
+                                               data-val-required="Titel får inte vara tom"
+                                               id="name"
+                                               name="name"
+                                               type="text"
+                                               value="" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="assignedid">Tilldelad</label>
+                                    <div class="col-md-9 input-group">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-ban-circle"></span>
+                                        </span>
+                                        <select class="selectpicker"
+                                                data-autoajax="true"
+                                                data-width="100%"
+                                                id="assignedid"
+                                                name="assignedid">
+                                            <option value="128">Admin</option>
+                                            <option value="16">Ledning</option>
+                                            <option value="4">Tekniker</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="startdatestring">Startdatum</label>
+                                    <div class="col-md-9 input-group date clockpicker" id="date-container-for-startdatestring-2">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                        <input class="form-control"
+                                               data-autoajax="true"
+                                               data-date="2016-09-28"
+                                               data-date-autoclose="true"
+                                               data-date-calendar-weeks="true"
+                                               data-date-container="#date-container-for-startdatestring-2"
+                                               data-date-format="yyyy-mm-dd"
+                                               data-date-language="sv"
+                                               data-date-orientation="bottom left"
+                                               data-date-today-btn="linked"
+                                               data-date-today-highlight="true"
+                                               data-date-week-start="1"
+                                               data-provide="datepicker"
+                                               data-val="true"
+                                               data-val-required="Datum får inte vara tomt"
+                                               id="startdatestring"
+                                               name="startdatestring"
+                                               type="text"
+                                               value="" />
+                                        <span class="input-group-btn" style="width:0px;"></span>
+                                        <input class="form-control"
+                                               data-autoajax="true"
+                                               data-val="true"
+                                               data-val-required="Klockslag får inte vara tomt"
+                                               id="starttimestring"
+                                               name="starttimestring"
+                                               type="text"
+                                               placeholder="19:57"
+                                               value="" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="enddatestring">Slutdatum</label>
+                                    <div class="col-md-9 input-group date clockpicker" id="date-container-for-enddatestring-3">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                        <input class="form-control"
+                                               data-autoajax="true"
+                                               data-date="2016-09-28"
+                                               data-date-autoclose="true"
+                                               data-date-calendar-weeks="true"
+                                               data-date-container="#date-container-for-enddatestring-3"
+                                               data-date-format="yyyy-mm-dd"
+                                               data-date-language="sv"
+                                               data-date-orientation="bottom left"
+                                               data-date-today-btn="linked"
+                                               data-date-today-highlight="true"
+                                               data-date-week-start="1"
+                                               data-provide="datepicker"
+                                               data-val="true"
+                                               data-val-required="Datum får inte vara tomt"
+                                               id="enddatestring"
+                                               name="enddatestring"
+                                               type="text"
+                                               value="" />
+                                        <span class="input-group-btn" style="width:0px;"></span>
+                                        <input class="form-control"
+                                               data-autoajax="true"
+                                               data-val="true"
+                                               data-val-required="Klockslag får inte vara tomt"
+                                               id="endtimestring"
+                                               name="endtimestring"
+                                               type="text"
+                                               placeholder="19:57"
+                                               value="" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="issueclassid">Ärendeklass</label>
+                                    <div class="col-md-9 input-group">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-sort-by-attributes"></span>
+                                        </span>
+                                        <select class="selectpicker"
+                                                data-autoajax="true"
+                                                data-width="100%"
+                                                id="issueclassid"
+                                                name="issueclassid">
+                                            <option value="0">--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="prio">Prioritet</label>
+                                    <div class="col-md-9 input-group">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-exclamation-sign"></span>
+                                        </span>
+                                        <select class="selectpicker"
+                                                data-autoajax="true"
+                                                data-width="100%"
+                                                id="prio"
+                                                name="prio">
+                                            <option value="0">--</option>
+                                            <option value="1">Låg</option>
+                                            <option value="2">Normal</option>
+                                            <option value="3">Hög</option>
+                                            <option value="4">Akut</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="responsible">Utförare</label>
+                                    <div class="col-md-9 input-group">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                        </span>
+                                        <select class="selectpicker"
+                                                data-autoajax="true"
+                                                data-width="100%"
+                                                id="responsible"
+                                                name="responsible">
+                                            <option value="0">--</option>
+                                            <option value="41">Renew</option>
+                                            <option value="42">Kund</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="customername">Kund</label>
+                                    <div class="col-md-9 input-group">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th-list"></span>
+                                        </span>
+                                        <input class="form-control"
+                                               data-autoajax="true"
+                                               id="customername"
+                                               name="customername"
+                                               type="text"
+                                               value="" readonly />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="areatype">Utrymme</label>
+                                    <div class="col-md-9 input-group">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-map-marker"></span>
+                                        </span>
+                                        <select class="selectpicker"
+                                                data-autoajax="true"
+                                                data-width="100%"
+                                                id="areatype"
+                                                name="areatype">
+                                            <option value="0">--</option>
+                                            <option value="10">Gemensamhet</option>
+                                            <option value="20">Lägenhet</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="description">Beskrivning</label>
+                                    <div class="col-md-9 input-group">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </span>
+                                        <textarea class="form-control" rows="11"
+                                                  data-autoajax="true"
+                                                  data-val="true"
+                                                  data-val-length-max="400"
+                                                  data-val-length="Beskrivning får inte överstiga 400 tecken"
+                                                  id="description"
+                                                  name="description"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button class="site-buttonmargin-right btn-default btn issue-tabproblem-form-buttons" data-action="32" type="button">Uppdatera</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button class="site-buttonmargin-left pull-right btn-info btn issue-tabproblem-form-buttons" data-action="8" type="button">Spara</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row" id="issue-tabfeedback-page" hidden>
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="row" id="create-issuefeedback-panel" hidden>
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title" id="title">Skapa kommentar</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <form id="create-issuefeedback-form">
+                                        <div class="form-group">fff
+                                            <div class="input-group">
+                                                <input data-autoajax="true"
+                                                       id="issueid"
+                                                       name="issueid"
+                                                       type="hidden"
+                                                       value="" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="accesstype">Synlighet</label>
+                                                    <div class="col-md-9 input-group">
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-ban-circle"></span>
+                                                        </span>
+                                                        <select class="selectpicker"
+                                                                data-autoajax="true"
+                                                                data-width="100%"
+                                                                id="accesstype"
+                                                                name="accesstype">
+                                                            <option value="22">Publik</option>
+                                                            <option value="21">Privat</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3" style="margin-left:-15px;margin-right:15px;" for="description">Kommentar</label>
+                                                    <div class="col-md-9 input-group">
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-pencil"></span>
+                                                        </span>
+                                                        <textarea class="form-control" rows="3"
+                                                                  data-autoajax="true"
+                                                                  data-val="true"
+                                                                  data-val-length-min="2"
+                                                                  data-val-length-max="200"
+                                                                  data-val-length="Kommentar måste vara mellan 2 och 200 tecken"
+                                                                  data-val-required="Kommentar får inte vara tom"
+                                                                  id="description"
+                                                                  name="description"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <button class="site-buttonmargin-left pull-right btn-success btn create-issuefeedback-form-buttons" data-action="4" type="button">Skapa</button>
+                                                <button class="site-buttonmargin-left pull-right btn-default btn create-issuefeedback-form-buttons" data-action="2" type="button">Stäng</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form id="issue-tabfeedback-form">
+                        <table id="issue-tabfeedback-table" class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th><!-- accessicon --></th>
+                                    <th>Kommentar</th>
+                                    <th>Från</th>
+                                    <th>Datum</th>
+                                    <th>Tid</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot>
+                                <tr>
+                                    <th><!-- accessicon --></th>
+                                    <th>Kommentar</th>
+                                    <th>Från</th>
+                                    <th>Datum</th>
+                                    <th>Tid</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button class="site-buttonmargin-right btn-default btn issue-tabfeedback-form-buttons" data-action="32" type="button">Uppdatera</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button class="site-buttonmargin-left pull-right btn-success btn issue-tabfeedback-form-buttons" data-action="4" type="button">Skapa</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row" id="issue-tabhistory-page" hidden>
+                <div class="col-md-10 col-md-offset-1">
+                    <form id="issue-tabhistory-form">
+                        <table id="issue-tabhistory-table" class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Från status</th>
+                                    <th>Till status</th>
+                                    <th></th>
+                                    <th>Ändrad av</th>
+                                    <th>Datum</th>
+                                    <th>Klockslag</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Från status</th>
+                                    <th>Till status</th>
+                                    <th></th>
+                                    <th>Ändrad av</th>
+                                    <th>Datum</th>
+                                    <th>Klockslag</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button class="site-buttonmargin-right btn-default btn issue-tabhistory-form-buttons" data-action="32" type="button">Uppdatera</button>
+                            </div>
+                            <div class="col-md-6">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>-->

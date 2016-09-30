@@ -8,7 +8,7 @@ export default class Index extends Component {
         return <div>
         <Row id="page-issue-all">
             <Col md={2} className="col-md-2 site-page-control">
-            <h3 className="site-page-header">Ärenden <img src={'../../img/help.png'} id="page-description-tooltip" className="site-clickable" /></h3>
+            <h3 className="site-page-header">Ärenden <img src={'../../../App/img/help.png'} id="page-description-tooltip" className="site-clickable" /></h3>
             <Row id="filter-issue-panel">
                 <Col md={12}>
                 <Row>
@@ -493,56 +493,56 @@ value="" />
     <table id="issuelist-table" className="table table-striped table-hover">
         <thead>
             <tr>
-                <th>                    // editcmdlink 
+                <th>                     
                 </th>
                 <th>ID</th>
-                <th>                    // statusicon 
+                <th>                     
                 </th>
                 <th>Prio</th>
                 <th>Titel</th>
-                <th>                    // descriptionicon 
+                <th>                     
                 </th>
                 <th>Adress</th>
-                <th>                    // responsibleicon 
+                <th>                     
                 </th>
                 <th>Tilldelad</th>
-                <th>                    // statuscmdlink 
+                <th>                    
                 </th>
-                <th>                    // areatype 
+                <th>                     
                 </th>
-                <th>                    // startdate 
+                <th>                     
                 </th> 
-				<th>                    // enddate 
+				<th>                    
                 </th>
-                <th>                    // status 
+                <th>                     
                 </th>
             </tr>
         </thead>
         <tbody></tbody>
         <tfoot>
             <tr>
-                <th>                   // editcmdlink 
+                <th>                    
                 </th>
                 <th>ID</th>
-                <th>                    // statusicon 
+                <th>                     
                 </th>
                 <th>Prio</th>
                 <th>Titel</th>
-                <th>                    // descriptionicon 
+                <th>                     
                 </th>
                 <th>Adress</th>
-                <th>                    // responsibleicon 
+                <th>                     
                 </th>
                 <th>Tilldelad</th>
-                <th>                    // statuscmdlink 
+                <th>                    
                 </th>
-                <th>                    // areatype 
+                <th>                     
                 </th>
-                <th>                    // startdate 
+                <th>                     
                 </th>
-                <th>                    // enddate 
+                <th>                    
                 </th>
-                <th>                    // status 
+                <th>                     
                 </th>
             </tr>
         </tfoot>
@@ -553,35 +553,35 @@ value="" />
 </Row>
 <Row id="page-issue-one" hidden>
     <Col md={2} className="site-page-control">
-    <h3 className="site-page-header">Ärende <span id="issue-page-one-number"></span> <img src={'../../img/help.png'} id="page-description-tooltip" className="site-clickable" /></h3>
+    <h3 className="site-page-header">Ärende <span id="issue-page-one-number"></span> <img src={'../../../App/img/help.png'} id="page-description-tooltip" className="site-clickable" /></h3>
     <Row id="command-issue-panel">
         <Col md={12}>
         <Row>
             <Col md={12}>
             <h4>Status</h4>
             <span id="command-issue-panel-curr-status-10" hidden>
-                <img src={'../../img/status10.png'} /> Prelimin&#228;r
+                <img src={'../../../App/img/status10.png'} /> Prelimin&#228;r
             </span>
             <span id="command-issue-panel-curr-status-20" hidden>
-                <img src={'../../img/status20.png'} /> &#214;ppen
+                <img src={'../../../App/img/status20.png'} /> &#214;ppen
             </span>
             <span id="command-issue-panel-curr-status-30" hidden>
-                <img src={'../../img/status30.png'} /> P&#229;b&#246;rjad
+                <img src={'../../../App/img/status30.png'} /> P&#229;b&#246;rjad
             </span>
             <span id="command-issue-panel-curr-status-40" hidden>
-                <img src={'../../img/status40.png'} /> St&#228;ngd
+                <img src={'../../../App/img/status40.png'} /> St&#228;ngd
             </span>
             <span id="command-issue-panel-curr-status-50" hidden>
-                <img src={'../../img/status50.png'} /> Godk&#228;nd
+                <img src={'../../../App/img/status50.png'} /> Godk&#228;nd
             </span>
             <span id="command-issue-panel-curr-status-60" hidden>
-                <img src={'../../img/status60.png'} /> Slutf&#246;rd
+                <img src={'../../../App/img/status60.png'} /> Slutf&#246;rd
             </span>
             <span id="command-issue-panel-curr-status-61" hidden>
-                <img src={'../../img/status61.png'} /> Fakturerad
+                <img src={'../../../App/img/status61.png'} /> Fakturerad
             </span>
             <span id="command-issue-panel-curr-status-70" hidden>
-                <img src={'../../img/status70.png'} /> Avslagen
+                <img src={'../../../App/img/status70.png'} /> Avslagen
             </span>
             </Col>
         </Row>
@@ -593,50 +593,50 @@ value="" />
         <Row id="command-issue-panel-next-status-for-10" hidden>
             <Col md={12}>
             <p>
-                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="20" data-tostatusname="&#214;ppen" src={'../../img/status20asnext.png'} /> Till &#214;ppen
+                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="20" data-tostatusname="&#214;ppen" src={'../../../App/img/status20asnext.png'} /> Till &#214;ppen
             </p>
             <p>
-                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="70" data-tostatusname="Avslagen" src={'../../img/status70asnext.png'} /> Till Avslagen
+                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="70" data-tostatusname="Avslagen" src={'../../../App/img/status70asnext.png'} /> Till Avslagen
             </p>
             </Col>
         </Row>
         <Row id="command-issue-panel-next-status-for-20" hidden>
             <Col md={12}>
             <p>
-                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="30" data-tostatusname="P&#229;b&#246;rjad" src={'../../img/status30asnext.png'} /> Till P&#229;b&#246;rjad
+                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="30" data-tostatusname="P&#229;b&#246;rjad" src={'../../../App/img/status30asnext.png'} /> Till P&#229;b&#246;rjad
             </p>
             <p>
-                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="70" data-tostatusname="Avslagen" src={'../../img/status70asnext.png'} /> Till Avslagen
+                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="70" data-tostatusname="Avslagen" src={'../../../App/img/status70asnext.png'} /> Till Avslagen
             </p>
             </Col>
         </Row>
         <Row id="command-issue-panel-next-status-for-30" hidden>
             <Col md={12}>
             <p>
-                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="40" data-tostatusname="St&#228;ngd" src={'../../img/status40asnext.png'} /> Till St&#228;ngd
+                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="40" data-tostatusname="St&#228;ngd" src={'../../../App/img/status40asnext.png'} /> Till St&#228;ngd
             </p>
             <p>
-                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="70" data-tostatusname="Avslagen" src={'../../img/status70asnext.png'} /> Till Avslagen
+                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="70" data-tostatusname="Avslagen" src={'../../../App/img/status70asnext.png'} /> Till Avslagen
             </p>
             </Col>
         </Row>
         <Row id="command-issue-panel-next-status-for-40" hidden>
             <Col md={12}>
             <p>
-                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="30" data-tostatusname="P&#229;b&#246;rjad" src={'../../img/status30asnext.png'} /> Till P&#229;b&#246;rjad
+                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="30" data-tostatusname="P&#229;b&#246;rjad" src={'../../../App/img/status30asnext.png'} /> Till P&#229;b&#246;rjad
             </p>
             <p>
-                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="50" data-tostatusname="Godk&#228;nd" src={'../../img/status50asnext.png'} /> Till Godk&#228;nd
+                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="50" data-tostatusname="Godk&#228;nd" src={'../../../App/img/status50asnext.png'} /> Till Godk&#228;nd
             </p>
             </Col>
         </Row>
         <Row id="command-issue-panel-next-status-for-50" hidden>
             <Col md={12}>
             <p>
-                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="60" data-tostatusname="Slutf&#246;rd" src={'../../img/status60asnext.png'} /> Till Slutf&#246;rd
+                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="60" data-tostatusname="Slutf&#246;rd" src={'../../../App/img/status60asnext.png'} /> Till Slutf&#246;rd
             </p>
             <p>
-                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="61" data-tostatusname="Fakturerad" src={'../../img/status61asnext.png'} /> Till Fakturerad
+                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="61" data-tostatusname="Fakturerad" src={'../../../App/img/status61asnext.png'} /> Till Fakturerad
             </p>
             </Col>
         </Row>
@@ -654,7 +654,7 @@ value="" />
         </Row>
         <Row className="site-pagemargin-top">
             <Col md={12}>
-            <img src={'../../img/return.png'} id="command-issue-panel-exit" className="site-clickable" /> Tillbaka
+            <img src={'../../../App/img/return.png'} id="command-issue-panel-exit" className="site-clickable" /> Tillbaka
             </Col>
         </Row>
         </Col>
@@ -984,7 +984,7 @@ name="description" />
     <thead>
         <tr>
             <th>
-                // accessicon 
+                 
             </th>
             <th>Kommentar</th>
             <th>Från</th>
@@ -996,7 +996,7 @@ name="description" />
     <tfoot>
         <tr>
             <th>
-                // accessicon 
+                 
             </th>
             <th>Kommentar</th>
             <th>Från</th>

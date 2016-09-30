@@ -5,7 +5,7 @@ import { Grid, Row, Col, Glyphicon, Button } from 'react-bootstrap';
 export default class Index extends Component {
 
     render() {
-        return
+        return <div>
         <Row id="page-issue-all">
             <Col md={2} className="col-md-2 site-page-control">
             <h3 className="site-page-header">Ärenden <img src={'/../../img/help.png'} id="page-description-tooltip" className="site-clickable" /></h3>
@@ -475,8 +475,8 @@ value="" />
 </Row>
 </form>
 </div>
-</div>
-</Col>
+				</div>
+				</Col>
 </Row>
 				<Row id="issue-calendar-view">
     <Col md={12}>
@@ -912,11 +912,11 @@ value="" />
         <Col md={10} mdOffset={1}>
         <Row id="create-issuefeedback-panel" hidden>
             <Col md={12}>
-            <Row className="panel panel-default">
+            <div className="panel panel-default">
                 <div className="panel-heading">
                     <h3 className="panel-title" id="title">Skapa kommentar</h3>
                 </div>
-                <Col className="panel-body">
+                <div className="panel-body">
                 <form id="create-issuefeedback-form">
                     <div className="form-group">
                         <div className="input-group">
@@ -946,7 +946,7 @@ value="" />
                         </Col>
                     </div>
                     </Col>
-                    <Col md={7}>
+					<Col md={7}>
                     <div className="form-group">
                         <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="description">Kommentar</label>
                         <Col md={9} className="input-group">
@@ -965,21 +965,21 @@ value="" />
                         </Col>
                     </div>
                     </Col>
-                 </Row>
-            <Row>
-                <Col md={6}>
-                </Col>
-                <Col md={6}>
-                <Button className="site-buttonmargin-left pull-right btn-success btn create-issuefeedback-form-buttons" data-action="4">Skapa</Button>
-                <Button className="site-buttonmargin-left pull-right btn-default btn create-issuefeedback-form-buttons" data-action="2">Stäng</Button>
-                </Col>
-            </Row>
-            </form>
-            </div>
-        </div>
-        </Col>
-    </Row>
-    <form id="issue-tabfeedback-form">
+                    </Row>
+					<Row>
+						<Col md={6}>
+						</Col>
+						<Col md={6}>
+							<Button className="site-buttonmargin-left pull-right btn-success btn create-issuefeedback-form-buttons" data-action="4">Skapa</Button>
+							<Button className="site-buttonmargin-left pull-right btn-default btn create-issuefeedback-form-buttons" data-action="2">Stäng</Button>
+						</Col>
+					</Row>
+				</form>
+				</div>
+			</div>
+			</Col>
+		</Row>
+		<form id="issue-tabfeedback-form">
         <table id="issue-tabfeedback-table" className="table table-striped table-hover">
             <thead>
                 <tr>
@@ -1015,8 +1015,8 @@ value="" />
             </Col>
         </Row>
     </form>
-    </Col>
-</Row>
+		</Col>
+	</Row>
 <Row id="issue-tabhistory-page" hidden>
     <Col className="col-md-10 col-md-offset-1">
     <form id="issue-tabhistory-form">
@@ -1056,7 +1056,8 @@ value="" />
 </Row>
 </Col>
 </Row>
-            ;
+            </div>
+			;
     }
 
 };

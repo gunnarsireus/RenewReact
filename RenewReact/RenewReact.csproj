@@ -401,8 +401,6 @@
     <Content Include="App\Jsx\Login\components\ValidateAccountPanel.js" />
     <Content Include="App\Jsx\Login\components\ForgotAccountPanel.js" />
     <Content Include="App\Jsx\Pagaende\Index.js" />
-    <Content Include="App\Jsx\Pagaende\Pågående.html" />
-    <Content Include="App\Jsx\Pagaende\Pågåendetxt.html" />
     <Content Include="App\js\DataTables-1.10.4\dataTables.autoFill.js" />
     <Content Include="App\js\DataTables-1.10.4\dataTables.autoFill.min.js" />
     <Content Include="App\js\DataTables-1.10.4\dataTables.bootstrap.js" />

@@ -5,10 +5,10 @@ import { Grid, Row, Col, Glyphicon, Button } from 'react-bootstrap';
 export default class Index extends Component {
 
     render() {
-        return    <div>
+        return <div>
         <Row id="page-issue-all">
             <Col md={2} className="col-md-2 site-page-control">
-            <h3 className="site-page-header">Ärenden <img src={'/../../img/help.png'} id="page-description-tooltip" className="site-clickable" /></h3>
+            <h3 className="site-page-header">Ärenden <img src={'../../img/help.png'} id="page-description-tooltip" className="site-clickable" /></h3>
             <Row id="filter-issue-panel">
                 <Col md={12}>
                 <Row>
@@ -475,8 +475,8 @@ value="" />
 </Row>
 </form>
 </div>
-</div>
-</Col>
+				</div>
+				</Col>
 </Row>
 				<Row id="issue-calendar-view">
     <Col md={12}>
@@ -553,35 +553,35 @@ value="" />
 </Row>
 <Row id="page-issue-one" hidden>
     <Col md={2} className="site-page-control">
-    <h3 className="site-page-header">Ärende <span id="issue-page-one-number"></span> <img src={'/../../img/help.png'} id="page-description-tooltip" className="site-clickable" /></h3>
+    <h3 className="site-page-header">Ärende <span id="issue-page-one-number"></span> <img src={'../../img/help.png'} id="page-description-tooltip" className="site-clickable" /></h3>
     <Row id="command-issue-panel">
         <Col md={12}>
         <Row>
             <Col md={12}>
             <h4>Status</h4>
             <span id="command-issue-panel-curr-status-10" hidden>
-                <img src={'/../../img/status10.png'} /> Prelimin&#228;r
+                <img src={'../../img/status10.png'} /> Prelimin&#228;r
             </span>
             <span id="command-issue-panel-curr-status-20" hidden>
-                <img src={'/../../img/status20.png'} /> &#214;ppen
+                <img src={'../../img/status20.png'} /> &#214;ppen
             </span>
             <span id="command-issue-panel-curr-status-30" hidden>
-                <img src={'/../../img/status30.png'} /> P&#229;b&#246;rjad
+                <img src={'../../img/status30.png'} /> P&#229;b&#246;rjad
             </span>
             <span id="command-issue-panel-curr-status-40" hidden>
-                <img src={'/../../img/status40.png'} /> St&#228;ngd
+                <img src={'../../img/status40.png'} /> St&#228;ngd
             </span>
             <span id="command-issue-panel-curr-status-50" hidden>
-                <img src={'/../../img/status50.png'} /> Godk&#228;nd
+                <img src={'../../img/status50.png'} /> Godk&#228;nd
             </span>
             <span id="command-issue-panel-curr-status-60" hidden>
-                <img src={'/../../img/status60.png'} /> Slutf&#246;rd
+                <img src={'../../img/status60.png'} /> Slutf&#246;rd
             </span>
             <span id="command-issue-panel-curr-status-61" hidden>
-                <img src={'/../../img/status61.png'} /> Fakturerad
+                <img src={'../../img/status61.png'} /> Fakturerad
             </span>
             <span id="command-issue-panel-curr-status-70" hidden>
-                <img src={'/../../img/status70.png'} /> Avslagen
+                <img src={'../../img/status70.png'} /> Avslagen
             </span>
             </Col>
         </Row>
@@ -593,50 +593,50 @@ value="" />
         <Row id="command-issue-panel-next-status-for-10" hidden>
             <Col md={12}>
             <p>
-                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="20" data-tostatusname="&#214;ppen" src={'/../../img/status20asnext.png'} /> Till &#214;ppen
+                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="20" data-tostatusname="&#214;ppen" src={'../../img/status20asnext.png'} /> Till &#214;ppen
             </p>
             <p>
-                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="70" data-tostatusname="Avslagen" src={'/../../img/status70asnext.png'} /> Till Avslagen
+                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="70" data-tostatusname="Avslagen" src={'../../img/status70asnext.png'} /> Till Avslagen
             </p>
             </Col>
         </Row>
         <Row id="command-issue-panel-next-status-for-20" hidden>
             <Col md={12}>
             <p>
-                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="30" data-tostatusname="P&#229;b&#246;rjad" src={'/../../img/status30asnext.png'} /> Till P&#229;b&#246;rjad
+                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="30" data-tostatusname="P&#229;b&#246;rjad" src={'../../img/status30asnext.png'} /> Till P&#229;b&#246;rjad
             </p>
             <p>
-                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="70" data-tostatusname="Avslagen" src={'/../../img/status70asnext.png'} /> Till Avslagen
+                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="70" data-tostatusname="Avslagen" src={'../../img/status70asnext.png'} /> Till Avslagen
             </p>
             </Col>
         </Row>
         <Row id="command-issue-panel-next-status-for-30" hidden>
             <Col md={12}>
             <p>
-                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="40" data-tostatusname="St&#228;ngd" src={'/../../img/status40asnext.png'} /> Till St&#228;ngd
+                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="40" data-tostatusname="St&#228;ngd" src={'../../img/status40asnext.png'} /> Till St&#228;ngd
             </p>
             <p>
-                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="70" data-tostatusname="Avslagen" src={'/../../img/status70asnext.png'} /> Till Avslagen
+                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="70" data-tostatusname="Avslagen" src={'../../img/status70asnext.png'} /> Till Avslagen
             </p>
             </Col>
         </Row>
         <Row id="command-issue-panel-next-status-for-40" hidden>
             <Col md={12}>
             <p>
-                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="30" data-tostatusname="P&#229;b&#246;rjad" src={'/../../img/status30asnext.png'} /> Till P&#229;b&#246;rjad
+                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="30" data-tostatusname="P&#229;b&#246;rjad" src={'../../img/status30asnext.png'} /> Till P&#229;b&#246;rjad
             </p>
             <p>
-                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="50" data-tostatusname="Godk&#228;nd" src={'/../../img/status50asnext.png'} /> Till Godk&#228;nd
+                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="50" data-tostatusname="Godk&#228;nd" src={'../../img/status50asnext.png'} /> Till Godk&#228;nd
             </p>
             </Col>
         </Row>
         <Row id="command-issue-panel-next-status-for-50" hidden>
             <Col md={12}>
             <p>
-                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="60" data-tostatusname="Slutf&#246;rd" src={'/../../img/status60asnext.png'} /> Till Slutf&#246;rd
+                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="60" data-tostatusname="Slutf&#246;rd" src={'../../img/status60asnext.png'} /> Till Slutf&#246;rd
             </p>
             <p>
-                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="61" data-tostatusname="Fakturerad" src={'/../../img/status61asnext.png'} /> Till Fakturerad
+                <img className="command-issue-panel-nextstatus site-clickable" data-tostatus="61" data-tostatusname="Fakturerad" src={'../../img/status61asnext.png'} /> Till Fakturerad
             </p>
             </Col>
         </Row>
@@ -654,7 +654,7 @@ value="" />
         </Row>
         <Row className="site-pagemargin-top">
             <Col md={12}>
-            <img src={'/../../img/return.png'} id="command-issue-panel-exit" className="site-clickable" /> Tillbaka
+            <img src={'../../img/return.png'} id="command-issue-panel-exit" className="site-clickable" /> Tillbaka
             </Col>
         </Row>
         </Col>
@@ -912,11 +912,11 @@ name="description" />
     <Col md={10} mdOffset={1}>
     <Row id="create-issuefeedback-panel" hidden>
         <Col md={12}>
-        <Row className="panel panel-default">
+        <div className="panel panel-default">
             <div className="panel-heading">
                 <h3 className="panel-title" id="title">Skapa kommentar</h3>
             </div>
-            <Col className="panel-body">
+            <div className="panel-body">
             <form id="create-issuefeedback-form">
                 <div className="form-group">
                     <div className="input-group">
@@ -970,8 +970,8 @@ name="description" />
 <Col md={6}>
 </Col>
 <Col md={6}>
-<Button className="site-buttonmargin-left pull-right btn-success btn create-issuefeedback-form-buttons" data-action="4">Skapa</Button>
-<Button className="site-buttonmargin-left pull-right btn-default btn create-issuefeedback-form-buttons" data-action="2">Stäng</Button>
+    <Button className="site-buttonmargin-left pull-right btn-success btn create-issuefeedback-form-buttons" data-action="4">Skapa</Button>
+    <Button className="site-buttonmargin-left pull-right btn-default btn create-issuefeedback-form-buttons" data-action="2">Stäng</Button>
 </Col>
 </Row>
 </form>
@@ -980,40 +980,40 @@ name="description" />
 </Col>
 </Row>
 <form id="issue-tabfeedback-form">
-    <table id="issue-tabfeedback-table" className="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th>
-                    // accessicon 
-                </th>
-                <th>Kommentar</th>
-                <th>Från</th>
-                <th>Datum</th>
-                <th>Tid</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-        <tfoot>
-            <tr>
-                <th>
-                    // accessicon 
-                </th>
-                <th>Kommentar</th>
-                <th>Från</th>
-                <th>Datum</th>
-                <th>Tid</th>
-            </tr>
-        </tfoot>
-    </table>
-    <br />
-    <Row>
-        <Col md={6}>
-        <Button className="site-buttonmargin-right btn-default btn issue-tabfeedback-form-buttons" data-action="32">Uppdatera</Button>
-        </Col>
-        <Col md={6}>
-        <Button className="site-buttonmargin-left pull-right btn-success btn issue-tabfeedback-form-buttons" data-action="4">Skapa</Button>
-        </Col>
-    </Row>
+<table id="issue-tabfeedback-table" className="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                // accessicon 
+            </th>
+            <th>Kommentar</th>
+            <th>Från</th>
+            <th>Datum</th>
+            <th>Tid</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+    <tfoot>
+        <tr>
+            <th>
+                // accessicon 
+            </th>
+            <th>Kommentar</th>
+            <th>Från</th>
+            <th>Datum</th>
+            <th>Tid</th>
+        </tr>
+    </tfoot>
+</table>
+<br />
+<Row>
+    <Col md={6}>
+    <Button className="site-buttonmargin-right btn-default btn issue-tabfeedback-form-buttons" data-action="32">Uppdatera</Button>
+    </Col>
+    <Col md={6}>
+    <Button className="site-buttonmargin-left pull-right btn-success btn issue-tabfeedback-form-buttons" data-action="4">Skapa</Button>
+    </Col>
+</Row>
 </form>
 </Col>
 </Row>

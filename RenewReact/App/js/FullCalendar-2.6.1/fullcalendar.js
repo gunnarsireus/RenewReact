@@ -11896,3 +11896,4 @@ fcViews.agendaWeek = {
 
 return FC; // export for Node/CommonJS
 });
+export FC

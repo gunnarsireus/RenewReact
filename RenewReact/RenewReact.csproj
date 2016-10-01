@@ -323,6 +323,9 @@
     <Content Include="App\css\select2\select2.css" />
     <Content Include="App\css\select2\site.css" />
     <Content Include="App\css\site.css" />
+    <Content Include="App\Jsx\Common\Calendar.js" />
+    <Content Include="App\Jsx\Common\CalendarApp.js" />
+    <Content Include="App\Jsx\Common\External.js" />
     <Content Include="App\Jsx\Erbjudanden\Index.js" />
     <Content Include="App\Jsx\Felanmalan\Index.js" />
     <Content Include="App\Jsx\Home\components\rightpart.js" />
@@ -525,6 +528,8 @@
     <Content Include="App\Views\Login\login.js" />
     <Content Include="App\Views\Nyheter\nyheter.html" />
     <Content Include="App\Views\Nyheter\nyheter.js" />
+    <Content Include="App\Views\Pagaende\calendar.html" />
+    <Content Include="App\Views\Pagaende\calendar.js" />
     <Content Include="App\Views\Pagaende\pagaende.html" />
     <Content Include="App\Views\Pagaende\pagaende.js" />
     <Content Include="App\Views\Personal\personal.html" />

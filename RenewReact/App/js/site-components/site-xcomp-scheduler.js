@@ -182,3 +182,4 @@ Site.Scheduler = function (element, slotLeftClick, itemLeftClick, itemRightClick
         return hh + ':' + mm;
     }
 }
+module.exports.SiteScheduler = Site.Scheduler;

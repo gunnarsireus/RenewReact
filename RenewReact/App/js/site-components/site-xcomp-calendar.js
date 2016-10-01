@@ -117,7 +117,7 @@ Site.Calendar = function (element, slotLeftClick, itemLeftClick, itemRightClick,
         }
     });
 
-    this.reload = function (items) {
+   this.reload = function (items) {
         this.calendar.fullCalendar('removeEvents');
         this.calendar.fullCalendar('addEventSource', items);
     }
@@ -164,3 +164,4 @@ Site.Calendar = function (element, slotLeftClick, itemLeftClick, itemRightClick,
         return hh + ':' + mm;
     }
 }
+module.exports.SiteCalendar = Site.Calendar;

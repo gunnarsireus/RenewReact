@@ -2,15 +2,15 @@
 import jquery from 'jquery';
 import jqueryUi from 'jquery-ui';
 import moment from 'moment';
-import bootstrat from 'react-bootstrap';
 import fullcalendar from 'fullcalendar';
-
+import styles from '../../css/Fullcalendar.css';
+import styles2 from '../../css/FullCalendar-2.6.1/fullcalendar.css'
 export default class Calendar extends Component {
     constructor(props) {
         super(props);
     };
     render() {
-        return <div id="calendar"></div>;
+        return <div id="calendar"></div>
     }
     componentDidMount() {
         $('#calendar').fullCalendar({
@@ -31,3 +31,4 @@ export default class Calendar extends Component {
         })
     }
 }
+

@@ -238,6 +238,7 @@
     <Compile Include="Utils\WebConfig.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\css\Fullcalendar.css" />
     <Content Include="App\Jsx\ArendeKlasser\Index.js" />
     <Content Include="App\Jsx\Arkiverade\Index.js" />
     <Content Include="App\Jsx\Boende\Index.js" />
@@ -427,8 +428,8 @@
     <Content Include="App\js\DataTables-1.10.4\dataTables.tableTools.min.js" />
     <Content Include="App\js\DataTables-1.10.4\jquery.dataTables.js" />
     <Content Include="App\js\DataTables-1.10.4\jquery.dataTables.min.js" />
-    <Content Include="App\js\FullCalendar-2.6.1\fullcalendar.js" />
-    <Content Include="App\js\FullCalendar-2.6.1\fullscheduler.js" />
+    <Content Include="App\js\FullCalendar-2.6.1\fullcalendarold.js" />
+    <Content Include="App\js\FullCalendar-2.6.1\fullschedulerold.js" />
     <Content Include="App\js\FullCalendar-2.6.1\lang\sv.js" />
     <Content Include="App\js\FullCalendar-2.6.1\moment.min.js" />
     <Content Include="App\js\platform\additional-methods.js" />

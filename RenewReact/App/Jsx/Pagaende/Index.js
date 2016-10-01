@@ -1,12 +1,28 @@
 import React, { Component } from 'react';
 import Input from '../Common/Input.js';
-import fullcalendar from 'fullcalendar';
+import jquery from 'jquery';
+import jqueryUi from 'jquery-ui';
 import moment from 'moment';
+import fullcalendar from 'fullcalendar';
+import fullcalendarScheduler from 'fullcalendar-scheduler';
+import style0 from '../../css/FullCalendar-2.6.1/fullcalendar.css';
+//import from '../../css/bootstrap-select.css';
+//import from '../../css/bootstrap-theme.css';
+//import from '../../css/bootstrap.css';
+import style from '../../css/site.css';
+import SiteCalendar from '../../js/site-components/site-xcomp-calendar.js';
+import SiteScheduler from '../../js/site-components/site-xcomp-scheduler.js';
 
 import { Grid, Row, Col, Glyphicon, Button } from 'react-bootstrap';
 
 export default class Index extends Component {
-
+    constructor(props) {
+        super(props);
+    };
+    componentDidMount() {
+        //SiteCalendar.element.fullCalendar();
+        //SiteScheduler();
+    }
     render() {
         return <div>
         <Row id="page-issue-all">

@@ -1,9 +1,6 @@
 ﻿// jQuery
 //require('../Scripts/kendo/2015.1.318/jquery.min'); //jquery 1.9.1
 require('jquery'); //jquery 1.11.2
-require('jquery-ui');
-require('jquery-validation');
-require('block-ui');
 
 // PubSub
 require('../Scripts/pubsub.js');
@@ -56,7 +53,7 @@ require('../App/js/platform/bootstrap.js');
 //require('../App/js/DataTables-1.10.4/dataTables.bootstrap.js');
 //require('../App/js/select2/select2.full.js');
 //require('../App/js/select2/i18n/sv.js');
-//require('../App/js/site-base.js');
+require('../App/js/site-base.js');
 //require('..App/js/FullCalendar-2.6.1/fullcalendar.js');
 //require('..App/js/FullCalendar-2.6.1/moment.min.js');
 

@@ -27,8 +27,8 @@ require('../App/css/bootstrap.css');
 //require('../App/css/bootstrap-select.css');
 //require('../App/css/select2/select2.css');
 //require('../App/css/select2/bootstrap-select2.css');
-require('../App/css/FullCalendar-2.6.1/fullcalendar.css');
-require('../App/css/FullCalendar-2.6.1/fullscheduler.css');
+//require('../App/css/FullCalendar-2.6.1/fullcalendar.css');
+//require('../App/css/FullCalendar-2.6.1/fullscheduler.css');
 //require('../App/css/select2/site.css');
 require('../App/css/site.css');
 
@@ -57,8 +57,8 @@ require('../App/js/platform/bootstrap.js');
 //require('../App/js/select2/select2.full.js');
 //require('../App/js/select2/i18n/sv.js');
 //require('../App/js/site-base.js');
-require('..App/js/FullCalendar-2.6.1/fullcalendar.js');
-require('..App/js/FullCalendar-2.6.1/moment.min.js');
+//require('..App/js/FullCalendar-2.6.1/fullcalendar.js');
+//require('..App/js/FullCalendar-2.6.1/moment.min.js');
 
 //site-componenets
 require('../App/js/site-components/site-xcomp-autoajax.js');

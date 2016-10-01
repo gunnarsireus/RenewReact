@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import fullcalendar from 'fullcalendar';
+import moment from 'moment';
 import jqueryUi from 'jquery-ui';
 
 export default class External extends Component {

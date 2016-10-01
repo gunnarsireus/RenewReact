@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import Input from '../Common/Input.js';
+import fullcalendar from 'fullcalendar';
+import moment from 'moment';
+
 import { Grid, Row, Col, Glyphicon, Button } from 'react-bootstrap';
 
 export default class Index extends Component {
@@ -139,7 +142,7 @@ export default class Index extends Component {
 					<Row>
 					<Col md={6}>
 						<div className="form-group">
-						<label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="name">Titel</label>
+						<label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="name">Titel</label>
 							<Col md={9} className="input-group">
 							<span className="input-group-addon">
 							<span className="glyphicon glyphicon-header"></span>
@@ -158,7 +161,7 @@ export default class Index extends Component {
 					</Col>
 					</div>				
 					    <div className="form-group">
-					<label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="assignedid">Tilldelad</label>
+					<label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="assignedid">Tilldelad</label>
 					<Col md={9} className="input-group">
 						<span className="input-group-addon">
 						<span className="glyphicon glyphicon-ban-circle"></span>
@@ -175,7 +178,7 @@ name="assignedid">
 </Col>
 </div>
         <div className="form-group">
-<label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="startdatestring">Startdatum</label>
+<label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="startdatestring">Startdatum</label>
 <Col md={9} className="input-group date clockpicker" id="date-container-for-startdatestring-0">
 <span className="input-group-addon">
     <span className="glyphicon glyphicon-calendar"></span>
@@ -199,7 +202,7 @@ id="startdatestring"
 name="startdatestring"
 type="text"
 value="" />
-<span className="input-group-btn" style={{width:"0px;"}}></span>
+<span className="input-group-btn" style={{width:"0px"}}></span>
 <input className="form-control"
 data-autoajax="true"
 data-val="true"
@@ -212,7 +215,7 @@ value="" />
 </Col>
 </div>
                         <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="enddatestring">Slutdatum</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="enddatestring">Slutdatum</label>
     <Col md={9} className="input-group date clockpicker" id="date-container-for-enddatestring-1">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-calendar"></span>
@@ -236,7 +239,7 @@ id="enddatestring"
 name="enddatestring"
 type="text"
 value="" />
-<span className="input-group-btn" style={{width:"0px;"}}></span>
+<span className="input-group-btn" style={{width:"0px"}}></span>
 <input className="form-control"
 data-autoajax="true"
 data-val="true"
@@ -249,7 +252,7 @@ value="" />
 </Col>
 </div>
                         <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="issueclassid">Ärendeklass</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="issueclassid">Ärendeklass</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-sort-by-attributes"></span>
@@ -264,7 +267,7 @@ name="issueclassid">
 </Col>
 </div>
                         <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="prio">Prioritet</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="prio">Prioritet</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-exclamation-sign"></span>
@@ -283,7 +286,7 @@ name="prio">
 </Col>
 </div>
                         <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="responsible">Utförare</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="responsible">Utförare</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-user"></span>
@@ -300,7 +303,7 @@ name="responsible">
 </Col>
 </div>
                         <div className="form-group">				    
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="description">Beskrivning</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="description">Beskrivning</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-pencil"></span>
@@ -317,7 +320,7 @@ name="description" />
 </Col>
 <Col md={6}>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="areatype">Utrymme</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="areatype">Utrymme</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-map-marker"></span>
@@ -334,7 +337,7 @@ name="areatype">
 </Col>
 </div>
 <div className="form-group">
-    <label className="control-label col-md-3" htmlFor="residentid" style={{marginLeft:"-15px;", marginRight:"15px;"}}>Boende</label>
+    <label className="control-label col-md-3" htmlFor="residentid" style={{marginLeft:"-15px", marginRight:"15px"}}>Boende</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-unchecked">
@@ -344,7 +347,7 @@ name="areatype">
     </Col>
 </div>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="firstname">Förnamn</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="firstname">Förnamn</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-user"></span>
@@ -361,7 +364,7 @@ value="" />
 </Col>
 </div>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="lastname">Efternamn</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="lastname">Efternamn</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-user"></span>
@@ -378,7 +381,7 @@ value="" />
 </Col>
 </div>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="phone">Telefon</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="phone">Telefon</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-phone-alt"></span>
@@ -390,13 +393,13 @@ data-val-length-max="20"
 data-val-length="Telefon får inte överstiga 20 tecken"
 id="phone"
 name="phone"
-onkeypress="return Site.Validation.isPhoneNumber(event)"
+//onKeyPress="return Site.Validation.isPhoneNumber(event)"
 type="text"
 value="" />
 </Col>
 </div>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="email">E-post</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="email">E-post</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-envelope"></span>
@@ -413,7 +416,7 @@ value="" />
 </Col>
 </div>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="address">Adress</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="address">Adress</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-map-marker"></span>
@@ -430,7 +433,7 @@ value="" />
 </Col>
 </div>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="floor">Våningsplan</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="floor">Våningsplan</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-align-justify"></span>
@@ -447,7 +450,7 @@ value="" />
 </Col>
 </div>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="apartment">Lägenhet</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="apartment">Lägenhet</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-home"></span>
@@ -686,7 +689,7 @@ value="" />
 <Row>
 <Col md={6}>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="name">Titel</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="name">Titel</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-header"></span>
@@ -705,7 +708,7 @@ value="" />
 </Col>
 </div>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="assignedid">Tilldelad</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="assignedid">Tilldelad</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-ban-circle"></span>
@@ -722,7 +725,7 @@ name="assignedid">
 </Col>
 </div>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="startdatestring">Startdatum</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="startdatestring">Startdatum</label>
     <Col md={9} className="input-group date clockpicker" id="date-container-for-startdatestring-2">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-calendar"></span>
@@ -746,7 +749,7 @@ id="startdatestring"
 name="startdatestring"
 type="text"
 value="" />
-<span className="input-group-btn" style={{width:"0px;"}}></span>
+<span className="input-group-btn" style={{width:"0px"}}></span>
 <input className="form-control"
 data-autoajax="true"
 data-val="true"
@@ -759,7 +762,7 @@ value="" />
 </Col>
 </div>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="enddatestring">Slutdatum</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="enddatestring">Slutdatum</label>
     <Col md={9} className="input-group date clockpicker" id="date-container-for-enddatestring-3">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-calendar"></span>
@@ -783,7 +786,7 @@ id="enddatestring"
 name="enddatestring"
 type="text"
 value="" />
-<span className="input-group-btn" style={{width:"0px;"}}></span>
+<span className="input-group-btn" style={{width:"0px"}}></span>
 <input className="form-control"
 data-autoajax="true"
 data-val="true"
@@ -796,7 +799,7 @@ value="" />
 </Col>
 </div>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="issueclassid">Ärendeklass</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="issueclassid">Ärendeklass</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-sort-by-attributes"></span>
@@ -811,7 +814,7 @@ name="issueclassid">
 </Col>
 </div>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="prio">Prioritet</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="prio">Prioritet</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-exclamation-sign"></span>
@@ -830,7 +833,7 @@ name="prio">
 </Col>
 </div>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="responsible">Utförare</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="responsible">Utförare</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-user"></span>
@@ -849,7 +852,7 @@ name="responsible">
 </Col>
 <Col md={6}>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="customername">Kund</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="customername">Kund</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-th-list"></span>
@@ -859,11 +862,11 @@ data-autoajax="true"
 id="customername"
 name="customername"
 type="text"
-value="" readonly />
+value="" readOnly />
 </Col>
 </div>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="areatype">Utrymme</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="areatype">Utrymme</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-map-marker"></span>
@@ -880,7 +883,7 @@ name="areatype">
 </Col>
 </div>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="description">Beskrivning</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="description">Beskrivning</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-pencil"></span>
@@ -930,7 +933,7 @@ value="" />
 <Row>
 <Col md={5}>
 <div className="form-group">
-   <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="accesstype">Synlighet</label>
+   <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="accesstype">Synlighet</label>
    <Col md={9} className="input-group">
    <span className="input-group-addon">
        <span className="glyphicon glyphicon-ban-circle"></span>
@@ -948,7 +951,7 @@ name="accesstype">
 </Col>
 <Col md={7}>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px;", marginRight:"15px;"}} htmlFor="description">Kommentar</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="description">Kommentar</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-pencil"></span>

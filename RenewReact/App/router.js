@@ -19,6 +19,7 @@ var admin = require('../App/Views/Admin/admin');
 var loggaut = require('../App/Views/Loggaut/loggaut');
 
 var login = require('../App/Views/Login/login');
+var calendar = require('../App/Views/Calendar/calendar');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -84,6 +85,10 @@ router.route('/loggaut', function (e) {
 
 router.route('/login', function (e) {
     layout.showIn("#content", login);
+});
+
+router.route('/calendar', function (e) {
+    layout.showIn("#content", calendar);
 });
 
 router.route('/', function (e) {

@@ -528,8 +528,8 @@
     <Content Include="App\Views\Login\login.js" />
     <Content Include="App\Views\Nyheter\nyheter.html" />
     <Content Include="App\Views\Nyheter\nyheter.js" />
-    <Content Include="App\Views\Pagaende\calendar.html" />
-    <Content Include="App\Views\Pagaende\calendar.js" />
+    <Content Include="App\Views\Calendar\calendar.html" />
+    <Content Include="App\Views\Calendar\calendar.js" />
     <Content Include="App\Views\Pagaende\pagaende.html" />
     <Content Include="App\Views\Pagaende\pagaende.js" />
     <Content Include="App\Views\Personal\personal.html" />

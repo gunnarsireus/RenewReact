@@ -1,9 +1,15 @@
 ﻿import React, { Component } from 'react';
-import fullcalendar from 'fullcalendar';
-import moment from 'moment';
+import jquery from 'jquery';
 import jqueryUi from 'jquery-ui';
+import moment from 'moment';
+import bootstrat from 'react-bootstrap';
+import fullcalendar from 'fullcalendar';
+
 
 export default class External extends Component {
+    constructor(props) {
+        super(props);
+    };
     render() {
         return <div id='external-events'>
                 <h4>Draggable Events</h4>

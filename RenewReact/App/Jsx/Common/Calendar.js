@@ -1,9 +1,14 @@
 ﻿import React, { Component } from 'react';
-import fullcalendar from 'fullcalendar';
-import moment from 'moment';
+import jquery from 'jquery';
 import jqueryUi from 'jquery-ui';
+import moment from 'moment';
+import bootstrat from 'react-bootstrap';
+import fullcalendar from 'fullcalendar';
 
 export default class Calendar extends Component {
+    constructor(props) {
+        super(props);
+    };
     render() {
         return <div id="calendar"></div>;
     }

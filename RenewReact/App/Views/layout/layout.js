@@ -11,7 +11,7 @@ var viewModel = kendo.observable({
             [{ title: 'Ärenden', href: '', icon: '' },
                     { title: 'Pågående', href: '#/pagaende', icon: '' },
                     { title: 'Arkiverade', href: '#/arkiverade', icon: '' },
-                    { title: 'Kalender', href: '#/kalender', icon: '' }],
+                    { title: 'Kalender', href: '#/calendar', icon: '' }],
             [{ title: 'Meddelanden', href: '', icon: '' },
                     { title: 'Nyheter', href: '#/nyheter', icon: '' },
                     { title: 'Erbjudanden', href: '#/erbjudanden', icon: '' }],

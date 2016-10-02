@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+﻿import React, { Component } from 'react';
 import { Grid, Row, Col, Glyphicon, Button } from 'react-bootstrap';
 
 import PagaendeActions from '../actions/PagaendeActions';

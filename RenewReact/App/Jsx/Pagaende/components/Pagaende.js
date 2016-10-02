@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+ï»¿import React, { Component } from 'react';
 import Input from '../../Common/Input.js';
 import CreateIssuePanel from './CreateIssuePanel.js';
 import IssueCalendarView from './IssueCalendarView.js';
@@ -60,7 +60,7 @@ export default class Pagaende extends Component {
         return <div>
         <Row id="page-issue-all">
             <Col md={2} className="col-md-2 site-page-control">
-				<h3 className="site-page-header">Ärenden <img src={'../../../App/img/help.png'} id="page-description-tooltip" className="site-clickable" /></h3>
+				<h3 className="site-page-header">Ã„renden <img src={'../../../App/img/help.png'} id="page-description-tooltip" className="site-clickable" /></h3>
 				<Row id="filter-issue-panel">
 					<Col md={12}>
 						<Row>
@@ -111,11 +111,11 @@ export default class Pagaende extends Component {
         id="status-select"
         name="status-select">
         <option value="0">--</option>
-        <option value="10">Preliminär</option>
-        <option value="20">Öppen</option>
-        <option value="30">Påbörjad</option>
-        <option value="40">Stängd</option>
-        <option value="50">Godkänd</option>
+        <option value="10">PreliminÃ¤r</option>
+        <option value="20">Ã–ppen</option>
+        <option value="30">PÃ¥bÃ¶rjad</option>
+        <option value="40">StÃ¤ngd</option>
+        <option value="50">GodkÃ¤nd</option>
     </select>
 </Col>
 </Row>
@@ -132,9 +132,9 @@ export default class Pagaende extends Component {
         id="priority-select"
         name="priority-select">
     <option value="0">--</option>
-    <option value="1">Låg</option>
+    <option value="1">LÃ¥g</option>
     <option value="2">Normal</option>
-    <option value="3">Hög</option>
+    <option value="3">HÃ¶g</option>
     <option value="4">Akut</option>
 </select>
 </Col>
@@ -153,13 +153,13 @@ export default class Pagaende extends Component {
         name="areatype-select">
     <option value="0">--</option>
     <option value="10">Gemensamhet</option>
-    <option value="20">Lägenhet</option>
+    <option value="20">LÃ¤genhet</option>
     </select>
 </Col>
 </Row>
 <Row className="site-row-spacing">
     <Col md={12}>
-        <h4>Nytt ärende</h4>
+        <h4>Nytt Ã¤rende</h4>
     </Col>
 </Row>
 <Row>
@@ -179,7 +179,7 @@ export default class Pagaende extends Component {
 </Row>
 <Row id="page-issue-one" hidden>
 <Col md={2} className="site-page-control">
-<h3 className="site-page-header">Ärende <span id="issue-page-one-number"></span> <img src={'../../../App/img/help.png'} id="page-description-tooltip" className="site-clickable" /></h3>
+<h3 className="site-page-header">Ã„rende <span id="issue-page-one-number"></span> <img src={'../../../App/img/help.png'} id="page-description-tooltip" className="site-clickable" /></h3>
 <Row id="command-issue-panel">
     <Col md={12}>
     <Row>
@@ -213,7 +213,7 @@ export default class Pagaende extends Component {
     </Row>
     <Row className="site-row-spacing">
         <Col md={12}>
-        <h4>Åtgärder</h4>
+        <h4>Ã…tgÃ¤rder</h4>
         </Col>
     </Row>
     <Row id="command-issue-panel-next-status-for-10" hidden>
@@ -322,8 +322,8 @@ export default class Pagaende extends Component {
     data-val="true"
     data-val-length-min="2"
     data-val-length-max="45"
-    data-val-length="Titel måste vara mellan 2 och 45 tecken"
-    data-val-required="Titel får inte vara tom"
+    data-val-length="Titel mÃ¥ste vara mellan 2 och 45 tecken"
+    data-val-required="Titel fÃ¥r inte vara tom"
     id="name"
     name="name"
     type="text"
@@ -367,7 +367,7 @@ data-date-today-highlight="true"
 data-date-week-start="1"
 data-provide="datepicker"
 data-val="true"
-data-val-required="Datum får inte vara tomt"
+data-val-required="Datum fÃ¥r inte vara tomt"
 id="startdatestring"
 name="startdatestring"
 type="text"
@@ -376,7 +376,7 @@ value="" />
 <input className="form-control"
 data-autoajax="true"
 data-val="true"
-data-val-required="Klockslag får inte vara tomt"
+data-val-required="Klockslag fÃ¥r inte vara tomt"
 id="starttimestring"
 name="starttimestring"
 type="text"
@@ -404,7 +404,7 @@ data-date-today-highlight="true"
 data-date-week-start="1"
 data-provide="datepicker"
 data-val="true"
-data-val-required="Datum får inte vara tomt"
+data-val-required="Datum fÃ¥r inte vara tomt"
 id="enddatestring"
 name="enddatestring"
 type="text"
@@ -413,7 +413,7 @@ value="" />
 <input className="form-control"
 data-autoajax="true"
 data-val="true"
-data-val-required="Klockslag får inte vara tomt"
+data-val-required="Klockslag fÃ¥r inte vara tomt"
 id="endtimestring"
 name="endtimestring"
 type="text"
@@ -422,7 +422,7 @@ value="" />
 </Col>
 </div>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="issueclassid">Ärendeklass</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="issueclassid">Ã„rendeklass</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-sort-by-attributes"></span>
@@ -448,15 +448,15 @@ data-width="100%"
 id="prio"
 name="prio">
 <option value="0">--</option>
-<option value="1">Låg</option>
+<option value="1">LÃ¥g</option>
 <option value="2">Normal</option>
-<option value="3">Hög</option>
+<option value="3">HÃ¶g</option>
 <option value="4">Akut</option>
 </select>
 </Col>
 </div>
 <div className="form-group">
-    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="responsible">Utförare</label>
+    <label className="control-label col-md-3" style={{marginLeft:"-15px", marginRight:"15px"}} htmlFor="responsible">UtfÃ¶rare</label>
     <Col md={9} className="input-group">
     <span className="input-group-addon">
         <span className="glyphicon glyphicon-user"></span>
@@ -501,7 +501,7 @@ id="areatype"
 name="areatype">
 <option value="0">--</option>
 <option value="10">Gemensamhet</option>
-<option value="20">Lägenhet</option>
+<option value="20">LÃ¤genhet</option>
 </select>
 </Col>
 </div>
@@ -515,7 +515,7 @@ name="areatype">
 data-autoajax="true"
 data-val="true"
 data-val-length-max="400"
-data-val-length="Beskrivning får inte överstiga 400 tecken"
+data-val-length="Beskrivning fÃ¥r inte Ã¶verstiga 400 tecken"
 id="description"
 name="description" />
 </Col>
@@ -584,8 +584,8 @@ data-autoajax="true"
 data-val="true"
 data-val-length-min="2"
 data-val-length-max="200"
-data-val-length="Kommentar måste vara mellan 2 och 200 tecken"
-data-val-required="Kommentar får inte vara tom"
+data-val-length="Kommentar mÃ¥ste vara mellan 2 och 200 tecken"
+data-val-required="Kommentar fÃ¥r inte vara tom"
 id="description"
 name="description" />
 </Col>
@@ -597,7 +597,7 @@ name="description" />
 </Col>
 <Col md={6}>
     <Button className="site-buttonmargin-left pull-right btn-success btn create-issuefeedback-form-buttons" data-action="4">Skapa</Button>
-    <Button className="site-buttonmargin-left pull-right btn-default btn create-issuefeedback-form-buttons" data-action="2">Stäng</Button>
+    <Button className="site-buttonmargin-left pull-right btn-default btn create-issuefeedback-form-buttons" data-action="2">StÃ¤ng</Button>
 </Col>
 </Row>
 </form>
@@ -613,7 +613,7 @@ name="description" />
                  
             </th>
             <th>Kommentar</th>
-            <th>Från</th>
+            <th>FrÃ¥n</th>
             <th>Datum</th>
             <th>Tid</th>
         </tr>
@@ -625,7 +625,7 @@ name="description" />
                  
             </th>
             <th>Kommentar</th>
-            <th>Från</th>
+            <th>FrÃ¥n</th>
             <th>Datum</th>
             <th>Tid</th>
         </tr>
@@ -649,10 +649,10 @@ name="description" />
         <table id="issue-tabhistory-table" className="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th>Från status</th>
+                    <th>FrÃ¥n status</th>
                     <th>Till status</th>
                     <th></th>
-                    <th>Ändrad av</th>
+                    <th>Ã„ndrad av</th>
                     <th>Datum</th>
                     <th>Klockslag</th>
                 </tr>
@@ -660,10 +660,10 @@ name="description" />
             <tbody></tbody>
             <tfoot>
                 <tr>
-                    <th>Från status</th>
+                    <th>FrÃ¥n status</th>
                     <th>Till status</th>
                     <th></th>
-                    <th>Ändrad av</th>
+                    <th>Ã„ndrad av</th>
                     <th>Datum</th>
                     <th>Klockslag</th>
                 </tr>

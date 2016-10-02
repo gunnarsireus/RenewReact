@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import jquery from 'jquery';
 import jqueryUi from 'jquery-ui';
 import moment from 'moment';
@@ -15,6 +16,9 @@ export default class Calendar extends Component {
         };
     };
     componentWillMount() {
+        if (document.getElementById('issuecalendar-div')!==null) {
+            ReactDOM.unmountComponentAtNode(document.getElementById('issuecalendar-div'))
+        }
         alert('componentWillMount()')
     };
     componentDidMount() {

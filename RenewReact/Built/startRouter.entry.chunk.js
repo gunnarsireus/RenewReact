@@ -46121,7 +46121,7 @@ webpackJsonp([0],[
 	                        _react2.default.createElement(
 	                            'h3',
 	                            { className: 'site-page-header' },
-	                            '�renden ',
+	                            'Ärenden ',
 	                            _react2.default.createElement('img', { src: '../../../App/img/help.png', id: 'page-description-tooltip', className: 'site-clickable' })
 	                        ),
 	                        _react2.default.createElement(
@@ -46233,27 +46233,27 @@ webpackJsonp([0],[
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '10' },
-	                                                'Prelimin�r'
+	                                                'Preliminär'
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '20' },
-	                                                '�ppen'
+	                                                'Öppen'
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '30' },
-	                                                'P�b�rjad'
+	                                                'Påbörjad'
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '40' },
-	                                                'St�ngd'
+	                                                'Stängd'
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '50' },
-	                                                'Godk�nd'
+	                                                'Godkänd'
 	                                            )
 	                                        )
 	                                    )
@@ -46292,7 +46292,7 @@ webpackJsonp([0],[
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '1' },
-	                                                'L�g'
+	                                                'Låg'
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'option',
@@ -46302,7 +46302,7 @@ webpackJsonp([0],[
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '3' },
-	                                                'H�g'
+	                                                'Hög'
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'option',
@@ -46351,7 +46351,7 @@ webpackJsonp([0],[
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '20' },
-	                                                'L�genhet'
+	                                                'Lägenhet'
 	                                            )
 	                                        )
 	                                    )
@@ -46365,7 +46365,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'h4',
 	                                            null,
-	                                            'Nytt �rende'
+	                                            'Nytt ärende'
 	                                        )
 	                                    )
 	                                ),
@@ -46403,7 +46403,7 @@ webpackJsonp([0],[
 	                        _react2.default.createElement(
 	                            'h3',
 	                            { className: 'site-page-header' },
-	                            '�rende ',
+	                            'Ärende ',
 	                            _react2.default.createElement('span', { id: 'issue-page-one-number' }),
 	                            ' ',
 	                            _react2.default.createElement('img', { src: '../../../App/img/help.png', id: 'page-description-tooltip', className: 'site-clickable' })
@@ -46484,7 +46484,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'h4',
 	                                            null,
-	                                            '�tg�rder'
+	                                            'Åtgärder'
 	                                        )
 	                                    )
 	                                ),
@@ -46708,8 +46708,8 @@ webpackJsonp([0],[
 	                                                        'data-val': 'true',
 	                                                        'data-val-length-min': '2',
 	                                                        'data-val-length-max': '45',
-	                                                        'data-val-length': 'Titel m�ste vara mellan 2 och 45 tecken',
-	                                                        'data-val-required': 'Titel f�r inte vara tom',
+	                                                        'data-val-length': 'Titel måste vara mellan 2 och 45 tecken',
+	                                                        'data-val-required': 'Titel får inte vara tom',
 	                                                        id: 'name',
 	                                                        name: 'name',
 	                                                        type: 'text',
@@ -46787,7 +46787,7 @@ webpackJsonp([0],[
 	                                                        'data-date-week-start': '1',
 	                                                        'data-provide': 'datepicker',
 	                                                        'data-val': 'true',
-	                                                        'data-val-required': 'Datum f�r inte vara tomt',
+	                                                        'data-val-required': 'Datum får inte vara tomt',
 	                                                        id: 'startdatestring',
 	                                                        name: 'startdatestring',
 	                                                        type: 'text',
@@ -46796,7 +46796,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement('input', { className: 'form-control',
 	                                                        'data-autoajax': 'true',
 	                                                        'data-val': 'true',
-	                                                        'data-val-required': 'Klockslag f�r inte vara tomt',
+	                                                        'data-val-required': 'Klockslag får inte vara tomt',
 	                                                        id: 'starttimestring',
 	                                                        name: 'starttimestring',
 	                                                        type: 'text',
@@ -46834,7 +46834,7 @@ webpackJsonp([0],[
 	                                                        'data-date-week-start': '1',
 	                                                        'data-provide': 'datepicker',
 	                                                        'data-val': 'true',
-	                                                        'data-val-required': 'Datum f�r inte vara tomt',
+	                                                        'data-val-required': 'Datum får inte vara tomt',
 	                                                        id: 'enddatestring',
 	                                                        name: 'enddatestring',
 	                                                        type: 'text',
@@ -46843,7 +46843,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement('input', { className: 'form-control',
 	                                                        'data-autoajax': 'true',
 	                                                        'data-val': 'true',
-	                                                        'data-val-required': 'Klockslag f�r inte vara tomt',
+	                                                        'data-val-required': 'Klockslag får inte vara tomt',
 	                                                        id: 'endtimestring',
 	                                                        name: 'endtimestring',
 	                                                        type: 'text',
@@ -46857,7 +46857,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'label',
 	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'issueclassid' },
-	                                                    '�rendeklass'
+	                                                    'Ärendeklass'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    _reactBootstrap.Col,
@@ -46913,7 +46913,7 @@ webpackJsonp([0],[
 	                                                        _react2.default.createElement(
 	                                                            'option',
 	                                                            { value: '1' },
-	                                                            'L�g'
+	                                                            'Låg'
 	                                                        ),
 	                                                        _react2.default.createElement(
 	                                                            'option',
@@ -46923,7 +46923,7 @@ webpackJsonp([0],[
 	                                                        _react2.default.createElement(
 	                                                            'option',
 	                                                            { value: '3' },
-	                                                            'H�g'
+	                                                            'Hög'
 	                                                        ),
 	                                                        _react2.default.createElement(
 	                                                            'option',
@@ -46939,7 +46939,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'label',
 	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'responsible' },
-	                                                    'Utf�rare'
+	                                                    'Utförare'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    _reactBootstrap.Col,
@@ -47038,7 +47038,7 @@ webpackJsonp([0],[
 	                                                        _react2.default.createElement(
 	                                                            'option',
 	                                                            { value: '20' },
-	                                                            'L�genhet'
+	                                                            'Lägenhet'
 	                                                        )
 	                                                    )
 	                                                )
@@ -47063,7 +47063,7 @@ webpackJsonp([0],[
 	                                                        'data-autoajax': 'true',
 	                                                        'data-val': 'true',
 	                                                        'data-val-length-max': '400',
-	                                                        'data-val-length': 'Beskrivning f�r inte �verstiga 400 tecken',
+	                                                        'data-val-length': 'Beskrivning får inte överstiga 400 tecken',
 	                                                        id: 'description',
 	                                                        name: 'description' })
 	                                                )
@@ -47206,8 +47206,8 @@ webpackJsonp([0],[
 	                                                                        'data-val': 'true',
 	                                                                        'data-val-length-min': '2',
 	                                                                        'data-val-length-max': '200',
-	                                                                        'data-val-length': 'Kommentar m�ste vara mellan 2 och 200 tecken',
-	                                                                        'data-val-required': 'Kommentar f�r inte vara tom',
+	                                                                        'data-val-length': 'Kommentar måste vara mellan 2 och 200 tecken',
+	                                                                        'data-val-required': 'Kommentar får inte vara tom',
 	                                                                        id: 'description',
 	                                                                        name: 'description' })
 	                                                                )
@@ -47229,7 +47229,7 @@ webpackJsonp([0],[
 	                                                            _react2.default.createElement(
 	                                                                _reactBootstrap.Button,
 	                                                                { className: 'site-buttonmargin-left pull-right btn-default btn create-issuefeedback-form-buttons', 'data-action': '2' },
-	                                                                'St�ng'
+	                                                                'Stäng'
 	                                                            )
 	                                                        )
 	                                                    )
@@ -47259,7 +47259,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'th',
 	                                                    null,
-	                                                    'Fr�n'
+	                                                    'Från'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    'th',
@@ -47289,7 +47289,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'th',
 	                                                    null,
-	                                                    'Fr�n'
+	                                                    'Från'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    'th',
@@ -47351,7 +47351,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'th',
 	                                                    null,
-	                                                    'Fr�n status'
+	                                                    'Från status'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    'th',
@@ -47362,7 +47362,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'th',
 	                                                    null,
-	                                                    '�ndrad av'
+	                                                    'Ändrad av'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    'th',
@@ -47386,7 +47386,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'th',
 	                                                    null,
-	                                                    'Fr�n status'
+	                                                    'Från status'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    'th',
@@ -47397,7 +47397,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'th',
 	                                                    null,
-	                                                    '�ndrad av'
+	                                                    'Ändrad av'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    'th',
@@ -48303,6 +48303,10 @@ webpackJsonp([0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactDom = __webpack_require__(36);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
 	var _jquery = __webpack_require__(2);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
@@ -48358,6 +48362,9 @@ webpackJsonp([0],[
 	    _createClass(Calendar, [{
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
+	            if (document.getElementById('issuecalendar-div') !== null) {
+	                _reactDom2.default.unmountComponentAtNode(document.getElementById('issuecalendar-div'));
+	            }
 	            alert('componentWillMount()');
 	        }
 	    }, {

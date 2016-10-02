@@ -501,8 +501,7 @@ value="" />
 </Row>
 <Row id="issue-calendar-view">
     <Col md={12}>
-    //<div id="issuecalendar-div"></div>
-    <Calendar/>
+    <div id="issuecalendar-div"></div>
     </Col>
 </Row>
 <Row id="issue-schedule-view">

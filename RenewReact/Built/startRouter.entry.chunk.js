@@ -46972,9 +46972,7 @@ webpackJsonp([0],[
 	                            _react2.default.createElement(
 	                                _reactBootstrap.Col,
 	                                { md: 12 },
-	                                '//',
-	                                _react2.default.createElement('div', { id: 'issuecalendar-div' }),
-	                                _react2.default.createElement(_Calendar2.default, null)
+	                                _react2.default.createElement('div', { id: 'issuecalendar-div' })
 	                            )
 	                        ),
 	                        _react2.default.createElement(
@@ -61186,6 +61184,8 @@ webpackJsonp([0],[
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	//import sv from '../../js/FullCalendar-2.6.1/lang/sv.js';
+
 
 	var Calendar = function (_Component) {
 	    _inherits(Calendar, _Component);
@@ -61218,8 +61218,8 @@ webpackJsonp([0],[
 	                        // if so, remove the element from the "Draggable Events" list
 	                        $(this).remove();
 	                    }
-	                }
-	                //    lang: 'sv',
+	                },
+	                lang: 'sv',
 	                //header: {
 	                //    left:   'prev,next today',
 	                //    center: 'title',
@@ -61227,7 +61227,7 @@ webpackJsonp([0],[
 	                //},
 	                //selectable: true,
 	                //allDaySlot: false,
-	                //weekNumbers: true,
+	                weekNumbers: true
 	                //defaultDate: Date.now(),
 	                //timezone: 'local',
 	                //editable: true,

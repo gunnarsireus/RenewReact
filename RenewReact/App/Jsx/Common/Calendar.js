@@ -2,6 +2,7 @@
 import jquery from 'jquery';
 import jqueryUi from 'jquery-ui';
 import moment from 'moment';
+//import sv from '../../js/FullCalendar-2.6.1/lang/sv.js';
 import fullcalendar from 'fullcalendar';
 import styles from '../../css/Fullcalendar.css';
 import styles2 from '../../css/FullCalendar-2.6.1/fullcalendar.css'
@@ -27,8 +28,8 @@ export default class Calendar extends Component {
                     // if so, remove the element from the "Draggable Events" list
                     $(this).remove();
                 }
-            }
-        //    lang: 'sv',
+            },
+            lang: 'sv',
         //header: {
         //    left:   'prev,next today',
         //    center: 'title',
@@ -36,7 +37,7 @@ export default class Calendar extends Component {
         //},
         //selectable: true,
         //allDaySlot: false,
-        //weekNumbers: true,
+        weekNumbers: true
         //defaultDate: Date.now(),
         //timezone: 'local',
         //editable: true,

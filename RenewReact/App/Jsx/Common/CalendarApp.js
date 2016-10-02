@@ -13,7 +13,7 @@ export default class CalendarApp extends Component {
             <Col md={2}>
                 <External />
             </Col>
-            <Col md={10} pullLeft={true}>
+            <Col md={10}>
                 <Calendar />
             </Col>
          </Row>

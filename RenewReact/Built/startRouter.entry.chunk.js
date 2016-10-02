@@ -39,21 +39,21 @@ webpackJsonp([0],[
 	var felanmalan = __webpack_require__(465);
 
 	var pagaende = __webpack_require__(468);
-	var arkiverade = __webpack_require__(588);
+	var arkiverade = __webpack_require__(589);
 
-	var nyheter = __webpack_require__(591);
-	var erbjudanden = __webpack_require__(594);
+	var nyheter = __webpack_require__(592);
+	var erbjudanden = __webpack_require__(595);
 
-	var kunder = __webpack_require__(597);
-	var boende = __webpack_require__(600);
-	var tidkoder = __webpack_require__(603);
-	var arendeKlasser = __webpack_require__(606);
+	var kunder = __webpack_require__(598);
+	var boende = __webpack_require__(601);
+	var tidkoder = __webpack_require__(604);
+	var arendeKlasser = __webpack_require__(607);
 
-	var admin = __webpack_require__(609);
-	var loggaut = __webpack_require__(612);
+	var admin = __webpack_require__(610);
+	var loggaut = __webpack_require__(613);
 
 	var login = __webpack_require__(437);
-	var calendar = __webpack_require__(613);
+	var calendar = __webpack_require__(614);
 
 	var router = new kendo.Router({
 	    init: function init() {
@@ -45946,7 +45946,7 @@ webpackJsonp([0],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(587);
+	var detailsTemplate = __webpack_require__(588);
 
 
 	var viewModel = kendo.observable({
@@ -46012,13 +46012,9 @@ webpackJsonp([0],[
 
 	var _site2 = _interopRequireDefault(_site);
 
-	var _siteXcompCalendar = __webpack_require__(585);
+	var _Calendar = __webpack_require__(585);
 
-	var _siteXcompCalendar2 = _interopRequireDefault(_siteXcompCalendar);
-
-	var _siteXcompScheduler = __webpack_require__(586);
-
-	var _siteXcompScheduler2 = _interopRequireDefault(_siteXcompScheduler);
+	var _Calendar2 = _interopRequireDefault(_Calendar);
 
 	var _reactBootstrap = __webpack_require__(180);
 
@@ -46028,10 +46024,14 @@ webpackJsonp([0],[
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /// <reference path="../Common/Calendar.js" />
+
 	//import from '../../css/bootstrap-select.css';
 	//import from '../../css/bootstrap-theme.css';
 	//import from '../../css/bootstrap.css';
+
+	//import SiteCalendar from '../../js/site-components/site-xcomp-calendar.js';
+	//import SiteScheduler from '../../js/site-components/site-xcomp-scheduler.js';
 
 
 	var Index = function (_Component) {
@@ -46046,7 +46046,7 @@ webpackJsonp([0],[
 	    _createClass(Index, [{
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            (0, _siteXcompCalendar2.default)();
+	            //SiteCalendar.element.fullCalendar();
 	            //SiteScheduler();
 	        }
 	    }, {
@@ -46972,7 +46972,9 @@ webpackJsonp([0],[
 	                            _react2.default.createElement(
 	                                _reactBootstrap.Col,
 	                                { md: 12 },
-	                                _react2.default.createElement('div', { id: 'issuecalendar-div' })
+	                                '//',
+	                                _react2.default.createElement('div', { id: 'issuecalendar-div' }),
+	                                _react2.default.createElement(_Calendar2.default, null)
 	                            )
 	                        ),
 	                        _react2.default.createElement(
@@ -61143,372 +61145,175 @@ webpackJsonp([0],[
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
 
-	/*
-	 FullCalendar
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 
-	 See http://www.http://fullcalendar.io/
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	 Required markup:
+	var _react = __webpack_require__(3);
 
-	   <div id="calendar">
-	   </div>
+	var _react2 = _interopRequireDefault(_react);
 
-	 Initialization:
+	var _jquery = __webpack_require__(2);
 
-	   function slotLeftClick(start, end, jsevent, uitarget) { ... }
-	   function itemLeftClick(item, jsevent, uitarget) { ... }
-	   function itemRightClick(item, jsevent, uitarget) { ... }
-	   function itemMove(item, jsevent, uitarget, undoCB) { ... }
-	   function itemResize(item, jsevent, uitarget, undoCB) { ... }
+	var _jquery2 = _interopRequireDefault(_jquery);
 
-	   calendar1 = new Site.Calendar($('#calendar'), slotLeftClick, itemLeftClick, itemRightClick, itemMove, itemResize);
-	   calendar1 = new Site.Calendar($('#calendar'), slotLeftClick, itemLeftClick, null, itemMove, null);
-	*/
+	var _jqueryUi = __webpack_require__(439);
 
-	var Site = Site || {};
+	var _jqueryUi2 = _interopRequireDefault(_jqueryUi);
 
-	Site.Calendar = function (element, slotLeftClick, itemLeftClick, itemRightClick, itemMove, itemResize) {
-	    this.calendar = element;
-	    this.prevclick = 0;
-	    var thiz = this;
+	var _moment = __webpack_require__(470);
 
-	    /* Capture right-click, http://stackoverflow.com/questions/17566412/on-right-click-trigger-left-click-at-same-place-where-mouse-exists */
+	var _moment2 = _interopRequireDefault(_moment);
 
-	    element.on('contextmenu', function (e) {
-	        e.preventDefault();
-	    });
+	var _fullcalendar = __webpack_require__(577);
 
-	    element.mousedown(function (e) {
-	        if (e.button === 2) {
-	            if ($(e.target).parents('.fc-event').length > 0) {
-	                return;
-	            }
-	            var newEvent = $.extend($.Event('mousedown'), {
-	                which: 3,
-	                clientX: e.clientX,
-	                clientY: e.clientY,
-	                pageX: e.pageX,
-	                pageY: e.pageY,
-	                screenX: e.screenX,
-	                screenY: e.screenY
+	var _fullcalendar2 = _interopRequireDefault(_fullcalendar);
+
+	var _Fullcalendar = __webpack_require__(586);
+
+	var _Fullcalendar2 = _interopRequireDefault(_Fullcalendar);
+
+	var _fullcalendar3 = __webpack_require__(579);
+
+	var _fullcalendar4 = _interopRequireDefault(_fullcalendar3);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Calendar = function (_Component) {
+	    _inherits(Calendar, _Component);
+
+	    function Calendar(props) {
+	        _classCallCheck(this, Calendar);
+
+	        return _possibleConstructorReturn(this, (Calendar.__proto__ || Object.getPrototypeOf(Calendar)).call(this, props));
+	    }
+
+	    _createClass(Calendar, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement('div', { id: 'calendar' });
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            $('#calendar').fullCalendar({
+	                header: {
+	                    left: 'prev,next today',
+	                    center: 'title',
+	                    right: 'month,agendaWeek,agendaDay'
+	                },
+	                editable: true,
+	                droppable: true, // this allows things to be dropped onto the calendar
+	                drop: function drop() {
+	                    // is the "remove after drop" checkbox checked?
+	                    if ($('#drop-remove').is(':checked')) {
+	                        // if so, remove the element from the "Draggable Events" list
+	                        $(this).remove();
+	                    }
+	                }
+	                //    lang: 'sv',
+	                //header: {
+	                //    left:   'prev,next today',
+	                //    center: 'title',
+	                //    right:  'month,agendaWeek,agendaDay'
+	                //},
+	                //selectable: true,
+	                //allDaySlot: false,
+	                //weekNumbers: true,
+	                //defaultDate: Date.now(),
+	                //timezone: 'local',
+	                //editable: true,
+	                //eventLimit: true,
+	                //select: function (start, end, jsEvent, view) {
+	                //    if (slotLeftClick && jsEvent.shiftKey) {
+	                //        slotLeftClick(start, end, jsEvent, $(this));
+	                //    }
+	                //},
+	                //eventClick: function (item, jsEvent, view) {
+	                //    if (jsEvent.which === 1 && itemLeftClick != null) {
+	                //        itemLeftClick(item, jsEvent, $(this));
+	                //    }
+	                //    else if (jsEvent.which === 3 && itemRightClick != null) {
+	                //        itemRightClick(item, jsEvent, $(this));
+	                //    }
+	                //},
+	                //dayClick: function (start, jsEvent, view) {
+	                //    var end = moment(start);
+	                //    end.add(1, 'hours');
+	                //    if (slotLeftClick && (jsEvent.timeStamp - thiz.prevclick) < 500) {
+	                //        slotLeftClick(start, end, jsEvent, $(this));
+	                //    }
+	                //    thiz.prevclick = jsEvent.timeStamp;
+	                //},
+	                //eventDrop: function (item, delta, revertFunc, jsEvent) {
+	                //    if (itemMove != null) {
+	                //        itemMove(item, jsEvent, $(this), revertFunc);
+	                //    }
+	                //},
+	                //eventResize: function (item, delta, revertFunc, jsEvent, ui, view) {
+	                //    if (itemResize != null) {
+	                //        itemResize(item, jsEvent, $(this), revertFunc);
+	                //    }
+	                //}
 	            });
-	            $(e.target).trigger(newEvent);
 	        }
-	    });
+	    }]);
 
-	    element.mouseup(function (e) {
-	        if (e.button === 2) {
-	            if (!$(e.target).parents('.fc-event').length > 0) {
-	                return;
-	            }
-	            var newEvent = $.extend($.Event('click'), {
-	                which: 3,
-	                clientX: e.clientX,
-	                clientY: e.clientY,
-	                pageX: e.pageX,
-	                pageY: e.pageY,
-	                screenX: e.screenX,
-	                screenY: e.screenY
-	            });
-	            $(e.target).trigger(newEvent);
-	        }
-	    });
+	    return Calendar;
+	}(_react.Component);
 
-	    element.fullCalendar({
-	        lang: 'sv',
-	        header: {
-	            left: 'prev,next today',
-	            center: 'title',
-	            right: 'month,agendaWeek,agendaDay'
-	        },
-	        selectable: true,
-	        allDaySlot: false,
-	        weekNumbers: true,
-	        defaultDate: Date.now(),
-	        timezone: 'local',
-	        editable: true,
-	        eventLimit: true,
-	        select: function select(start, end, jsEvent, view) {
-	            if (slotLeftClick && jsEvent.shiftKey) {
-	                slotLeftClick(start, end, jsEvent, $(this));
-	            }
-	        },
-	        eventClick: function eventClick(item, jsEvent, view) {
-	            if (jsEvent.which === 1 && itemLeftClick != null) {
-	                itemLeftClick(item, jsEvent, $(this));
-	            } else if (jsEvent.which === 3 && itemRightClick != null) {
-	                itemRightClick(item, jsEvent, $(this));
-	            }
-	        },
-	        dayClick: function dayClick(start, jsEvent, view) {
-	            var end = moment(start);
-	            end.add(1, 'hours');
-	            if (slotLeftClick && jsEvent.timeStamp - thiz.prevclick < 500) {
-	                slotLeftClick(start, end, jsEvent, $(this));
-	            }
-	            thiz.prevclick = jsEvent.timeStamp;
-	        },
-	        eventDrop: function eventDrop(item, delta, revertFunc, jsEvent) {
-	            if (itemMove != null) {
-	                itemMove(item, jsEvent, $(this), revertFunc);
-	            }
-	        },
-	        eventResize: function eventResize(item, delta, revertFunc, jsEvent, ui, view) {
-	            if (itemResize != null) {
-	                itemResize(item, jsEvent, $(this), revertFunc);
-	            }
-	        }
-	    });
-
-	    this.reload = function (items) {
-	        this.calendar.fullCalendar('removeEvents');
-	        this.calendar.fullCalendar('addEventSource', items);
-	    };
-
-	    this.showsMonth = function () {
-	        var view = this.calendar.fullCalendar('getView');
-	        return view.intervalUnit == 'month';
-	    };
-
-	    this.showsWeek = function () {
-	        var view = this.calendar.fullCalendar('getView');
-	        return view.intervalUnit == 'week';
-	    };
-
-	    this.showsDay = function () {
-	        var view = this.calendar.fullCalendar('getView');
-	        return view.intervalUnit == 'day';
-	    };
-
-	    this.getCurrentDate = function () {
-	        var today = new Date();
-	        var dd = today.getDate();
-	        var mm = today.getMonth() + 1;
-	        var yyyy = today.getFullYear();
-	        if (dd < 10) {
-	            dd = '0' + dd;
-	        }
-	        if (mm < 10) {
-	            mm = '0' + mm;
-	        }
-	        return yyyy + '-' + mm + '-' + dd;
-	    };
-
-	    this.getCurrentTime = function () {
-	        var today = new Date();
-	        var hh = today.getHours();
-	        var mm = today.getMinutes();
-	        if (hh < 10) {
-	            hh = '0' + hh;
-	        }
-	        if (mm < 10) {
-	            mm = '0' + mm;
-	        }
-	        return hh + ':' + mm;
-	    };
-	};
-	module.exports.SiteCalendar = Site.Calendar;
-	module.exports.SiteCalendarReload = Site.Calendar.reload;
+	exports.default = Calendar;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
 /* 586 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {"use strict";
+	// style-loader: Adds some css to the DOM by adding a <style> tag
 
-	/*
-	 FullScheduler
-
-	 See http://www.http://fullcalendar.io/
-
-	 Required markup:
-
-	   <div id="scheduler">
-	   </div>
-
-	 Initialization:
-
-	   function slotLeftClick(start, end, jsevent, uitarget, resourceID) { ... }
-	   function itemLeftClick(item, jsevent, uitarget) { ... }
-	   function itemRightClick(item, jsevent, uitarget) { ... }
-	   function itemMove(item, jsevent, uitarget, undoCB) { ... }
-	   function itemResize(item, jsevent, uitarget, undoCB) { ... }
-
-	   scheduler = new Site.Scheduler($('#scheduler'), slotLeftClick, itemLeftClick, itemRightClick, itemMove, itemResize);
-	   scheduler = new Site.Scheduler($('#scheduler'), slotLeftClick, itemLeftClick, null, itemMove, null);
-	*/
-
-	var Site = Site || {};
-
-	Site.Scheduler = function (element, slotLeftClick, itemLeftClick, itemRightClick, itemMove, itemResize) {
-	    this.scheduler = element;
-	    this.prevclick = 0;
-
-	    var thiz = this;
-
-	    /* Capture right-click, http://stackoverflow.com/questions/17566412/on-right-click-trigger-left-click-at-same-place-where-mouse-exists */
-
-	    element.on('contextmenu', function (e) {
-	        e.preventDefault();
-	    });
-
-	    element.mousedown(function (e) {
-	        if (e.button === 2) {
-	            if ($(e.target).parents(".fc-event").length > 0) {
-	                return;
-	            }
-	            var newEvent = $.extend($.Event("mousedown"), {
-	                which: 3,
-	                clientX: e.clientX,
-	                clientY: e.clientY,
-	                pageX: e.pageX,
-	                pageY: e.pageY,
-	                screenX: e.screenX,
-	                screenY: e.screenY
-	            });
-	            $(e.target).trigger(newEvent);
-	        }
-	    });
-
-	    element.mouseup(function (e) {
-	        if (e.button === 2) {
-	            if (!$(e.target).parents(".fc-event").length > 0) {
-	                return;
-	            }
-	            var newEvent = $.extend($.Event("click"), {
-	                which: 3,
-	                clientX: e.clientX,
-	                clientY: e.clientY,
-	                pageX: e.pageX,
-	                pageY: e.pageY,
-	                screenX: e.screenX,
-	                screenY: e.screenY
-	            });
-	            $(e.target).trigger(newEvent);
-	        }
-	    });
-
-	    element.fullCalendar({
-	        lang: 'sv',
-	        header: {
-	            left: 'prev,next today',
-	            center: 'title',
-	            right: 'timelineMonth,timelineWeek,timelineDay' //also available - agendaWeek
-	        },
-	        defaultView: 'timelineDay',
-	        height: 800,
-	        eventOverlap: false,
-	        selectable: true,
-	        allDaySlot: false,
-	        weekNumbers: true,
-	        defaultDate: Date.now(),
-	        timezone: 'local',
-	        editable: true,
-	        eventLimit: true,
-	        groupByResource: true,
-	        resources: [],
-	        resourceAreaWidth: '15%',
-	        resourceLabelText: 'Tekniker',
-	        schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-	        select: function select(start, end, jsEvent, view, resource) {
-	            if (slotLeftClick && jsEvent.shiftKey) {
-	                slotLeftClick(start, end, jsEvent, $(this), resource.id);
-	            }
-	        },
-	        eventClick: function eventClick(item, jsEvent, view) {
-	            if (jsEvent.which === 1 && itemLeftClick != null) {
-	                itemLeftClick(item, jsEvent, $(this));
-	            } else if (jsEvent.which === 3 && itemRightClick != null) {
-	                itemRightClick(item, jsEvent, $(this));
-	            }
-	        },
-	        dayClick: function dayClick(start, jsEvent, view, resource) {
-	            var end = moment(start);
-	            end.add(1, 'hours');
-	            if (slotLeftClick && jsEvent.timeStamp - thiz.prevclick < 500) {
-	                slotLeftClick(start, end, jsEvent, $(this), resource.id);
-	            }
-	            thiz.prevclick = jsEvent.timeStamp;
-	        },
-	        eventDrop: function eventDrop(item, delta, revertFunc, jsEvent) {
-	            if (itemMove != null) {
-	                itemMove(item, jsEvent, $(this), revertFunc);
-	            }
-	        },
-	        eventResize: function eventResize(item, delta, revertFunc, jsEvent, ui, view) {
-	            if (itemResize != null) {
-	                itemResize(item, jsEvent, $(this), revertFunc);
-	            }
-	        }
-	    });
-
-	    this.reload = function (resources, events) {
-	        var currentresources = this.scheduler.fullCalendar('getResources');
-	        var currentlength = currentresources.length;
-	        for (var i = 0; i < currentlength; i++) {
-	            var res = currentresources[0];
-	            this.scheduler.fullCalendar('removeResource', res.id);
-	        }
-	        for (var i = 0; i < resources.length; i++) {
-	            var res = resources[i];
-	            this.scheduler.fullCalendar('addResource', res);
-	        }
-	        this.scheduler.fullCalendar('removeEvents');
-	        this.scheduler.fullCalendar('addEventSource', events);
-	    };
-
-	    this.showsMonth = function () {
-	        var view = this.scheduler.fullCalendar('getView');
-	        return view.intervalUnit == "month";
-	    };
-
-	    this.showsWeek = function () {
-	        var view = this.scheduler.fullCalendar('getView');
-	        return view.intervalUnit == "week";
-	    };
-
-	    this.showsDay = function () {
-	        var view = this.scheduler.fullCalendar('getView');
-	        return view.intervalUnit == "day";
-	    }, this.getCurrentDate = function () {
-	        var today = new Date();
-	        var dd = today.getDate();
-	        var mm = today.getMonth() + 1;
-	        var yyyy = today.getFullYear();
-	        if (dd < 10) {
-	            dd = '0' + dd;
-	        }
-	        if (mm < 10) {
-	            mm = '0' + mm;
-	        }
-	        return yyyy + '-' + mm + '-' + dd;
-	    };
-
-	    this.getCurrentTime = function () {
-	        var today = new Date();
-	        var hh = today.getHours();
-	        var mm = today.getMinutes();
-	        if (hh < 10) {
-	            hh = '0' + hh;
-	        }
-	        if (mm < 10) {
-	            mm = '0' + mm;
-	        }
-	        return hh + ':' + mm;
-	    };
-	};
-	module.exports.SiteScheduler = Site.Scheduler;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+	// load the styles
+	var content = __webpack_require__(587);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(582)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./Fullcalendar.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./Fullcalendar.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
 
 /***/ },
 /* 587 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-pagaende\" ></div>\r\n";
+	exports = module.exports = __webpack_require__(581)();
+	exports.push([module.id, "\tbody {\r\n\t\tmargin-top: 40px;\r\n\t\ttext-align: center;\r\n\t\tfont-size: 14px;\r\n\t\tfont-family: \"Lucida Grande\",Helvetica,Arial,Verdana,sans-serif;\r\n\t}\r\n\r\n  h1 {\r\n    font-size: 35px;\r\n    margin-bottom: 30px;\r\n  }\r\n\t\t\r\n\t#app {\r\n\t\twidth: 1100px;\r\n\t\tmargin: 0 auto;\r\n\t}\r\n\t\t\r\n\t#external-events {\r\n\t\tfloat: left;\r\n\t\twidth: 150px;\r\n\t\tpadding: 0 10px;\r\n\t\tborder: 1px solid #ccc;\r\n\t\tbackground: #eee;\r\n\t\ttext-align: left;\r\n\t}\r\n\t\t\r\n\t#external-events h4 {\r\n\t\tfont-size: 16px;\r\n\t\tmargin-top: 0;\r\n\t\tpadding-top: 1em;\r\n\t}\r\n\t\t\r\n\t#external-events .fc-event {\r\n\t\tmargin: 10px 0;\r\n\t\tcursor: pointer;\r\n\t}\r\n\t\t\r\n\t#external-events p {\r\n\t\tmargin: 1.5em 0;\r\n\t\tfont-size: 11px;\r\n\t\tcolor: #666;\r\n\t}\r\n\t\t\r\n\t#external-events p input {\r\n\t\tmargin: 0;\r\n\t\tvertical-align: middle;\r\n\t}\r\n\r\n\t#calendar {\r\n\t\tfloat: right;\r\n\t\twidth: 900px;\r\n\t}", ""]);
 
 /***/ },
 /* 588 */
+/***/ function(module, exports) {
+
+	module.exports = "<div id=\"react-pagaende\" ></div>\r\n";
+
+/***/ },
+/* 589 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61521,13 +61326,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(589);
+	var _index = __webpack_require__(590);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(590);
+	var detailsTemplate = __webpack_require__(591);
 
 
 	var viewModel = kendo.observable({
@@ -61546,7 +61351,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 589 */
+/* 590 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61596,13 +61401,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 590 */
+/* 591 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-arkiverade\" ></div>\r\n";
 
 /***/ },
-/* 591 */
+/* 592 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61615,13 +61420,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(592);
+	var _index = __webpack_require__(593);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(593);
+	var detailsTemplate = __webpack_require__(594);
 
 
 	var viewModel = kendo.observable({
@@ -61640,7 +61445,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 592 */
+/* 593 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61690,13 +61495,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 593 */
+/* 594 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-nyheter\" ></div>\r\n";
 
 /***/ },
-/* 594 */
+/* 595 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61709,13 +61514,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(595);
+	var _index = __webpack_require__(596);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(596);
+	var detailsTemplate = __webpack_require__(597);
 
 
 	var viewModel = kendo.observable({
@@ -61734,7 +61539,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 595 */
+/* 596 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61784,13 +61589,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 596 */
+/* 597 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-erbjudanden\"></div>\r\n";
 
 /***/ },
-/* 597 */
+/* 598 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61803,13 +61608,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(598);
+	var _index = __webpack_require__(599);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(599);
+	var detailsTemplate = __webpack_require__(600);
 
 
 	var viewModel = kendo.observable({
@@ -61828,7 +61633,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 598 */
+/* 599 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61878,13 +61683,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 599 */
+/* 600 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-kunder\" ></div>\r\n";
 
 /***/ },
-/* 600 */
+/* 601 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61897,13 +61702,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(601);
+	var _index = __webpack_require__(602);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(602);
+	var detailsTemplate = __webpack_require__(603);
 
 
 	var viewModel = kendo.observable({
@@ -61922,7 +61727,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 601 */
+/* 602 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61972,13 +61777,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 602 */
+/* 603 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-boende\" ></div>\r\n";
 
 /***/ },
-/* 603 */
+/* 604 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61991,13 +61796,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(604);
+	var _index = __webpack_require__(605);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(605);
+	var detailsTemplate = __webpack_require__(606);
 
 
 	var viewModel = kendo.observable({
@@ -62016,7 +61821,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 604 */
+/* 605 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62066,13 +61871,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 605 */
+/* 606 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-tidkoder\"></div>\r\n";
 
 /***/ },
-/* 606 */
+/* 607 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62085,13 +61890,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(607);
+	var _index = __webpack_require__(608);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(608);
+	var detailsTemplate = __webpack_require__(609);
 
 
 	var viewModel = kendo.observable({
@@ -62110,7 +61915,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 607 */
+/* 608 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62160,13 +61965,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 608 */
+/* 609 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-arendeKlasser\" >hej</div>\r\n";
 
 /***/ },
-/* 609 */
+/* 610 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62179,13 +61984,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(610);
+	var _index = __webpack_require__(611);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(611);
+	var detailsTemplate = __webpack_require__(612);
 
 
 	var viewModel = kendo.observable({
@@ -62204,7 +62009,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 610 */
+/* 611 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62254,13 +62059,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 611 */
+/* 612 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-admin\" ></div>\r\n";
 
 /***/ },
-/* 612 */
+/* 613 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -62281,7 +62086,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 613 */
+/* 614 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62294,13 +62099,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _CalendarApp = __webpack_require__(614);
+	var _CalendarApp = __webpack_require__(615);
 
 	var _CalendarApp2 = _interopRequireDefault(_CalendarApp);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(619);
+	var detailsTemplate = __webpack_require__(617);
 
 
 	var viewModel = kendo.observable({
@@ -62319,7 +62124,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 614 */
+/* 615 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62334,11 +62139,11 @@ webpackJsonp([0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Calendar = __webpack_require__(615);
+	var _Calendar = __webpack_require__(585);
 
 	var _Calendar2 = _interopRequireDefault(_Calendar);
 
-	var _External = __webpack_require__(618);
+	var _External = __webpack_require__(616);
 
 	var _External2 = _interopRequireDefault(_External);
 
@@ -62374,7 +62179,7 @@ webpackJsonp([0],[
 	                ),
 	                _react2.default.createElement(
 	                    _reactBootstrap.Col,
-	                    { md: 10, pullLeft: true },
+	                    { md: 10 },
 	                    _react2.default.createElement(_Calendar2.default, null)
 	                )
 	            );
@@ -62387,132 +62192,9 @@ webpackJsonp([0],[
 	exports.default = CalendarApp;
 
 /***/ },
-/* 615 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(3);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _jquery = __webpack_require__(2);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	var _jqueryUi = __webpack_require__(439);
-
-	var _jqueryUi2 = _interopRequireDefault(_jqueryUi);
-
-	var _moment = __webpack_require__(470);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
-	var _fullcalendar = __webpack_require__(577);
-
-	var _fullcalendar2 = _interopRequireDefault(_fullcalendar);
-
-	var _Fullcalendar = __webpack_require__(616);
-
-	var _Fullcalendar2 = _interopRequireDefault(_Fullcalendar);
-
-	var _fullcalendar3 = __webpack_require__(579);
-
-	var _fullcalendar4 = _interopRequireDefault(_fullcalendar3);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Calendar = function (_Component) {
-	    _inherits(Calendar, _Component);
-
-	    function Calendar(props) {
-	        _classCallCheck(this, Calendar);
-
-	        return _possibleConstructorReturn(this, (Calendar.__proto__ || Object.getPrototypeOf(Calendar)).call(this, props));
-	    }
-
-	    _createClass(Calendar, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement('div', { id: 'calendar' });
-	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            $('#calendar').fullCalendar({
-	                header: {
-	                    left: 'prev,next today',
-	                    center: 'title',
-	                    right: 'month,agendaWeek,agendaDay'
-	                },
-	                editable: true,
-	                droppable: true, // this allows things to be dropped onto the calendar
-	                drop: function drop() {
-	                    // is the "remove after drop" checkbox checked?
-	                    if ($('#drop-remove').is(':checked')) {
-	                        // if so, remove the element from the "Draggable Events" list
-	                        $(this).remove();
-	                    }
-	                }
-	            });
-	        }
-	    }]);
-
-	    return Calendar;
-	}(_react.Component);
-
-	exports.default = Calendar;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
-
-/***/ },
 /* 616 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(617);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(582)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./Fullcalendar.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./Fullcalendar.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 617 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(581)();
-	exports.push([module.id, "\tbody {\r\n\t\tmargin-top: 40px;\r\n\t\ttext-align: center;\r\n\t\tfont-size: 14px;\r\n\t\tfont-family: \"Lucida Grande\",Helvetica,Arial,Verdana,sans-serif;\r\n\t}\r\n\r\n  h1 {\r\n    font-size: 35px;\r\n    margin-bottom: 30px;\r\n  }\r\n\t\t\r\n\t#app {\r\n\t\twidth: 1100px;\r\n\t\tmargin: 0 auto;\r\n\t}\r\n\t\t\r\n\t#external-events {\r\n\t\tfloat: left;\r\n\t\twidth: 150px;\r\n\t\tpadding: 0 10px;\r\n\t\tborder: 1px solid #ccc;\r\n\t\tbackground: #eee;\r\n\t\ttext-align: left;\r\n\t}\r\n\t\t\r\n\t#external-events h4 {\r\n\t\tfont-size: 16px;\r\n\t\tmargin-top: 0;\r\n\t\tpadding-top: 1em;\r\n\t}\r\n\t\t\r\n\t#external-events .fc-event {\r\n\t\tmargin: 10px 0;\r\n\t\tcursor: pointer;\r\n\t}\r\n\t\t\r\n\t#external-events p {\r\n\t\tmargin: 1.5em 0;\r\n\t\tfont-size: 11px;\r\n\t\tcolor: #666;\r\n\t}\r\n\t\t\r\n\t#external-events p input {\r\n\t\tmargin: 0;\r\n\t\tvertical-align: middle;\r\n\t}\r\n\r\n\t#calendar {\r\n\t\tfloat: right;\r\n\t\twidth: 900px;\r\n\t}", ""]);
-
-/***/ },
-/* 618 */
-/***/ function(module, exports, __webpack_require__) {
-
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -62541,7 +62223,7 @@ webpackJsonp([0],[
 
 	var _fullcalendar2 = _interopRequireDefault(_fullcalendar);
 
-	var _Fullcalendar = __webpack_require__(616);
+	var _Fullcalendar = __webpack_require__(586);
 
 	var _Fullcalendar2 = _interopRequireDefault(_Fullcalendar);
 
@@ -62641,10 +62323,10 @@ webpackJsonp([0],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
-/* 619 */
+/* 617 */
 /***/ function(module, exports) {
 
-	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-calendar\" ></div>\r\n";
+	module.exports = "<div id=\"react-calendar\" ></div>\r\n";
 
 /***/ }
 ]);

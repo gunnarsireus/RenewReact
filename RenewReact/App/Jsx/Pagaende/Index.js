@@ -1,3 +1,4 @@
+/// <reference path="../Common/Calendar.js" />
 import React, { Component } from 'react';
 import Input from '../Common/Input.js';
 import jquery from 'jquery';
@@ -10,8 +11,9 @@ import style0 from '../../css/FullCalendar-2.6.1/fullcalendar.css';
 //import from '../../css/bootstrap-theme.css';
 //import from '../../css/bootstrap.css';
 import style from '../../css/site.css';
-import SiteCalendar from '../../js/site-components/site-xcomp-calendar.js';
-import SiteScheduler from '../../js/site-components/site-xcomp-scheduler.js';
+//import SiteCalendar from '../../js/site-components/site-xcomp-calendar.js';
+//import SiteScheduler from '../../js/site-components/site-xcomp-scheduler.js';
+import Calendar from '../Common/Calendar.js'
 
 import { Grid, Row, Col, Glyphicon, Button } from 'react-bootstrap';
 
@@ -497,12 +499,13 @@ value="" />
 				</div>
 				</Col>
 </Row>
-				<Row id="issue-calendar-view">
+<Row id="issue-calendar-view">
     <Col md={12}>
-    <div id="issuecalendar-div"></div>
+    //<div id="issuecalendar-div"></div>
+    <Calendar/>
     </Col>
 </Row>
-				<Row id="issue-schedule-view">
+<Row id="issue-schedule-view">
     <Col md={12}>
     <div id="issueschedule-div"></div>
     </Col>

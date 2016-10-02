@@ -15,7 +15,7 @@ export default class Login extends Component {
         super(props);
         this.state = {
             panelList: LoginStore.getPanels(),
-            activeId :LoginStore.getActiveId
+            activeId :LoginStore.getActiveId()
         };
         this.onChange = this.onChange.bind(this);
     };

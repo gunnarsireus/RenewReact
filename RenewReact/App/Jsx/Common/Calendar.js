@@ -6,15 +6,40 @@ import moment from 'moment';
 import fullcalendar from 'fullcalendar';
 import styles from '../../css/Fullcalendar.css';
 import styles2 from '../../css/FullCalendar-2.6.1/fullcalendar.css'
+import LoginStore from '../Login/stores/LoginStore';
 export default class Calendar extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            activeId :LoginStore.getActiveId()
+        };
+    };
+    componentWillMount() {
+        alert('componentWillMount()')
+    };
+    componentDidMount() {
+        alert('componentDidMount()')
+    };
+    componentWillReceiveProps() {
+        this.setState({
+            activeId: LoginStore.getActiveId()
+        });
+        alert('componentWillReceiveProps() ' + this.state.activeId)
+    };
+    componentDidUpdate() {
+        alert('componentDidUpdate()')
+    };
+    componentWillUpdate() {
+        alert('componentWillUpdate()')
+    };
+    componentWillUnmount() {
+        alert('componentWillUnmount()')
     };
     render() {
-        return <div id="calendar"></div>
+        return <div id="issuecalendar-div"></div>
     }
     componentDidMount() {
-        $('#calendar').fullCalendar({
+        $('#issuecalendar-div').fullCalendar({
             header: {
                 left: 'prev,next today',
                 center: 'title',

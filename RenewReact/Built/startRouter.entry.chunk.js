@@ -39,21 +39,21 @@ webpackJsonp([0],[
 	var felanmalan = __webpack_require__(465);
 
 	var pagaende = __webpack_require__(468);
-	var arkiverade = __webpack_require__(589);
+	var arkiverade = __webpack_require__(597);
 
-	var nyheter = __webpack_require__(592);
-	var erbjudanden = __webpack_require__(595);
+	var nyheter = __webpack_require__(600);
+	var erbjudanden = __webpack_require__(603);
 
-	var kunder = __webpack_require__(598);
-	var boende = __webpack_require__(601);
-	var tidkoder = __webpack_require__(604);
-	var arendeKlasser = __webpack_require__(607);
+	var kunder = __webpack_require__(606);
+	var boende = __webpack_require__(609);
+	var tidkoder = __webpack_require__(612);
+	var arendeKlasser = __webpack_require__(615);
 
-	var admin = __webpack_require__(610);
-	var loggaut = __webpack_require__(613);
+	var admin = __webpack_require__(618);
+	var loggaut = __webpack_require__(621);
 
 	var login = __webpack_require__(437);
-	var calendar = __webpack_require__(614);
+	var calendar = __webpack_require__(622);
 
 	var router = new kendo.Router({
 	    init: function init() {
@@ -40707,7 +40707,7 @@ webpackJsonp([0],[
 
 	        _this.state = {
 	            panelList: _LoginStore2.default.getPanels(),
-	            activeId: _LoginStore2.default.getActiveId
+	            activeId: _LoginStore2.default.getActiveId()
 	        };
 	        _this.onChange = _this.onChange.bind(_this);
 	        return _this;
@@ -45940,13 +45940,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(469);
+	var _Pagaende = __webpack_require__(469);
 
-	var _index2 = _interopRequireDefault(_index);
+	var _Pagaende2 = _interopRequireDefault(_Pagaende);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(588);
+	var detailsTemplate = __webpack_require__(596);
 
 
 	var viewModel = kendo.observable({
@@ -45957,7 +45957,7 @@ webpackJsonp([0],[
 	    model: viewModel,
 	    show: function show() {
 
-	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-pagaende"));
+	        _reactDom2.default.render(_react2.default.createElement(_Pagaende2.default, null), document.getElementById("react-pagaende"));
 	        kendo.fx(this.element).fade('in').duration(100).play();
 	    }
 	});
@@ -45984,6 +45984,30 @@ webpackJsonp([0],[
 
 	var _Input2 = _interopRequireDefault(_Input);
 
+	var _CreateIssuePanel = __webpack_require__(470);
+
+	var _CreateIssuePanel2 = _interopRequireDefault(_CreateIssuePanel);
+
+	var _IssueCalendarView = __webpack_require__(474);
+
+	var _IssueCalendarView2 = _interopRequireDefault(_IssueCalendarView);
+
+	var _IssueScheduleView = __webpack_require__(590);
+
+	var _IssueScheduleView2 = _interopRequireDefault(_IssueScheduleView);
+
+	var _IssueListView = __webpack_require__(591);
+
+	var _IssueListView2 = _interopRequireDefault(_IssueListView);
+
+	var _PagaendeActions = __webpack_require__(471);
+
+	var _PagaendeActions2 = _interopRequireDefault(_PagaendeActions);
+
+	var _PagaendeStore = __webpack_require__(592);
+
+	var _PagaendeStore2 = _interopRequireDefault(_PagaendeStore);
+
 	var _jquery = __webpack_require__(2);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
@@ -45992,29 +46016,25 @@ webpackJsonp([0],[
 
 	var _jqueryUi2 = _interopRequireDefault(_jqueryUi);
 
-	var _moment = __webpack_require__(470);
+	var _moment = __webpack_require__(476);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _fullcalendar = __webpack_require__(577);
+	var _fullcalendar = __webpack_require__(583);
 
 	var _fullcalendar2 = _interopRequireDefault(_fullcalendar);
 
-	var _fullcalendarScheduler = __webpack_require__(578);
+	var _fullcalendarScheduler = __webpack_require__(593);
 
 	var _fullcalendarScheduler2 = _interopRequireDefault(_fullcalendarScheduler);
 
-	var _fullcalendar3 = __webpack_require__(579);
+	var _fullcalendar3 = __webpack_require__(588);
 
 	var _fullcalendar4 = _interopRequireDefault(_fullcalendar3);
 
-	var _site = __webpack_require__(583);
+	var _site = __webpack_require__(594);
 
 	var _site2 = _interopRequireDefault(_site);
-
-	var _Calendar = __webpack_require__(585);
-
-	var _Calendar2 = _interopRequireDefault(_Calendar);
 
 	var _reactBootstrap = __webpack_require__(180);
 
@@ -46024,30 +46044,67 @@ webpackJsonp([0],[
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /// <reference path="../Common/Calendar.js" />
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	//import from '../../css/bootstrap-select.css';
-	//import from '../../css/bootstrap-theme.css';
-	//import from '../../css/bootstrap.css';
+	var Pagaende = function (_Component) {
+	    _inherits(Pagaende, _Component);
 
-	//import SiteCalendar from '../../js/site-components/site-xcomp-calendar.js';
-	//import SiteScheduler from '../../js/site-components/site-xcomp-scheduler.js';
+	    function Pagaende(props) {
+	        _classCallCheck(this, Pagaende);
 
+	        var _this = _possibleConstructorReturn(this, (Pagaende.__proto__ || Object.getPrototypeOf(Pagaende)).call(this, props));
 
-	var Index = function (_Component) {
-	    _inherits(Index, _Component);
-
-	    function Index(props) {
-	        _classCallCheck(this, Index);
-
-	        return _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).call(this, props));
+	        _this.state = {
+	            panelList: _PagaendeStore2.default.getPanels(),
+	            activeId: _PagaendeStore2.default.getActiveId()
+	        };
+	        _this.onChange = _this.onChange.bind(_this);
+	        _this.onCalendar = _this.onCalendar.bind(_this);
+	        _this.onSchedule = _this.onSchedule.bind(_this);
+	        _this.onList = _this.onList.bind(_this);
+	        return _this;
 	    }
 
-	    _createClass(Index, [{
+	    _createClass(Pagaende, [{
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            //SiteCalendar.element.fullCalendar();
-	            //SiteScheduler();
+	            _PagaendeStore2.default.addChangeListener(this.onChange);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            _PagaendeStore2.default.removeChangeListener(this.onChange);
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps() {
+	            this.setState({
+	                activeId: _PagaendeStore2.default.getActiveId()
+	            });
+	            alert('componentWillReceiveProps() ' + this.state.activeId);
+	        }
+	    }, {
+	        key: 'onChange',
+	        value: function onChange() {
+	            this.setState({
+	                panelList: _PagaendeStore2.default.getPanels(),
+	                activeId: _PagaendeStore2.default.getActiveId()
+	            });
+	        }
+	    }, {
+	        key: 'onCalendar',
+	        value: function onCalendar() {
+	            _PagaendeActions2.default.setActive(1);
+	        }
+	    }, {
+	        key: 'onSchedule',
+	        value: function onSchedule() {
+	            _PagaendeActions2.default.setActive(2);
+	        }
+	    }, {
+	        key: 'onList',
+	        value: function onList() {
+	            _PagaendeActions2.default.setActive(2);
 	        }
 	    }, {
 	        key: 'render',
@@ -46064,7 +46121,7 @@ webpackJsonp([0],[
 	                        _react2.default.createElement(
 	                            'h3',
 	                            { className: 'site-page-header' },
-	                            'Ärenden ',
+	                            '�renden ',
 	                            _react2.default.createElement('img', { src: '../../../App/img/help.png', id: 'page-description-tooltip', className: 'site-clickable' })
 	                        ),
 	                        _react2.default.createElement(
@@ -46084,7 +46141,7 @@ webpackJsonp([0],[
 	                                            { className: 'btn-group', role: 'group' },
 	                                            _react2.default.createElement(
 	                                                _reactBootstrap.Button,
-	                                                { id: 'calendar-view-select', className: 'btn btn-default' },
+	                                                { id: 'calendar-view-select', onClick: this.onCalendar, className: 'btn btn-default' },
 	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-calendar', 'aria-hidden': 'true' })
 	                                            )
 	                                        ),
@@ -46093,7 +46150,7 @@ webpackJsonp([0],[
 	                                            { className: 'btn-group', role: 'group' },
 	                                            _react2.default.createElement(
 	                                                _reactBootstrap.Button,
-	                                                { id: 'schedule-view-select', className: 'btn btn-default' },
+	                                                { id: 'schedule-view-select', onClick: this.onSchedule, className: 'btn btn-default' },
 	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-tasks', 'aria-hidden': 'true' })
 	                                            )
 	                                        ),
@@ -46102,7 +46159,7 @@ webpackJsonp([0],[
 	                                            { className: 'btn-group', role: 'group' },
 	                                            _react2.default.createElement(
 	                                                _reactBootstrap.Button,
-	                                                { id: 'list-view-select', className: 'btn btn-default' },
+	                                                { id: 'list-view-select', onClick: this.onList, className: 'btn btn-default' },
 	                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-list', 'aria-hidden': 'true' })
 	                                            )
 	                                        )
@@ -46176,27 +46233,27 @@ webpackJsonp([0],[
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '10' },
-	                                                'Preliminär'
+	                                                'Prelimin�r'
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '20' },
-	                                                'Öppen'
+	                                                '�ppen'
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '30' },
-	                                                'Påbörjad'
+	                                                'P�b�rjad'
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '40' },
-	                                                'Stängd'
+	                                                'St�ngd'
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '50' },
-	                                                'Godkänd'
+	                                                'Godk�nd'
 	                                            )
 	                                        )
 	                                    )
@@ -46235,7 +46292,7 @@ webpackJsonp([0],[
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '1' },
-	                                                'Låg'
+	                                                'L�g'
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'option',
@@ -46245,7 +46302,7 @@ webpackJsonp([0],[
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '3' },
-	                                                'Hög'
+	                                                'H�g'
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'option',
@@ -46294,7 +46351,7 @@ webpackJsonp([0],[
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '20' },
-	                                                'Lägenhet'
+	                                                'L�genhet'
 	                                            )
 	                                        )
 	                                    )
@@ -46308,7 +46365,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'h4',
 	                                            null,
-	                                            'Nytt ärende'
+	                                            'Nytt �rende'
 	                                        )
 	                                    )
 	                                ),
@@ -46331,756 +46388,10 @@ webpackJsonp([0],[
 	                    _react2.default.createElement(
 	                        _reactBootstrap.Col,
 	                        { md: 10, className: 'site-page-content' },
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Row,
-	                            { id: 'create-issue-panel', hidden: true },
-	                            _react2.default.createElement(
-	                                _reactBootstrap.Col,
-	                                { md: 12 },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'panel panel-default' },
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { className: 'panel-heading' },
-	                                        _react2.default.createElement(
-	                                            'h3',
-	                                            { className: 'panel-title', id: 'title' },
-	                                            'Skapa ärende'
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { className: 'panel-body' },
-	                                        _react2.default.createElement(
-	                                            'form',
-	                                            { id: 'create-issue-form' },
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                { className: 'form-group' },
-	                                                _react2.default.createElement(
-	                                                    'div',
-	                                                    { className: 'input-group' },
-	                                                    _react2.default.createElement('input', { 'data-autoajax': 'false',
-	                                                        id: 'customerid',
-	                                                        name: 'customerid',
-	                                                        type: 'hidden',
-	                                                        value: '' })
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                _reactBootstrap.Row,
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    _reactBootstrap.Col,
-	                                                    { md: 6 },
-	                                                    _react2.default.createElement(
-	                                                        'div',
-	                                                        { className: 'form-group' },
-	                                                        _react2.default.createElement(
-	                                                            'label',
-	                                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'name' },
-	                                                            'Titel'
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            _reactBootstrap.Col,
-	                                                            { md: 9, className: 'input-group' },
-	                                                            _react2.default.createElement(
-	                                                                'span',
-	                                                                { className: 'input-group-addon' },
-	                                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-header' })
-	                                                            ),
-	                                                            _react2.default.createElement('input', { className: 'form-control',
-	                                                                'data-autoajax': 'true',
-	                                                                'data-val': 'true',
-	                                                                'data-val-length-min': '2',
-	                                                                'data-val-length-max': '45',
-	                                                                'data-val-length': 'Titel måste vara mellan 2 och 45 tecken',
-	                                                                'data-val-required': 'Titel får inte vara tom',
-	                                                                id: 'name',
-	                                                                name: 'name',
-	                                                                type: 'text',
-	                                                                value: '' })
-	                                                        )
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'div',
-	                                                        { className: 'form-group' },
-	                                                        _react2.default.createElement(
-	                                                            'label',
-	                                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'assignedid' },
-	                                                            'Tilldelad'
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            _reactBootstrap.Col,
-	                                                            { md: 9, className: 'input-group' },
-	                                                            _react2.default.createElement(
-	                                                                'span',
-	                                                                { className: 'input-group-addon' },
-	                                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-ban-circle' })
-	                                                            ),
-	                                                            _react2.default.createElement(
-	                                                                'select',
-	                                                                { className: 'selectpicker',
-	                                                                    'data-autoajax': 'true',
-	                                                                    'data-width': '100%',
-	                                                                    id: 'assignedid',
-	                                                                    name: 'assignedid' },
-	                                                                _react2.default.createElement(
-	                                                                    'option',
-	                                                                    { value: '128' },
-	                                                                    'Admin'
-	                                                                ),
-	                                                                _react2.default.createElement(
-	                                                                    'option',
-	                                                                    { value: '16' },
-	                                                                    'Ledning'
-	                                                                ),
-	                                                                _react2.default.createElement(
-	                                                                    'option',
-	                                                                    { value: '4' },
-	                                                                    'Tekniker'
-	                                                                )
-	                                                            )
-	                                                        )
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'div',
-	                                                        { className: 'form-group' },
-	                                                        _react2.default.createElement(
-	                                                            'label',
-	                                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'startdatestring' },
-	                                                            'Startdatum'
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            _reactBootstrap.Col,
-	                                                            { md: 9, className: 'input-group date clockpicker', id: 'date-container-for-startdatestring-0' },
-	                                                            _react2.default.createElement(
-	                                                                'span',
-	                                                                { className: 'input-group-addon' },
-	                                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-calendar' })
-	                                                            ),
-	                                                            _react2.default.createElement('input', { className: 'form-control',
-	                                                                'data-autoajax': 'true',
-	                                                                'data-date': '2016-09-27',
-	                                                                'data-date-autoclose': 'true',
-	                                                                'data-date-calendar-weeks': 'true',
-	                                                                'data-date-container': '#date-container-for-startdatestring-0',
-	                                                                'data-date-format': 'yyyy-mm-dd',
-	                                                                'data-date-language': 'sv',
-	                                                                'data-date-orientation': 'bottom left',
-	                                                                'data-date-today-btn': 'linked',
-	                                                                'data-date-today-highlight': 'true',
-	                                                                'data-date-week-start': '1',
-	                                                                'data-provide': 'datepicker',
-	                                                                'data-val': 'true',
-	                                                                'data-val-required': 'Datum får inte vara tomt',
-	                                                                id: 'startdatestring',
-	                                                                name: 'startdatestring',
-	                                                                type: 'text',
-	                                                                value: '' }),
-	                                                            _react2.default.createElement('span', { className: 'input-group-btn', style: { width: "0px" } }),
-	                                                            _react2.default.createElement('input', { className: 'form-control',
-	                                                                'data-autoajax': 'true',
-	                                                                'data-val': 'true',
-	                                                                'data-val-required': 'Klockslag får inte vara tomt',
-	                                                                id: 'starttimestring',
-	                                                                name: 'starttimestring',
-	                                                                type: 'text',
-	                                                                placeholder: '16:57',
-	                                                                value: '' })
-	                                                        )
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'div',
-	                                                        { className: 'form-group' },
-	                                                        _react2.default.createElement(
-	                                                            'label',
-	                                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'enddatestring' },
-	                                                            'Slutdatum'
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            _reactBootstrap.Col,
-	                                                            { md: 9, className: 'input-group date clockpicker', id: 'date-container-for-enddatestring-1' },
-	                                                            _react2.default.createElement(
-	                                                                'span',
-	                                                                { className: 'input-group-addon' },
-	                                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-calendar' })
-	                                                            ),
-	                                                            _react2.default.createElement('input', { className: 'form-control',
-	                                                                'data-autoajax': 'true',
-	                                                                'data-date': '2016-09-27',
-	                                                                'data-date-autoclose': 'true',
-	                                                                'data-date-calendar-weeks': 'true',
-	                                                                'data-date-container': '#date-container-for-enddatestring-1',
-	                                                                'data-date-format': 'yyyy-mm-dd',
-	                                                                'data-date-language': 'sv',
-	                                                                'data-date-orientation': 'bottom left',
-	                                                                'data-date-today-btn': 'linked',
-	                                                                'data-date-today-highlight': 'true',
-	                                                                'data-date-week-start': '1',
-	                                                                'data-provide': 'datepicker',
-	                                                                'data-val': 'true',
-	                                                                'data-val-required': 'Datum får inte vara tomt',
-	                                                                id: 'enddatestring',
-	                                                                name: 'enddatestring',
-	                                                                type: 'text',
-	                                                                value: '' }),
-	                                                            _react2.default.createElement('span', { className: 'input-group-btn', style: { width: "0px" } }),
-	                                                            _react2.default.createElement('input', { className: 'form-control',
-	                                                                'data-autoajax': 'true',
-	                                                                'data-val': 'true',
-	                                                                'data-val-required': 'Klockslag får inte vara tomt',
-	                                                                id: 'endtimestring',
-	                                                                name: 'endtimestring',
-	                                                                type: 'text',
-	                                                                placeholder: '16:57',
-	                                                                value: '' })
-	                                                        )
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'div',
-	                                                        { className: 'form-group' },
-	                                                        _react2.default.createElement(
-	                                                            'label',
-	                                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'issueclassid' },
-	                                                            'Ärendeklass'
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            _reactBootstrap.Col,
-	                                                            { md: 9, className: 'input-group' },
-	                                                            _react2.default.createElement(
-	                                                                'span',
-	                                                                { className: 'input-group-addon' },
-	                                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-sort-by-attributes' })
-	                                                            ),
-	                                                            _react2.default.createElement(
-	                                                                'select',
-	                                                                { className: 'selectpicker',
-	                                                                    'data-autoajax': 'true',
-	                                                                    'data-width': '100%',
-	                                                                    id: 'issueclassid',
-	                                                                    name: 'issueclassid' },
-	                                                                _react2.default.createElement(
-	                                                                    'option',
-	                                                                    { value: '0' },
-	                                                                    '--'
-	                                                                )
-	                                                            )
-	                                                        )
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'div',
-	                                                        { className: 'form-group' },
-	                                                        _react2.default.createElement(
-	                                                            'label',
-	                                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'prio' },
-	                                                            'Prioritet'
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            _reactBootstrap.Col,
-	                                                            { md: 9, className: 'input-group' },
-	                                                            _react2.default.createElement(
-	                                                                'span',
-	                                                                { className: 'input-group-addon' },
-	                                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-exclamation-sign' })
-	                                                            ),
-	                                                            _react2.default.createElement(
-	                                                                'select',
-	                                                                { className: 'selectpicker',
-	                                                                    'data-autoajax': 'true',
-	                                                                    'data-width': '100%',
-	                                                                    id: 'prio',
-	                                                                    name: 'prio' },
-	                                                                _react2.default.createElement(
-	                                                                    'option',
-	                                                                    { value: '0' },
-	                                                                    '--'
-	                                                                ),
-	                                                                _react2.default.createElement(
-	                                                                    'option',
-	                                                                    { value: '1' },
-	                                                                    'Låg'
-	                                                                ),
-	                                                                _react2.default.createElement(
-	                                                                    'option',
-	                                                                    { value: '2' },
-	                                                                    'Normal'
-	                                                                ),
-	                                                                _react2.default.createElement(
-	                                                                    'option',
-	                                                                    { value: '3' },
-	                                                                    'Hög'
-	                                                                ),
-	                                                                _react2.default.createElement(
-	                                                                    'option',
-	                                                                    { value: '4' },
-	                                                                    'Akut'
-	                                                                )
-	                                                            )
-	                                                        )
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'div',
-	                                                        { className: 'form-group' },
-	                                                        _react2.default.createElement(
-	                                                            'label',
-	                                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'responsible' },
-	                                                            'Utförare'
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            _reactBootstrap.Col,
-	                                                            { md: 9, className: 'input-group' },
-	                                                            _react2.default.createElement(
-	                                                                'span',
-	                                                                { className: 'input-group-addon' },
-	                                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-user' })
-	                                                            ),
-	                                                            _react2.default.createElement(
-	                                                                'select',
-	                                                                { className: 'selectpicker',
-	                                                                    'data-autoajax': 'true',
-	                                                                    'data-width': '100%',
-	                                                                    id: 'responsible',
-	                                                                    name: 'responsible' },
-	                                                                _react2.default.createElement(
-	                                                                    'option',
-	                                                                    { value: '0' },
-	                                                                    '--'
-	                                                                ),
-	                                                                _react2.default.createElement(
-	                                                                    'option',
-	                                                                    { value: '41' },
-	                                                                    'Renew'
-	                                                                ),
-	                                                                _react2.default.createElement(
-	                                                                    'option',
-	                                                                    { value: '42' },
-	                                                                    'Kund'
-	                                                                )
-	                                                            )
-	                                                        )
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'div',
-	                                                        { className: 'form-group' },
-	                                                        _react2.default.createElement(
-	                                                            'label',
-	                                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'description' },
-	                                                            'Beskrivning'
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            _reactBootstrap.Col,
-	                                                            { md: 9, className: 'input-group' },
-	                                                            _react2.default.createElement(
-	                                                                'span',
-	                                                                { className: 'input-group-addon' },
-	                                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-pencil' })
-	                                                            ),
-	                                                            _react2.default.createElement('textarea', { className: 'form-control', rows: '4',
-	                                                                'data-autoajax': 'true',
-	                                                                'data-val': 'true',
-	                                                                'data-val-length-max': '400',
-	                                                                'data-val-length': 'Beskrivning får inte överstiga 400 tecken',
-	                                                                id: 'description',
-	                                                                name: 'description' })
-	                                                        )
-	                                                    )
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    _reactBootstrap.Col,
-	                                                    { md: 6 },
-	                                                    _react2.default.createElement(
-	                                                        'div',
-	                                                        { className: 'form-group' },
-	                                                        _react2.default.createElement(
-	                                                            'label',
-	                                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'areatype' },
-	                                                            'Utrymme'
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            _reactBootstrap.Col,
-	                                                            { md: 9, className: 'input-group' },
-	                                                            _react2.default.createElement(
-	                                                                'span',
-	                                                                { className: 'input-group-addon' },
-	                                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-map-marker' })
-	                                                            ),
-	                                                            _react2.default.createElement(
-	                                                                'select',
-	                                                                { className: 'selectpicker',
-	                                                                    'data-autoajax': 'true',
-	                                                                    'data-width': '100%',
-	                                                                    id: 'areatype',
-	                                                                    name: 'areatype' },
-	                                                                _react2.default.createElement(
-	                                                                    'option',
-	                                                                    { value: '0' },
-	                                                                    '--'
-	                                                                ),
-	                                                                _react2.default.createElement(
-	                                                                    'option',
-	                                                                    { value: '10' },
-	                                                                    'Gemensamhet'
-	                                                                ),
-	                                                                _react2.default.createElement(
-	                                                                    'option',
-	                                                                    { value: '20' },
-	                                                                    'Lägenhet'
-	                                                                )
-	                                                            )
-	                                                        )
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'div',
-	                                                        { className: 'form-group' },
-	                                                        _react2.default.createElement(
-	                                                            'label',
-	                                                            { className: 'control-label col-md-3', htmlFor: 'residentid', style: { marginLeft: "-15px", marginRight: "15px" } },
-	                                                            'Boende'
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            _reactBootstrap.Col,
-	                                                            { md: 9, className: 'input-group' },
-	                                                            _react2.default.createElement(
-	                                                                'span',
-	                                                                { className: 'input-group-addon' },
-	                                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-unchecked' })
-	                                                            ),
-	                                                            _react2.default.createElement('select', { 'data-autoajax': 'true', 'data-width': '100%', id: 'residentid', name: 'residentid' })
-	                                                        )
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'div',
-	                                                        { className: 'form-group' },
-	                                                        _react2.default.createElement(
-	                                                            'label',
-	                                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'firstname' },
-	                                                            'Förnamn'
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            _reactBootstrap.Col,
-	                                                            { md: 9, className: 'input-group' },
-	                                                            _react2.default.createElement(
-	                                                                'span',
-	                                                                { className: 'input-group-addon' },
-	                                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-user' })
-	                                                            ),
-	                                                            _react2.default.createElement('input', { className: 'form-control',
-	                                                                'data-autoajax': 'true',
-	                                                                'data-val': 'true',
-	                                                                'data-val-length-max': '45',
-	                                                                'data-val-length': 'Förnamn får inte överstiga 45 tecken',
-	                                                                id: 'firstname',
-	                                                                name: 'firstname',
-	                                                                type: 'text',
-	                                                                value: '' })
-	                                                        )
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'div',
-	                                                        { className: 'form-group' },
-	                                                        _react2.default.createElement(
-	                                                            'label',
-	                                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'lastname' },
-	                                                            'Efternamn'
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            _reactBootstrap.Col,
-	                                                            { md: 9, className: 'input-group' },
-	                                                            _react2.default.createElement(
-	                                                                'span',
-	                                                                { className: 'input-group-addon' },
-	                                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-user' })
-	                                                            ),
-	                                                            _react2.default.createElement('input', { className: 'form-control',
-	                                                                'data-autoajax': 'true',
-	                                                                'data-val': 'true',
-	                                                                'data-val-length-max': '45',
-	                                                                'data-val-length': 'Efternamn får inte överstiga 45 tecken',
-	                                                                id: 'lastname',
-	                                                                name: 'lastname',
-	                                                                type: 'text',
-	                                                                value: '' })
-	                                                        )
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'div',
-	                                                        { className: 'form-group' },
-	                                                        _react2.default.createElement(
-	                                                            'label',
-	                                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'phone' },
-	                                                            'Telefon'
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            _reactBootstrap.Col,
-	                                                            { md: 9, className: 'input-group' },
-	                                                            _react2.default.createElement(
-	                                                                'span',
-	                                                                { className: 'input-group-addon' },
-	                                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-phone-alt' })
-	                                                            ),
-	                                                            _react2.default.createElement('input', { className: 'form-control',
-	                                                                'data-autoajax': 'true',
-	                                                                'data-val': 'true',
-	                                                                'data-val-length-max': '20',
-	                                                                'data-val-length': 'Telefon får inte överstiga 20 tecken',
-	                                                                id: 'phone',
-	                                                                name: 'phone'
-	                                                                //onKeyPress="return Site.Validation.isPhoneNumber(event)"
-	                                                                , type: 'text',
-	                                                                value: '' })
-	                                                        )
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'div',
-	                                                        { className: 'form-group' },
-	                                                        _react2.default.createElement(
-	                                                            'label',
-	                                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'email' },
-	                                                            'E-post'
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            _reactBootstrap.Col,
-	                                                            { md: 9, className: 'input-group' },
-	                                                            _react2.default.createElement(
-	                                                                'span',
-	                                                                { className: 'input-group-addon' },
-	                                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-envelope' })
-	                                                            ),
-	                                                            _react2.default.createElement('input', { className: 'form-control',
-	                                                                'data-autoajax': 'true',
-	                                                                'data-val': 'true',
-	                                                                'data-val-length-max': '60',
-	                                                                'data-val-length': 'E-post får inte överstiga 60 tecken',
-	                                                                id: 'email',
-	                                                                name: 'email',
-	                                                                type: 'text',
-	                                                                value: '' })
-	                                                        )
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'div',
-	                                                        { className: 'form-group' },
-	                                                        _react2.default.createElement(
-	                                                            'label',
-	                                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'address' },
-	                                                            'Adress'
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            _reactBootstrap.Col,
-	                                                            { md: 9, className: 'input-group' },
-	                                                            _react2.default.createElement(
-	                                                                'span',
-	                                                                { className: 'input-group-addon' },
-	                                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-map-marker' })
-	                                                            ),
-	                                                            _react2.default.createElement('input', { className: 'form-control',
-	                                                                'data-autoajax': 'true',
-	                                                                'data-val': 'true',
-	                                                                'data-val-length-max': '45',
-	                                                                'data-val-length': 'Adress får inte överstiga 45 tecken',
-	                                                                id: 'address',
-	                                                                name: 'address',
-	                                                                type: 'text',
-	                                                                value: '' })
-	                                                        )
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'div',
-	                                                        { className: 'form-group' },
-	                                                        _react2.default.createElement(
-	                                                            'label',
-	                                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'floor' },
-	                                                            'Våningsplan'
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            _reactBootstrap.Col,
-	                                                            { md: 9, className: 'input-group' },
-	                                                            _react2.default.createElement(
-	                                                                'span',
-	                                                                { className: 'input-group-addon' },
-	                                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-align-justify' })
-	                                                            ),
-	                                                            _react2.default.createElement('input', { className: 'form-control',
-	                                                                'data-autoajax': 'true',
-	                                                                'data-val': 'true',
-	                                                                'data-val-length-max': '10',
-	                                                                'data-val-length': 'Våningsplan får inte överstiga 10 tecken',
-	                                                                id: 'floor',
-	                                                                name: 'floor',
-	                                                                type: 'text',
-	                                                                value: '' })
-	                                                        )
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'div',
-	                                                        { className: 'form-group' },
-	                                                        _react2.default.createElement(
-	                                                            'label',
-	                                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'apartment' },
-	                                                            'Lägenhet'
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            _reactBootstrap.Col,
-	                                                            { md: 9, className: 'input-group' },
-	                                                            _react2.default.createElement(
-	                                                                'span',
-	                                                                { className: 'input-group-addon' },
-	                                                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-home' })
-	                                                            ),
-	                                                            _react2.default.createElement('input', { className: 'form-control',
-	                                                                'data-autoajax': 'true',
-	                                                                'data-val': 'true',
-	                                                                'data-val-length-max': '10',
-	                                                                'data-val-length': 'Lägenhet får inte överstiga 10 tecken',
-	                                                                id: 'apartment',
-	                                                                name: 'apartment',
-	                                                                type: 'text',
-	                                                                value: '' })
-	                                                        )
-	                                                    )
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                _reactBootstrap.Row,
-	                                                null,
-	                                                _react2.default.createElement(_reactBootstrap.Col, { md: 6 }),
-	                                                _react2.default.createElement(
-	                                                    _reactBootstrap.Col,
-	                                                    { md: 6 },
-	                                                    _react2.default.createElement(
-	                                                        _reactBootstrap.Button,
-	                                                        { className: 'site-buttonmargin-left pull-right btn-success btn create-issue-form-buttons', 'data-action': '4' },
-	                                                        'Skapa'
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        _reactBootstrap.Button,
-	                                                        { className: 'site-buttonmargin-left pull-right btn-default btn create-issue-form-buttons', 'data-action': '2' },
-	                                                        'Stäng'
-	                                                    )
-	                                                )
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Row,
-	                            { id: 'issue-calendar-view' },
-	                            _react2.default.createElement(
-	                                _reactBootstrap.Col,
-	                                { md: 12 },
-	                                _react2.default.createElement('div', { id: 'issuecalendar-div' })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Row,
-	                            { id: 'issue-schedule-view' },
-	                            _react2.default.createElement(
-	                                _reactBootstrap.Col,
-	                                { md: 12 },
-	                                _react2.default.createElement('div', { id: 'issueschedule-div' })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Row,
-	                            { id: 'issue-list-view' },
-	                            _react2.default.createElement(
-	                                _reactBootstrap.Col,
-	                                { md: 12 },
-	                                _react2.default.createElement(
-	                                    'table',
-	                                    { id: 'issuelist-table', className: 'table table-striped table-hover' },
-	                                    _react2.default.createElement(
-	                                        'thead',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            'tr',
-	                                            null,
-	                                            _react2.default.createElement('th', null),
-	                                            _react2.default.createElement(
-	                                                'th',
-	                                                null,
-	                                                'ID'
-	                                            ),
-	                                            _react2.default.createElement('th', null),
-	                                            _react2.default.createElement(
-	                                                'th',
-	                                                null,
-	                                                'Prio'
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'th',
-	                                                null,
-	                                                'Titel'
-	                                            ),
-	                                            _react2.default.createElement('th', null),
-	                                            _react2.default.createElement(
-	                                                'th',
-	                                                null,
-	                                                'Adress'
-	                                            ),
-	                                            _react2.default.createElement('th', null),
-	                                            _react2.default.createElement(
-	                                                'th',
-	                                                null,
-	                                                'Tilldelad'
-	                                            ),
-	                                            _react2.default.createElement('th', null),
-	                                            _react2.default.createElement('th', null),
-	                                            _react2.default.createElement('th', null),
-	                                            _react2.default.createElement('th', null),
-	                                            _react2.default.createElement('th', null)
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement('tbody', null),
-	                                    _react2.default.createElement(
-	                                        'tfoot',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            'tr',
-	                                            null,
-	                                            _react2.default.createElement('th', null),
-	                                            _react2.default.createElement(
-	                                                'th',
-	                                                null,
-	                                                'ID'
-	                                            ),
-	                                            _react2.default.createElement('th', null),
-	                                            _react2.default.createElement(
-	                                                'th',
-	                                                null,
-	                                                'Prio'
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'th',
-	                                                null,
-	                                                'Titel'
-	                                            ),
-	                                            _react2.default.createElement('th', null),
-	                                            _react2.default.createElement(
-	                                                'th',
-	                                                null,
-	                                                'Adress'
-	                                            ),
-	                                            _react2.default.createElement('th', null),
-	                                            _react2.default.createElement(
-	                                                'th',
-	                                                null,
-	                                                'Tilldelad'
-	                                            ),
-	                                            _react2.default.createElement('th', null),
-	                                            _react2.default.createElement('th', null),
-	                                            _react2.default.createElement('th', null),
-	                                            _react2.default.createElement('th', null),
-	                                            _react2.default.createElement('th', null)
-	                                        )
-	                                    )
-	                                )
-	                            )
-	                        )
+	                        _react2.default.createElement(_CreateIssuePanel2.default, { show: this.state.panelList[0].active }),
+	                        _react2.default.createElement(_IssueCalendarView2.default, { show: this.state.panelList[1].active }),
+	                        _react2.default.createElement(_IssueScheduleView2.default, { show: this.state.panelList[2].active }),
+	                        _react2.default.createElement(_IssueListView2.default, { show: this.state.panelList[3].active })
 	                    )
 	                ),
 	                _react2.default.createElement(
@@ -47092,7 +46403,7 @@ webpackJsonp([0],[
 	                        _react2.default.createElement(
 	                            'h3',
 	                            { className: 'site-page-header' },
-	                            'Ärende ',
+	                            '�rende ',
 	                            _react2.default.createElement('span', { id: 'issue-page-one-number' }),
 	                            ' ',
 	                            _react2.default.createElement('img', { src: '../../../App/img/help.png', id: 'page-description-tooltip', className: 'site-clickable' })
@@ -47173,7 +46484,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'h4',
 	                                            null,
-	                                            'Åtgärder'
+	                                            '�tg�rder'
 	                                        )
 	                                    )
 	                                ),
@@ -47397,8 +46708,8 @@ webpackJsonp([0],[
 	                                                        'data-val': 'true',
 	                                                        'data-val-length-min': '2',
 	                                                        'data-val-length-max': '45',
-	                                                        'data-val-length': 'Titel måste vara mellan 2 och 45 tecken',
-	                                                        'data-val-required': 'Titel får inte vara tom',
+	                                                        'data-val-length': 'Titel m�ste vara mellan 2 och 45 tecken',
+	                                                        'data-val-required': 'Titel f�r inte vara tom',
 	                                                        id: 'name',
 	                                                        name: 'name',
 	                                                        type: 'text',
@@ -47476,7 +46787,7 @@ webpackJsonp([0],[
 	                                                        'data-date-week-start': '1',
 	                                                        'data-provide': 'datepicker',
 	                                                        'data-val': 'true',
-	                                                        'data-val-required': 'Datum får inte vara tomt',
+	                                                        'data-val-required': 'Datum f�r inte vara tomt',
 	                                                        id: 'startdatestring',
 	                                                        name: 'startdatestring',
 	                                                        type: 'text',
@@ -47485,7 +46796,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement('input', { className: 'form-control',
 	                                                        'data-autoajax': 'true',
 	                                                        'data-val': 'true',
-	                                                        'data-val-required': 'Klockslag får inte vara tomt',
+	                                                        'data-val-required': 'Klockslag f�r inte vara tomt',
 	                                                        id: 'starttimestring',
 	                                                        name: 'starttimestring',
 	                                                        type: 'text',
@@ -47515,6 +46826,858 @@ webpackJsonp([0],[
 	                                                        'data-date-autoclose': 'true',
 	                                                        'data-date-calendar-weeks': 'true',
 	                                                        'data-date-container': '#date-container-for-enddatestring-3',
+	                                                        'data-date-format': 'yyyy-mm-dd',
+	                                                        'data-date-language': 'sv',
+	                                                        'data-date-orientation': 'bottom left',
+	                                                        'data-date-today-btn': 'linked',
+	                                                        'data-date-today-highlight': 'true',
+	                                                        'data-date-week-start': '1',
+	                                                        'data-provide': 'datepicker',
+	                                                        'data-val': 'true',
+	                                                        'data-val-required': 'Datum f�r inte vara tomt',
+	                                                        id: 'enddatestring',
+	                                                        name: 'enddatestring',
+	                                                        type: 'text',
+	                                                        value: '' }),
+	                                                    _react2.default.createElement('span', { className: 'input-group-btn', style: { width: "0px" } }),
+	                                                    _react2.default.createElement('input', { className: 'form-control',
+	                                                        'data-autoajax': 'true',
+	                                                        'data-val': 'true',
+	                                                        'data-val-required': 'Klockslag f�r inte vara tomt',
+	                                                        id: 'endtimestring',
+	                                                        name: 'endtimestring',
+	                                                        type: 'text',
+	                                                        placeholder: '16:57',
+	                                                        value: '' })
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'form-group' },
+	                                                _react2.default.createElement(
+	                                                    'label',
+	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'issueclassid' },
+	                                                    '�rendeklass'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _reactBootstrap.Col,
+	                                                    { md: 9, className: 'input-group' },
+	                                                    _react2.default.createElement(
+	                                                        'span',
+	                                                        { className: 'input-group-addon' },
+	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-sort-by-attributes' })
+	                                                    ),
+	                                                    _react2.default.createElement(
+	                                                        'select',
+	                                                        { className: 'selectpicker',
+	                                                            'data-autoajax': 'true',
+	                                                            'data-width': '100%',
+	                                                            id: 'issueclassid',
+	                                                            name: 'issueclassid' },
+	                                                        _react2.default.createElement(
+	                                                            'option',
+	                                                            { value: '0' },
+	                                                            '--'
+	                                                        )
+	                                                    )
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'form-group' },
+	                                                _react2.default.createElement(
+	                                                    'label',
+	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'prio' },
+	                                                    'Prioritet'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _reactBootstrap.Col,
+	                                                    { md: 9, className: 'input-group' },
+	                                                    _react2.default.createElement(
+	                                                        'span',
+	                                                        { className: 'input-group-addon' },
+	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-exclamation-sign' })
+	                                                    ),
+	                                                    _react2.default.createElement(
+	                                                        'select',
+	                                                        { className: 'selectpicker',
+	                                                            'data-autoajax': 'true',
+	                                                            'data-width': '100%',
+	                                                            id: 'prio',
+	                                                            name: 'prio' },
+	                                                        _react2.default.createElement(
+	                                                            'option',
+	                                                            { value: '0' },
+	                                                            '--'
+	                                                        ),
+	                                                        _react2.default.createElement(
+	                                                            'option',
+	                                                            { value: '1' },
+	                                                            'L�g'
+	                                                        ),
+	                                                        _react2.default.createElement(
+	                                                            'option',
+	                                                            { value: '2' },
+	                                                            'Normal'
+	                                                        ),
+	                                                        _react2.default.createElement(
+	                                                            'option',
+	                                                            { value: '3' },
+	                                                            'H�g'
+	                                                        ),
+	                                                        _react2.default.createElement(
+	                                                            'option',
+	                                                            { value: '4' },
+	                                                            'Akut'
+	                                                        )
+	                                                    )
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'form-group' },
+	                                                _react2.default.createElement(
+	                                                    'label',
+	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'responsible' },
+	                                                    'Utf�rare'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _reactBootstrap.Col,
+	                                                    { md: 9, className: 'input-group' },
+	                                                    _react2.default.createElement(
+	                                                        'span',
+	                                                        { className: 'input-group-addon' },
+	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-user' })
+	                                                    ),
+	                                                    _react2.default.createElement(
+	                                                        'select',
+	                                                        { className: 'selectpicker',
+	                                                            'data-autoajax': 'true',
+	                                                            'data-width': '100%',
+	                                                            id: 'responsible',
+	                                                            name: 'responsible' },
+	                                                        _react2.default.createElement(
+	                                                            'option',
+	                                                            { value: '0' },
+	                                                            '--'
+	                                                        ),
+	                                                        _react2.default.createElement(
+	                                                            'option',
+	                                                            { value: '41' },
+	                                                            'Renew'
+	                                                        ),
+	                                                        _react2.default.createElement(
+	                                                            'option',
+	                                                            { value: '42' },
+	                                                            'Kund'
+	                                                        )
+	                                                    )
+	                                                )
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            _reactBootstrap.Col,
+	                                            { md: 6 },
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'form-group' },
+	                                                _react2.default.createElement(
+	                                                    'label',
+	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'customername' },
+	                                                    'Kund'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _reactBootstrap.Col,
+	                                                    { md: 9, className: 'input-group' },
+	                                                    _react2.default.createElement(
+	                                                        'span',
+	                                                        { className: 'input-group-addon' },
+	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-th-list' })
+	                                                    ),
+	                                                    _react2.default.createElement('input', { className: 'form-control',
+	                                                        'data-autoajax': 'true',
+	                                                        id: 'customername',
+	                                                        name: 'customername',
+	                                                        type: 'text',
+	                                                        value: '', readOnly: true })
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'form-group' },
+	                                                _react2.default.createElement(
+	                                                    'label',
+	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'areatype' },
+	                                                    'Utrymme'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _reactBootstrap.Col,
+	                                                    { md: 9, className: 'input-group' },
+	                                                    _react2.default.createElement(
+	                                                        'span',
+	                                                        { className: 'input-group-addon' },
+	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-map-marker' })
+	                                                    ),
+	                                                    _react2.default.createElement(
+	                                                        'select',
+	                                                        { className: 'selectpicker',
+	                                                            'data-autoajax': 'true',
+	                                                            'data-width': '100%',
+	                                                            id: 'areatype',
+	                                                            name: 'areatype' },
+	                                                        _react2.default.createElement(
+	                                                            'option',
+	                                                            { value: '0' },
+	                                                            '--'
+	                                                        ),
+	                                                        _react2.default.createElement(
+	                                                            'option',
+	                                                            { value: '10' },
+	                                                            'Gemensamhet'
+	                                                        ),
+	                                                        _react2.default.createElement(
+	                                                            'option',
+	                                                            { value: '20' },
+	                                                            'L�genhet'
+	                                                        )
+	                                                    )
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'form-group' },
+	                                                _react2.default.createElement(
+	                                                    'label',
+	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'description' },
+	                                                    'Beskrivning'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _reactBootstrap.Col,
+	                                                    { md: 9, className: 'input-group' },
+	                                                    _react2.default.createElement(
+	                                                        'span',
+	                                                        { className: 'input-group-addon' },
+	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-pencil' })
+	                                                    ),
+	                                                    _react2.default.createElement('textarea', { className: 'form-control', rows: '11',
+	                                                        'data-autoajax': 'true',
+	                                                        'data-val': 'true',
+	                                                        'data-val-length-max': '400',
+	                                                        'data-val-length': 'Beskrivning f�r inte �verstiga 400 tecken',
+	                                                        id: 'description',
+	                                                        name: 'description' })
+	                                                )
+	                                            )
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement('br', null),
+	                                    _react2.default.createElement(
+	                                        _reactBootstrap.Row,
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            _reactBootstrap.Col,
+	                                            { md: 6 },
+	                                            _react2.default.createElement(
+	                                                _reactBootstrap.Button,
+	                                                { className: 'site-buttonmargin-right btn-default btn issue-tabproblem-form-buttons', 'data-action': '32' },
+	                                                'Uppdatera'
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            _reactBootstrap.Col,
+	                                            { md: 6 },
+	                                            _react2.default.createElement(
+	                                                _reactBootstrap.Button,
+	                                                { className: 'site-buttonmargin-left pull-right btn-info btn issue-tabproblem-form-buttons', 'data-action': '8' },
+	                                                'Spara'
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            _reactBootstrap.Row,
+	                            { id: 'issue-tabfeedback-page', hidden: true },
+	                            _react2.default.createElement(
+	                                _reactBootstrap.Col,
+	                                { md: 10, mdOffset: 1 },
+	                                _react2.default.createElement(
+	                                    _reactBootstrap.Row,
+	                                    { id: 'create-issuefeedback-panel', hidden: true },
+	                                    _react2.default.createElement(
+	                                        _reactBootstrap.Col,
+	                                        { md: 12 },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'panel panel-default' },
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'panel-heading' },
+	                                                _react2.default.createElement(
+	                                                    'h3',
+	                                                    { className: 'panel-title', id: 'title' },
+	                                                    'Skapa kommentar'
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'panel-body' },
+	                                                _react2.default.createElement(
+	                                                    'form',
+	                                                    { id: 'create-issuefeedback-form' },
+	                                                    _react2.default.createElement(
+	                                                        'div',
+	                                                        { className: 'form-group' },
+	                                                        _react2.default.createElement(
+	                                                            'div',
+	                                                            { className: 'input-group' },
+	                                                            _react2.default.createElement('input', { 'data-autoajax': 'true',
+	                                                                id: 'issueid',
+	                                                                name: 'issueid',
+	                                                                type: 'hidden',
+	                                                                value: '' })
+	                                                        )
+	                                                    ),
+	                                                    _react2.default.createElement(
+	                                                        _reactBootstrap.Row,
+	                                                        null,
+	                                                        _react2.default.createElement(
+	                                                            _reactBootstrap.Col,
+	                                                            { md: 5 },
+	                                                            _react2.default.createElement(
+	                                                                'div',
+	                                                                { className: 'form-group' },
+	                                                                _react2.default.createElement(
+	                                                                    'label',
+	                                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'accesstype' },
+	                                                                    'Synlighet'
+	                                                                ),
+	                                                                _react2.default.createElement(
+	                                                                    _reactBootstrap.Col,
+	                                                                    { md: 9, className: 'input-group' },
+	                                                                    _react2.default.createElement(
+	                                                                        'span',
+	                                                                        { className: 'input-group-addon' },
+	                                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-ban-circle' })
+	                                                                    ),
+	                                                                    _react2.default.createElement(
+	                                                                        'select',
+	                                                                        { className: 'selectpicker',
+	                                                                            'data-autoajax': 'true',
+	                                                                            'data-width': '100%',
+	                                                                            id: 'accesstype',
+	                                                                            name: 'accesstype' },
+	                                                                        _react2.default.createElement(
+	                                                                            'option',
+	                                                                            { value: '22' },
+	                                                                            'Publik'
+	                                                                        ),
+	                                                                        _react2.default.createElement(
+	                                                                            'option',
+	                                                                            { value: '21' },
+	                                                                            'Privat'
+	                                                                        )
+	                                                                    )
+	                                                                )
+	                                                            )
+	                                                        ),
+	                                                        _react2.default.createElement(
+	                                                            _reactBootstrap.Col,
+	                                                            { md: 7 },
+	                                                            _react2.default.createElement(
+	                                                                'div',
+	                                                                { className: 'form-group' },
+	                                                                _react2.default.createElement(
+	                                                                    'label',
+	                                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'description' },
+	                                                                    'Kommentar'
+	                                                                ),
+	                                                                _react2.default.createElement(
+	                                                                    _reactBootstrap.Col,
+	                                                                    { md: 9, className: 'input-group' },
+	                                                                    _react2.default.createElement(
+	                                                                        'span',
+	                                                                        { className: 'input-group-addon' },
+	                                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-pencil' })
+	                                                                    ),
+	                                                                    _react2.default.createElement('textarea', { className: 'form-control', rows: '3',
+	                                                                        'data-autoajax': 'true',
+	                                                                        'data-val': 'true',
+	                                                                        'data-val-length-min': '2',
+	                                                                        'data-val-length-max': '200',
+	                                                                        'data-val-length': 'Kommentar m�ste vara mellan 2 och 200 tecken',
+	                                                                        'data-val-required': 'Kommentar f�r inte vara tom',
+	                                                                        id: 'description',
+	                                                                        name: 'description' })
+	                                                                )
+	                                                            )
+	                                                        )
+	                                                    ),
+	                                                    _react2.default.createElement(
+	                                                        _reactBootstrap.Row,
+	                                                        null,
+	                                                        _react2.default.createElement(_reactBootstrap.Col, { md: 6 }),
+	                                                        _react2.default.createElement(
+	                                                            _reactBootstrap.Col,
+	                                                            { md: 6 },
+	                                                            _react2.default.createElement(
+	                                                                _reactBootstrap.Button,
+	                                                                { className: 'site-buttonmargin-left pull-right btn-success btn create-issuefeedback-form-buttons', 'data-action': '4' },
+	                                                                'Skapa'
+	                                                            ),
+	                                                            _react2.default.createElement(
+	                                                                _reactBootstrap.Button,
+	                                                                { className: 'site-buttonmargin-left pull-right btn-default btn create-issuefeedback-form-buttons', 'data-action': '2' },
+	                                                                'St�ng'
+	                                                            )
+	                                                        )
+	                                                    )
+	                                                )
+	                                            )
+	                                        )
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'form',
+	                                    { id: 'issue-tabfeedback-form' },
+	                                    _react2.default.createElement(
+	                                        'table',
+	                                        { id: 'issue-tabfeedback-table', className: 'table table-striped table-hover' },
+	                                        _react2.default.createElement(
+	                                            'thead',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'tr',
+	                                                null,
+	                                                _react2.default.createElement('th', null),
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    'Kommentar'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    'Fr�n'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    'Datum'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    'Tid'
+	                                                )
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement('tbody', null),
+	                                        _react2.default.createElement(
+	                                            'tfoot',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'tr',
+	                                                null,
+	                                                _react2.default.createElement('th', null),
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    'Kommentar'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    'Fr�n'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    'Datum'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    'Tid'
+	                                                )
+	                                            )
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement('br', null),
+	                                    _react2.default.createElement(
+	                                        _reactBootstrap.Row,
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            _reactBootstrap.Col,
+	                                            { md: 6 },
+	                                            _react2.default.createElement(
+	                                                _reactBootstrap.Button,
+	                                                { className: 'site-buttonmargin-right btn-default btn issue-tabfeedback-form-buttons', 'data-action': '32' },
+	                                                'Uppdatera'
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            _reactBootstrap.Col,
+	                                            { md: 6 },
+	                                            _react2.default.createElement(
+	                                                _reactBootstrap.Button,
+	                                                { className: 'site-buttonmargin-left pull-right btn-success btn issue-tabfeedback-form-buttons', 'data-action': '4' },
+	                                                'Skapa'
+	                                            )
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            _reactBootstrap.Row,
+	                            { id: 'issue-tabhistory-page', hidden: true },
+	                            _react2.default.createElement(
+	                                _reactBootstrap.Col,
+	                                { className: 'col-md-10 col-md-offset-1' },
+	                                _react2.default.createElement(
+	                                    'form',
+	                                    { id: 'issue-tabhistory-form' },
+	                                    _react2.default.createElement(
+	                                        'table',
+	                                        { id: 'issue-tabhistory-table', className: 'table table-striped table-hover' },
+	                                        _react2.default.createElement(
+	                                            'thead',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'tr',
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    'Fr�n status'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    'Till status'
+	                                                ),
+	                                                _react2.default.createElement('th', null),
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    '�ndrad av'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    'Datum'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    'Klockslag'
+	                                                )
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement('tbody', null),
+	                                        _react2.default.createElement(
+	                                            'tfoot',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'tr',
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    'Fr�n status'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    'Till status'
+	                                                ),
+	                                                _react2.default.createElement('th', null),
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    '�ndrad av'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    'Datum'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'th',
+	                                                    null,
+	                                                    'Klockslag'
+	                                                )
+	                                            )
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement('br', null),
+	                                    _react2.default.createElement(
+	                                        _reactBootstrap.Row,
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            _reactBootstrap.Col,
+	                                            { md: 6 },
+	                                            _react2.default.createElement(
+	                                                _reactBootstrap.Button,
+	                                                { className: 'site-buttonmargin-right btn-default btn issue-tabhistory-form-buttons', 'data-action': '32' },
+	                                                'Uppdatera'
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(_reactBootstrap.Col, { md: 6 })
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Pagaende;
+	}(_react.Component);
+
+	exports.default = Pagaende;
+	;
+
+/***/ },
+/* 470 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Input = __webpack_require__(448);
+
+	var _Input2 = _interopRequireDefault(_Input);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _PagaendeActions = __webpack_require__(471);
+
+	var _PagaendeActions2 = _interopRequireDefault(_PagaendeActions);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CreateIssuePanel = function (_Component) {
+	    _inherits(CreateIssuePanel, _Component);
+
+	    function CreateIssuePanel(props) {
+	        _classCallCheck(this, CreateIssuePanel);
+
+	        return _possibleConstructorReturn(this, (CreateIssuePanel.__proto__ || Object.getPrototypeOf(CreateIssuePanel)).call(this, props));
+	    }
+
+	    _createClass(CreateIssuePanel, [{
+	        key: 'displayStyle',
+	        value: function displayStyle() {
+	            return this.props.show ? 'block' : 'none';
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    _reactBootstrap.Row,
+	                    { id: 'create-issue-panel', hidden: true },
+	                    _react2.default.createElement(
+	                        _reactBootstrap.Col,
+	                        { md: 12 },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'panel panel-default' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'panel-heading' },
+	                                _react2.default.createElement(
+	                                    'h3',
+	                                    { className: 'panel-title', id: 'title' },
+	                                    'Skapa ärende'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'panel-body' },
+	                                _react2.default.createElement(
+	                                    'form',
+	                                    { id: 'create-issue-form' },
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'input-group' },
+	                                            _react2.default.createElement('input', { 'data-autoajax': 'false',
+	                                                id: 'customerid',
+	                                                name: 'customerid',
+	                                                type: 'hidden',
+	                                                value: '' })
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        _reactBootstrap.Row,
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            _reactBootstrap.Col,
+	                                            { md: 6 },
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'form-group' },
+	                                                _react2.default.createElement(
+	                                                    'label',
+	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'name' },
+	                                                    'Titel'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _reactBootstrap.Col,
+	                                                    { md: 9, className: 'input-group' },
+	                                                    _react2.default.createElement(
+	                                                        'span',
+	                                                        { className: 'input-group-addon' },
+	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-header' })
+	                                                    ),
+	                                                    _react2.default.createElement('input', { className: 'form-control',
+	                                                        'data-autoajax': 'true',
+	                                                        'data-val': 'true',
+	                                                        'data-val-length-min': '2',
+	                                                        'data-val-length-max': '45',
+	                                                        'data-val-length': 'Titel måste vara mellan 2 och 45 tecken',
+	                                                        'data-val-required': 'Titel får inte vara tom',
+	                                                        id: 'name',
+	                                                        name: 'name',
+	                                                        type: 'text',
+	                                                        value: '' })
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'form-group' },
+	                                                _react2.default.createElement(
+	                                                    'label',
+	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'assignedid' },
+	                                                    'Tilldelad'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _reactBootstrap.Col,
+	                                                    { md: 9, className: 'input-group' },
+	                                                    _react2.default.createElement(
+	                                                        'span',
+	                                                        { className: 'input-group-addon' },
+	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-ban-circle' })
+	                                                    ),
+	                                                    _react2.default.createElement(
+	                                                        'select',
+	                                                        { className: 'selectpicker',
+	                                                            'data-autoajax': 'true',
+	                                                            'data-width': '100%',
+	                                                            id: 'assignedid',
+	                                                            name: 'assignedid' },
+	                                                        _react2.default.createElement(
+	                                                            'option',
+	                                                            { value: '128' },
+	                                                            'Admin'
+	                                                        ),
+	                                                        _react2.default.createElement(
+	                                                            'option',
+	                                                            { value: '16' },
+	                                                            'Ledning'
+	                                                        ),
+	                                                        _react2.default.createElement(
+	                                                            'option',
+	                                                            { value: '4' },
+	                                                            'Tekniker'
+	                                                        )
+	                                                    )
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'form-group' },
+	                                                _react2.default.createElement(
+	                                                    'label',
+	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'startdatestring' },
+	                                                    'Startdatum'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _reactBootstrap.Col,
+	                                                    { md: 9, className: 'input-group date clockpicker', id: 'date-container-for-startdatestring-0' },
+	                                                    _react2.default.createElement(
+	                                                        'span',
+	                                                        { className: 'input-group-addon' },
+	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-calendar' })
+	                                                    ),
+	                                                    _react2.default.createElement('input', { className: 'form-control',
+	                                                        'data-autoajax': 'true',
+	                                                        'data-date': '2016-09-27',
+	                                                        'data-date-autoclose': 'true',
+	                                                        'data-date-calendar-weeks': 'true',
+	                                                        'data-date-container': '#date-container-for-startdatestring-0',
+	                                                        'data-date-format': 'yyyy-mm-dd',
+	                                                        'data-date-language': 'sv',
+	                                                        'data-date-orientation': 'bottom left',
+	                                                        'data-date-today-btn': 'linked',
+	                                                        'data-date-today-highlight': 'true',
+	                                                        'data-date-week-start': '1',
+	                                                        'data-provide': 'datepicker',
+	                                                        'data-val': 'true',
+	                                                        'data-val-required': 'Datum får inte vara tomt',
+	                                                        id: 'startdatestring',
+	                                                        name: 'startdatestring',
+	                                                        type: 'text',
+	                                                        value: '' }),
+	                                                    _react2.default.createElement('span', { className: 'input-group-btn', style: { width: "0px" } }),
+	                                                    _react2.default.createElement('input', { className: 'form-control',
+	                                                        'data-autoajax': 'true',
+	                                                        'data-val': 'true',
+	                                                        'data-val-required': 'Klockslag får inte vara tomt',
+	                                                        id: 'starttimestring',
+	                                                        name: 'starttimestring',
+	                                                        type: 'text',
+	                                                        placeholder: '16:57',
+	                                                        value: '' })
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'form-group' },
+	                                                _react2.default.createElement(
+	                                                    'label',
+	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'enddatestring' },
+	                                                    'Slutdatum'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _reactBootstrap.Col,
+	                                                    { md: 9, className: 'input-group date clockpicker', id: 'date-container-for-enddatestring-1' },
+	                                                    _react2.default.createElement(
+	                                                        'span',
+	                                                        { className: 'input-group-addon' },
+	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-calendar' })
+	                                                    ),
+	                                                    _react2.default.createElement('input', { className: 'form-control',
+	                                                        'data-autoajax': 'true',
+	                                                        'data-date': '2016-09-27',
+	                                                        'data-date-autoclose': 'true',
+	                                                        'data-date-calendar-weeks': 'true',
+	                                                        'data-date-container': '#date-container-for-enddatestring-1',
 	                                                        'data-date-format': 'yyyy-mm-dd',
 	                                                        'data-date-language': 'sv',
 	                                                        'data-date-orientation': 'bottom left',
@@ -47662,18 +47825,14 @@ webpackJsonp([0],[
 	                                                        )
 	                                                    )
 	                                                )
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            _reactBootstrap.Col,
-	                                            { md: 6 },
+	                                            ),
 	                                            _react2.default.createElement(
 	                                                'div',
 	                                                { className: 'form-group' },
 	                                                _react2.default.createElement(
 	                                                    'label',
-	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'customername' },
-	                                                    'Kund'
+	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'description' },
+	                                                    'Beskrivning'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    _reactBootstrap.Col,
@@ -47681,16 +47840,21 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement(
 	                                                        'span',
 	                                                        { className: 'input-group-addon' },
-	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-th-list' })
+	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-pencil' })
 	                                                    ),
-	                                                    _react2.default.createElement('input', { className: 'form-control',
+	                                                    _react2.default.createElement('textarea', { className: 'form-control', rows: '4',
 	                                                        'data-autoajax': 'true',
-	                                                        id: 'customername',
-	                                                        name: 'customername',
-	                                                        type: 'text',
-	                                                        value: '', readOnly: true })
+	                                                        'data-val': 'true',
+	                                                        'data-val-length-max': '400',
+	                                                        'data-val-length': 'Beskrivning får inte överstiga 400 tecken',
+	                                                        id: 'description',
+	                                                        name: 'description' })
 	                                                )
-	                                            ),
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            _reactBootstrap.Col,
+	                                            { md: 6 },
 	                                            _react2.default.createElement(
 	                                                'div',
 	                                                { className: 'form-group' },
@@ -47737,8 +47901,8 @@ webpackJsonp([0],[
 	                                                { className: 'form-group' },
 	                                                _react2.default.createElement(
 	                                                    'label',
-	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'description' },
-	                                                    'Beskrivning'
+	                                                    { className: 'control-label col-md-3', htmlFor: 'residentid', style: { marginLeft: "-15px", marginRight: "15px" } },
+	                                                    'Boende'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    _reactBootstrap.Col,
@@ -47746,375 +47910,221 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement(
 	                                                        'span',
 	                                                        { className: 'input-group-addon' },
-	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-pencil' })
+	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-unchecked' })
 	                                                    ),
-	                                                    _react2.default.createElement('textarea', { className: 'form-control', rows: '11',
-	                                                        'data-autoajax': 'true',
-	                                                        'data-val': 'true',
-	                                                        'data-val-length-max': '400',
-	                                                        'data-val-length': 'Beskrivning får inte överstiga 400 tecken',
-	                                                        id: 'description',
-	                                                        name: 'description' })
-	                                                )
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement('br', null),
-	                                    _react2.default.createElement(
-	                                        _reactBootstrap.Row,
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            _reactBootstrap.Col,
-	                                            { md: 6 },
-	                                            _react2.default.createElement(
-	                                                _reactBootstrap.Button,
-	                                                { className: 'site-buttonmargin-right btn-default btn issue-tabproblem-form-buttons', 'data-action': '32' },
-	                                                'Uppdatera'
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            _reactBootstrap.Col,
-	                                            { md: 6 },
-	                                            _react2.default.createElement(
-	                                                _reactBootstrap.Button,
-	                                                { className: 'site-buttonmargin-left pull-right btn-info btn issue-tabproblem-form-buttons', 'data-action': '8' },
-	                                                'Spara'
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Row,
-	                            { id: 'issue-tabfeedback-page', hidden: true },
-	                            _react2.default.createElement(
-	                                _reactBootstrap.Col,
-	                                { md: 10, mdOffset: 1 },
-	                                _react2.default.createElement(
-	                                    _reactBootstrap.Row,
-	                                    { id: 'create-issuefeedback-panel', hidden: true },
-	                                    _react2.default.createElement(
-	                                        _reactBootstrap.Col,
-	                                        { md: 12 },
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'panel panel-default' },
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                { className: 'panel-heading' },
-	                                                _react2.default.createElement(
-	                                                    'h3',
-	                                                    { className: 'panel-title', id: 'title' },
-	                                                    'Skapa kommentar'
+	                                                    _react2.default.createElement('select', { 'data-autoajax': 'true', 'data-width': '100%', id: 'residentid', name: 'residentid' })
 	                                                )
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'div',
-	                                                { className: 'panel-body' },
+	                                                { className: 'form-group' },
 	                                                _react2.default.createElement(
-	                                                    'form',
-	                                                    { id: 'create-issuefeedback-form' },
+	                                                    'label',
+	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'firstname' },
+	                                                    'Förnamn'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _reactBootstrap.Col,
+	                                                    { md: 9, className: 'input-group' },
 	                                                    _react2.default.createElement(
-	                                                        'div',
-	                                                        { className: 'form-group' },
-	                                                        _react2.default.createElement(
-	                                                            'div',
-	                                                            { className: 'input-group' },
-	                                                            _react2.default.createElement('input', { 'data-autoajax': 'true',
-	                                                                id: 'issueid',
-	                                                                name: 'issueid',
-	                                                                type: 'hidden',
-	                                                                value: '' })
-	                                                        )
+	                                                        'span',
+	                                                        { className: 'input-group-addon' },
+	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-user' })
 	                                                    ),
+	                                                    _react2.default.createElement('input', { className: 'form-control',
+	                                                        'data-autoajax': 'true',
+	                                                        'data-val': 'true',
+	                                                        'data-val-length-max': '45',
+	                                                        'data-val-length': 'Förnamn får inte överstiga 45 tecken',
+	                                                        id: 'firstname',
+	                                                        name: 'firstname',
+	                                                        type: 'text',
+	                                                        value: '' })
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'form-group' },
+	                                                _react2.default.createElement(
+	                                                    'label',
+	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'lastname' },
+	                                                    'Efternamn'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _reactBootstrap.Col,
+	                                                    { md: 9, className: 'input-group' },
 	                                                    _react2.default.createElement(
-	                                                        _reactBootstrap.Row,
-	                                                        null,
-	                                                        _react2.default.createElement(
-	                                                            _reactBootstrap.Col,
-	                                                            { md: 5 },
-	                                                            _react2.default.createElement(
-	                                                                'div',
-	                                                                { className: 'form-group' },
-	                                                                _react2.default.createElement(
-	                                                                    'label',
-	                                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'accesstype' },
-	                                                                    'Synlighet'
-	                                                                ),
-	                                                                _react2.default.createElement(
-	                                                                    _reactBootstrap.Col,
-	                                                                    { md: 9, className: 'input-group' },
-	                                                                    _react2.default.createElement(
-	                                                                        'span',
-	                                                                        { className: 'input-group-addon' },
-	                                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-ban-circle' })
-	                                                                    ),
-	                                                                    _react2.default.createElement(
-	                                                                        'select',
-	                                                                        { className: 'selectpicker',
-	                                                                            'data-autoajax': 'true',
-	                                                                            'data-width': '100%',
-	                                                                            id: 'accesstype',
-	                                                                            name: 'accesstype' },
-	                                                                        _react2.default.createElement(
-	                                                                            'option',
-	                                                                            { value: '22' },
-	                                                                            'Publik'
-	                                                                        ),
-	                                                                        _react2.default.createElement(
-	                                                                            'option',
-	                                                                            { value: '21' },
-	                                                                            'Privat'
-	                                                                        )
-	                                                                    )
-	                                                                )
-	                                                            )
-	                                                        ),
-	                                                        _react2.default.createElement(
-	                                                            _reactBootstrap.Col,
-	                                                            { md: 7 },
-	                                                            _react2.default.createElement(
-	                                                                'div',
-	                                                                { className: 'form-group' },
-	                                                                _react2.default.createElement(
-	                                                                    'label',
-	                                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'description' },
-	                                                                    'Kommentar'
-	                                                                ),
-	                                                                _react2.default.createElement(
-	                                                                    _reactBootstrap.Col,
-	                                                                    { md: 9, className: 'input-group' },
-	                                                                    _react2.default.createElement(
-	                                                                        'span',
-	                                                                        { className: 'input-group-addon' },
-	                                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-pencil' })
-	                                                                    ),
-	                                                                    _react2.default.createElement('textarea', { className: 'form-control', rows: '3',
-	                                                                        'data-autoajax': 'true',
-	                                                                        'data-val': 'true',
-	                                                                        'data-val-length-min': '2',
-	                                                                        'data-val-length-max': '200',
-	                                                                        'data-val-length': 'Kommentar måste vara mellan 2 och 200 tecken',
-	                                                                        'data-val-required': 'Kommentar får inte vara tom',
-	                                                                        id: 'description',
-	                                                                        name: 'description' })
-	                                                                )
-	                                                            )
-	                                                        )
+	                                                        'span',
+	                                                        { className: 'input-group-addon' },
+	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-user' })
 	                                                    ),
+	                                                    _react2.default.createElement('input', { className: 'form-control',
+	                                                        'data-autoajax': 'true',
+	                                                        'data-val': 'true',
+	                                                        'data-val-length-max': '45',
+	                                                        'data-val-length': 'Efternamn får inte överstiga 45 tecken',
+	                                                        id: 'lastname',
+	                                                        name: 'lastname',
+	                                                        type: 'text',
+	                                                        value: '' })
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'form-group' },
+	                                                _react2.default.createElement(
+	                                                    'label',
+	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'phone' },
+	                                                    'Telefon'
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    _reactBootstrap.Col,
+	                                                    { md: 9, className: 'input-group' },
 	                                                    _react2.default.createElement(
-	                                                        _reactBootstrap.Row,
-	                                                        null,
-	                                                        _react2.default.createElement(_reactBootstrap.Col, { md: 6 }),
-	                                                        _react2.default.createElement(
-	                                                            _reactBootstrap.Col,
-	                                                            { md: 6 },
-	                                                            _react2.default.createElement(
-	                                                                _reactBootstrap.Button,
-	                                                                { className: 'site-buttonmargin-left pull-right btn-success btn create-issuefeedback-form-buttons', 'data-action': '4' },
-	                                                                'Skapa'
-	                                                            ),
-	                                                            _react2.default.createElement(
-	                                                                _reactBootstrap.Button,
-	                                                                { className: 'site-buttonmargin-left pull-right btn-default btn create-issuefeedback-form-buttons', 'data-action': '2' },
-	                                                                'Stäng'
-	                                                            )
-	                                                        )
-	                                                    )
+	                                                        'span',
+	                                                        { className: 'input-group-addon' },
+	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-phone-alt' })
+	                                                    ),
+	                                                    _react2.default.createElement('input', { className: 'form-control',
+	                                                        'data-autoajax': 'true',
+	                                                        'data-val': 'true',
+	                                                        'data-val-length-max': '20',
+	                                                        'data-val-length': 'Telefon får inte överstiga 20 tecken',
+	                                                        id: 'phone',
+	                                                        name: 'phone'
+	                                                        //onKeyPress="return Site.Validation.isPhoneNumber(event)"
+	                                                        , type: 'text',
+	                                                        value: '' })
 	                                                )
-	                                            )
-	                                        )
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'form',
-	                                    { id: 'issue-tabfeedback-form' },
-	                                    _react2.default.createElement(
-	                                        'table',
-	                                        { id: 'issue-tabfeedback-table', className: 'table table-striped table-hover' },
-	                                        _react2.default.createElement(
-	                                            'thead',
-	                                            null,
+	                                            ),
 	                                            _react2.default.createElement(
-	                                                'tr',
-	                                                null,
-	                                                _react2.default.createElement('th', null),
+	                                                'div',
+	                                                { className: 'form-group' },
 	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    'Kommentar'
+	                                                    'label',
+	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'email' },
+	                                                    'E-post'
 	                                                ),
 	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    'Från'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    'Datum'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    'Tid'
+	                                                    _reactBootstrap.Col,
+	                                                    { md: 9, className: 'input-group' },
+	                                                    _react2.default.createElement(
+	                                                        'span',
+	                                                        { className: 'input-group-addon' },
+	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-envelope' })
+	                                                    ),
+	                                                    _react2.default.createElement('input', { className: 'form-control',
+	                                                        'data-autoajax': 'true',
+	                                                        'data-val': 'true',
+	                                                        'data-val-length-max': '60',
+	                                                        'data-val-length': 'E-post får inte överstiga 60 tecken',
+	                                                        id: 'email',
+	                                                        name: 'email',
+	                                                        type: 'text',
+	                                                        value: '' })
 	                                                )
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement('tbody', null),
-	                                        _react2.default.createElement(
-	                                            'tfoot',
-	                                            null,
+	                                            ),
 	                                            _react2.default.createElement(
-	                                                'tr',
-	                                                null,
-	                                                _react2.default.createElement('th', null),
+	                                                'div',
+	                                                { className: 'form-group' },
 	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    'Kommentar'
+	                                                    'label',
+	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'address' },
+	                                                    'Adress'
 	                                                ),
 	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    'Från'
+	                                                    _reactBootstrap.Col,
+	                                                    { md: 9, className: 'input-group' },
+	                                                    _react2.default.createElement(
+	                                                        'span',
+	                                                        { className: 'input-group-addon' },
+	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-map-marker' })
+	                                                    ),
+	                                                    _react2.default.createElement('input', { className: 'form-control',
+	                                                        'data-autoajax': 'true',
+	                                                        'data-val': 'true',
+	                                                        'data-val-length-max': '45',
+	                                                        'data-val-length': 'Adress får inte överstiga 45 tecken',
+	                                                        id: 'address',
+	                                                        name: 'address',
+	                                                        type: 'text',
+	                                                        value: '' })
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'form-group' },
+	                                                _react2.default.createElement(
+	                                                    'label',
+	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'floor' },
+	                                                    'Våningsplan'
 	                                                ),
 	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    'Datum'
+	                                                    _reactBootstrap.Col,
+	                                                    { md: 9, className: 'input-group' },
+	                                                    _react2.default.createElement(
+	                                                        'span',
+	                                                        { className: 'input-group-addon' },
+	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-align-justify' })
+	                                                    ),
+	                                                    _react2.default.createElement('input', { className: 'form-control',
+	                                                        'data-autoajax': 'true',
+	                                                        'data-val': 'true',
+	                                                        'data-val-length-max': '10',
+	                                                        'data-val-length': 'Våningsplan får inte överstiga 10 tecken',
+	                                                        id: 'floor',
+	                                                        name: 'floor',
+	                                                        type: 'text',
+	                                                        value: '' })
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'form-group' },
+	                                                _react2.default.createElement(
+	                                                    'label',
+	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'apartment' },
+	                                                    'Lägenhet'
 	                                                ),
 	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    'Tid'
+	                                                    _reactBootstrap.Col,
+	                                                    { md: 9, className: 'input-group' },
+	                                                    _react2.default.createElement(
+	                                                        'span',
+	                                                        { className: 'input-group-addon' },
+	                                                        _react2.default.createElement('span', { className: 'glyphicon glyphicon-home' })
+	                                                    ),
+	                                                    _react2.default.createElement('input', { className: 'form-control',
+	                                                        'data-autoajax': 'true',
+	                                                        'data-val': 'true',
+	                                                        'data-val-length-max': '10',
+	                                                        'data-val-length': 'Lägenhet får inte överstiga 10 tecken',
+	                                                        id: 'apartment',
+	                                                        name: 'apartment',
+	                                                        type: 'text',
+	                                                        value: '' })
 	                                                )
 	                                            )
 	                                        )
 	                                    ),
-	                                    _react2.default.createElement('br', null),
 	                                    _react2.default.createElement(
 	                                        _reactBootstrap.Row,
 	                                        null,
+	                                        _react2.default.createElement(_reactBootstrap.Col, { md: 6 }),
 	                                        _react2.default.createElement(
 	                                            _reactBootstrap.Col,
 	                                            { md: 6 },
 	                                            _react2.default.createElement(
 	                                                _reactBootstrap.Button,
-	                                                { className: 'site-buttonmargin-right btn-default btn issue-tabfeedback-form-buttons', 'data-action': '32' },
-	                                                'Uppdatera'
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            _reactBootstrap.Col,
-	                                            { md: 6 },
-	                                            _react2.default.createElement(
-	                                                _reactBootstrap.Button,
-	                                                { className: 'site-buttonmargin-left pull-right btn-success btn issue-tabfeedback-form-buttons', 'data-action': '4' },
+	                                                { className: 'site-buttonmargin-left pull-right btn-success btn create-issue-form-buttons', 'data-action': '4' },
 	                                                'Skapa'
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactBootstrap.Row,
-	                            { id: 'issue-tabhistory-page', hidden: true },
-	                            _react2.default.createElement(
-	                                _reactBootstrap.Col,
-	                                { className: 'col-md-10 col-md-offset-1' },
-	                                _react2.default.createElement(
-	                                    'form',
-	                                    { id: 'issue-tabhistory-form' },
-	                                    _react2.default.createElement(
-	                                        'table',
-	                                        { id: 'issue-tabhistory-table', className: 'table table-striped table-hover' },
-	                                        _react2.default.createElement(
-	                                            'thead',
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                'tr',
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    'Från status'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    'Till status'
-	                                                ),
-	                                                _react2.default.createElement('th', null),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    'Ändrad av'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    'Datum'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    'Klockslag'
-	                                                )
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement('tbody', null),
-	                                        _react2.default.createElement(
-	                                            'tfoot',
-	                                            null,
-	                                            _react2.default.createElement(
-	                                                'tr',
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    'Från status'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    'Till status'
-	                                                ),
-	                                                _react2.default.createElement('th', null),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    'Ändrad av'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    'Datum'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    'Klockslag'
-	                                                )
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement('br', null),
-	                                    _react2.default.createElement(
-	                                        _reactBootstrap.Row,
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            _reactBootstrap.Col,
-	                                            { md: 6 },
+	                                            ),
 	                                            _react2.default.createElement(
 	                                                _reactBootstrap.Button,
-	                                                { className: 'site-buttonmargin-right btn-default btn issue-tabhistory-form-buttons', 'data-action': '32' },
-	                                                'Uppdatera'
+	                                                { className: 'site-buttonmargin-left pull-right btn-default btn create-issue-form-buttons', 'data-action': '2' },
+	                                                'Stäng'
 	                                            )
-	                                        ),
-	                                        _react2.default.createElement(_reactBootstrap.Col, { md: 6 })
+	                                        )
 	                                    )
 	                                )
 	                            )
@@ -48125,14 +48135,338 @@ webpackJsonp([0],[
 	        }
 	    }]);
 
-	    return Index;
+	    return CreateIssuePanel;
 	}(_react.Component);
 
-	exports.default = Index;
+	exports.default = CreateIssuePanel;
 	;
+	CreateIssuePanel.propTypes = {
+	    show: _react2.default.PropTypes.bool.isRequired
+	};
 
 /***/ },
-/* 470 */
+/* 471 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _PagaendeDispatcher = __webpack_require__(472);
+
+	var _PagaendeDispatcher2 = _interopRequireDefault(_PagaendeDispatcher);
+
+	var _PagaendeConstants = __webpack_require__(473);
+
+	var _PagaendeConstants2 = _interopRequireDefault(_PagaendeConstants);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var PagaendeActions = {
+	    setActive: function setActive(id) {
+	        _PagaendeDispatcher2.default.dispatch({
+	            actionType: _PagaendeConstants2.default.SET_ACTIVE,
+	            id: id
+	        });
+	    },
+	    inactivateAll: function inactivateAll() {
+	        _PagaendeDispatcher2.default.dispatch({
+	            actionType: _PagaendeConstants2.default.INACTIVATE_ALL
+	        });
+	    }
+	};
+
+	exports.default = PagaendeActions;
+
+/***/ },
+/* 472 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _flux = __webpack_require__(451);
+
+	exports.default = new _flux.Dispatcher();
+
+/***/ },
+/* 473 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _keymirror = __webpack_require__(455);
+
+	var _keymirror2 = _interopRequireDefault(_keymirror);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = (0, _keymirror2.default)({
+	    SET_ACTIVE: null,
+	    INACTIVATE_ALL: null
+	});
+
+/***/ },
+/* 474 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _Calendar = __webpack_require__(475);
+
+	var _Calendar2 = _interopRequireDefault(_Calendar);
+
+	var _PagaendeActions = __webpack_require__(471);
+
+	var _PagaendeActions2 = _interopRequireDefault(_PagaendeActions);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var IssueCalendarView = function (_Component) {
+	    _inherits(IssueCalendarView, _Component);
+
+	    function IssueCalendarView(props) {
+	        _classCallCheck(this, IssueCalendarView);
+
+	        return _possibleConstructorReturn(this, (IssueCalendarView.__proto__ || Object.getPrototypeOf(IssueCalendarView)).call(this, props));
+	    }
+
+	    _createClass(IssueCalendarView, [{
+	        key: 'displayStyle',
+	        value: function displayStyle() {
+	            return this.props.show ? 'block' : 'none';
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                _reactBootstrap.Row,
+	                { id: 'issue-calendar-view', style: { display: this.displayStyle() } },
+	                _react2.default.createElement(
+	                    _reactBootstrap.Col,
+	                    { md: 12 },
+	                    _react2.default.createElement(_Calendar2.default, null)
+	                )
+	            );
+	        }
+	    }]);
+
+	    return IssueCalendarView;
+	}(_react.Component);
+
+	exports.default = IssueCalendarView;
+	;
+	IssueCalendarView.propTypes = {
+	    show: _react2.default.PropTypes.bool.isRequired
+	};
+
+/***/ },
+/* 475 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _jquery = __webpack_require__(2);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _jqueryUi = __webpack_require__(439);
+
+	var _jqueryUi2 = _interopRequireDefault(_jqueryUi);
+
+	var _moment = __webpack_require__(476);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	var _fullcalendar = __webpack_require__(583);
+
+	var _fullcalendar2 = _interopRequireDefault(_fullcalendar);
+
+	var _Fullcalendar = __webpack_require__(584);
+
+	var _Fullcalendar2 = _interopRequireDefault(_Fullcalendar);
+
+	var _fullcalendar3 = __webpack_require__(588);
+
+	var _fullcalendar4 = _interopRequireDefault(_fullcalendar3);
+
+	var _LoginStore = __webpack_require__(459);
+
+	var _LoginStore2 = _interopRequireDefault(_LoginStore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	//import sv from '../../js/FullCalendar-2.6.1/lang/sv.js';
+
+
+	var Calendar = function (_Component) {
+	    _inherits(Calendar, _Component);
+
+	    function Calendar(props) {
+	        _classCallCheck(this, Calendar);
+
+	        var _this = _possibleConstructorReturn(this, (Calendar.__proto__ || Object.getPrototypeOf(Calendar)).call(this, props));
+
+	        _this.state = {
+	            activeId: _LoginStore2.default.getActiveId()
+	        };
+	        return _this;
+	    }
+
+	    _createClass(Calendar, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            alert('componentWillMount()');
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            alert('componentDidMount()');
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps() {
+	            this.setState({
+	                activeId: _LoginStore2.default.getActiveId()
+	            });
+	            alert('componentWillReceiveProps() ' + this.state.activeId);
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            alert('componentDidUpdate()');
+	        }
+	    }, {
+	        key: 'componentWillUpdate',
+	        value: function componentWillUpdate() {
+	            alert('componentWillUpdate()');
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            alert('componentWillUnmount()');
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement('div', { id: 'issuecalendar-div' });
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            $('#issuecalendar-div').fullCalendar({
+	                header: {
+	                    left: 'prev,next today',
+	                    center: 'title',
+	                    right: 'month,agendaWeek,agendaDay'
+	                },
+	                editable: true,
+	                droppable: true, // this allows things to be dropped onto the calendar
+	                drop: function drop() {
+	                    // is the "remove after drop" checkbox checked?
+	                    if ($('#drop-remove').is(':checked')) {
+	                        // if so, remove the element from the "Draggable Events" list
+	                        $(this).remove();
+	                    }
+	                },
+	                lang: 'sv',
+	                //header: {
+	                //    left:   'prev,next today',
+	                //    center: 'title',
+	                //    right:  'month,agendaWeek,agendaDay'
+	                //},
+	                //selectable: true,
+	                //allDaySlot: false,
+	                weekNumbers: true
+	                //defaultDate: Date.now(),
+	                //timezone: 'local',
+	                //editable: true,
+	                //eventLimit: true,
+	                //select: function (start, end, jsEvent, view) {
+	                //    if (slotLeftClick && jsEvent.shiftKey) {
+	                //        slotLeftClick(start, end, jsEvent, $(this));
+	                //    }
+	                //},
+	                //eventClick: function (item, jsEvent, view) {
+	                //    if (jsEvent.which === 1 && itemLeftClick != null) {
+	                //        itemLeftClick(item, jsEvent, $(this));
+	                //    }
+	                //    else if (jsEvent.which === 3 && itemRightClick != null) {
+	                //        itemRightClick(item, jsEvent, $(this));
+	                //    }
+	                //},
+	                //dayClick: function (start, jsEvent, view) {
+	                //    var end = moment(start);
+	                //    end.add(1, 'hours');
+	                //    if (slotLeftClick && (jsEvent.timeStamp - thiz.prevclick) < 500) {
+	                //        slotLeftClick(start, end, jsEvent, $(this));
+	                //    }
+	                //    thiz.prevclick = jsEvent.timeStamp;
+	                //},
+	                //eventDrop: function (item, delta, revertFunc, jsEvent) {
+	                //    if (itemMove != null) {
+	                //        itemMove(item, jsEvent, $(this), revertFunc);
+	                //    }
+	                //},
+	                //eventResize: function (item, delta, revertFunc, jsEvent, ui, view) {
+	                //    if (itemResize != null) {
+	                //        itemResize(item, jsEvent, $(this), revertFunc);
+	                //    }
+	                //}
+	            });
+	        }
+	    }]);
+
+	    return Calendar;
+	}(_react.Component);
+
+	exports.default = Calendar;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ },
+/* 476 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {//! moment.js
@@ -48259,7 +48593,7 @@ webpackJsonp([0],[
 	// substring from most specific to least, but move to the next array item if it's a more specific variant than the current root
 	function chooseLocale(names){var i=0,j,next,locale,split;while(i<names.length){split=normalizeLocale(names[i]).split('-');j=split.length;next=normalizeLocale(names[i+1]);next=next?next.split('-'):null;while(j>0){locale=loadLocale(split.slice(0,j).join('-'));if(locale){return locale;}if(next&&next.length>=j&&compareArrays(split,next,true)>=j-1){//the next array item is better than a shallower substring of this one
 	break;}j--;}i++;}return null;}function loadLocale(name){var oldLocale=null;// TODO: Find a better way to register and load all the locales in Node
-	if(!locales[name]&&typeof module!=='undefined'&&module&&module.exports){try{oldLocale=globalLocale._abbr;__webpack_require__(472)("./"+name);// because defineLocale currently also sets the global locale, we
+	if(!locales[name]&&typeof module!=='undefined'&&module&&module.exports){try{oldLocale=globalLocale._abbr;__webpack_require__(478)("./"+name);// because defineLocale currently also sets the global locale, we
 	// want to undo that for lazy loaded locales
 	locale_locales__getSetGlobalLocale(oldLocale);}catch(e){}}return locales[name];}// This function will load locale and then set the global locale.  If
 	// no arguments are passed in, it will simply return the current global
@@ -48503,10 +48837,10 @@ webpackJsonp([0],[
 	addFormatToken('X',0,0,'unix');addFormatToken('x',0,0,'valueOf');// PARSING
 	addRegexToken('x',matchSigned);addRegexToken('X',matchTimestamp);addParseToken('X',function(input,array,config){config._d=new Date(parseFloat(input,10)*1000);});addParseToken('x',function(input,array,config){config._d=new Date(toInt(input));});// Side effect imports
 	utils_hooks__hooks.version='2.15.1';setHookCallback(local__createLocal);utils_hooks__hooks.fn=momentPrototype;utils_hooks__hooks.min=min;utils_hooks__hooks.max=max;utils_hooks__hooks.now=now;utils_hooks__hooks.utc=create_utc__createUTC;utils_hooks__hooks.unix=moment__createUnix;utils_hooks__hooks.months=lists__listMonths;utils_hooks__hooks.isDate=isDate;utils_hooks__hooks.locale=locale_locales__getSetGlobalLocale;utils_hooks__hooks.invalid=valid__createInvalid;utils_hooks__hooks.duration=create__createDuration;utils_hooks__hooks.isMoment=isMoment;utils_hooks__hooks.weekdays=lists__listWeekdays;utils_hooks__hooks.parseZone=moment__createInZone;utils_hooks__hooks.localeData=locale_locales__getLocale;utils_hooks__hooks.isDuration=isDuration;utils_hooks__hooks.monthsShort=lists__listMonthsShort;utils_hooks__hooks.weekdaysMin=lists__listWeekdaysMin;utils_hooks__hooks.defineLocale=defineLocale;utils_hooks__hooks.updateLocale=updateLocale;utils_hooks__hooks.locales=locale_locales__listLocales;utils_hooks__hooks.weekdaysShort=lists__listWeekdaysShort;utils_hooks__hooks.normalizeUnits=normalizeUnits;utils_hooks__hooks.relativeTimeRounding=duration_humanize__getSetRelativeTimeRounding;utils_hooks__hooks.relativeTimeThreshold=duration_humanize__getSetRelativeTimeThreshold;utils_hooks__hooks.calendarFormat=getCalendarFormat;utils_hooks__hooks.prototype=momentPrototype;var _moment=utils_hooks__hooks;return _moment;});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(471)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(477)(module)))
 
 /***/ },
-/* 471 */
+/* 477 */
 /***/ function(module, exports) {
 
 	module.exports = function (module) {
@@ -48521,218 +48855,218 @@ webpackJsonp([0],[
 	};
 
 /***/ },
-/* 472 */
+/* 478 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 473,
-		"./af.js": 473,
-		"./ar": 474,
-		"./ar-ly": 475,
-		"./ar-ly.js": 475,
-		"./ar-ma": 476,
-		"./ar-ma.js": 476,
-		"./ar-sa": 477,
-		"./ar-sa.js": 477,
-		"./ar-tn": 478,
-		"./ar-tn.js": 478,
-		"./ar.js": 474,
-		"./az": 479,
-		"./az.js": 479,
-		"./be": 480,
-		"./be.js": 480,
-		"./bg": 481,
-		"./bg.js": 481,
-		"./bn": 482,
-		"./bn.js": 482,
-		"./bo": 483,
-		"./bo.js": 483,
-		"./br": 484,
-		"./br.js": 484,
-		"./bs": 485,
-		"./bs.js": 485,
-		"./ca": 486,
-		"./ca.js": 486,
-		"./cs": 487,
-		"./cs.js": 487,
-		"./cv": 488,
-		"./cv.js": 488,
-		"./cy": 489,
-		"./cy.js": 489,
-		"./da": 490,
-		"./da.js": 490,
-		"./de": 491,
-		"./de-at": 492,
-		"./de-at.js": 492,
-		"./de.js": 491,
-		"./dv": 493,
-		"./dv.js": 493,
-		"./el": 494,
-		"./el.js": 494,
-		"./en-au": 495,
-		"./en-au.js": 495,
-		"./en-ca": 496,
-		"./en-ca.js": 496,
-		"./en-gb": 497,
-		"./en-gb.js": 497,
-		"./en-ie": 498,
-		"./en-ie.js": 498,
-		"./en-nz": 499,
-		"./en-nz.js": 499,
-		"./eo": 500,
-		"./eo.js": 500,
-		"./es": 501,
-		"./es-do": 502,
-		"./es-do.js": 502,
-		"./es.js": 501,
-		"./et": 503,
-		"./et.js": 503,
-		"./eu": 504,
-		"./eu.js": 504,
-		"./fa": 505,
-		"./fa.js": 505,
-		"./fi": 506,
-		"./fi.js": 506,
-		"./fo": 507,
-		"./fo.js": 507,
-		"./fr": 508,
-		"./fr-ca": 509,
-		"./fr-ca.js": 509,
-		"./fr-ch": 510,
-		"./fr-ch.js": 510,
-		"./fr.js": 508,
-		"./fy": 511,
-		"./fy.js": 511,
-		"./gd": 512,
-		"./gd.js": 512,
-		"./gl": 513,
-		"./gl.js": 513,
-		"./he": 514,
-		"./he.js": 514,
-		"./hi": 515,
-		"./hi.js": 515,
-		"./hr": 516,
-		"./hr.js": 516,
-		"./hu": 517,
-		"./hu.js": 517,
-		"./hy-am": 518,
-		"./hy-am.js": 518,
-		"./id": 519,
-		"./id.js": 519,
-		"./is": 520,
-		"./is.js": 520,
-		"./it": 521,
-		"./it.js": 521,
-		"./ja": 522,
-		"./ja.js": 522,
-		"./jv": 523,
-		"./jv.js": 523,
-		"./ka": 524,
-		"./ka.js": 524,
-		"./kk": 525,
-		"./kk.js": 525,
-		"./km": 526,
-		"./km.js": 526,
-		"./ko": 527,
-		"./ko.js": 527,
-		"./ky": 528,
-		"./ky.js": 528,
-		"./lb": 529,
-		"./lb.js": 529,
-		"./lo": 530,
-		"./lo.js": 530,
-		"./lt": 531,
-		"./lt.js": 531,
-		"./lv": 532,
-		"./lv.js": 532,
-		"./me": 533,
-		"./me.js": 533,
-		"./mi": 534,
-		"./mi.js": 534,
-		"./mk": 535,
-		"./mk.js": 535,
-		"./ml": 536,
-		"./ml.js": 536,
-		"./mr": 537,
-		"./mr.js": 537,
-		"./ms": 538,
-		"./ms-my": 539,
-		"./ms-my.js": 539,
-		"./ms.js": 538,
-		"./my": 540,
-		"./my.js": 540,
-		"./nb": 541,
-		"./nb.js": 541,
-		"./ne": 542,
-		"./ne.js": 542,
-		"./nl": 543,
-		"./nl.js": 543,
-		"./nn": 544,
-		"./nn.js": 544,
-		"./pa-in": 545,
-		"./pa-in.js": 545,
-		"./pl": 546,
-		"./pl.js": 546,
-		"./pt": 547,
-		"./pt-br": 548,
-		"./pt-br.js": 548,
-		"./pt.js": 547,
-		"./ro": 549,
-		"./ro.js": 549,
-		"./ru": 550,
-		"./ru.js": 550,
-		"./se": 551,
-		"./se.js": 551,
-		"./si": 552,
-		"./si.js": 552,
-		"./sk": 553,
-		"./sk.js": 553,
-		"./sl": 554,
-		"./sl.js": 554,
-		"./sq": 555,
-		"./sq.js": 555,
-		"./sr": 556,
-		"./sr-cyrl": 557,
-		"./sr-cyrl.js": 557,
-		"./sr.js": 556,
-		"./ss": 558,
-		"./ss.js": 558,
-		"./sv": 559,
-		"./sv.js": 559,
-		"./sw": 560,
-		"./sw.js": 560,
-		"./ta": 561,
-		"./ta.js": 561,
-		"./te": 562,
-		"./te.js": 562,
-		"./th": 563,
-		"./th.js": 563,
-		"./tl-ph": 564,
-		"./tl-ph.js": 564,
-		"./tlh": 565,
-		"./tlh.js": 565,
-		"./tr": 566,
-		"./tr.js": 566,
-		"./tzl": 567,
-		"./tzl.js": 567,
-		"./tzm": 568,
-		"./tzm-latn": 569,
-		"./tzm-latn.js": 569,
-		"./tzm.js": 568,
-		"./uk": 570,
-		"./uk.js": 570,
-		"./uz": 571,
-		"./uz.js": 571,
-		"./vi": 572,
-		"./vi.js": 572,
-		"./x-pseudo": 573,
-		"./x-pseudo.js": 573,
-		"./zh-cn": 574,
-		"./zh-cn.js": 574,
-		"./zh-hk": 575,
-		"./zh-hk.js": 575,
-		"./zh-tw": 576,
-		"./zh-tw.js": 576
+		"./af": 479,
+		"./af.js": 479,
+		"./ar": 480,
+		"./ar-ly": 481,
+		"./ar-ly.js": 481,
+		"./ar-ma": 482,
+		"./ar-ma.js": 482,
+		"./ar-sa": 483,
+		"./ar-sa.js": 483,
+		"./ar-tn": 484,
+		"./ar-tn.js": 484,
+		"./ar.js": 480,
+		"./az": 485,
+		"./az.js": 485,
+		"./be": 486,
+		"./be.js": 486,
+		"./bg": 487,
+		"./bg.js": 487,
+		"./bn": 488,
+		"./bn.js": 488,
+		"./bo": 489,
+		"./bo.js": 489,
+		"./br": 490,
+		"./br.js": 490,
+		"./bs": 491,
+		"./bs.js": 491,
+		"./ca": 492,
+		"./ca.js": 492,
+		"./cs": 493,
+		"./cs.js": 493,
+		"./cv": 494,
+		"./cv.js": 494,
+		"./cy": 495,
+		"./cy.js": 495,
+		"./da": 496,
+		"./da.js": 496,
+		"./de": 497,
+		"./de-at": 498,
+		"./de-at.js": 498,
+		"./de.js": 497,
+		"./dv": 499,
+		"./dv.js": 499,
+		"./el": 500,
+		"./el.js": 500,
+		"./en-au": 501,
+		"./en-au.js": 501,
+		"./en-ca": 502,
+		"./en-ca.js": 502,
+		"./en-gb": 503,
+		"./en-gb.js": 503,
+		"./en-ie": 504,
+		"./en-ie.js": 504,
+		"./en-nz": 505,
+		"./en-nz.js": 505,
+		"./eo": 506,
+		"./eo.js": 506,
+		"./es": 507,
+		"./es-do": 508,
+		"./es-do.js": 508,
+		"./es.js": 507,
+		"./et": 509,
+		"./et.js": 509,
+		"./eu": 510,
+		"./eu.js": 510,
+		"./fa": 511,
+		"./fa.js": 511,
+		"./fi": 512,
+		"./fi.js": 512,
+		"./fo": 513,
+		"./fo.js": 513,
+		"./fr": 514,
+		"./fr-ca": 515,
+		"./fr-ca.js": 515,
+		"./fr-ch": 516,
+		"./fr-ch.js": 516,
+		"./fr.js": 514,
+		"./fy": 517,
+		"./fy.js": 517,
+		"./gd": 518,
+		"./gd.js": 518,
+		"./gl": 519,
+		"./gl.js": 519,
+		"./he": 520,
+		"./he.js": 520,
+		"./hi": 521,
+		"./hi.js": 521,
+		"./hr": 522,
+		"./hr.js": 522,
+		"./hu": 523,
+		"./hu.js": 523,
+		"./hy-am": 524,
+		"./hy-am.js": 524,
+		"./id": 525,
+		"./id.js": 525,
+		"./is": 526,
+		"./is.js": 526,
+		"./it": 527,
+		"./it.js": 527,
+		"./ja": 528,
+		"./ja.js": 528,
+		"./jv": 529,
+		"./jv.js": 529,
+		"./ka": 530,
+		"./ka.js": 530,
+		"./kk": 531,
+		"./kk.js": 531,
+		"./km": 532,
+		"./km.js": 532,
+		"./ko": 533,
+		"./ko.js": 533,
+		"./ky": 534,
+		"./ky.js": 534,
+		"./lb": 535,
+		"./lb.js": 535,
+		"./lo": 536,
+		"./lo.js": 536,
+		"./lt": 537,
+		"./lt.js": 537,
+		"./lv": 538,
+		"./lv.js": 538,
+		"./me": 539,
+		"./me.js": 539,
+		"./mi": 540,
+		"./mi.js": 540,
+		"./mk": 541,
+		"./mk.js": 541,
+		"./ml": 542,
+		"./ml.js": 542,
+		"./mr": 543,
+		"./mr.js": 543,
+		"./ms": 544,
+		"./ms-my": 545,
+		"./ms-my.js": 545,
+		"./ms.js": 544,
+		"./my": 546,
+		"./my.js": 546,
+		"./nb": 547,
+		"./nb.js": 547,
+		"./ne": 548,
+		"./ne.js": 548,
+		"./nl": 549,
+		"./nl.js": 549,
+		"./nn": 550,
+		"./nn.js": 550,
+		"./pa-in": 551,
+		"./pa-in.js": 551,
+		"./pl": 552,
+		"./pl.js": 552,
+		"./pt": 553,
+		"./pt-br": 554,
+		"./pt-br.js": 554,
+		"./pt.js": 553,
+		"./ro": 555,
+		"./ro.js": 555,
+		"./ru": 556,
+		"./ru.js": 556,
+		"./se": 557,
+		"./se.js": 557,
+		"./si": 558,
+		"./si.js": 558,
+		"./sk": 559,
+		"./sk.js": 559,
+		"./sl": 560,
+		"./sl.js": 560,
+		"./sq": 561,
+		"./sq.js": 561,
+		"./sr": 562,
+		"./sr-cyrl": 563,
+		"./sr-cyrl.js": 563,
+		"./sr.js": 562,
+		"./ss": 564,
+		"./ss.js": 564,
+		"./sv": 565,
+		"./sv.js": 565,
+		"./sw": 566,
+		"./sw.js": 566,
+		"./ta": 567,
+		"./ta.js": 567,
+		"./te": 568,
+		"./te.js": 568,
+		"./th": 569,
+		"./th.js": 569,
+		"./tl-ph": 570,
+		"./tl-ph.js": 570,
+		"./tlh": 571,
+		"./tlh.js": 571,
+		"./tr": 572,
+		"./tr.js": 572,
+		"./tzl": 573,
+		"./tzl.js": 573,
+		"./tzm": 574,
+		"./tzm-latn": 575,
+		"./tzm-latn.js": 575,
+		"./tzm.js": 574,
+		"./uk": 576,
+		"./uk.js": 576,
+		"./uz": 577,
+		"./uz.js": 577,
+		"./vi": 578,
+		"./vi.js": 578,
+		"./x-pseudo": 579,
+		"./x-pseudo.js": 579,
+		"./zh-cn": 580,
+		"./zh-cn.js": 580,
+		"./zh-hk": 581,
+		"./zh-hk.js": 581,
+		"./zh-tw": 582,
+		"./zh-tw.js": 582
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -48745,11 +49079,11 @@ webpackJsonp([0],[
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 472;
+	webpackContext.id = 478;
 
 
 /***/ },
-/* 473 */
+/* 479 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48757,7 +49091,7 @@ webpackJsonp([0],[
 	//! author : Werner Mollentze : https://github.com/wernerm
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -48824,7 +49158,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 474 */
+/* 480 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48834,7 +49168,7 @@ webpackJsonp([0],[
 	//! author : forabi https://github.com/forabi
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -48954,7 +49288,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 475 */
+/* 481 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48962,7 +49296,7 @@ webpackJsonp([0],[
 	//! author : Ali Hmer: https://github.com/kikoanis
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -49068,7 +49402,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 476 */
+/* 482 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49077,7 +49411,7 @@ webpackJsonp([0],[
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -49129,7 +49463,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 477 */
+/* 483 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49137,7 +49471,7 @@ webpackJsonp([0],[
 	//! author : Suhail Alkowaileet : https://github.com/xsoh
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -49235,7 +49569,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 478 */
+/* 484 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49243,7 +49577,7 @@ webpackJsonp([0],[
 	//! author : Nader Toukabri : https://github.com/naderio
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -49295,7 +49629,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 479 */
+/* 485 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49303,7 +49637,7 @@ webpackJsonp([0],[
 	//! author : topchiyev : https://github.com/topchiyev
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -49403,7 +49737,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 480 */
+/* 486 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49413,7 +49747,7 @@ webpackJsonp([0],[
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -49537,7 +49871,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 481 */
+/* 487 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49545,7 +49879,7 @@ webpackJsonp([0],[
 	//! author : Krasen Borisov : https://github.com/kraz
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -49628,7 +49962,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 482 */
+/* 488 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49636,7 +49970,7 @@ webpackJsonp([0],[
 	//! author : Kaushik Gandhi : https://github.com/kaushikgandhi
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -49746,7 +50080,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 483 */
+/* 489 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49754,7 +50088,7 @@ webpackJsonp([0],[
 	//! author : Thupten N. Chakrishar : https://github.com/vajradog
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -49864,7 +50198,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 484 */
+/* 490 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49872,7 +50206,7 @@ webpackJsonp([0],[
 	//! author : Jean-Baptiste Le Duigou : https://github.com/jbleduigou
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -49973,7 +50307,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 485 */
+/* 491 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49982,7 +50316,7 @@ webpackJsonp([0],[
 	//! based on (hr) translation by Bojan Marković
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -50117,7 +50451,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 486 */
+/* 492 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50125,7 +50459,7 @@ webpackJsonp([0],[
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -50196,7 +50530,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 487 */
+/* 493 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50204,7 +50538,7 @@ webpackJsonp([0],[
 	//! author : petrbela : https://github.com/petrbela
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -50383,7 +50717,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 488 */
+/* 494 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50391,7 +50725,7 @@ webpackJsonp([0],[
 	//! author : Anatoly Mironov : https://github.com/mirontoli
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -50447,7 +50781,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 489 */
+/* 495 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50456,7 +50790,7 @@ webpackJsonp([0],[
 	//! author : https://github.com/ryangreaves
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -50528,7 +50862,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 490 */
+/* 496 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50536,7 +50870,7 @@ webpackJsonp([0],[
 	//! author : Ulrik Nielsen : https://github.com/mrbase
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -50589,7 +50923,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 491 */
+/* 497 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50599,7 +50933,7 @@ webpackJsonp([0],[
 	//! author : Mikolaj Dadela : https://github.com/mik01aj
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -50668,7 +51002,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 492 */
+/* 498 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50679,7 +51013,7 @@ webpackJsonp([0],[
 	//! author : Mikolaj Dadela : https://github.com/mik01aj
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -50748,7 +51082,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 493 */
+/* 499 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50756,7 +51090,7 @@ webpackJsonp([0],[
 	//! author : Jawish Hameed : https://github.com/jawish
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -50828,7 +51162,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 494 */
+/* 500 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50836,7 +51170,7 @@ webpackJsonp([0],[
 	//! author : Aggelos Karalias : https://github.com/mehiel
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -50928,7 +51262,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 495 */
+/* 501 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50936,7 +51270,7 @@ webpackJsonp([0],[
 	//! author : Jared Morse : https://github.com/jarcoal
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -50993,7 +51327,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 496 */
+/* 502 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51001,7 +51335,7 @@ webpackJsonp([0],[
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -51054,7 +51388,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 497 */
+/* 503 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51062,7 +51396,7 @@ webpackJsonp([0],[
 	//! author : Chris Gedrim : https://github.com/chrisgedrim
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -51119,7 +51453,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 498 */
+/* 504 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51127,7 +51461,7 @@ webpackJsonp([0],[
 	//! author : Chris Cartlidge : https://github.com/chriscartlidge
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -51184,7 +51518,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 499 */
+/* 505 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51192,7 +51526,7 @@ webpackJsonp([0],[
 	//! author : Luke McGregor : https://github.com/lukemcgregor
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -51249,7 +51583,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 500 */
+/* 506 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51259,7 +51593,7 @@ webpackJsonp([0],[
 	//!          Se ne, bonvolu korekti kaj avizi min por ke mi povas lerni!
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -51323,7 +51657,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 501 */
+/* 507 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51331,7 +51665,7 @@ webpackJsonp([0],[
 	//! author : Julio Napurí : https://github.com/julionc
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -51405,14 +51739,14 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 502 */
+/* 508 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : Spanish (Dominican Republic) [es-do]
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -51486,7 +51820,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 503 */
+/* 509 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51495,7 +51829,7 @@ webpackJsonp([0],[
 	//! improvements : Illimar Tambek : https://github.com/ragulka
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -51567,7 +51901,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 504 */
+/* 510 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51575,7 +51909,7 @@ webpackJsonp([0],[
 	//! author : Eneko Illarramendi : https://github.com/eillarra
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -51634,7 +51968,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 505 */
+/* 511 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51642,7 +51976,7 @@ webpackJsonp([0],[
 	//! author : Ebrahim Byagowi : https://github.com/ebraminio
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -51743,7 +52077,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 506 */
+/* 512 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51751,7 +52085,7 @@ webpackJsonp([0],[
 	//! author : Tarmo Aidantausta : https://github.com/bleadof
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -51848,7 +52182,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 507 */
+/* 513 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51856,7 +52190,7 @@ webpackJsonp([0],[
 	//! author : Ragnar Johannesen : https://github.com/ragnar123
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -51909,7 +52243,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 508 */
+/* 514 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51917,7 +52251,7 @@ webpackJsonp([0],[
 	//! author : John Fischer : https://github.com/jfroffice
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -51974,7 +52308,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 509 */
+/* 515 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51982,7 +52316,7 @@ webpackJsonp([0],[
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -52035,7 +52369,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 510 */
+/* 516 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52043,7 +52377,7 @@ webpackJsonp([0],[
 	//! author : Gaspard Bucher : https://github.com/gaspard
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -52100,7 +52434,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 511 */
+/* 517 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52108,7 +52442,7 @@ webpackJsonp([0],[
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -52174,7 +52508,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 512 */
+/* 518 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52182,7 +52516,7 @@ webpackJsonp([0],[
 	//! author : Jon Ashdown : https://github.com/jonashdown
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -52249,7 +52583,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 513 */
+/* 519 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52257,7 +52591,7 @@ webpackJsonp([0],[
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -52327,7 +52661,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 514 */
+/* 520 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52337,7 +52671,7 @@ webpackJsonp([0],[
 	//! author : Tal Ater : https://github.com/TalAter
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -52428,7 +52762,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 515 */
+/* 521 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52436,7 +52770,7 @@ webpackJsonp([0],[
 	//! author : Mayank Singhal : https://github.com/mayanksinghal
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -52553,7 +52887,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 516 */
+/* 522 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52561,7 +52895,7 @@ webpackJsonp([0],[
 	//! author : Bojan Marković : https://github.com/bmarkovic
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -52699,7 +53033,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 517 */
+/* 523 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52707,7 +53041,7 @@ webpackJsonp([0],[
 	//! author : Adam Brunner : https://github.com/adambrunner
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -52809,7 +53143,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 518 */
+/* 524 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52817,7 +53151,7 @@ webpackJsonp([0],[
 	//! author : Armendarabyan : https://github.com/armendarabyan
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -52906,7 +53240,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 519 */
+/* 525 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52915,7 +53249,7 @@ webpackJsonp([0],[
 	//! reference: http://id.wikisource.org/wiki/Pedoman_Umum_Ejaan_Bahasa_Indonesia_yang_Disempurnakan
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -52990,7 +53324,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 520 */
+/* 526 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52998,7 +53332,7 @@ webpackJsonp([0],[
 	//! author : Hinrik Örn Sigurðsson : https://github.com/hinrik
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -53118,7 +53452,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 521 */
+/* 527 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53127,7 +53461,7 @@ webpackJsonp([0],[
 	//! author: Mattia Larentis: https://github.com/nostalgiaz
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -53189,7 +53523,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 522 */
+/* 528 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53197,7 +53531,7 @@ webpackJsonp([0],[
 	//! author : LI Long : https://github.com/baryon
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -53266,7 +53600,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 523 */
+/* 529 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53275,7 +53609,7 @@ webpackJsonp([0],[
 	//! reference: http://jv.wikipedia.org/wiki/Basa_Jawa
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -53350,7 +53684,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 524 */
+/* 530 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53358,7 +53692,7 @@ webpackJsonp([0],[
 	//! author : Irakli Janiashvili : https://github.com/irakli-janiashvili
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -53439,7 +53773,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 525 */
+/* 531 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53447,7 +53781,7 @@ webpackJsonp([0],[
 	//! authors : Nurlan Rakhimzhanov : https://github.com/nurlan
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -53527,7 +53861,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 526 */
+/* 532 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53535,7 +53869,7 @@ webpackJsonp([0],[
 	//! author : Kruy Vanna : https://github.com/kruyvanna
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -53586,7 +53920,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 527 */
+/* 533 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53595,7 +53929,7 @@ webpackJsonp([0],[
 	//! author : Jeeeyul Lee <jeeeyul@gmail.com>
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -53652,7 +53986,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 528 */
+/* 534 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53660,7 +53994,7 @@ webpackJsonp([0],[
 	//! author : Chyngyz Arystan uulu : https://github.com/chyngyz
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -53740,7 +54074,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 529 */
+/* 535 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53749,7 +54083,7 @@ webpackJsonp([0],[
 	//! author : David Raison : https://github.com/kwisatz
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -53879,7 +54213,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 530 */
+/* 536 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53887,7 +54221,7 @@ webpackJsonp([0],[
 	//! author : Ryan Hart : https://github.com/ryanhart2
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -53950,7 +54284,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 531 */
+/* 537 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53958,7 +54292,7 @@ webpackJsonp([0],[
 	//! author : Mindaugas Mozūras : https://github.com/mmozuras
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -54068,7 +54402,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 532 */
+/* 538 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -54077,7 +54411,7 @@ webpackJsonp([0],[
 	//! author : Jānis Elmeris : https://github.com/JanisE
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -54166,7 +54500,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 533 */
+/* 539 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -54174,7 +54508,7 @@ webpackJsonp([0],[
 	//! author : Miodrag Nikač <miodrag@restartit.me> : https://github.com/miodragnikac
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -54270,7 +54604,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 534 */
+/* 540 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -54278,7 +54612,7 @@ webpackJsonp([0],[
 	//! author : John Corrigan <robbiecloset@gmail.com> : https://github.com/johnideal
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -54335,7 +54669,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 535 */
+/* 541 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -54343,7 +54677,7 @@ webpackJsonp([0],[
 	//! author : Borislav Mickov : https://github.com/B0k0
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -54426,7 +54760,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 536 */
+/* 542 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -54434,7 +54768,7 @@ webpackJsonp([0],[
 	//! author : Floyd Pink : https://github.com/floydpink
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -54506,7 +54840,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 537 */
+/* 543 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -54515,7 +54849,7 @@ webpackJsonp([0],[
 	//! author : Vivek Athalye : https://github.com/vnathalye
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -54686,7 +55020,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 538 */
+/* 544 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -54694,7 +55028,7 @@ webpackJsonp([0],[
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -54769,7 +55103,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 539 */
+/* 545 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -54778,7 +55112,7 @@ webpackJsonp([0],[
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -54853,7 +55187,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 540 */
+/* 546 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -54863,7 +55197,7 @@ webpackJsonp([0],[
 	//! author : Tin Aung Lin : https://github.com/thanyawzinmin
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -54950,7 +55284,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 541 */
+/* 547 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -54959,7 +55293,7 @@ webpackJsonp([0],[
 	//!           Sigurd Gartmann : https://github.com/sigurdga
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -55014,7 +55348,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 542 */
+/* 548 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -55022,7 +55356,7 @@ webpackJsonp([0],[
 	//! author : suvash : https://github.com/suvash
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -55138,7 +55472,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 543 */
+/* 549 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -55147,7 +55481,7 @@ webpackJsonp([0],[
 	//! author : Jacob Middag : https://github.com/middagj
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -55225,7 +55559,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 544 */
+/* 550 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -55233,7 +55567,7 @@ webpackJsonp([0],[
 	//! author : https://github.com/mechuwind
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -55286,7 +55620,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 545 */
+/* 551 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -55294,7 +55628,7 @@ webpackJsonp([0],[
 	//! author : Harpreet Singh : https://github.com/harpreetkhalsagtbit
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -55411,7 +55745,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 546 */
+/* 552 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -55419,7 +55753,7 @@ webpackJsonp([0],[
 	//! author : Rafal Hirsz : https://github.com/evoL
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -55517,7 +55851,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 547 */
+/* 553 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -55525,7 +55859,7 @@ webpackJsonp([0],[
 	//! author : Jefferson : https://github.com/jalex79
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -55582,7 +55916,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 548 */
+/* 554 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -55590,7 +55924,7 @@ webpackJsonp([0],[
 	//! author : Caio Ribeiro Pereira : https://github.com/caio-ribeiro-pereira
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -55643,7 +55977,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 549 */
+/* 555 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -55652,7 +55986,7 @@ webpackJsonp([0],[
 	//! author : Valentin Agachi : https://github.com/avaly
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -55719,7 +56053,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 550 */
+/* 556 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -55729,7 +56063,7 @@ webpackJsonp([0],[
 	//! author : Коренберг Марк : https://github.com/socketpair
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -55903,7 +56237,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 551 */
+/* 557 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -55911,7 +56245,7 @@ webpackJsonp([0],[
 	//! authors : Bård Rolstad Henriksen : https://github.com/karamell
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -55964,7 +56298,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 552 */
+/* 558 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -55972,7 +56306,7 @@ webpackJsonp([0],[
 	//! author : Sampath Sitinamaluwa : https://github.com/sampathsris
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -56037,7 +56371,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 553 */
+/* 559 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56046,7 +56380,7 @@ webpackJsonp([0],[
 	//! based on work of petrbela : https://github.com/petrbela
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -56199,7 +56533,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 554 */
+/* 560 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56207,7 +56541,7 @@ webpackJsonp([0],[
 	//! author : Robert Sedovšek : https://github.com/sedovsek
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -56362,7 +56696,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 555 */
+/* 561 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56372,7 +56706,7 @@ webpackJsonp([0],[
 	//! author : Oerd Cukalla : https://github.com/oerd
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -56433,7 +56767,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 556 */
+/* 562 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56441,7 +56775,7 @@ webpackJsonp([0],[
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -56536,7 +56870,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 557 */
+/* 563 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56544,7 +56878,7 @@ webpackJsonp([0],[
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -56639,7 +56973,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 558 */
+/* 564 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56647,7 +56981,7 @@ webpackJsonp([0],[
 	//! author : Nicolai Davies<mail@nicolai.io> : https://github.com/nicolaidavies
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -56728,7 +57062,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 559 */
+/* 565 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56736,7 +57070,7 @@ webpackJsonp([0],[
 	//! author : Jens Alm : https://github.com/ulmus
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -56795,7 +57129,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 560 */
+/* 566 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56803,7 +57137,7 @@ webpackJsonp([0],[
 	//! author : Fahad Kassim : https://github.com/fadsel
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -56855,7 +57189,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 561 */
+/* 567 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56863,7 +57197,7 @@ webpackJsonp([0],[
 	//! author : Arjunkumar Krishnamoorthy : https://github.com/tk120404
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -56986,7 +57320,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 562 */
+/* 568 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -56994,7 +57328,7 @@ webpackJsonp([0],[
 	//! author : Krishna Chaitanya Thota : https://github.com/kcthota
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -57076,7 +57410,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 563 */
+/* 569 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57084,7 +57418,7 @@ webpackJsonp([0],[
 	//! author : Kridsada Thanabulpong : https://github.com/sirn
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -57144,7 +57478,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 564 */
+/* 570 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57152,7 +57486,7 @@ webpackJsonp([0],[
 	//! author : Dan Hagman : https://github.com/hagmandan
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -57207,7 +57541,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 565 */
+/* 571 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57215,7 +57549,7 @@ webpackJsonp([0],[
 	//! author : Dominika Kruk : https://github.com/amaranthrose
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -57316,7 +57650,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 566 */
+/* 572 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57325,7 +57659,7 @@ webpackJsonp([0],[
 	//!           Burak Yiğit Kaya: https://github.com/BYK
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -57408,7 +57742,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 567 */
+/* 573 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57417,7 +57751,7 @@ webpackJsonp([0],[
 	//! author : Iustì Canun
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -57501,7 +57835,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 568 */
+/* 574 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57509,7 +57843,7 @@ webpackJsonp([0],[
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -57560,7 +57894,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 569 */
+/* 575 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57568,7 +57902,7 @@ webpackJsonp([0],[
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -57619,7 +57953,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 570 */
+/* 576 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57628,7 +57962,7 @@ webpackJsonp([0],[
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -57761,7 +58095,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 571 */
+/* 577 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57769,7 +58103,7 @@ webpackJsonp([0],[
 	//! author : Sardor Muminov : https://github.com/muminoff
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -57820,7 +58154,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 572 */
+/* 578 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57828,7 +58162,7 @@ webpackJsonp([0],[
 	//! author : Bang Nguyen : https://github.com/bangnk
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -57901,7 +58235,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 573 */
+/* 579 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57909,7 +58243,7 @@ webpackJsonp([0],[
 	//! author : Andrew Hood : https://github.com/andrewhood125
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -57967,7 +58301,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 574 */
+/* 580 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -57976,7 +58310,7 @@ webpackJsonp([0],[
 	//! author : Zeno Zeng : https://github.com/zenozeng
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -58094,7 +58428,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 575 */
+/* 581 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58104,7 +58438,7 @@ webpackJsonp([0],[
 	//! author : Konstantin : https://github.com/skfd
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -58200,7 +58534,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 576 */
+/* 582 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -58209,7 +58543,7 @@ webpackJsonp([0],[
 	//! author : Chris Lam : https://github.com/hehachris
 
 	;(function (global, factory) {
-	     true ? factory(__webpack_require__(470)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
+	     true ? factory(__webpack_require__(476)) : typeof define === 'function' && define.amd ? define(['../moment'], factory) : factory(global.moment);
 	})(this, function (moment) {
 	    'use strict';
 
@@ -58305,14 +58639,14 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 577 */
+/* 583 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	 * FullCalendar v3.0.1
 	 * Docs & License: http://fullcalendar.io/
 	 * (c) 2016 Adam Shaw
-	 */(function(factory){if(true){!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2),__webpack_require__(470)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));}else if(typeof exports==='object'){// Node/CommonJS
+	 */(function(factory){if(true){!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2),__webpack_require__(476)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));}else if(typeof exports==='object'){// Node/CommonJS
 	module.exports=factory(require('jquery'),require('moment'));}else{factory(jQuery,moment);}})(function($,moment){;;var FC=$.fullCalendar={version:"3.0.1",internalApiVersion:6};var fcViews=FC.views={};$.fn.fullCalendar=function(options){var args=Array.prototype.slice.call(arguments,1);// for a possible method call
 	var res=this;// what this function will return (this jQuery object by default)
 	this.each(function(i,_element){// loop each DOM element involved
@@ -60888,14 +61222,391 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 578 */
+/* 584 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(585);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(587)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./Fullcalendar.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./Fullcalendar.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 585 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(586)();
+	exports.push([module.id, "\tbody {\r\n\t\tmargin-top: 40px;\r\n\t\ttext-align: center;\r\n\t\tfont-size: 14px;\r\n\t\tfont-family: \"Lucida Grande\",Helvetica,Arial,Verdana,sans-serif;\r\n\t}\r\n\r\n  h1 {\r\n    font-size: 35px;\r\n    margin-bottom: 30px;\r\n  }\r\n\t\t\r\n\t#app {\r\n\t\twidth: 1100px;\r\n\t\tmargin: 0 auto;\r\n\t}\r\n\t\t\r\n\t#external-events {\r\n\t\tfloat: left;\r\n\t\twidth: 150px;\r\n\t\tpadding: 0 10px;\r\n\t\tborder: 1px solid #ccc;\r\n\t\tbackground: #eee;\r\n\t\ttext-align: left;\r\n\t}\r\n\t\t\r\n\t#external-events h4 {\r\n\t\tfont-size: 16px;\r\n\t\tmargin-top: 0;\r\n\t\tpadding-top: 1em;\r\n\t}\r\n\t\t\r\n\t#external-events .fc-event {\r\n\t\tmargin: 10px 0;\r\n\t\tcursor: pointer;\r\n\t}\r\n\t\t\r\n\t#external-events p {\r\n\t\tmargin: 1.5em 0;\r\n\t\tfont-size: 11px;\r\n\t\tcolor: #666;\r\n\t}\r\n\t\t\r\n\t#external-events p input {\r\n\t\tmargin: 0;\r\n\t\tvertical-align: middle;\r\n\t}\r\n\r\n\t#calendar {\r\n\t\tfloat: right;\r\n\t\twidth: 900px;\r\n\t}", ""]);
+
+/***/ },
+/* 586 */,
+/* 587 */,
+/* 588 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(589);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(587)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./fullcalendar.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./fullcalendar.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 589 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(586)();
+	exports.push([module.id, "/*!\r\n * FullCalendar v2.6.1 Stylesheet\r\n * Docs & License: http://fullcalendar.io/\r\n * (c) 2015 Adam Shaw\r\n */\r\n\r\n\r\n.fc {\r\n\tdirection: ltr;\r\n\ttext-align: left;\r\n}\r\n\r\n.fc-rtl {\r\n\ttext-align: right;\r\n}\r\n\r\nbody .fc { /* extra precedence to overcome jqui */\r\n\tfont-size: 1em;\r\n}\r\n\r\n\r\n/* Colors\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-unthemed th,\r\n.fc-unthemed td,\r\n.fc-unthemed thead,\r\n.fc-unthemed tbody,\r\n.fc-unthemed .fc-divider,\r\n.fc-unthemed .fc-row,\r\n.fc-unthemed .fc-popover {\r\n\tborder-color: #ddd;\r\n}\r\n\r\n.fc-unthemed .fc-popover {\r\n\tbackground-color: #fff;\r\n}\r\n\r\n.fc-unthemed .fc-divider,\r\n.fc-unthemed .fc-popover .fc-header {\r\n\tbackground: #eee;\r\n}\r\n\r\n.fc-unthemed .fc-popover .fc-header .fc-close {\r\n\tcolor: #666;\r\n}\r\n\r\n.fc-unthemed .fc-today {\r\n\tbackground: #fcf8e3;\r\n}\r\n\r\n.fc-highlight { /* when user is selecting cells */\r\n\tbackground: #bce8f1;\r\n\topacity: .3;\r\n\tfilter: alpha(opacity=30); /* for IE */\r\n}\r\n\r\n.fc-bgevent { /* default look for background events */\r\n\tbackground: rgb(143, 223, 130);\r\n\topacity: .3;\r\n\tfilter: alpha(opacity=30); /* for IE */\r\n}\r\n\r\n.fc-nonbusiness { /* default look for non-business-hours areas */\r\n\t/* will inherit .fc-bgevent's styles */\r\n\tbackground: #d7d7d7;\r\n}\r\n\r\n\r\n/* Icons (inline elements with styled text that mock arrow icons)\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-icon {\r\n\tdisplay: inline-block;\r\n\twidth: 1em;\r\n\theight: 1em;\r\n\tline-height: 1em;\r\n\tfont-size: 1em;\r\n\ttext-align: center;\r\n\toverflow: hidden;\r\n\tfont-family: \"Courier New\", Courier, monospace;\r\n\r\n\t/* don't allow browser text-selection */\r\n\t-webkit-touch-callout: none;\r\n\t-webkit-user-select: none;\r\n\t-khtml-user-select: none;\r\n\t-moz-user-select: none;\r\n\t-ms-user-select: none;\r\n\tuser-select: none;\r\n\t}\r\n\r\n/*\r\nAcceptable font-family overrides for individual icons:\r\n\t\"Arial\", sans-serif\r\n\t\"Times New Roman\", serif\r\n\r\nNOTE: use percentage font sizes or else old IE chokes\r\n*/\r\n\r\n.fc-icon:after {\r\n\tposition: relative;\r\n\tmargin: 0 -1em; /* ensures character will be centered, regardless of width */\r\n}\r\n\r\n.fc-icon-left-single-arrow:after {\r\n\tcontent: \"\\02039\";\r\n\tfont-weight: bold;\r\n\tfont-size: 200%;\r\n\ttop: -7%;\r\n\tleft: 3%;\r\n}\r\n\r\n.fc-icon-right-single-arrow:after {\r\n\tcontent: \"\\0203A\";\r\n\tfont-weight: bold;\r\n\tfont-size: 200%;\r\n\ttop: -7%;\r\n\tleft: -3%;\r\n}\r\n\r\n.fc-icon-left-double-arrow:after {\r\n\tcontent: \"\\000AB\";\r\n\tfont-size: 160%;\r\n\ttop: -7%;\r\n}\r\n\r\n.fc-icon-right-double-arrow:after {\r\n\tcontent: \"\\000BB\";\r\n\tfont-size: 160%;\r\n\ttop: -7%;\r\n}\r\n\r\n.fc-icon-left-triangle:after {\r\n\tcontent: \"\\25C4\";\r\n\tfont-size: 125%;\r\n\ttop: 3%;\r\n\tleft: -2%;\r\n}\r\n\r\n.fc-icon-right-triangle:after {\r\n\tcontent: \"\\25BA\";\r\n\tfont-size: 125%;\r\n\ttop: 3%;\r\n\tleft: 2%;\r\n}\r\n\r\n.fc-icon-down-triangle:after {\r\n\tcontent: \"\\25BC\";\r\n\tfont-size: 125%;\r\n\ttop: 2%;\r\n}\r\n\r\n.fc-icon-x:after {\r\n\tcontent: \"\\000D7\";\r\n\tfont-size: 200%;\r\n\ttop: 6%;\r\n}\r\n\r\n\r\n/* Buttons (styled <button> tags, normalized to work cross-browser)\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc button {\r\n\t/* force height to include the border and padding */\r\n\t-moz-box-sizing: border-box;\r\n\t-webkit-box-sizing: border-box;\r\n\tbox-sizing: border-box;\r\n\r\n\t/* dimensions */\r\n\tmargin: 0;\r\n\theight: 2.1em;\r\n\tpadding: 0 .6em;\r\n\r\n\t/* text & cursor */\r\n\tfont-size: 1em; /* normalize */\r\n\twhite-space: nowrap;\r\n\tcursor: pointer;\r\n}\r\n\r\n/* Firefox has an annoying inner border */\r\n.fc button::-moz-focus-inner { margin: 0; padding: 0; }\r\n\t\r\n.fc-state-default { /* non-theme */\r\n\tborder: 1px solid;\r\n}\r\n\r\n.fc-state-default.fc-corner-left { /* non-theme */\r\n\tborder-top-left-radius: 4px;\r\n\tborder-bottom-left-radius: 4px;\r\n}\r\n\r\n.fc-state-default.fc-corner-right { /* non-theme */\r\n\tborder-top-right-radius: 4px;\r\n\tborder-bottom-right-radius: 4px;\r\n}\r\n\r\n/* icons in buttons */\r\n\r\n.fc button .fc-icon { /* non-theme */\r\n\tposition: relative;\r\n\ttop: -0.05em; /* seems to be a good adjustment across browsers */\r\n\tmargin: 0 .2em;\r\n\tvertical-align: middle;\r\n}\r\n\t\r\n/*\r\n  button states\r\n  borrowed from twitter bootstrap (http://twitter.github.com/bootstrap/)\r\n*/\r\n\r\n.fc-state-default {\r\n\tbackground-color: #f5f5f5;\r\n\tbackground-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);\r\n\tbackground-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));\r\n\tbackground-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);\r\n\tbackground-image: -o-linear-gradient(top, #ffffff, #e6e6e6);\r\n\tbackground-image: linear-gradient(to bottom, #ffffff, #e6e6e6);\r\n\tbackground-repeat: repeat-x;\r\n\tborder-color: #e6e6e6 #e6e6e6 #bfbfbf;\r\n\tborder-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\r\n\tcolor: #333;\r\n\ttext-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);\r\n\tbox-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\r\n}\r\n\r\n.fc-state-hover,\r\n.fc-state-down,\r\n.fc-state-active,\r\n.fc-state-disabled {\r\n\tcolor: #333333;\r\n\tbackground-color: #e6e6e6;\r\n}\r\n\r\n.fc-state-hover {\r\n\tcolor: #333333;\r\n\ttext-decoration: none;\r\n\tbackground-position: 0 -15px;\r\n\t-webkit-transition: background-position 0.1s linear;\r\n\t   -moz-transition: background-position 0.1s linear;\r\n\t     -o-transition: background-position 0.1s linear;\r\n\t        transition: background-position 0.1s linear;\r\n}\r\n\r\n.fc-state-down,\r\n.fc-state-active {\r\n\tbackground-color: #cccccc;\r\n\tbackground-image: none;\r\n\tbox-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);\r\n}\r\n\r\n.fc-state-disabled {\r\n\tcursor: default;\r\n\tbackground-image: none;\r\n\topacity: 0.65;\r\n\tfilter: alpha(opacity=65);\r\n\tbox-shadow: none;\r\n}\r\n\r\n\r\n/* Buttons Groups\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-button-group {\r\n\tdisplay: inline-block;\r\n}\r\n\r\n/*\r\nevery button that is not first in a button group should scootch over one pixel and cover the\r\nprevious button's border...\r\n*/\r\n\r\n.fc .fc-button-group > * { /* extra precedence b/c buttons have margin set to zero */\r\n\tfloat: left;\r\n\tmargin: 0 0 0 -1px;\r\n}\r\n\r\n.fc .fc-button-group > :first-child { /* same */\r\n\tmargin-left: 0;\r\n}\r\n\r\n\r\n/* Popover\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-popover {\r\n\tposition: absolute;\r\n\tbox-shadow: 0 2px 6px rgba(0,0,0,.15);\r\n}\r\n\r\n.fc-popover .fc-header { /* TODO: be more consistent with fc-head/fc-body */\r\n\tpadding: 2px 4px;\r\n}\r\n\r\n.fc-popover .fc-header .fc-title {\r\n\tmargin: 0 2px;\r\n}\r\n\r\n.fc-popover .fc-header .fc-close {\r\n\tcursor: pointer;\r\n}\r\n\r\n.fc-ltr .fc-popover .fc-header .fc-title,\r\n.fc-rtl .fc-popover .fc-header .fc-close {\r\n\tfloat: left;\r\n}\r\n\r\n.fc-rtl .fc-popover .fc-header .fc-title,\r\n.fc-ltr .fc-popover .fc-header .fc-close {\r\n\tfloat: right;\r\n}\r\n\r\n/* unthemed */\r\n\r\n.fc-unthemed .fc-popover {\r\n\tborder-width: 1px;\r\n\tborder-style: solid;\r\n}\r\n\r\n.fc-unthemed .fc-popover .fc-header .fc-close {\r\n\tfont-size: .9em;\r\n\tmargin-top: 2px;\r\n}\r\n\r\n/* jqui themed */\r\n\r\n.fc-popover > .ui-widget-header + .ui-widget-content {\r\n\tborder-top: 0; /* where they meet, let the header have the border */\r\n}\r\n\r\n\r\n/* Misc Reusable Components\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-divider {\r\n\tborder-style: solid;\r\n\tborder-width: 1px;\r\n}\r\n\r\nhr.fc-divider {\r\n\theight: 0;\r\n\tmargin: 0;\r\n\tpadding: 0 0 2px; /* height is unreliable across browsers, so use padding */\r\n\tborder-width: 1px 0;\r\n}\r\n\r\n.fc-clear {\r\n\tclear: both;\r\n}\r\n\r\n.fc-bg,\r\n.fc-bgevent-skeleton,\r\n.fc-highlight-skeleton,\r\n.fc-helper-skeleton {\r\n\t/* these element should always cling to top-left/right corners */\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tright: 0;\r\n}\r\n\r\n.fc-bg {\r\n\tbottom: 0; /* strech bg to bottom edge */\r\n}\r\n\r\n.fc-bg table {\r\n\theight: 100%; /* strech bg to bottom edge */\r\n}\r\n\r\n\r\n/* Tables\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc table {\r\n\twidth: 100%;\r\n\ttable-layout: fixed;\r\n\tborder-collapse: collapse;\r\n\tborder-spacing: 0;\r\n\tfont-size: 1em; /* normalize cross-browser */\r\n}\r\n\r\n.fc th {\r\n\ttext-align: center;\r\n}\r\n\r\n.fc th,\r\n.fc td {\r\n\tborder-style: solid;\r\n\tborder-width: 1px;\r\n\tpadding: 0;\r\n\tvertical-align: top;\r\n}\r\n\r\n.fc td.fc-today {\r\n\tborder-style: double; /* overcome neighboring borders */\r\n}\r\n\r\n\r\n/* Fake Table Rows\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc .fc-row { /* extra precedence to overcome themes w/ .ui-widget-content forcing a 1px border */\r\n\t/* no visible border by default. but make available if need be (scrollbar width compensation) */\r\n\tborder-style: solid;\r\n\tborder-width: 0;\r\n}\r\n\r\n.fc-row table {\r\n\t/* don't put left/right border on anything within a fake row.\r\n\t   the outer tbody will worry about this */\r\n\tborder-left: 0 hidden transparent;\r\n\tborder-right: 0 hidden transparent;\r\n\r\n\t/* no bottom borders on rows */\r\n\tborder-bottom: 0 hidden transparent; \r\n}\r\n\r\n.fc-row:first-child table {\r\n\tborder-top: 0 hidden transparent; /* no top border on first row */\r\n}\r\n\r\n\r\n/* Day Row (used within the header and the DayGrid)\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-row {\r\n\tposition: relative;\r\n}\r\n\r\n.fc-row .fc-bg {\r\n\tz-index: 1;\r\n}\r\n\r\n/* highlighting cells & background event skeleton */\r\n\r\n.fc-row .fc-bgevent-skeleton,\r\n.fc-row .fc-highlight-skeleton {\r\n\tbottom: 0; /* stretch skeleton to bottom of row */\r\n}\r\n\r\n.fc-row .fc-bgevent-skeleton table,\r\n.fc-row .fc-highlight-skeleton table {\r\n\theight: 100%; /* stretch skeleton to bottom of row */\r\n}\r\n\r\n.fc-row .fc-highlight-skeleton td,\r\n.fc-row .fc-bgevent-skeleton td {\r\n\tborder-color: transparent;\r\n}\r\n\r\n.fc-row .fc-bgevent-skeleton {\r\n\tz-index: 2;\r\n\r\n}\r\n\r\n.fc-row .fc-highlight-skeleton {\r\n\tz-index: 3;\r\n}\r\n\r\n/*\r\nrow content (which contains day/week numbers and events) as well as \"helper\" (which contains\r\ntemporary rendered events).\r\n*/\r\n\r\n.fc-row .fc-content-skeleton {\r\n\tposition: relative;\r\n\tz-index: 4;\r\n\tpadding-bottom: 2px; /* matches the space above the events */\r\n}\r\n\r\n.fc-row .fc-helper-skeleton {\r\n\tz-index: 5;\r\n}\r\n\r\n.fc-row .fc-content-skeleton td,\r\n.fc-row .fc-helper-skeleton td {\r\n\t/* see-through to the background below */\r\n\tbackground: none; /* in case <td>s are globally styled */\r\n\tborder-color: transparent;\r\n\r\n\t/* don't put a border between events and/or the day number */\r\n\tborder-bottom: 0;\r\n}\r\n\r\n.fc-row .fc-content-skeleton tbody td, /* cells with events inside (so NOT the day number cell) */\r\n.fc-row .fc-helper-skeleton tbody td {\r\n\t/* don't put a border between event cells */\r\n\tborder-top: 0;\r\n}\r\n\r\n\r\n/* Scrolling Container\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-scroller { /* this class goes on elements for guaranteed vertical scrollbars */\r\n\toverflow-y: scroll;\r\n\toverflow-x: hidden;\r\n}\r\n\r\n.fc-scroller > * { /* we expect an immediate inner element */\r\n\tposition: relative; /* re-scope all positions */\r\n\twidth: 100%; /* hack to force re-sizing this inner element when scrollbars appear/disappear */\r\n\toverflow: hidden; /* don't let negative margins or absolute positioning create further scroll */\r\n}\r\n\r\n\r\n/* Global Event Styles\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-event {\r\n\tposition: relative; /* for resize handle and other inner positioning */\r\n\tdisplay: block; /* make the <a> tag block */\r\n\tfont-size: .85em;\r\n\tline-height: 1.3;\r\n\tborder-radius: 3px;\r\n\tborder: 1px solid #3a87ad; /* default BORDER color */\r\n\tbackground-color: #3a87ad; /* default BACKGROUND color */\r\n\tfont-weight: normal; /* undo jqui's ui-widget-header bold */\r\n}\r\n\r\n/* overpower some of bootstrap's and jqui's styles on <a> tags */\r\n.fc-event,\r\n.fc-event:hover,\r\n.ui-widget .fc-event {\r\n\tcolor: #fff; /* default TEXT color */\r\n\ttext-decoration: none; /* if <a> has an href */\r\n}\r\n\r\n.fc-event[href],\r\n.fc-event.fc-draggable {\r\n\tcursor: pointer; /* give events with links and draggable events a hand mouse pointer */\r\n}\r\n\r\n.fc-not-allowed, /* causes a \"warning\" cursor. applied on body */\r\n.fc-not-allowed .fc-event { /* to override an event's custom cursor */\r\n\tcursor: not-allowed;\r\n}\r\n\r\n.fc-event .fc-bg { /* the generic .fc-bg already does position */\r\n\tz-index: 1;\r\n\tbackground: #fff;\r\n\topacity: .25;\r\n\tfilter: alpha(opacity=25); /* for IE */\r\n}\r\n\r\n.fc-event .fc-content {\r\n\tposition: relative;\r\n\tz-index: 2;\r\n}\r\n\r\n.fc-event .fc-resizer {\r\n\tposition: absolute;\r\n\tz-index: 3;\r\n}\r\n\r\n\r\n/* Horizontal Events\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n/* events that are continuing to/from another week. kill rounded corners and butt up against edge */\r\n\r\n.fc-ltr .fc-h-event.fc-not-start,\r\n.fc-rtl .fc-h-event.fc-not-end {\r\n\tmargin-left: 0;\r\n\tborder-left-width: 0;\r\n\tpadding-left: 1px; /* replace the border with padding */\r\n\tborder-top-left-radius: 0;\r\n\tborder-bottom-left-radius: 0;\r\n}\r\n\r\n.fc-ltr .fc-h-event.fc-not-end,\r\n.fc-rtl .fc-h-event.fc-not-start {\r\n\tmargin-right: 0;\r\n\tborder-right-width: 0;\r\n\tpadding-right: 1px; /* replace the border with padding */\r\n\tborder-top-right-radius: 0;\r\n\tborder-bottom-right-radius: 0;\r\n}\r\n\r\n/* resizer */\r\n\r\n.fc-h-event .fc-resizer { /* positioned it to overcome the event's borders */\r\n\ttop: -1px;\r\n\tbottom: -1px;\r\n\tleft: -1px;\r\n\tright: -1px;\r\n\twidth: 5px;\r\n}\r\n\r\n/* left resizer  */\r\n.fc-ltr .fc-h-event .fc-start-resizer,\r\n.fc-ltr .fc-h-event .fc-start-resizer:before,\r\n.fc-ltr .fc-h-event .fc-start-resizer:after,\r\n.fc-rtl .fc-h-event .fc-end-resizer,\r\n.fc-rtl .fc-h-event .fc-end-resizer:before,\r\n.fc-rtl .fc-h-event .fc-end-resizer:after {\r\n\tright: auto; /* ignore the right and only use the left */\r\n\tcursor: w-resize;\r\n}\r\n\r\n/* right resizer */\r\n.fc-ltr .fc-h-event .fc-end-resizer,\r\n.fc-ltr .fc-h-event .fc-end-resizer:before,\r\n.fc-ltr .fc-h-event .fc-end-resizer:after,\r\n.fc-rtl .fc-h-event .fc-start-resizer,\r\n.fc-rtl .fc-h-event .fc-start-resizer:before,\r\n.fc-rtl .fc-h-event .fc-start-resizer:after {\r\n\tleft: auto; /* ignore the left and only use the right */\r\n\tcursor: e-resize;\r\n}\r\n\r\n\r\n/* DayGrid events\r\n----------------------------------------------------------------------------------------------------\r\nWe use the full \"fc-day-grid-event\" class instead of using descendants because the event won't\r\nbe a descendant of the grid when it is being dragged.\r\n*/\r\n\r\n.fc-day-grid-event {\r\n\tmargin: 1px 2px 0; /* spacing between events and edges */\r\n\tpadding: 0 1px;\r\n}\r\n\r\n\r\n.fc-day-grid-event .fc-content { /* force events to be one-line tall */\r\n\twhite-space: nowrap;\r\n\toverflow: hidden;\r\n}\r\n\r\n.fc-day-grid-event .fc-time {\r\n\tfont-weight: bold;\r\n}\r\n\r\n.fc-day-grid-event .fc-resizer { /* enlarge the default hit area */\r\n\tleft: -3px;\r\n\tright: -3px;\r\n\twidth: 7px;\r\n}\r\n\r\n\r\n/* Event Limiting\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n/* \"more\" link that represents hidden events */\r\n\r\na.fc-more {\r\n\tmargin: 1px 3px;\r\n\tfont-size: .85em;\r\n\tcursor: pointer;\r\n\ttext-decoration: none;\r\n}\r\n\r\na.fc-more:hover {\r\n\ttext-decoration: underline;\r\n}\r\n\r\n.fc-limited { /* rows and cells that are hidden because of a \"more\" link */\r\n\tdisplay: none;\r\n}\r\n\r\n/* popover that appears when \"more\" link is clicked */\r\n\r\n.fc-day-grid .fc-row {\r\n\tz-index: 1; /* make the \"more\" popover one higher than this */\r\n}\r\n\r\n.fc-more-popover {\r\n\tz-index: 2;\r\n\twidth: 220px;\r\n}\r\n\r\n.fc-more-popover .fc-event-container {\r\n\tpadding: 10px;\r\n}\r\n\r\n\r\n/* Now Indicator\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-now-indicator {\r\n\tposition: absolute;\r\n\tborder: 0 solid red;\r\n}\r\n\r\n/* Toolbar\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-toolbar {\r\n\ttext-align: center;\r\n\tmargin-bottom: 1em;\r\n}\r\n\r\n.fc-toolbar .fc-left {\r\n\tfloat: left;\r\n}\r\n\r\n.fc-toolbar .fc-right {\r\n\tfloat: right;\r\n}\r\n\r\n.fc-toolbar .fc-center {\r\n\tdisplay: inline-block;\r\n}\r\n\r\n/* the things within each left/right/center section */\r\n.fc .fc-toolbar > * > * { /* extra precedence to override button border margins */\r\n\tfloat: left;\r\n\tmargin-left: .75em;\r\n}\r\n\r\n/* the first thing within each left/center/right section */\r\n.fc .fc-toolbar > * > :first-child { /* extra precedence to override button border margins */\r\n\tmargin-left: 0;\r\n}\r\n\t\r\n/* title text */\r\n\r\n.fc-toolbar h2 {\r\n\tmargin: 0;\r\n}\r\n\r\n/* button layering (for border precedence) */\r\n\r\n.fc-toolbar button {\r\n\tposition: relative;\r\n}\r\n\r\n.fc-toolbar .fc-state-hover,\r\n.fc-toolbar .ui-state-hover {\r\n\tz-index: 2;\r\n}\r\n\t\r\n.fc-toolbar .fc-state-down {\r\n\tz-index: 3;\r\n}\r\n\r\n.fc-toolbar .fc-state-active,\r\n.fc-toolbar .ui-state-active {\r\n\tz-index: 4;\r\n}\r\n\r\n.fc-toolbar button:focus {\r\n\tz-index: 5;\r\n}\r\n\r\n\r\n/* View Structure\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n/* undo twitter bootstrap's box-sizing rules. normalizes positioning techniques */\r\n/* don't do this for the toolbar because we'll want bootstrap to style those buttons as some pt */\r\n.fc-view-container *,\r\n.fc-view-container *:before,\r\n.fc-view-container *:after {\r\n\t-webkit-box-sizing: content-box;\r\n\t   -moz-box-sizing: content-box;\r\n\t        box-sizing: content-box;\r\n}\r\n\r\n.fc-view, /* scope positioning and z-index's for everything within the view */\r\n.fc-view > table { /* so dragged elements can be above the view's main element */\r\n\tposition: relative;\r\n\tz-index: 1;\r\n}\r\n\r\n/* BasicView\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n/* day row structure */\r\n\r\n.fc-basicWeek-view .fc-content-skeleton,\r\n.fc-basicDay-view .fc-content-skeleton {\r\n\t/* we are sure there are no day numbers in these views, so... */\r\n\tpadding-top: 1px; /* add a pixel to make sure there are 2px padding above events */\r\n\tpadding-bottom: 1em; /* ensure a space at bottom of cell for user selecting/clicking */\r\n}\r\n\r\n.fc-basic-view .fc-body .fc-row {\r\n\tmin-height: 4em; /* ensure that all rows are at least this tall */\r\n}\r\n\r\n/* a \"rigid\" row will take up a constant amount of height because content-skeleton is absolute */\r\n\r\n.fc-row.fc-rigid {\r\n\toverflow: hidden;\r\n}\r\n\r\n.fc-row.fc-rigid .fc-content-skeleton {\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tright: 0;\r\n}\r\n\r\n/* week and day number styling */\r\n\r\n.fc-basic-view .fc-week-number,\r\n.fc-basic-view .fc-day-number {\r\n\tpadding: 0 2px;\r\n}\r\n\r\n.fc-basic-view td.fc-week-number span,\r\n.fc-basic-view td.fc-day-number {\r\n\tpadding-top: 2px;\r\n\tpadding-bottom: 2px;\r\n}\r\n\r\n.fc-basic-view .fc-week-number {\r\n\ttext-align: center;\r\n}\r\n\r\n.fc-basic-view .fc-week-number span {\r\n\t/* work around the way we do column resizing and ensure a minimum width */\r\n\tdisplay: inline-block;\r\n\tmin-width: 1.25em;\r\n}\r\n\r\n.fc-ltr .fc-basic-view .fc-day-number {\r\n\ttext-align: right;\r\n}\r\n\r\n.fc-rtl .fc-basic-view .fc-day-number {\r\n\ttext-align: left;\r\n}\r\n\r\n.fc-day-number.fc-other-month {\r\n\topacity: 0.3;\r\n\tfilter: alpha(opacity=30); /* for IE */\r\n\t/* opacity with small font can sometimes look too faded\r\n\t   might want to set the 'color' property instead\r\n\t   making day-numbers bold also fixes the problem */\r\n}\r\n\r\n/* AgendaView all-day area\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-agenda-view .fc-day-grid {\r\n\tposition: relative;\r\n\tz-index: 2; /* so the \"more..\" popover will be over the time grid */\r\n}\r\n\r\n.fc-agenda-view .fc-day-grid .fc-row {\r\n\tmin-height: 3em; /* all-day section will never get shorter than this */\r\n}\r\n\r\n.fc-agenda-view .fc-day-grid .fc-row .fc-content-skeleton {\r\n\tpadding-top: 1px; /* add a pixel to make sure there are 2px padding above events */\r\n\tpadding-bottom: 1em; /* give space underneath events for clicking/selecting days */\r\n}\r\n\r\n\r\n/* TimeGrid axis running down the side (for both the all-day area and the slot area)\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc .fc-axis { /* .fc to overcome default cell styles */\r\n\tvertical-align: middle;\r\n\tpadding: 0 4px;\r\n\twhite-space: nowrap;\r\n}\r\n\r\n.fc-ltr .fc-axis {\r\n\ttext-align: right;\r\n}\r\n\r\n.fc-rtl .fc-axis {\r\n\ttext-align: left;\r\n}\r\n\r\n.ui-widget td.fc-axis {\r\n\tfont-weight: normal; /* overcome jqui theme making it bold */\r\n}\r\n\r\n\r\n/* TimeGrid Structure\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-time-grid-container, /* so scroll container's z-index is below all-day */\r\n.fc-time-grid { /* so slats/bg/content/etc positions get scoped within here */\r\n\tposition: relative;\r\n\tz-index: 1;\r\n}\r\n\r\n.fc-time-grid {\r\n\tmin-height: 100%; /* so if height setting is 'auto', .fc-bg stretches to fill height */\r\n}\r\n\r\n.fc-time-grid table { /* don't put outer borders on slats/bg/content/etc */\r\n\tborder: 0 hidden transparent;\r\n}\r\n\r\n.fc-time-grid > .fc-bg {\r\n\tz-index: 1;\r\n}\r\n\r\n.fc-time-grid .fc-slats,\r\n.fc-time-grid > hr { /* the <hr> AgendaView injects when grid is shorter than scroller */\r\n\tposition: relative;\r\n\tz-index: 2;\r\n}\r\n\r\n.fc-time-grid .fc-content-col {\r\n\tposition: relative; /* because now-indicator lives directly inside */\r\n}\r\n\r\n.fc-time-grid .fc-content-skeleton {\r\n\tposition: absolute;\r\n\tz-index: 3;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tright: 0;\r\n}\r\n\r\n/* divs within a cell within the fc-content-skeleton */\r\n\r\n.fc-time-grid .fc-business-container {\r\n\tposition: relative;\r\n\tz-index: 1;\r\n}\r\n\r\n.fc-time-grid .fc-bgevent-container {\r\n\tposition: relative;\r\n\tz-index: 2;\r\n}\r\n\r\n.fc-time-grid .fc-highlight-container {\r\n\tposition: relative;\r\n\tz-index: 3;\r\n}\r\n\r\n.fc-time-grid .fc-event-container {\r\n\tposition: relative;\r\n\tz-index: 4;\r\n}\r\n\r\n.fc-time-grid .fc-now-indicator-line {\r\n\tz-index: 5;\r\n}\r\n\r\n.fc-time-grid .fc-helper-container { /* also is fc-event-container */\r\n\tposition: relative;\r\n\tz-index: 6;\r\n}\r\n\r\n\r\n/* TimeGrid Slats (lines that run horizontally)\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-time-grid .fc-slats td {\r\n\theight: 1.5em;\r\n\tborder-bottom: 0; /* each cell is responsible for its top border */\r\n}\r\n\r\n.fc-time-grid .fc-slats .fc-minor td {\r\n\tborder-top-style: dotted;\r\n}\r\n\r\n.fc-time-grid .fc-slats .ui-widget-content { /* for jqui theme */\r\n\tbackground: none; /* see through to fc-bg */\r\n}\r\n\r\n\r\n/* TimeGrid Highlighting Slots\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-time-grid .fc-highlight-container { /* a div within a cell within the fc-highlight-skeleton */\r\n\tposition: relative; /* scopes the left/right of the fc-highlight to be in the column */\r\n}\r\n\r\n.fc-time-grid .fc-highlight {\r\n\tposition: absolute;\r\n\tleft: 0;\r\n\tright: 0;\r\n\t/* top and bottom will be in by JS */\r\n}\r\n\r\n\r\n/* TimeGrid Event Containment\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-ltr .fc-time-grid .fc-event-container { /* space on the sides of events for LTR (default) */\r\n\tmargin: 0 2.5% 0 2px;\r\n}\r\n\r\n.fc-rtl .fc-time-grid .fc-event-container { /* space on the sides of events for RTL */\r\n\tmargin: 0 2px 0 2.5%;\r\n}\r\n\r\n.fc-time-grid .fc-event,\r\n.fc-time-grid .fc-bgevent {\r\n\tposition: absolute;\r\n\tz-index: 1; /* scope inner z-index's */\r\n}\r\n\r\n.fc-time-grid .fc-bgevent {\r\n\t/* background events always span full width */\r\n\tleft: 0;\r\n\tright: 0;\r\n}\r\n\r\n\r\n/* Generic Vertical Event\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-v-event.fc-not-start { /* events that are continuing from another day */\r\n\t/* replace space made by the top border with padding */\r\n\tborder-top-width: 0;\r\n\tpadding-top: 1px;\r\n\r\n\t/* remove top rounded corners */\r\n\tborder-top-left-radius: 0;\r\n\tborder-top-right-radius: 0;\r\n}\r\n\r\n.fc-v-event.fc-not-end {\r\n\t/* replace space made by the top border with padding */\r\n\tborder-bottom-width: 0;\r\n\tpadding-bottom: 1px;\r\n\r\n\t/* remove bottom rounded corners */\r\n\tborder-bottom-left-radius: 0;\r\n\tborder-bottom-right-radius: 0;\r\n}\r\n\r\n\r\n/* TimeGrid Event Styling\r\n----------------------------------------------------------------------------------------------------\r\nWe use the full \"fc-time-grid-event\" class instead of using descendants because the event won't\r\nbe a descendant of the grid when it is being dragged.\r\n*/\r\n\r\n.fc-time-grid-event {\r\n\toverflow: hidden; /* don't let the bg flow over rounded corners */\r\n}\r\n\r\n.fc-time-grid-event .fc-time,\r\n.fc-time-grid-event .fc-title {\r\n\tpadding: 0 1px;\r\n}\r\n\r\n.fc-time-grid-event .fc-time {\r\n\tfont-size: .85em;\r\n\twhite-space: nowrap;\r\n}\r\n\r\n/* short mode, where time and title are on the same line */\r\n\r\n.fc-time-grid-event.fc-short .fc-content {\r\n\t/* don't wrap to second line (now that contents will be inline) */\r\n\twhite-space: nowrap;\r\n}\r\n\r\n.fc-time-grid-event.fc-short .fc-time,\r\n.fc-time-grid-event.fc-short .fc-title {\r\n\t/* put the time and title on the same line */\r\n\tdisplay: inline-block;\r\n\tvertical-align: top;\r\n}\r\n\r\n.fc-time-grid-event.fc-short .fc-time span {\r\n\tdisplay: none; /* don't display the full time text... */\r\n}\r\n\r\n.fc-time-grid-event.fc-short .fc-time:before {\r\n\tcontent: attr(data-start); /* ...instead, display only the start time */\r\n}\r\n\r\n.fc-time-grid-event.fc-short .fc-time:after {\r\n\tcontent: \"\\000A0-\\000A0\"; /* seperate with a dash, wrapped in nbsp's */\r\n}\r\n\r\n.fc-time-grid-event.fc-short .fc-title {\r\n\tfont-size: .85em; /* make the title text the same size as the time */\r\n\tpadding: 0; /* undo padding from above */\r\n}\r\n\r\n/* resizer */\r\n\r\n.fc-time-grid-event .fc-resizer {\r\n\tleft: 0;\r\n\tright: 0;\r\n\tbottom: 0;\r\n\theight: 8px;\r\n\toverflow: hidden;\r\n\tline-height: 8px;\r\n\tfont-size: 11px;\r\n\tfont-family: monospace;\r\n\ttext-align: center;\r\n\tcursor: s-resize;\r\n}\r\n\r\n.fc-time-grid-event .fc-resizer:after {\r\n\tcontent: \"=\";\r\n}\r\n\r\n\r\n/* Now Indicator\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-time-grid .fc-now-indicator-line {\r\n\tborder-top-width: 1px;\r\n\tleft: 0;\r\n\tright: 0;\r\n}\r\n\r\n/* arrow on axis */\r\n\r\n.fc-time-grid .fc-now-indicator-arrow {\r\n\tmargin-top: -5px; /* vertically center on top coordinate */\r\n}\r\n\r\n.fc-ltr .fc-time-grid .fc-now-indicator-arrow {\r\n\tleft: 0;\r\n\t/* triangle pointing right... */\r\n\tborder-width: 5px 0 5px 6px;\r\n\tborder-top-color: transparent;\r\n\tborder-bottom-color: transparent;\r\n}\r\n\r\n.fc-rtl .fc-time-grid .fc-now-indicator-arrow {\r\n\tright: 0;\r\n\t/* triangle pointing left... */\r\n\tborder-width: 5px 6px 5px 0;\r\n\tborder-top-color: transparent;\r\n\tborder-bottom-color: transparent;\r\n}\r\n", ""]);
+
+/***/ },
+/* 590 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _PagaendeActions = __webpack_require__(471);
+
+	var _PagaendeActions2 = _interopRequireDefault(_PagaendeActions);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var IssueScheduleView = function (_Component) {
+	    _inherits(IssueScheduleView, _Component);
+
+	    function IssueScheduleView(props) {
+	        _classCallCheck(this, IssueScheduleView);
+
+	        return _possibleConstructorReturn(this, (IssueScheduleView.__proto__ || Object.getPrototypeOf(IssueScheduleView)).call(this, props));
+	    }
+
+	    _createClass(IssueScheduleView, [{
+	        key: 'displayStyle',
+	        value: function displayStyle() {
+	            return this.props.show ? 'block' : 'none';
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                _reactBootstrap.Row,
+	                { id: 'issue-schedule-view', style: { display: this.displayStyle() } },
+	                _react2.default.createElement(
+	                    _reactBootstrap.Col,
+	                    { md: 12 },
+	                    _react2.default.createElement('div', { id: 'issueschedule-div' })
+	                )
+	            );
+	        }
+	    }]);
+
+	    return IssueScheduleView;
+	}(_react.Component);
+
+	exports.default = IssueScheduleView;
+	;
+	IssueScheduleView.propTypes = {
+	    show: _react2.default.PropTypes.bool.isRequired
+	};
+
+/***/ },
+/* 591 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _PagaendeActions = __webpack_require__(471);
+
+	var _PagaendeActions2 = _interopRequireDefault(_PagaendeActions);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var IssueListView = function (_Component) {
+		_inherits(IssueListView, _Component);
+
+		function IssueListView(props) {
+			_classCallCheck(this, IssueListView);
+
+			return _possibleConstructorReturn(this, (IssueListView.__proto__ || Object.getPrototypeOf(IssueListView)).call(this, props));
+		}
+
+		_createClass(IssueListView, [{
+			key: 'displayStyle',
+			value: function displayStyle() {
+				return this.props.show ? 'block' : 'none';
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						_reactBootstrap.Row,
+						{ id: 'issue-list-view', style: { display: this.displayStyle() } },
+						_react2.default.createElement(
+							_reactBootstrap.Col,
+							{ md: 12 },
+							_react2.default.createElement(
+								'table',
+								{ id: 'issuelist-table', className: 'table table-striped table-hover' },
+								_react2.default.createElement(
+									'thead',
+									null,
+									_react2.default.createElement(
+										'tr',
+										null,
+										_react2.default.createElement('th', null),
+										_react2.default.createElement(
+											'th',
+											null,
+											'ID'
+										),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Prio'
+										),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Titel'
+										),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Adress'
+										),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Tilldelad'
+										),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement('th', null)
+									)
+								),
+								_react2.default.createElement('tbody', null),
+								_react2.default.createElement(
+									'tfoot',
+									null,
+									_react2.default.createElement(
+										'tr',
+										null,
+										_react2.default.createElement('th', null),
+										_react2.default.createElement(
+											'th',
+											null,
+											'ID'
+										),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Prio'
+										),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Titel'
+										),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Adress'
+										),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Tilldelad'
+										),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement('th', null)
+									)
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return IssueListView;
+	}(_react.Component);
+
+	exports.default = IssueListView;
+	;
+	IssueListView.propTypes = {
+		show: _react2.default.PropTypes.bool.isRequired
+	};
+
+/***/ },
+/* 592 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _events = __webpack_require__(460);
+
+	var _PagaendeDispatcher = __webpack_require__(472);
+
+	var _PagaendeDispatcher2 = _interopRequireDefault(_PagaendeDispatcher);
+
+	var _PagaendeConstants = __webpack_require__(473);
+
+	var _PagaendeConstants2 = _interopRequireDefault(_PagaendeConstants);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var _panelList = [{ id: 0, panel: "CreateIssuePanel", active: false }, { id: 1, panel: "IssueCalendarView", active: true }, { id: 2, panel: "IssueScheduleView", active: false }, { id: 3, panel: "IssueListView", active: false }];
+
+	var CHANGE_EVENT = 'change';
+	var PagaendeStore = Object.assign({}, _events.EventEmitter.prototype, {
+	    getPanels: function getPanels() {
+	        return _panelList;
+	    },
+	    getActiveId: function getActiveId() {
+	        var id = -1;
+	        _panelList.forEach(function (item, index, array) {
+	            if (item.active === true) {
+	                id = index;
+	            }
+	        });
+	        return id;
+	    },
+	    emitChange: function emitChange() {
+	        this.emit(CHANGE_EVENT);
+	    },
+	    addChangeListener: function addChangeListener(callback) {
+	        this.on(CHANGE_EVENT, callback);
+	    },
+	    removeChangeListener: function removeChangeListener(callback) {
+	        this.removeListener(CHANGE_EVENT, callback);
+	    }
+	});
+
+	function _setActive(id) {
+	    _panelList.forEach(function (item, index, array) {
+	        if (item.id === id) {
+	            item.active = true;
+	        } else {
+	            item.active = false;
+	        }
+	    });
+	}
+
+	function _inactivateAll() {
+	    _panelList.forEach(function (item, index, array) {
+	        item.active = false;
+	    });
+	}
+
+	_PagaendeDispatcher2.default.register(function (action) {
+	    switch (action.actionType) {
+	        case _PagaendeConstants2.default.SET_ACTIVE:
+	            _setActive(action.id);
+	            PagaendeStore.emitChange();
+	            break;
+	        case _PagaendeConstants2.default.INACTIVE_ALL:
+	            _inactivateAll();
+	            PagaendeStore.emitChange();
+	            break;
+	        default:
+	    }
+	});
+
+	exports.default = PagaendeStore;
+
+/***/ },
+/* 593 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	FullCalendar Scheduler v1.4.0
 	Docs & License: http://fullcalendar.io/scheduler/
 	(c) 2016 Adam Shaw
-	 */(function(factory){if(true){!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2),__webpack_require__(470),__webpack_require__(577)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));}else if(typeof exports==='object'){// Node/CommonJS
+	 */(function(factory){if(true){!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2),__webpack_require__(476),__webpack_require__(583)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));}else if(typeof exports==='object'){// Node/CommonJS
 	module.exports=factory(require('jquery'),require('moment'),require('fullcalendar'));}else{factory(jQuery,moment);}})(function($,moment){;var COL_MIN_WIDTH,Calendar,CalendarExtension,Class,ClippedScroller,CoordCache,DEFAULT_GRID_DURATION,DragListener,EmitterMixin,EnhancedScroller,EventRow,FC,Grid,HRowGroup,LICENSE_INFO_URL,ListenerMixin,MAX_AUTO_CELLS,MAX_AUTO_SLOTS_PER_LABEL,MAX_CELLS,MIN_AUTO_LABELS,PRESET_LICENSE_KEYS,RELEASE_DATE,ResourceAgendaView,ResourceBasicView,ResourceDayGrid,ResourceDayTableMixin,ResourceGridMixin,ResourceManager,ResourceMonthView,ResourceRow,ResourceTimeGrid,ResourceTimelineGrid,ResourceTimelineView,ResourceViewMixin,RowGroup,RowParent,STOCK_SUB_DURATIONS,ScrollFollower,ScrollFollowerSprite,ScrollJoiner,ScrollerCanvas,Spreadsheet,TimelineGrid,TimelineView,UPGRADE_WINDOW,VRowGroup,View,applyAll,capitaliseFirstLetter,compareByFieldSpecs,computeIntervalUnit,computeOffsetForSeg,computeOffsetForSegs,copyRect,cssToStr,debounce,detectWarningInContainer,divideDurationByDuration,divideRangeByDuration,durationHasTime,flexibleCompare,getContentRect,getOuterRect,getOwnCells,getRectHeight,getRectWidth,getScrollbarWidths,hContainRect,htmlEscape,intersectRanges,intersectRects,isImmuneUrl,isInt,isValidKey,joinRects,multiplyDuration,origDisplayEvents,origDisplayView,origGetSegCustomClasses,origGetSegDefaultBackgroundColor,origGetSegDefaultBorderColor,origGetSegDefaultTextColor,origRenderSkeleton,origUnrenderSkeleton,parseFieldSpecs,processLicenseKey,proxy,renderingWarningInContainer,syncThen,testRectContains,testRectHContains,testRectVContains,timeRowSegsCollide,vContainRect,extend=function(child,parent){for(var key in parent){if(hasProp.call(parent,key))child[key]=parent[key];}function ctor(){this.constructor=child;}ctor.prototype=parent.prototype;child.prototype=new ctor();child.__super__=parent.prototype;return child;},hasProp={}.hasOwnProperty,indexOf=[].indexOf||function(item){for(var i=0,l=this.length;i<l;i++){if(i in this&&this[i]===item)return i;}return-1;},slice=[].slice;FC=$.fullCalendar;FC.schedulerVersion="1.4.0";if(FC.internalApiVersion!==6){FC.warn('v'+FC.schedulerVersion+' of FullCalendar Scheduler '+'is incompatible with v'+FC.version+' of the core.\n'+'Please see http://fullcalendar.io/support/ for more information.');return;}Calendar=FC.Calendar;Class=FC.Class;View=FC.View;Grid=FC.Grid;intersectRanges=FC.intersectRanges;debounce=FC.debounce;isInt=FC.isInt;getScrollbarWidths=FC.getScrollbarWidths;DragListener=FC.DragListener;htmlEscape=FC.htmlEscape;computeIntervalUnit=FC.computeIntervalUnit;proxy=FC.proxy;capitaliseFirstLetter=FC.capitaliseFirstLetter;applyAll=FC.applyAll;EmitterMixin=FC.EmitterMixin;ListenerMixin=FC.ListenerMixin;durationHasTime=FC.durationHasTime;divideRangeByDuration=FC.divideRangeByDuration;divideDurationByDuration=FC.divideDurationByDuration;multiplyDuration=FC.multiplyDuration;parseFieldSpecs=FC.parseFieldSpecs;compareByFieldSpecs=FC.compareByFieldSpecs;flexibleCompare=FC.flexibleCompare;intersectRects=FC.intersectRects;CoordCache=FC.CoordCache;getContentRect=FC.getContentRect;getOuterRect=FC.getOuterRect;/*
 	Given a jQuery <tr> set, returns the <td>'s that do not have multi-line rowspans.
 	Would use the [rowspan] selector, but never not defined in IE8.
@@ -61101,219 +61812,15 @@ webpackJsonp([0],[
 	 */isValidKey=function(key){var minPurchaseDate,parts,purchaseDate,releaseDate;if($.inArray(key,PRESET_LICENSE_KEYS)!==-1){return true;}parts=(key||'').match(/^(\d+)\-fcs\-(\d+)$/);if(parts&&parts[1].length===10){purchaseDate=moment.utc(parseInt(parts[2])*1000);releaseDate=moment.utc(FC.mockSchedulerReleaseDate||RELEASE_DATE);if(releaseDate.isValid()){minPurchaseDate=releaseDate.clone().subtract(UPGRADE_WINDOW);if(purchaseDate.isAfter(minPurchaseDate)){return true;}}}return false;};isImmuneUrl=function(url){return Boolean(url.match(/\w+\:\/\/fullcalendar\.io\/|\/demos\/[\w-]+\.html$/));};renderingWarningInContainer=function(messageHtml,containerEl){return containerEl.append($('<div class="fc-license-message" />').html(messageHtml));};detectWarningInContainer=function(containerEl){return containerEl.find('.fc-license-message').length>=1;};});
 
 /***/ },
-/* 579 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(580);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(582)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./fullcalendar.css", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./fullcalendar.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 580 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(581)();
-	exports.push([module.id, "/*!\r\n * FullCalendar v2.6.1 Stylesheet\r\n * Docs & License: http://fullcalendar.io/\r\n * (c) 2015 Adam Shaw\r\n */\r\n\r\n\r\n.fc {\r\n\tdirection: ltr;\r\n\ttext-align: left;\r\n}\r\n\r\n.fc-rtl {\r\n\ttext-align: right;\r\n}\r\n\r\nbody .fc { /* extra precedence to overcome jqui */\r\n\tfont-size: 1em;\r\n}\r\n\r\n\r\n/* Colors\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-unthemed th,\r\n.fc-unthemed td,\r\n.fc-unthemed thead,\r\n.fc-unthemed tbody,\r\n.fc-unthemed .fc-divider,\r\n.fc-unthemed .fc-row,\r\n.fc-unthemed .fc-popover {\r\n\tborder-color: #ddd;\r\n}\r\n\r\n.fc-unthemed .fc-popover {\r\n\tbackground-color: #fff;\r\n}\r\n\r\n.fc-unthemed .fc-divider,\r\n.fc-unthemed .fc-popover .fc-header {\r\n\tbackground: #eee;\r\n}\r\n\r\n.fc-unthemed .fc-popover .fc-header .fc-close {\r\n\tcolor: #666;\r\n}\r\n\r\n.fc-unthemed .fc-today {\r\n\tbackground: #fcf8e3;\r\n}\r\n\r\n.fc-highlight { /* when user is selecting cells */\r\n\tbackground: #bce8f1;\r\n\topacity: .3;\r\n\tfilter: alpha(opacity=30); /* for IE */\r\n}\r\n\r\n.fc-bgevent { /* default look for background events */\r\n\tbackground: rgb(143, 223, 130);\r\n\topacity: .3;\r\n\tfilter: alpha(opacity=30); /* for IE */\r\n}\r\n\r\n.fc-nonbusiness { /* default look for non-business-hours areas */\r\n\t/* will inherit .fc-bgevent's styles */\r\n\tbackground: #d7d7d7;\r\n}\r\n\r\n\r\n/* Icons (inline elements with styled text that mock arrow icons)\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-icon {\r\n\tdisplay: inline-block;\r\n\twidth: 1em;\r\n\theight: 1em;\r\n\tline-height: 1em;\r\n\tfont-size: 1em;\r\n\ttext-align: center;\r\n\toverflow: hidden;\r\n\tfont-family: \"Courier New\", Courier, monospace;\r\n\r\n\t/* don't allow browser text-selection */\r\n\t-webkit-touch-callout: none;\r\n\t-webkit-user-select: none;\r\n\t-khtml-user-select: none;\r\n\t-moz-user-select: none;\r\n\t-ms-user-select: none;\r\n\tuser-select: none;\r\n\t}\r\n\r\n/*\r\nAcceptable font-family overrides for individual icons:\r\n\t\"Arial\", sans-serif\r\n\t\"Times New Roman\", serif\r\n\r\nNOTE: use percentage font sizes or else old IE chokes\r\n*/\r\n\r\n.fc-icon:after {\r\n\tposition: relative;\r\n\tmargin: 0 -1em; /* ensures character will be centered, regardless of width */\r\n}\r\n\r\n.fc-icon-left-single-arrow:after {\r\n\tcontent: \"\\02039\";\r\n\tfont-weight: bold;\r\n\tfont-size: 200%;\r\n\ttop: -7%;\r\n\tleft: 3%;\r\n}\r\n\r\n.fc-icon-right-single-arrow:after {\r\n\tcontent: \"\\0203A\";\r\n\tfont-weight: bold;\r\n\tfont-size: 200%;\r\n\ttop: -7%;\r\n\tleft: -3%;\r\n}\r\n\r\n.fc-icon-left-double-arrow:after {\r\n\tcontent: \"\\000AB\";\r\n\tfont-size: 160%;\r\n\ttop: -7%;\r\n}\r\n\r\n.fc-icon-right-double-arrow:after {\r\n\tcontent: \"\\000BB\";\r\n\tfont-size: 160%;\r\n\ttop: -7%;\r\n}\r\n\r\n.fc-icon-left-triangle:after {\r\n\tcontent: \"\\25C4\";\r\n\tfont-size: 125%;\r\n\ttop: 3%;\r\n\tleft: -2%;\r\n}\r\n\r\n.fc-icon-right-triangle:after {\r\n\tcontent: \"\\25BA\";\r\n\tfont-size: 125%;\r\n\ttop: 3%;\r\n\tleft: 2%;\r\n}\r\n\r\n.fc-icon-down-triangle:after {\r\n\tcontent: \"\\25BC\";\r\n\tfont-size: 125%;\r\n\ttop: 2%;\r\n}\r\n\r\n.fc-icon-x:after {\r\n\tcontent: \"\\000D7\";\r\n\tfont-size: 200%;\r\n\ttop: 6%;\r\n}\r\n\r\n\r\n/* Buttons (styled <button> tags, normalized to work cross-browser)\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc button {\r\n\t/* force height to include the border and padding */\r\n\t-moz-box-sizing: border-box;\r\n\t-webkit-box-sizing: border-box;\r\n\tbox-sizing: border-box;\r\n\r\n\t/* dimensions */\r\n\tmargin: 0;\r\n\theight: 2.1em;\r\n\tpadding: 0 .6em;\r\n\r\n\t/* text & cursor */\r\n\tfont-size: 1em; /* normalize */\r\n\twhite-space: nowrap;\r\n\tcursor: pointer;\r\n}\r\n\r\n/* Firefox has an annoying inner border */\r\n.fc button::-moz-focus-inner { margin: 0; padding: 0; }\r\n\t\r\n.fc-state-default { /* non-theme */\r\n\tborder: 1px solid;\r\n}\r\n\r\n.fc-state-default.fc-corner-left { /* non-theme */\r\n\tborder-top-left-radius: 4px;\r\n\tborder-bottom-left-radius: 4px;\r\n}\r\n\r\n.fc-state-default.fc-corner-right { /* non-theme */\r\n\tborder-top-right-radius: 4px;\r\n\tborder-bottom-right-radius: 4px;\r\n}\r\n\r\n/* icons in buttons */\r\n\r\n.fc button .fc-icon { /* non-theme */\r\n\tposition: relative;\r\n\ttop: -0.05em; /* seems to be a good adjustment across browsers */\r\n\tmargin: 0 .2em;\r\n\tvertical-align: middle;\r\n}\r\n\t\r\n/*\r\n  button states\r\n  borrowed from twitter bootstrap (http://twitter.github.com/bootstrap/)\r\n*/\r\n\r\n.fc-state-default {\r\n\tbackground-color: #f5f5f5;\r\n\tbackground-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);\r\n\tbackground-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));\r\n\tbackground-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);\r\n\tbackground-image: -o-linear-gradient(top, #ffffff, #e6e6e6);\r\n\tbackground-image: linear-gradient(to bottom, #ffffff, #e6e6e6);\r\n\tbackground-repeat: repeat-x;\r\n\tborder-color: #e6e6e6 #e6e6e6 #bfbfbf;\r\n\tborder-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\r\n\tcolor: #333;\r\n\ttext-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);\r\n\tbox-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\r\n}\r\n\r\n.fc-state-hover,\r\n.fc-state-down,\r\n.fc-state-active,\r\n.fc-state-disabled {\r\n\tcolor: #333333;\r\n\tbackground-color: #e6e6e6;\r\n}\r\n\r\n.fc-state-hover {\r\n\tcolor: #333333;\r\n\ttext-decoration: none;\r\n\tbackground-position: 0 -15px;\r\n\t-webkit-transition: background-position 0.1s linear;\r\n\t   -moz-transition: background-position 0.1s linear;\r\n\t     -o-transition: background-position 0.1s linear;\r\n\t        transition: background-position 0.1s linear;\r\n}\r\n\r\n.fc-state-down,\r\n.fc-state-active {\r\n\tbackground-color: #cccccc;\r\n\tbackground-image: none;\r\n\tbox-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);\r\n}\r\n\r\n.fc-state-disabled {\r\n\tcursor: default;\r\n\tbackground-image: none;\r\n\topacity: 0.65;\r\n\tfilter: alpha(opacity=65);\r\n\tbox-shadow: none;\r\n}\r\n\r\n\r\n/* Buttons Groups\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-button-group {\r\n\tdisplay: inline-block;\r\n}\r\n\r\n/*\r\nevery button that is not first in a button group should scootch over one pixel and cover the\r\nprevious button's border...\r\n*/\r\n\r\n.fc .fc-button-group > * { /* extra precedence b/c buttons have margin set to zero */\r\n\tfloat: left;\r\n\tmargin: 0 0 0 -1px;\r\n}\r\n\r\n.fc .fc-button-group > :first-child { /* same */\r\n\tmargin-left: 0;\r\n}\r\n\r\n\r\n/* Popover\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-popover {\r\n\tposition: absolute;\r\n\tbox-shadow: 0 2px 6px rgba(0,0,0,.15);\r\n}\r\n\r\n.fc-popover .fc-header { /* TODO: be more consistent with fc-head/fc-body */\r\n\tpadding: 2px 4px;\r\n}\r\n\r\n.fc-popover .fc-header .fc-title {\r\n\tmargin: 0 2px;\r\n}\r\n\r\n.fc-popover .fc-header .fc-close {\r\n\tcursor: pointer;\r\n}\r\n\r\n.fc-ltr .fc-popover .fc-header .fc-title,\r\n.fc-rtl .fc-popover .fc-header .fc-close {\r\n\tfloat: left;\r\n}\r\n\r\n.fc-rtl .fc-popover .fc-header .fc-title,\r\n.fc-ltr .fc-popover .fc-header .fc-close {\r\n\tfloat: right;\r\n}\r\n\r\n/* unthemed */\r\n\r\n.fc-unthemed .fc-popover {\r\n\tborder-width: 1px;\r\n\tborder-style: solid;\r\n}\r\n\r\n.fc-unthemed .fc-popover .fc-header .fc-close {\r\n\tfont-size: .9em;\r\n\tmargin-top: 2px;\r\n}\r\n\r\n/* jqui themed */\r\n\r\n.fc-popover > .ui-widget-header + .ui-widget-content {\r\n\tborder-top: 0; /* where they meet, let the header have the border */\r\n}\r\n\r\n\r\n/* Misc Reusable Components\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-divider {\r\n\tborder-style: solid;\r\n\tborder-width: 1px;\r\n}\r\n\r\nhr.fc-divider {\r\n\theight: 0;\r\n\tmargin: 0;\r\n\tpadding: 0 0 2px; /* height is unreliable across browsers, so use padding */\r\n\tborder-width: 1px 0;\r\n}\r\n\r\n.fc-clear {\r\n\tclear: both;\r\n}\r\n\r\n.fc-bg,\r\n.fc-bgevent-skeleton,\r\n.fc-highlight-skeleton,\r\n.fc-helper-skeleton {\r\n\t/* these element should always cling to top-left/right corners */\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tright: 0;\r\n}\r\n\r\n.fc-bg {\r\n\tbottom: 0; /* strech bg to bottom edge */\r\n}\r\n\r\n.fc-bg table {\r\n\theight: 100%; /* strech bg to bottom edge */\r\n}\r\n\r\n\r\n/* Tables\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc table {\r\n\twidth: 100%;\r\n\ttable-layout: fixed;\r\n\tborder-collapse: collapse;\r\n\tborder-spacing: 0;\r\n\tfont-size: 1em; /* normalize cross-browser */\r\n}\r\n\r\n.fc th {\r\n\ttext-align: center;\r\n}\r\n\r\n.fc th,\r\n.fc td {\r\n\tborder-style: solid;\r\n\tborder-width: 1px;\r\n\tpadding: 0;\r\n\tvertical-align: top;\r\n}\r\n\r\n.fc td.fc-today {\r\n\tborder-style: double; /* overcome neighboring borders */\r\n}\r\n\r\n\r\n/* Fake Table Rows\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc .fc-row { /* extra precedence to overcome themes w/ .ui-widget-content forcing a 1px border */\r\n\t/* no visible border by default. but make available if need be (scrollbar width compensation) */\r\n\tborder-style: solid;\r\n\tborder-width: 0;\r\n}\r\n\r\n.fc-row table {\r\n\t/* don't put left/right border on anything within a fake row.\r\n\t   the outer tbody will worry about this */\r\n\tborder-left: 0 hidden transparent;\r\n\tborder-right: 0 hidden transparent;\r\n\r\n\t/* no bottom borders on rows */\r\n\tborder-bottom: 0 hidden transparent; \r\n}\r\n\r\n.fc-row:first-child table {\r\n\tborder-top: 0 hidden transparent; /* no top border on first row */\r\n}\r\n\r\n\r\n/* Day Row (used within the header and the DayGrid)\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-row {\r\n\tposition: relative;\r\n}\r\n\r\n.fc-row .fc-bg {\r\n\tz-index: 1;\r\n}\r\n\r\n/* highlighting cells & background event skeleton */\r\n\r\n.fc-row .fc-bgevent-skeleton,\r\n.fc-row .fc-highlight-skeleton {\r\n\tbottom: 0; /* stretch skeleton to bottom of row */\r\n}\r\n\r\n.fc-row .fc-bgevent-skeleton table,\r\n.fc-row .fc-highlight-skeleton table {\r\n\theight: 100%; /* stretch skeleton to bottom of row */\r\n}\r\n\r\n.fc-row .fc-highlight-skeleton td,\r\n.fc-row .fc-bgevent-skeleton td {\r\n\tborder-color: transparent;\r\n}\r\n\r\n.fc-row .fc-bgevent-skeleton {\r\n\tz-index: 2;\r\n\r\n}\r\n\r\n.fc-row .fc-highlight-skeleton {\r\n\tz-index: 3;\r\n}\r\n\r\n/*\r\nrow content (which contains day/week numbers and events) as well as \"helper\" (which contains\r\ntemporary rendered events).\r\n*/\r\n\r\n.fc-row .fc-content-skeleton {\r\n\tposition: relative;\r\n\tz-index: 4;\r\n\tpadding-bottom: 2px; /* matches the space above the events */\r\n}\r\n\r\n.fc-row .fc-helper-skeleton {\r\n\tz-index: 5;\r\n}\r\n\r\n.fc-row .fc-content-skeleton td,\r\n.fc-row .fc-helper-skeleton td {\r\n\t/* see-through to the background below */\r\n\tbackground: none; /* in case <td>s are globally styled */\r\n\tborder-color: transparent;\r\n\r\n\t/* don't put a border between events and/or the day number */\r\n\tborder-bottom: 0;\r\n}\r\n\r\n.fc-row .fc-content-skeleton tbody td, /* cells with events inside (so NOT the day number cell) */\r\n.fc-row .fc-helper-skeleton tbody td {\r\n\t/* don't put a border between event cells */\r\n\tborder-top: 0;\r\n}\r\n\r\n\r\n/* Scrolling Container\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-scroller { /* this class goes on elements for guaranteed vertical scrollbars */\r\n\toverflow-y: scroll;\r\n\toverflow-x: hidden;\r\n}\r\n\r\n.fc-scroller > * { /* we expect an immediate inner element */\r\n\tposition: relative; /* re-scope all positions */\r\n\twidth: 100%; /* hack to force re-sizing this inner element when scrollbars appear/disappear */\r\n\toverflow: hidden; /* don't let negative margins or absolute positioning create further scroll */\r\n}\r\n\r\n\r\n/* Global Event Styles\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-event {\r\n\tposition: relative; /* for resize handle and other inner positioning */\r\n\tdisplay: block; /* make the <a> tag block */\r\n\tfont-size: .85em;\r\n\tline-height: 1.3;\r\n\tborder-radius: 3px;\r\n\tborder: 1px solid #3a87ad; /* default BORDER color */\r\n\tbackground-color: #3a87ad; /* default BACKGROUND color */\r\n\tfont-weight: normal; /* undo jqui's ui-widget-header bold */\r\n}\r\n\r\n/* overpower some of bootstrap's and jqui's styles on <a> tags */\r\n.fc-event,\r\n.fc-event:hover,\r\n.ui-widget .fc-event {\r\n\tcolor: #fff; /* default TEXT color */\r\n\ttext-decoration: none; /* if <a> has an href */\r\n}\r\n\r\n.fc-event[href],\r\n.fc-event.fc-draggable {\r\n\tcursor: pointer; /* give events with links and draggable events a hand mouse pointer */\r\n}\r\n\r\n.fc-not-allowed, /* causes a \"warning\" cursor. applied on body */\r\n.fc-not-allowed .fc-event { /* to override an event's custom cursor */\r\n\tcursor: not-allowed;\r\n}\r\n\r\n.fc-event .fc-bg { /* the generic .fc-bg already does position */\r\n\tz-index: 1;\r\n\tbackground: #fff;\r\n\topacity: .25;\r\n\tfilter: alpha(opacity=25); /* for IE */\r\n}\r\n\r\n.fc-event .fc-content {\r\n\tposition: relative;\r\n\tz-index: 2;\r\n}\r\n\r\n.fc-event .fc-resizer {\r\n\tposition: absolute;\r\n\tz-index: 3;\r\n}\r\n\r\n\r\n/* Horizontal Events\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n/* events that are continuing to/from another week. kill rounded corners and butt up against edge */\r\n\r\n.fc-ltr .fc-h-event.fc-not-start,\r\n.fc-rtl .fc-h-event.fc-not-end {\r\n\tmargin-left: 0;\r\n\tborder-left-width: 0;\r\n\tpadding-left: 1px; /* replace the border with padding */\r\n\tborder-top-left-radius: 0;\r\n\tborder-bottom-left-radius: 0;\r\n}\r\n\r\n.fc-ltr .fc-h-event.fc-not-end,\r\n.fc-rtl .fc-h-event.fc-not-start {\r\n\tmargin-right: 0;\r\n\tborder-right-width: 0;\r\n\tpadding-right: 1px; /* replace the border with padding */\r\n\tborder-top-right-radius: 0;\r\n\tborder-bottom-right-radius: 0;\r\n}\r\n\r\n/* resizer */\r\n\r\n.fc-h-event .fc-resizer { /* positioned it to overcome the event's borders */\r\n\ttop: -1px;\r\n\tbottom: -1px;\r\n\tleft: -1px;\r\n\tright: -1px;\r\n\twidth: 5px;\r\n}\r\n\r\n/* left resizer  */\r\n.fc-ltr .fc-h-event .fc-start-resizer,\r\n.fc-ltr .fc-h-event .fc-start-resizer:before,\r\n.fc-ltr .fc-h-event .fc-start-resizer:after,\r\n.fc-rtl .fc-h-event .fc-end-resizer,\r\n.fc-rtl .fc-h-event .fc-end-resizer:before,\r\n.fc-rtl .fc-h-event .fc-end-resizer:after {\r\n\tright: auto; /* ignore the right and only use the left */\r\n\tcursor: w-resize;\r\n}\r\n\r\n/* right resizer */\r\n.fc-ltr .fc-h-event .fc-end-resizer,\r\n.fc-ltr .fc-h-event .fc-end-resizer:before,\r\n.fc-ltr .fc-h-event .fc-end-resizer:after,\r\n.fc-rtl .fc-h-event .fc-start-resizer,\r\n.fc-rtl .fc-h-event .fc-start-resizer:before,\r\n.fc-rtl .fc-h-event .fc-start-resizer:after {\r\n\tleft: auto; /* ignore the left and only use the right */\r\n\tcursor: e-resize;\r\n}\r\n\r\n\r\n/* DayGrid events\r\n----------------------------------------------------------------------------------------------------\r\nWe use the full \"fc-day-grid-event\" class instead of using descendants because the event won't\r\nbe a descendant of the grid when it is being dragged.\r\n*/\r\n\r\n.fc-day-grid-event {\r\n\tmargin: 1px 2px 0; /* spacing between events and edges */\r\n\tpadding: 0 1px;\r\n}\r\n\r\n\r\n.fc-day-grid-event .fc-content { /* force events to be one-line tall */\r\n\twhite-space: nowrap;\r\n\toverflow: hidden;\r\n}\r\n\r\n.fc-day-grid-event .fc-time {\r\n\tfont-weight: bold;\r\n}\r\n\r\n.fc-day-grid-event .fc-resizer { /* enlarge the default hit area */\r\n\tleft: -3px;\r\n\tright: -3px;\r\n\twidth: 7px;\r\n}\r\n\r\n\r\n/* Event Limiting\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n/* \"more\" link that represents hidden events */\r\n\r\na.fc-more {\r\n\tmargin: 1px 3px;\r\n\tfont-size: .85em;\r\n\tcursor: pointer;\r\n\ttext-decoration: none;\r\n}\r\n\r\na.fc-more:hover {\r\n\ttext-decoration: underline;\r\n}\r\n\r\n.fc-limited { /* rows and cells that are hidden because of a \"more\" link */\r\n\tdisplay: none;\r\n}\r\n\r\n/* popover that appears when \"more\" link is clicked */\r\n\r\n.fc-day-grid .fc-row {\r\n\tz-index: 1; /* make the \"more\" popover one higher than this */\r\n}\r\n\r\n.fc-more-popover {\r\n\tz-index: 2;\r\n\twidth: 220px;\r\n}\r\n\r\n.fc-more-popover .fc-event-container {\r\n\tpadding: 10px;\r\n}\r\n\r\n\r\n/* Now Indicator\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-now-indicator {\r\n\tposition: absolute;\r\n\tborder: 0 solid red;\r\n}\r\n\r\n/* Toolbar\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-toolbar {\r\n\ttext-align: center;\r\n\tmargin-bottom: 1em;\r\n}\r\n\r\n.fc-toolbar .fc-left {\r\n\tfloat: left;\r\n}\r\n\r\n.fc-toolbar .fc-right {\r\n\tfloat: right;\r\n}\r\n\r\n.fc-toolbar .fc-center {\r\n\tdisplay: inline-block;\r\n}\r\n\r\n/* the things within each left/right/center section */\r\n.fc .fc-toolbar > * > * { /* extra precedence to override button border margins */\r\n\tfloat: left;\r\n\tmargin-left: .75em;\r\n}\r\n\r\n/* the first thing within each left/center/right section */\r\n.fc .fc-toolbar > * > :first-child { /* extra precedence to override button border margins */\r\n\tmargin-left: 0;\r\n}\r\n\t\r\n/* title text */\r\n\r\n.fc-toolbar h2 {\r\n\tmargin: 0;\r\n}\r\n\r\n/* button layering (for border precedence) */\r\n\r\n.fc-toolbar button {\r\n\tposition: relative;\r\n}\r\n\r\n.fc-toolbar .fc-state-hover,\r\n.fc-toolbar .ui-state-hover {\r\n\tz-index: 2;\r\n}\r\n\t\r\n.fc-toolbar .fc-state-down {\r\n\tz-index: 3;\r\n}\r\n\r\n.fc-toolbar .fc-state-active,\r\n.fc-toolbar .ui-state-active {\r\n\tz-index: 4;\r\n}\r\n\r\n.fc-toolbar button:focus {\r\n\tz-index: 5;\r\n}\r\n\r\n\r\n/* View Structure\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n/* undo twitter bootstrap's box-sizing rules. normalizes positioning techniques */\r\n/* don't do this for the toolbar because we'll want bootstrap to style those buttons as some pt */\r\n.fc-view-container *,\r\n.fc-view-container *:before,\r\n.fc-view-container *:after {\r\n\t-webkit-box-sizing: content-box;\r\n\t   -moz-box-sizing: content-box;\r\n\t        box-sizing: content-box;\r\n}\r\n\r\n.fc-view, /* scope positioning and z-index's for everything within the view */\r\n.fc-view > table { /* so dragged elements can be above the view's main element */\r\n\tposition: relative;\r\n\tz-index: 1;\r\n}\r\n\r\n/* BasicView\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n/* day row structure */\r\n\r\n.fc-basicWeek-view .fc-content-skeleton,\r\n.fc-basicDay-view .fc-content-skeleton {\r\n\t/* we are sure there are no day numbers in these views, so... */\r\n\tpadding-top: 1px; /* add a pixel to make sure there are 2px padding above events */\r\n\tpadding-bottom: 1em; /* ensure a space at bottom of cell for user selecting/clicking */\r\n}\r\n\r\n.fc-basic-view .fc-body .fc-row {\r\n\tmin-height: 4em; /* ensure that all rows are at least this tall */\r\n}\r\n\r\n/* a \"rigid\" row will take up a constant amount of height because content-skeleton is absolute */\r\n\r\n.fc-row.fc-rigid {\r\n\toverflow: hidden;\r\n}\r\n\r\n.fc-row.fc-rigid .fc-content-skeleton {\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tright: 0;\r\n}\r\n\r\n/* week and day number styling */\r\n\r\n.fc-basic-view .fc-week-number,\r\n.fc-basic-view .fc-day-number {\r\n\tpadding: 0 2px;\r\n}\r\n\r\n.fc-basic-view td.fc-week-number span,\r\n.fc-basic-view td.fc-day-number {\r\n\tpadding-top: 2px;\r\n\tpadding-bottom: 2px;\r\n}\r\n\r\n.fc-basic-view .fc-week-number {\r\n\ttext-align: center;\r\n}\r\n\r\n.fc-basic-view .fc-week-number span {\r\n\t/* work around the way we do column resizing and ensure a minimum width */\r\n\tdisplay: inline-block;\r\n\tmin-width: 1.25em;\r\n}\r\n\r\n.fc-ltr .fc-basic-view .fc-day-number {\r\n\ttext-align: right;\r\n}\r\n\r\n.fc-rtl .fc-basic-view .fc-day-number {\r\n\ttext-align: left;\r\n}\r\n\r\n.fc-day-number.fc-other-month {\r\n\topacity: 0.3;\r\n\tfilter: alpha(opacity=30); /* for IE */\r\n\t/* opacity with small font can sometimes look too faded\r\n\t   might want to set the 'color' property instead\r\n\t   making day-numbers bold also fixes the problem */\r\n}\r\n\r\n/* AgendaView all-day area\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-agenda-view .fc-day-grid {\r\n\tposition: relative;\r\n\tz-index: 2; /* so the \"more..\" popover will be over the time grid */\r\n}\r\n\r\n.fc-agenda-view .fc-day-grid .fc-row {\r\n\tmin-height: 3em; /* all-day section will never get shorter than this */\r\n}\r\n\r\n.fc-agenda-view .fc-day-grid .fc-row .fc-content-skeleton {\r\n\tpadding-top: 1px; /* add a pixel to make sure there are 2px padding above events */\r\n\tpadding-bottom: 1em; /* give space underneath events for clicking/selecting days */\r\n}\r\n\r\n\r\n/* TimeGrid axis running down the side (for both the all-day area and the slot area)\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc .fc-axis { /* .fc to overcome default cell styles */\r\n\tvertical-align: middle;\r\n\tpadding: 0 4px;\r\n\twhite-space: nowrap;\r\n}\r\n\r\n.fc-ltr .fc-axis {\r\n\ttext-align: right;\r\n}\r\n\r\n.fc-rtl .fc-axis {\r\n\ttext-align: left;\r\n}\r\n\r\n.ui-widget td.fc-axis {\r\n\tfont-weight: normal; /* overcome jqui theme making it bold */\r\n}\r\n\r\n\r\n/* TimeGrid Structure\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-time-grid-container, /* so scroll container's z-index is below all-day */\r\n.fc-time-grid { /* so slats/bg/content/etc positions get scoped within here */\r\n\tposition: relative;\r\n\tz-index: 1;\r\n}\r\n\r\n.fc-time-grid {\r\n\tmin-height: 100%; /* so if height setting is 'auto', .fc-bg stretches to fill height */\r\n}\r\n\r\n.fc-time-grid table { /* don't put outer borders on slats/bg/content/etc */\r\n\tborder: 0 hidden transparent;\r\n}\r\n\r\n.fc-time-grid > .fc-bg {\r\n\tz-index: 1;\r\n}\r\n\r\n.fc-time-grid .fc-slats,\r\n.fc-time-grid > hr { /* the <hr> AgendaView injects when grid is shorter than scroller */\r\n\tposition: relative;\r\n\tz-index: 2;\r\n}\r\n\r\n.fc-time-grid .fc-content-col {\r\n\tposition: relative; /* because now-indicator lives directly inside */\r\n}\r\n\r\n.fc-time-grid .fc-content-skeleton {\r\n\tposition: absolute;\r\n\tz-index: 3;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tright: 0;\r\n}\r\n\r\n/* divs within a cell within the fc-content-skeleton */\r\n\r\n.fc-time-grid .fc-business-container {\r\n\tposition: relative;\r\n\tz-index: 1;\r\n}\r\n\r\n.fc-time-grid .fc-bgevent-container {\r\n\tposition: relative;\r\n\tz-index: 2;\r\n}\r\n\r\n.fc-time-grid .fc-highlight-container {\r\n\tposition: relative;\r\n\tz-index: 3;\r\n}\r\n\r\n.fc-time-grid .fc-event-container {\r\n\tposition: relative;\r\n\tz-index: 4;\r\n}\r\n\r\n.fc-time-grid .fc-now-indicator-line {\r\n\tz-index: 5;\r\n}\r\n\r\n.fc-time-grid .fc-helper-container { /* also is fc-event-container */\r\n\tposition: relative;\r\n\tz-index: 6;\r\n}\r\n\r\n\r\n/* TimeGrid Slats (lines that run horizontally)\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-time-grid .fc-slats td {\r\n\theight: 1.5em;\r\n\tborder-bottom: 0; /* each cell is responsible for its top border */\r\n}\r\n\r\n.fc-time-grid .fc-slats .fc-minor td {\r\n\tborder-top-style: dotted;\r\n}\r\n\r\n.fc-time-grid .fc-slats .ui-widget-content { /* for jqui theme */\r\n\tbackground: none; /* see through to fc-bg */\r\n}\r\n\r\n\r\n/* TimeGrid Highlighting Slots\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-time-grid .fc-highlight-container { /* a div within a cell within the fc-highlight-skeleton */\r\n\tposition: relative; /* scopes the left/right of the fc-highlight to be in the column */\r\n}\r\n\r\n.fc-time-grid .fc-highlight {\r\n\tposition: absolute;\r\n\tleft: 0;\r\n\tright: 0;\r\n\t/* top and bottom will be in by JS */\r\n}\r\n\r\n\r\n/* TimeGrid Event Containment\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-ltr .fc-time-grid .fc-event-container { /* space on the sides of events for LTR (default) */\r\n\tmargin: 0 2.5% 0 2px;\r\n}\r\n\r\n.fc-rtl .fc-time-grid .fc-event-container { /* space on the sides of events for RTL */\r\n\tmargin: 0 2px 0 2.5%;\r\n}\r\n\r\n.fc-time-grid .fc-event,\r\n.fc-time-grid .fc-bgevent {\r\n\tposition: absolute;\r\n\tz-index: 1; /* scope inner z-index's */\r\n}\r\n\r\n.fc-time-grid .fc-bgevent {\r\n\t/* background events always span full width */\r\n\tleft: 0;\r\n\tright: 0;\r\n}\r\n\r\n\r\n/* Generic Vertical Event\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-v-event.fc-not-start { /* events that are continuing from another day */\r\n\t/* replace space made by the top border with padding */\r\n\tborder-top-width: 0;\r\n\tpadding-top: 1px;\r\n\r\n\t/* remove top rounded corners */\r\n\tborder-top-left-radius: 0;\r\n\tborder-top-right-radius: 0;\r\n}\r\n\r\n.fc-v-event.fc-not-end {\r\n\t/* replace space made by the top border with padding */\r\n\tborder-bottom-width: 0;\r\n\tpadding-bottom: 1px;\r\n\r\n\t/* remove bottom rounded corners */\r\n\tborder-bottom-left-radius: 0;\r\n\tborder-bottom-right-radius: 0;\r\n}\r\n\r\n\r\n/* TimeGrid Event Styling\r\n----------------------------------------------------------------------------------------------------\r\nWe use the full \"fc-time-grid-event\" class instead of using descendants because the event won't\r\nbe a descendant of the grid when it is being dragged.\r\n*/\r\n\r\n.fc-time-grid-event {\r\n\toverflow: hidden; /* don't let the bg flow over rounded corners */\r\n}\r\n\r\n.fc-time-grid-event .fc-time,\r\n.fc-time-grid-event .fc-title {\r\n\tpadding: 0 1px;\r\n}\r\n\r\n.fc-time-grid-event .fc-time {\r\n\tfont-size: .85em;\r\n\twhite-space: nowrap;\r\n}\r\n\r\n/* short mode, where time and title are on the same line */\r\n\r\n.fc-time-grid-event.fc-short .fc-content {\r\n\t/* don't wrap to second line (now that contents will be inline) */\r\n\twhite-space: nowrap;\r\n}\r\n\r\n.fc-time-grid-event.fc-short .fc-time,\r\n.fc-time-grid-event.fc-short .fc-title {\r\n\t/* put the time and title on the same line */\r\n\tdisplay: inline-block;\r\n\tvertical-align: top;\r\n}\r\n\r\n.fc-time-grid-event.fc-short .fc-time span {\r\n\tdisplay: none; /* don't display the full time text... */\r\n}\r\n\r\n.fc-time-grid-event.fc-short .fc-time:before {\r\n\tcontent: attr(data-start); /* ...instead, display only the start time */\r\n}\r\n\r\n.fc-time-grid-event.fc-short .fc-time:after {\r\n\tcontent: \"\\000A0-\\000A0\"; /* seperate with a dash, wrapped in nbsp's */\r\n}\r\n\r\n.fc-time-grid-event.fc-short .fc-title {\r\n\tfont-size: .85em; /* make the title text the same size as the time */\r\n\tpadding: 0; /* undo padding from above */\r\n}\r\n\r\n/* resizer */\r\n\r\n.fc-time-grid-event .fc-resizer {\r\n\tleft: 0;\r\n\tright: 0;\r\n\tbottom: 0;\r\n\theight: 8px;\r\n\toverflow: hidden;\r\n\tline-height: 8px;\r\n\tfont-size: 11px;\r\n\tfont-family: monospace;\r\n\ttext-align: center;\r\n\tcursor: s-resize;\r\n}\r\n\r\n.fc-time-grid-event .fc-resizer:after {\r\n\tcontent: \"=\";\r\n}\r\n\r\n\r\n/* Now Indicator\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-time-grid .fc-now-indicator-line {\r\n\tborder-top-width: 1px;\r\n\tleft: 0;\r\n\tright: 0;\r\n}\r\n\r\n/* arrow on axis */\r\n\r\n.fc-time-grid .fc-now-indicator-arrow {\r\n\tmargin-top: -5px; /* vertically center on top coordinate */\r\n}\r\n\r\n.fc-ltr .fc-time-grid .fc-now-indicator-arrow {\r\n\tleft: 0;\r\n\t/* triangle pointing right... */\r\n\tborder-width: 5px 0 5px 6px;\r\n\tborder-top-color: transparent;\r\n\tborder-bottom-color: transparent;\r\n}\r\n\r\n.fc-rtl .fc-time-grid .fc-now-indicator-arrow {\r\n\tright: 0;\r\n\t/* triangle pointing left... */\r\n\tborder-width: 5px 6px 5px 0;\r\n\tborder-top-color: transparent;\r\n\tborder-bottom-color: transparent;\r\n}\r\n", ""]);
-
-/***/ },
-/* 581 */,
-/* 582 */,
-/* 583 */,
-/* 584 */,
-/* 585 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(3);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _jquery = __webpack_require__(2);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	var _jqueryUi = __webpack_require__(439);
-
-	var _jqueryUi2 = _interopRequireDefault(_jqueryUi);
-
-	var _moment = __webpack_require__(470);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
-	var _fullcalendar = __webpack_require__(577);
-
-	var _fullcalendar2 = _interopRequireDefault(_fullcalendar);
-
-	var _Fullcalendar = __webpack_require__(586);
-
-	var _Fullcalendar2 = _interopRequireDefault(_Fullcalendar);
-
-	var _fullcalendar3 = __webpack_require__(579);
-
-	var _fullcalendar4 = _interopRequireDefault(_fullcalendar3);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	//import sv from '../../js/FullCalendar-2.6.1/lang/sv.js';
-
-
-	var Calendar = function (_Component) {
-	    _inherits(Calendar, _Component);
-
-	    function Calendar(props) {
-	        _classCallCheck(this, Calendar);
-
-	        return _possibleConstructorReturn(this, (Calendar.__proto__ || Object.getPrototypeOf(Calendar)).call(this, props));
-	    }
-
-	    _createClass(Calendar, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement('div', { id: 'calendar' });
-	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            $('#calendar').fullCalendar({
-	                header: {
-	                    left: 'prev,next today',
-	                    center: 'title',
-	                    right: 'month,agendaWeek,agendaDay'
-	                },
-	                editable: true,
-	                droppable: true, // this allows things to be dropped onto the calendar
-	                drop: function drop() {
-	                    // is the "remove after drop" checkbox checked?
-	                    if ($('#drop-remove').is(':checked')) {
-	                        // if so, remove the element from the "Draggable Events" list
-	                        $(this).remove();
-	                    }
-	                },
-	                lang: 'sv',
-	                //header: {
-	                //    left:   'prev,next today',
-	                //    center: 'title',
-	                //    right:  'month,agendaWeek,agendaDay'
-	                //},
-	                //selectable: true,
-	                //allDaySlot: false,
-	                weekNumbers: true
-	                //defaultDate: Date.now(),
-	                //timezone: 'local',
-	                //editable: true,
-	                //eventLimit: true,
-	                //select: function (start, end, jsEvent, view) {
-	                //    if (slotLeftClick && jsEvent.shiftKey) {
-	                //        slotLeftClick(start, end, jsEvent, $(this));
-	                //    }
-	                //},
-	                //eventClick: function (item, jsEvent, view) {
-	                //    if (jsEvent.which === 1 && itemLeftClick != null) {
-	                //        itemLeftClick(item, jsEvent, $(this));
-	                //    }
-	                //    else if (jsEvent.which === 3 && itemRightClick != null) {
-	                //        itemRightClick(item, jsEvent, $(this));
-	                //    }
-	                //},
-	                //dayClick: function (start, jsEvent, view) {
-	                //    var end = moment(start);
-	                //    end.add(1, 'hours');
-	                //    if (slotLeftClick && (jsEvent.timeStamp - thiz.prevclick) < 500) {
-	                //        slotLeftClick(start, end, jsEvent, $(this));
-	                //    }
-	                //    thiz.prevclick = jsEvent.timeStamp;
-	                //},
-	                //eventDrop: function (item, delta, revertFunc, jsEvent) {
-	                //    if (itemMove != null) {
-	                //        itemMove(item, jsEvent, $(this), revertFunc);
-	                //    }
-	                //},
-	                //eventResize: function (item, delta, revertFunc, jsEvent, ui, view) {
-	                //    if (itemResize != null) {
-	                //        itemResize(item, jsEvent, $(this), revertFunc);
-	                //    }
-	                //}
-	            });
-	        }
-	    }]);
-
-	    return Calendar;
-	}(_react.Component);
-
-	exports.default = Calendar;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
-
-/***/ },
-/* 586 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(587);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(582)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./Fullcalendar.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./Fullcalendar.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 587 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(581)();
-	exports.push([module.id, "\tbody {\r\n\t\tmargin-top: 40px;\r\n\t\ttext-align: center;\r\n\t\tfont-size: 14px;\r\n\t\tfont-family: \"Lucida Grande\",Helvetica,Arial,Verdana,sans-serif;\r\n\t}\r\n\r\n  h1 {\r\n    font-size: 35px;\r\n    margin-bottom: 30px;\r\n  }\r\n\t\t\r\n\t#app {\r\n\t\twidth: 1100px;\r\n\t\tmargin: 0 auto;\r\n\t}\r\n\t\t\r\n\t#external-events {\r\n\t\tfloat: left;\r\n\t\twidth: 150px;\r\n\t\tpadding: 0 10px;\r\n\t\tborder: 1px solid #ccc;\r\n\t\tbackground: #eee;\r\n\t\ttext-align: left;\r\n\t}\r\n\t\t\r\n\t#external-events h4 {\r\n\t\tfont-size: 16px;\r\n\t\tmargin-top: 0;\r\n\t\tpadding-top: 1em;\r\n\t}\r\n\t\t\r\n\t#external-events .fc-event {\r\n\t\tmargin: 10px 0;\r\n\t\tcursor: pointer;\r\n\t}\r\n\t\t\r\n\t#external-events p {\r\n\t\tmargin: 1.5em 0;\r\n\t\tfont-size: 11px;\r\n\t\tcolor: #666;\r\n\t}\r\n\t\t\r\n\t#external-events p input {\r\n\t\tmargin: 0;\r\n\t\tvertical-align: middle;\r\n\t}\r\n\r\n\t#calendar {\r\n\t\tfloat: right;\r\n\t\twidth: 900px;\r\n\t}", ""]);
-
-/***/ },
-/* 588 */
+/* 594 */,
+/* 595 */,
+/* 596 */
 /***/ function(module, exports) {
 
 	module.exports = "<div id=\"react-pagaende\" ></div>\r\n";
 
 /***/ },
-/* 589 */
+/* 597 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61326,13 +61833,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(590);
+	var _index = __webpack_require__(598);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(591);
+	var detailsTemplate = __webpack_require__(599);
 
 
 	var viewModel = kendo.observable({
@@ -61351,7 +61858,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 590 */
+/* 598 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61401,13 +61908,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 591 */
+/* 599 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-arkiverade\" ></div>\r\n";
 
 /***/ },
-/* 592 */
+/* 600 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61420,13 +61927,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(593);
+	var _index = __webpack_require__(601);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(594);
+	var detailsTemplate = __webpack_require__(602);
 
 
 	var viewModel = kendo.observable({
@@ -61445,7 +61952,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 593 */
+/* 601 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61495,13 +62002,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 594 */
+/* 602 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-nyheter\" ></div>\r\n";
 
 /***/ },
-/* 595 */
+/* 603 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61514,13 +62021,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(596);
+	var _index = __webpack_require__(604);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(597);
+	var detailsTemplate = __webpack_require__(605);
 
 
 	var viewModel = kendo.observable({
@@ -61539,7 +62046,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 596 */
+/* 604 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61589,13 +62096,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 597 */
+/* 605 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-erbjudanden\"></div>\r\n";
 
 /***/ },
-/* 598 */
+/* 606 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61608,13 +62115,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(599);
+	var _index = __webpack_require__(607);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(600);
+	var detailsTemplate = __webpack_require__(608);
 
 
 	var viewModel = kendo.observable({
@@ -61633,7 +62140,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 599 */
+/* 607 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61683,13 +62190,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 600 */
+/* 608 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-kunder\" ></div>\r\n";
 
 /***/ },
-/* 601 */
+/* 609 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61702,13 +62209,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(602);
+	var _index = __webpack_require__(610);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(603);
+	var detailsTemplate = __webpack_require__(611);
 
 
 	var viewModel = kendo.observable({
@@ -61727,7 +62234,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 602 */
+/* 610 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61777,13 +62284,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 603 */
+/* 611 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-boende\" ></div>\r\n";
 
 /***/ },
-/* 604 */
+/* 612 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61796,13 +62303,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(605);
+	var _index = __webpack_require__(613);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(606);
+	var detailsTemplate = __webpack_require__(614);
 
 
 	var viewModel = kendo.observable({
@@ -61821,7 +62328,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 605 */
+/* 613 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61871,13 +62378,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 606 */
+/* 614 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-tidkoder\"></div>\r\n";
 
 /***/ },
-/* 607 */
+/* 615 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61890,13 +62397,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(608);
+	var _index = __webpack_require__(616);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(609);
+	var detailsTemplate = __webpack_require__(617);
 
 
 	var viewModel = kendo.observable({
@@ -61915,7 +62422,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 608 */
+/* 616 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61965,13 +62472,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 609 */
+/* 617 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-arendeKlasser\" >hej</div>\r\n";
 
 /***/ },
-/* 610 */
+/* 618 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61984,13 +62491,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(611);
+	var _index = __webpack_require__(619);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(612);
+	var detailsTemplate = __webpack_require__(620);
 
 
 	var viewModel = kendo.observable({
@@ -62009,7 +62516,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 611 */
+/* 619 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62059,13 +62566,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 612 */
+/* 620 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-admin\" ></div>\r\n";
 
 /***/ },
-/* 613 */
+/* 621 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -62086,7 +62593,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 614 */
+/* 622 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62099,13 +62606,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _CalendarApp = __webpack_require__(615);
+	var _CalendarApp = __webpack_require__(623);
 
 	var _CalendarApp2 = _interopRequireDefault(_CalendarApp);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(617);
+	var detailsTemplate = __webpack_require__(625);
 
 
 	var viewModel = kendo.observable({
@@ -62124,7 +62631,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 615 */
+/* 623 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62139,11 +62646,11 @@ webpackJsonp([0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Calendar = __webpack_require__(585);
+	var _Calendar = __webpack_require__(475);
 
 	var _Calendar2 = _interopRequireDefault(_Calendar);
 
-	var _External = __webpack_require__(616);
+	var _External = __webpack_require__(624);
 
 	var _External2 = _interopRequireDefault(_External);
 
@@ -62192,7 +62699,7 @@ webpackJsonp([0],[
 	exports.default = CalendarApp;
 
 /***/ },
-/* 616 */
+/* 624 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -62215,19 +62722,19 @@ webpackJsonp([0],[
 
 	var _jqueryUi2 = _interopRequireDefault(_jqueryUi);
 
-	var _moment = __webpack_require__(470);
+	var _moment = __webpack_require__(476);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _fullcalendar = __webpack_require__(577);
+	var _fullcalendar = __webpack_require__(583);
 
 	var _fullcalendar2 = _interopRequireDefault(_fullcalendar);
 
-	var _Fullcalendar = __webpack_require__(586);
+	var _Fullcalendar = __webpack_require__(584);
 
 	var _Fullcalendar2 = _interopRequireDefault(_Fullcalendar);
 
-	var _fullcalendar3 = __webpack_require__(579);
+	var _fullcalendar3 = __webpack_require__(588);
 
 	var _fullcalendar4 = _interopRequireDefault(_fullcalendar3);
 
@@ -62323,7 +62830,7 @@ webpackJsonp([0],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
-/* 617 */
+/* 625 */
 /***/ function(module, exports) {
 
 	module.exports = "<div id=\"react-calendar\" ></div>\r\n";

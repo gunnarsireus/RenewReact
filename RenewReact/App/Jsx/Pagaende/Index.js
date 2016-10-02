@@ -1078,7 +1078,6 @@ name="description" />
 </Col>
 </Row>
 </div>
-;
-}
+;}
 
 };

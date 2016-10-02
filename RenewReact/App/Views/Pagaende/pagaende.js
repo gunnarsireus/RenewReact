@@ -1,7 +1,7 @@
 ﻿var detailsTemplate = require('./pagaende.html');
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Index from '../../Jsx/Pagaende/index.js';
+import Pagaende from '../../Jsx/Pagaende/components/Pagaende.js';
 
 
 var viewModel = kendo.observable({
@@ -13,7 +13,7 @@ var view = new kendo.View(detailsTemplate, {
     show: function () {
 
         ReactDOM.render(
-            <Index />,
+            <Pagaende />,
             document.getElementById("react-pagaende"));
         kendo.fx(this.element).fade('in').duration(100).play();
     }

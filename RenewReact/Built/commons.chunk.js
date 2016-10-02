@@ -1804,6 +1804,7 @@
 	    }
 	};
 	module.exports.getFormData = Site.InputForms.getFormData;
+	module.exports.isNONE = Site.InputForms.isNONE;
 
 /***/ },
 
@@ -2049,7 +2050,7 @@
 
 /***/ },
 
-/***/ 578:
+/***/ 581:
 /***/ function(module, exports) {
 
 	/*
@@ -2103,7 +2104,7 @@
 
 /***/ },
 
-/***/ 579:
+/***/ 582:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -2329,16 +2330,16 @@
 
 /***/ },
 
-/***/ 580:
+/***/ 583:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(581);
+	var content = __webpack_require__(584);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(579)(content, {});
+	var update = __webpack_require__(582)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -2356,10 +2357,10 @@
 
 /***/ },
 
-/***/ 581:
+/***/ 584:
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(578)();
+	exports = module.exports = __webpack_require__(581)();
 	exports.push([module.id, ".container {\r\n  padding-left: 0px !important;  /*Compensate for KendoUI*/\r\n}\r\n/* Margins */\r\n\r\n.site-pagemargin-top {\r\n    margin-top: 70px;\r\n}\r\n\r\n.site-itemmargin-top {\r\n    margin-top: 20px;\r\n}\r\n\r\n.site-tabmenumargin-bottom {\r\n    margin-bottom: 30px;\r\n}\r\n\r\n.site-half-row-spacing {\r\n    margin-top: 7px;\r\n}\r\n\r\n.site-row-spacing {\r\n    margin-top: 10px;\r\n}\r\n\r\n.site-buttonmargin-left {\r\n    margin-left: 10px;\r\n}\r\n\r\n.site-buttonmargin-right {\r\n    margin-right: 10px;\r\n}\r\n\r\n.site-page-control {\r\n    margin-bottom: 40px;\r\n}\r\n\r\n.site-page-header {\r\n    margin-bottom: 40px;\r\n}\r\n\r\n.site-page-content {\r\n    margin-top: 20px;\r\n    padding-right: 20px;\r\n    border-left: 1px solid #CCCCCC;\r\n}\r\n\r\n@media (max-width: 992px) {\r\n    .site-page-content {\r\n    margin-top: 20px;\r\n    padding-right: 0px;\r\n    border-left: 0px;\r\n  }\r\n}\r\n\r\n/* Padding */\r\n\r\n.site-no-horizontal-padding {\r\n    padding-left: 0px;\r\n    padding-right: 0px;\r\n}\r\n\r\n.site-no-vertical-padding {\r\n    padding-top: 0px;\r\n    padding-bottom: 0px;\r\n}\r\n\r\n.site-no-padding {\r\n    padding: 0px;\r\n}\r\n\r\n/* Links */\r\n\r\na:visited {\r\n    text-decoration: none;\r\n    color: inherit;\r\n}\r\n\r\na:hover {\r\n    text-decoration: none;\r\n    color: inherit;\r\n}\r\n\r\na:active {\r\n    text-decoration: none;\r\n    color: inherit;\r\n}\r\n\r\n/* Tables */\r\n\r\ntable.compact tr td {\r\n    padding-top: 2px !important;\r\n    padding-bottom: 2px !important;\r\n}\r\n\r\n/* Clickable items that need cursor */\r\n\r\n.site-clickable {\r\n    cursor: pointer;\r\n}\r\n\r\n/* Borders */\r\n\r\n.site-form-border {\r\n    outline: 1px solid #BCBDC0;\r\n}\r\n\r\n/* jquery.uiblock.js */\r\n\r\n#progress-indicator {\r\n    position: fixed;\r\n    top: 175px;\r\n    left: 0;\r\n    width: 100%;\r\n    z-index: 10;\r\n}\r\n\r\n/* Prevent select-boxes flickering (#39) */\r\n/* http://stackoverflow.com/questions/23251488/bootstrap-select-plugin-how-to-avoid-flickering */\r\n\r\nselect {\r\n    visibility: hidden;\r\n    display: none;\r\n}\r\n\r\n/* Info window in google maps */\r\n\r\n.container-position-info-window-wrapper p {\r\n    margin: 5px;\r\n}\r\n\r\n.container-position-info-window {\r\n   padding: 5px;\r\n}\r\n\r\n.container-position-info-window h3 {\r\n    padding-bottom: 10px;\r\n}\r\n\r\n.container-position-info-window-wrapper h4 span {\r\n    padding-left: 10px;\r\n}\r\n\r\n.container-position-info-window-wrapper h4 {\r\n    margin-bottom: 5px;\r\n}\r\n\r\n.container-position-info-window-wrapper h4 img {\r\n    padding-bottom: 3px;\r\n}\r\n\r\n/* JEditable */\r\n\r\n.site-jeditable-style {\r\n    outline: 0;\r\n    border: 1px solid #060606;\r\n    padding-left: 2px;\r\n    visibility: visible;\r\n    display: inline;\r\n    color: #060606;\r\n}\r\n\r\ntbody .site-jeditable-target {\r\n    color: #25AAE1;\r\n    cursor: pointer;\r\n}\r\n\r\n/* Menu display */\r\n\r\n@media (min-width: 768px) and (max-width: 991px) {\r\n    .navbar-collapse.collapse {\r\n        display: none !important;\r\n    }\r\n    .navbar-collapse.collapse.in {\r\n        display: block !important;\r\n    }\r\n    .navbar-header .collapse, .navbar-toggle {\r\n        display:block !important;\r\n    }\r\n    .navbar-header {\r\n        float:none;\r\n    }\r\n}\r\n", ""]);
 
 /***/ }

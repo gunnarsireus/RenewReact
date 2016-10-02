@@ -101,3 +101,4 @@ Site.DataTables = Site.DataTables || {
         table.fnSetColumnVis(col, false);
     }
 };
+module.exports.SiteDataTables = Site.DataTables;

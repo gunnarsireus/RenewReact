@@ -108,3 +108,4 @@ Site.DatePicker = Site.DatePicker || {
         })
     }
 }
+module.exports.SiteDatePicker = Site.DatePicker

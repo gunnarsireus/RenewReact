@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import {hideMessage,validateAccountFailed} from '../../../js/site-login.js';
-import {siteAjaxPost,siteGoTo} from '../../../js/site-base.js';
-import {getFormData} from '../../../js/site-components/site-xcomp-inputforms.js';
-import {clearAll} from '../../../js/site-components/site-xcomp-localstorage.js';
 import Input from '../../Common/Input.js';
 import { Grid, Row, Col, Glyphicon, Button } from 'react-bootstrap';
 

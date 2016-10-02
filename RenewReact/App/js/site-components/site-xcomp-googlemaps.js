@@ -172,3 +172,4 @@ Site.GoogleMaps.getDefaultLatitude = function () {
 Site.GoogleMaps.getDefaultLongitude = function () {
     return 16.5642930;
 }
+module.exports.SiteGoogleMaps = Site.GoogleMaps;

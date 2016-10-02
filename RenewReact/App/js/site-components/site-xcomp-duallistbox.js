@@ -53,3 +53,4 @@ Site.DualListbox = Site.DualListbox || {
         return result;
     }
 }
+module.exports.SiteDualListbox = Site.DualListBox;

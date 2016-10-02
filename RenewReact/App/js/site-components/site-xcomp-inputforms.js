@@ -78,3 +78,4 @@ Site.InputForms = Site.InputForms || {
     }
 };
 module.exports.getFormData = Site.InputForms.getFormData;
+module.exports.isNONE = Site.InputForms.isNONE;

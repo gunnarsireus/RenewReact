@@ -181,3 +181,4 @@ Site.AutoAjax = Site.AutoAjax || {
         alert('Site.AutoAjax - ' + text);
     }
 };
+module.exports.SiteAutoAjax = Site.AutoAjax;

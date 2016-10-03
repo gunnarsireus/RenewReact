@@ -11,10 +11,6 @@ var viewModel = kendo.observable({
 var view = new kendo.View(detailsTemplate, {
     model: viewModel,
     show: function () {
-        if (document.getElementById('issuecalendar-div')!==null) {
-            alert('exists ');
-        }
-
         ReactDOM.render(
             <CalendarApp />,
             document.getElementById("react-calendar"));

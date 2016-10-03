@@ -11,39 +11,12 @@ import LoginStore from '../Login/stores/LoginStore';
 export default class Calendar extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            alertVisible: true
-        };
-    };
-    componentWillMount() {
-        this.setState({
-            alertVisible: !this.state.alertVisible
-        });
-        alert('componentWillMount()' + this.state.alertVisible)
-    };
-    componentDidMount() {
-        alert('componentDidMount()')
-    };
-    componentWillReceiveProps() {
-        this.setState({
-            alertVisible: !this.state.alertVisible
-        });
-        alert('componentWillReceiveProps() ' + this.state.alertVisible)
-    };
-    componentDidUpdate() {
-        alert('componentDidUpdate()')
-    };
-    componentWillUpdate() {
-        alert('componentWillUpdate()')
-    };
-    componentWillUnmount() {
-        alert('componentWillUnmount()')
     };
     render() {
-        return <div id="issuecalendar-div"></div>
+        return <div id={this.props.divId}></div>
     }
     componentDidMount() {
-        $('#issuecalendar-div').fullCalendar({
+        $('#' + this.props.divId ).fullCalendar({
             header: {
                 left: 'prev,next today',
                 center: 'title',
@@ -105,4 +78,6 @@ export default class Calendar extends Component {
         })
     }
 }
-
+Calendar.propTypes= {
+    divId: React.PropTypes.string.isRequired
+}; 

@@ -45956,10 +45956,6 @@ webpackJsonp([0],[
 	var view = new kendo.View(detailsTemplate, {
 	    model: viewModel,
 	    show: function show() {
-	        if (document.getElementById('issuecalendar-div') !== null) {
-	            alert('exists ');
-	            _reactDom2.default.unmountComponentAtNode(document.getElementById('issuecalendar-div'));
-	        }
 	        _reactDom2.default.render(_react2.default.createElement(_Pagaende2.default, null), document.getElementById("react-pagaende"));
 	        kendo.fx(this.element).fade('in').duration(100).play();
 	    }
@@ -46079,14 +46075,6 @@ webpackJsonp([0],[
 	            _PagaendeStore2.default.removeChangeListener(this.onChange);
 	        }
 	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps() {
-	            this.setState({
-	                activeId: _PagaendeStore2.default.getActiveId()
-	            });
-	            alert('componentWillReceiveProps() ' + this.state.activeId);
-	        }
-	    }, {
 	        key: 'onChange',
 	        value: function onChange() {
 	            this.setState({
@@ -46107,7 +46095,7 @@ webpackJsonp([0],[
 	    }, {
 	        key: 'onList',
 	        value: function onList() {
-	            _PagaendeActions2.default.setActive(2);
+	            _PagaendeActions2.default.setActive(3);
 	        }
 	    }, {
 	        key: 'render',
@@ -48275,7 +48263,7 @@ webpackJsonp([0],[
 	                _react2.default.createElement(
 	                    _reactBootstrap.Col,
 	                    { md: 12 },
-	                    _react2.default.createElement(_Calendar2.default, null)
+	                    _react2.default.createElement(_Calendar2.default, { divId: 'divPagaende' })
 	                )
 	            );
 	        }
@@ -48354,59 +48342,18 @@ webpackJsonp([0],[
 	    function Calendar(props) {
 	        _classCallCheck(this, Calendar);
 
-	        var _this = _possibleConstructorReturn(this, (Calendar.__proto__ || Object.getPrototypeOf(Calendar)).call(this, props));
-
-	        _this.state = {
-	            alertVisible: true
-	        };
-	        return _this;
+	        return _possibleConstructorReturn(this, (Calendar.__proto__ || Object.getPrototypeOf(Calendar)).call(this, props));
 	    }
 
 	    _createClass(Calendar, [{
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            this.setState({
-	                alertVisible: !this.state.alertVisible
-	            });
-	            alert('componentWillMount()' + this.state.alertVisible);
-	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            alert('componentDidMount()');
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps() {
-	            this.setState({
-	                alertVisible: !this.state.alertVisible
-	            });
-	            alert('componentWillReceiveProps() ' + this.state.alertVisible);
-	        }
-	    }, {
-	        key: 'componentDidUpdate',
-	        value: function componentDidUpdate() {
-	            alert('componentDidUpdate()');
-	        }
-	    }, {
-	        key: 'componentWillUpdate',
-	        value: function componentWillUpdate() {
-	            alert('componentWillUpdate()');
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            alert('componentWillUnmount()');
-	        }
-	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement('div', { id: 'issuecalendar-div' });
+	            return _react2.default.createElement('div', { id: this.props.divId });
 	        }
 	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            $('#issuecalendar-div').fullCalendar({
+	            $('#' + this.props.divId).fullCalendar({
 	                header: {
 	                    left: 'prev,next today',
 	                    center: 'title',
@@ -48473,6 +48420,10 @@ webpackJsonp([0],[
 	}(_react.Component);
 
 	exports.default = Calendar;
+
+	Calendar.propTypes = {
+	    divId: _react2.default.PropTypes.string.isRequired
+	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
@@ -62632,10 +62583,6 @@ webpackJsonp([0],[
 	var view = new kendo.View(detailsTemplate, {
 	    model: viewModel,
 	    show: function show() {
-	        if (document.getElementById('issuecalendar-div') !== null) {
-	            alert('exists ');
-	        }
-
 	        _reactDom2.default.render(_react2.default.createElement(_CalendarApp2.default, null), document.getElementById("react-calendar"));
 	        kendo.fx(this.element).fade('in').duration(100).play();
 	    }
@@ -62700,7 +62647,7 @@ webpackJsonp([0],[
 	                _react2.default.createElement(
 	                    _reactBootstrap.Col,
 	                    { md: 10 },
-	                    _react2.default.createElement(_Calendar2.default, null)
+	                    _react2.default.createElement(_Calendar2.default, { divId: 'divCalenderApp' })
 	                )
 	            );
 	        }

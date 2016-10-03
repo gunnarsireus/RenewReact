@@ -35,12 +35,6 @@ export default class Pagaende extends Component {
     componentWillUnmount() {
         PagaendeStore.removeChangeListener(this.onChange);
     };
-    componentWillReceiveProps() {
-        this.setState({
-            activeId: PagaendeStore.getActiveId()
-        });
-        alert('componentWillReceiveProps() ' + this.state.activeId)
-    };
     onChange() {
         this.setState({
             panelList: PagaendeStore.getPanels(),
@@ -54,7 +48,7 @@ export default class Pagaende extends Component {
         PagaendeActions.setActive(2);
     };
     onList() {
-        PagaendeActions.setActive(2);
+        PagaendeActions.setActive(3);
     };
     render() {
         return <div>

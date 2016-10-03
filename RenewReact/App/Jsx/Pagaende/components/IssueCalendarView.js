@@ -14,7 +14,7 @@ export default class IssueCalendarView extends Component {
     render() {
         return  <Row id="issue-calendar-view" style={{display:this.displayStyle()}}>
                     <Col md={12}>
-                        <Calendar />
+                        <Calendar divId={'divPagaende'}/>
                     </Col>
                 </Row>  
 ;}

@@ -14,7 +14,7 @@ export default class CalendarApp extends Component {
                 <External />
             </Col>
             <Col md={10}>
-                <Calendar />
+                <Calendar divId={'divCalenderApp'}/>
             </Col>
          </Row>
         );

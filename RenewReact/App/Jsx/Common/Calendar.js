@@ -12,23 +12,23 @@ export default class Calendar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeId :LoginStore.getActiveId()
+            alertVisible: true
         };
     };
     componentWillMount() {
-        if (document.getElementById('issuecalendar-div')!==null) {
-            ReactDOM.unmountComponentAtNode(document.getElementById('issuecalendar-div'))
-        }
-        alert('componentWillMount()')
+        this.setState({
+            alertVisible: !this.state.alertVisible
+        });
+        alert('componentWillMount()' + this.state.alertVisible)
     };
     componentDidMount() {
         alert('componentDidMount()')
     };
     componentWillReceiveProps() {
         this.setState({
-            activeId: LoginStore.getActiveId()
+            alertVisible: !this.state.alertVisible
         });
-        alert('componentWillReceiveProps() ' + this.state.activeId)
+        alert('componentWillReceiveProps() ' + this.state.alertVisible)
     };
     componentDidUpdate() {
         alert('componentDidUpdate()')

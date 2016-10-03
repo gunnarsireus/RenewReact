@@ -45956,7 +45956,10 @@ webpackJsonp([0],[
 	var view = new kendo.View(detailsTemplate, {
 	    model: viewModel,
 	    show: function show() {
-
+	        if (document.getElementById('issuecalendar-div') !== null) {
+	            alert('exists ');
+	            _reactDom2.default.unmountComponentAtNode(document.getElementById('issuecalendar-div'));
+	        }
 	        _reactDom2.default.render(_react2.default.createElement(_Pagaende2.default, null), document.getElementById("react-pagaende"));
 	        kendo.fx(this.element).fade('in').duration(100).play();
 	    }
@@ -48354,7 +48357,7 @@ webpackJsonp([0],[
 	        var _this = _possibleConstructorReturn(this, (Calendar.__proto__ || Object.getPrototypeOf(Calendar)).call(this, props));
 
 	        _this.state = {
-	            activeId: _LoginStore2.default.getActiveId()
+	            alertVisible: true
 	        };
 	        return _this;
 	    }
@@ -48362,10 +48365,10 @@ webpackJsonp([0],[
 	    _createClass(Calendar, [{
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
-	            if (document.getElementById('issuecalendar-div') !== null) {
-	                _reactDom2.default.unmountComponentAtNode(document.getElementById('issuecalendar-div'));
-	            }
-	            alert('componentWillMount()');
+	            this.setState({
+	                alertVisible: !this.state.alertVisible
+	            });
+	            alert('componentWillMount()' + this.state.alertVisible);
 	        }
 	    }, {
 	        key: 'componentDidMount',
@@ -48376,9 +48379,9 @@ webpackJsonp([0],[
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps() {
 	            this.setState({
-	                activeId: _LoginStore2.default.getActiveId()
+	                alertVisible: !this.state.alertVisible
 	            });
-	            alert('componentWillReceiveProps() ' + this.state.activeId);
+	            alert('componentWillReceiveProps() ' + this.state.alertVisible);
 	        }
 	    }, {
 	        key: 'componentDidUpdate',
@@ -62629,6 +62632,9 @@ webpackJsonp([0],[
 	var view = new kendo.View(detailsTemplate, {
 	    model: viewModel,
 	    show: function show() {
+	        if (document.getElementById('issuecalendar-div') !== null) {
+	            alert('exists ');
+	        }
 
 	        _reactDom2.default.render(_react2.default.createElement(_CalendarApp2.default, null), document.getElementById("react-calendar"));
 	        kendo.fx(this.element).fade('in').duration(100).play();

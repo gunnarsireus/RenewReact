@@ -47489,7 +47489,7 @@ webpackJsonp([0],[
 	                null,
 	                _react2.default.createElement(
 	                    _reactBootstrap.Row,
-	                    { id: 'create-issue-panel', hidden: true },
+	                    { id: 'create-issue-panel', style: { display: this.displayStyle() } },
 	                    _react2.default.createElement(
 	                        _reactBootstrap.Col,
 	                        { md: 12 },

@@ -14,7 +14,7 @@ export default class CreateIssuePanel extends Component {
     };
     render() {
         return  <div>
-        <Row id="create-issue-panel" hidden>
+        <Row id="create-issue-panel">
              <Col md={12}>
                  <div className="panel panel-default">
                      <div className="panel-heading">

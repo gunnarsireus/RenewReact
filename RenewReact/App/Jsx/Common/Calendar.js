@@ -1,5 +1,4 @@
 ﻿import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import jquery from 'jquery';
 import jqueryUi from 'jquery-ui';
 import moment from 'moment';
@@ -7,7 +6,7 @@ import moment from 'moment';
 import fullcalendar from 'fullcalendar';
 import styles from '../../css/Fullcalendar.css';
 import styles2 from '../../css/FullCalendar-2.6.1/fullcalendar.css'
-import LoginStore from '../Login/stores/LoginStore';
+
 export default class Calendar extends Component {
     constructor(props) {
         super(props);
@@ -39,8 +38,8 @@ export default class Calendar extends Component {
         //},
         //selectable: true,
         //allDaySlot: false,
-        weekNumbers: true
-        //defaultDate: Date.now(),
+        weekNumbers: true,
+        defaultDate: Date.now()
         //timezone: 'local',
         //editable: true,
         //eventLimit: true,

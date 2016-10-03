@@ -39,21 +39,21 @@ webpackJsonp([0],[
 	var felanmalan = __webpack_require__(465);
 
 	var pagaende = __webpack_require__(468);
-	var arkiverade = __webpack_require__(597);
+	var arkiverade = __webpack_require__(600);
 
-	var nyheter = __webpack_require__(600);
-	var erbjudanden = __webpack_require__(603);
+	var nyheter = __webpack_require__(603);
+	var erbjudanden = __webpack_require__(606);
 
-	var kunder = __webpack_require__(606);
-	var boende = __webpack_require__(609);
-	var tidkoder = __webpack_require__(612);
-	var arendeKlasser = __webpack_require__(615);
+	var kunder = __webpack_require__(609);
+	var boende = __webpack_require__(612);
+	var tidkoder = __webpack_require__(615);
+	var arendeKlasser = __webpack_require__(618);
 
-	var admin = __webpack_require__(618);
-	var loggaut = __webpack_require__(621);
+	var admin = __webpack_require__(621);
+	var loggaut = __webpack_require__(624);
 
 	var login = __webpack_require__(437);
-	var calendar = __webpack_require__(622);
+	var calendar = __webpack_require__(625);
 
 	var router = new kendo.Router({
 	    init: function init() {
@@ -45946,7 +45946,7 @@ webpackJsonp([0],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(596);
+	var detailsTemplate = __webpack_require__(599);
 
 
 	var viewModel = kendo.observable({
@@ -45995,7 +45995,7 @@ webpackJsonp([0],[
 
 	var _IssueScheduleView2 = _interopRequireDefault(_IssueScheduleView);
 
-	var _IssueListView = __webpack_require__(591);
+	var _IssueListView = __webpack_require__(595);
 
 	var _IssueListView2 = _interopRequireDefault(_IssueListView);
 
@@ -46003,7 +46003,7 @@ webpackJsonp([0],[
 
 	var _PagaendeActions2 = _interopRequireDefault(_PagaendeActions);
 
-	var _PagaendeStore = __webpack_require__(592);
+	var _PagaendeStore = __webpack_require__(596);
 
 	var _PagaendeStore2 = _interopRequireDefault(_PagaendeStore);
 
@@ -46023,7 +46023,7 @@ webpackJsonp([0],[
 
 	var _fullcalendar2 = _interopRequireDefault(_fullcalendar);
 
-	var _fullcalendarScheduler = __webpack_require__(593);
+	var _fullcalendarScheduler = __webpack_require__(592);
 
 	var _fullcalendarScheduler2 = _interopRequireDefault(_fullcalendarScheduler);
 
@@ -46031,7 +46031,7 @@ webpackJsonp([0],[
 
 	var _fullcalendar4 = _interopRequireDefault(_fullcalendar3);
 
-	var _site = __webpack_require__(594);
+	var _site = __webpack_require__(597);
 
 	var _site2 = _interopRequireDefault(_site);
 
@@ -48294,10 +48294,6 @@ webpackJsonp([0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(36);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
 	var _jquery = __webpack_require__(2);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
@@ -48321,10 +48317,6 @@ webpackJsonp([0],[
 	var _fullcalendar3 = __webpack_require__(588);
 
 	var _fullcalendar4 = _interopRequireDefault(_fullcalendar3);
-
-	var _LoginStore = __webpack_require__(459);
-
-	var _LoginStore2 = _interopRequireDefault(_LoginStore);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48376,8 +48368,8 @@ webpackJsonp([0],[
 	                //},
 	                //selectable: true,
 	                //allDaySlot: false,
-	                weekNumbers: true
-	                //defaultDate: Date.now(),
+	                weekNumbers: true,
+	                defaultDate: Date.now()
 	                //timezone: 'local',
 	                //editable: true,
 	                //eventLimit: true,
@@ -61266,11 +61258,11 @@ webpackJsonp([0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _Scheduler = __webpack_require__(591);
+
+	var _Scheduler2 = _interopRequireDefault(_Scheduler);
+
 	var _reactBootstrap = __webpack_require__(180);
-
-	var _PagaendeActions = __webpack_require__(471);
-
-	var _PagaendeActions2 = _interopRequireDefault(_PagaendeActions);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -61295,6 +61287,9 @@ webpackJsonp([0],[
 	            return this.props.show ? 'block' : 'none';
 	        }
 	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {}
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -61303,7 +61298,7 @@ webpackJsonp([0],[
 	                _react2.default.createElement(
 	                    _reactBootstrap.Col,
 	                    { md: 12 },
-	                    _react2.default.createElement('div', { id: 'issueschedule-div' })
+	                    _react2.default.createElement(_Scheduler2.default, { divId: 'issueschedule-div' })
 	                )
 	            );
 	        }
@@ -61322,7 +61317,7 @@ webpackJsonp([0],[
 /* 591 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -61334,11 +61329,37 @@ webpackJsonp([0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactBootstrap = __webpack_require__(180);
+	var _jquery = __webpack_require__(2);
 
-	var _PagaendeActions = __webpack_require__(471);
+	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _PagaendeActions2 = _interopRequireDefault(_PagaendeActions);
+	var _jqueryUi = __webpack_require__(439);
+
+	var _jqueryUi2 = _interopRequireDefault(_jqueryUi);
+
+	var _moment = __webpack_require__(476);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	var _fullcalendar = __webpack_require__(583);
+
+	var _fullcalendar2 = _interopRequireDefault(_fullcalendar);
+
+	var _fullcalendarScheduler = __webpack_require__(592);
+
+	var _fullcalendarScheduler2 = _interopRequireDefault(_fullcalendarScheduler);
+
+	var _Fullcalendar = __webpack_require__(584);
+
+	var _Fullcalendar2 = _interopRequireDefault(_Fullcalendar);
+
+	var _fullcalendar3 = __webpack_require__(588);
+
+	var _fullcalendar4 = _interopRequireDefault(_fullcalendar3);
+
+	var _fullscheduler = __webpack_require__(593);
+
+	var _fullscheduler2 = _interopRequireDefault(_fullscheduler);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -61347,220 +61368,80 @@ webpackJsonp([0],[
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	//import sv from '../../js/FullScheduler-2.6.1/lang/sv.js';
 
-	var IssueListView = function (_Component) {
-		_inherits(IssueListView, _Component);
 
-		function IssueListView(props) {
-			_classCallCheck(this, IssueListView);
+	var Scheduler = function (_Component) {
+		_inherits(Scheduler, _Component);
 
-			return _possibleConstructorReturn(this, (IssueListView.__proto__ || Object.getPrototypeOf(IssueListView)).call(this, props));
+		function Scheduler(props) {
+			_classCallCheck(this, Scheduler);
+
+			return _possibleConstructorReturn(this, (Scheduler.__proto__ || Object.getPrototypeOf(Scheduler)).call(this, props));
 		}
 
-		_createClass(IssueListView, [{
-			key: 'displayStyle',
-			value: function displayStyle() {
-				return this.props.show ? 'block' : 'none';
-			}
-		}, {
+		_createClass(Scheduler, [{
 			key: 'render',
 			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(
-						_reactBootstrap.Row,
-						{ id: 'issue-list-view', style: { display: this.displayStyle() } },
-						_react2.default.createElement(
-							_reactBootstrap.Col,
-							{ md: 12 },
-							_react2.default.createElement(
-								'table',
-								{ id: 'issuelist-table', className: 'table table-striped table-hover' },
-								_react2.default.createElement(
-									'thead',
-									null,
-									_react2.default.createElement(
-										'tr',
-										null,
-										_react2.default.createElement('th', null),
-										_react2.default.createElement(
-											'th',
-											null,
-											'ID'
-										),
-										_react2.default.createElement('th', null),
-										_react2.default.createElement(
-											'th',
-											null,
-											'Prio'
-										),
-										_react2.default.createElement(
-											'th',
-											null,
-											'Titel'
-										),
-										_react2.default.createElement('th', null),
-										_react2.default.createElement(
-											'th',
-											null,
-											'Adress'
-										),
-										_react2.default.createElement('th', null),
-										_react2.default.createElement(
-											'th',
-											null,
-											'Tilldelad'
-										),
-										_react2.default.createElement('th', null),
-										_react2.default.createElement('th', null),
-										_react2.default.createElement('th', null),
-										_react2.default.createElement('th', null),
-										_react2.default.createElement('th', null)
-									)
-								),
-								_react2.default.createElement('tbody', null),
-								_react2.default.createElement(
-									'tfoot',
-									null,
-									_react2.default.createElement(
-										'tr',
-										null,
-										_react2.default.createElement('th', null),
-										_react2.default.createElement(
-											'th',
-											null,
-											'ID'
-										),
-										_react2.default.createElement('th', null),
-										_react2.default.createElement(
-											'th',
-											null,
-											'Prio'
-										),
-										_react2.default.createElement(
-											'th',
-											null,
-											'Titel'
-										),
-										_react2.default.createElement('th', null),
-										_react2.default.createElement(
-											'th',
-											null,
-											'Adress'
-										),
-										_react2.default.createElement('th', null),
-										_react2.default.createElement(
-											'th',
-											null,
-											'Tilldelad'
-										),
-										_react2.default.createElement('th', null),
-										_react2.default.createElement('th', null),
-										_react2.default.createElement('th', null),
-										_react2.default.createElement('th', null),
-										_react2.default.createElement('th', null)
-									)
-								)
-							)
-						)
-					)
-				);
+				return _react2.default.createElement('div', { id: this.props.divId });
+			}
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				$('#' + this.props.divId).fullCalendar({
+					now: Date.now(),
+					editable: true, // enable draggable events
+					droppable: true, // this allows things to be dropped onto the calendar
+					aspectRatio: 1.8,
+					scrollTime: '00:00', // undo default 6am scrollTime
+					header: {
+						left: 'today prev,next',
+						center: 'title',
+						right: 'timelineDay,timelineThreeDays,agendaWeek,month'
+					},
+					defaultView: 'timelineDay',
+					views: {
+						timelineThreeDays: {
+							type: 'timeline',
+							duration: { days: 3 }
+						}
+					},
+					resourceLabelText: 'Rooms',
+					resources: [{ id: 'a', title: 'Auditorium A' }, { id: 'b', title: 'Auditorium B', eventColor: 'green' }, { id: 'c', title: 'Auditorium C', eventColor: 'orange' }, { id: 'd', title: 'Auditorium D', children: [{ id: 'd1', title: 'Room D1' }, { id: 'd2', title: 'Room D2' }] }, { id: 'e', title: 'Auditorium E' }, { id: 'f', title: 'Auditorium F', eventColor: 'red' }, { id: 'g', title: 'Auditorium G' }, { id: 'h', title: 'Auditorium H' }, { id: 'i', title: 'Auditorium I' }, { id: 'j', title: 'Auditorium J' }, { id: 'k', title: 'Auditorium K' }, { id: 'l', title: 'Auditorium L' }, { id: 'm', title: 'Auditorium M' }, { id: 'n', title: 'Auditorium N' }, { id: 'o', title: 'Auditorium O' }, { id: 'p', title: 'Auditorium P' }, { id: 'q', title: 'Auditorium Q' }, { id: 'r', title: 'Auditorium R' }, { id: 's', title: 'Auditorium S' }, { id: 't', title: 'Auditorium T' }, { id: 'u', title: 'Auditorium U' }, { id: 'v', title: 'Auditorium V' }, { id: 'w', title: 'Auditorium W' }, { id: 'x', title: 'Auditorium X' }, { id: 'y', title: 'Auditorium Y' }, { id: 'z', title: 'Auditorium Z' }],
+					events: [{ id: '1', resourceId: 'b', start: '2016-09-07T02:00:00', end: '2016-09-07T07:00:00', title: 'event 1' }, { id: '2', resourceId: 'c', start: '2016-09-07T05:00:00', end: '2016-09-07T22:00:00', title: 'event 2' }, { id: '3', resourceId: 'd', start: '2016-09-06', end: '2016-09-08', title: 'event 3' }, { id: '4', resourceId: 'e', start: '2016-09-07T03:00:00', end: '2016-09-07T08:00:00', title: 'event 4' }, { id: '5', resourceId: 'f', start: '2016-09-07T00:30:00', end: '2016-09-07T02:30:00', title: 'event 5' }],
+					drop: function drop(date, jsEvent, ui, resourceId) {
+						console.log('drop', date.format(), resourceId);
+
+						// is the "remove after drop" checkbox checked?
+						if ($('#drop-remove').is(':checked')) {
+							// if so, remove the element from the "Draggable Events" list
+							$(this).remove();
+						}
+					},
+					eventReceive: function eventReceive(event) {
+						// called when a proper external event is dropped
+						console.log('eventReceive', event);
+					},
+					eventDrop: function eventDrop(event) {
+						// called when an event (already on the calendar) is moved
+						console.log('eventDrop', event);
+					}
+				});
 			}
 		}]);
 
-		return IssueListView;
+		return Scheduler;
 	}(_react.Component);
 
-	exports.default = IssueListView;
-	;
-	IssueListView.propTypes = {
-		show: _react2.default.PropTypes.bool.isRequired
+	exports.default = Scheduler;
+
+	Scheduler.propTypes = {
+		divId: _react2.default.PropTypes.string.isRequired
 	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
 /* 592 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _events = __webpack_require__(460);
-
-	var _PagaendeDispatcher = __webpack_require__(472);
-
-	var _PagaendeDispatcher2 = _interopRequireDefault(_PagaendeDispatcher);
-
-	var _PagaendeConstants = __webpack_require__(473);
-
-	var _PagaendeConstants2 = _interopRequireDefault(_PagaendeConstants);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var _panelList = [{ id: 0, panel: "CreateIssuePanel", active: false }, { id: 1, panel: "IssueCalendarView", active: true }, { id: 2, panel: "IssueScheduleView", active: false }, { id: 3, panel: "IssueListView", active: false }];
-
-	var CHANGE_EVENT = 'change';
-	var PagaendeStore = Object.assign({}, _events.EventEmitter.prototype, {
-	    getPanels: function getPanels() {
-	        return _panelList;
-	    },
-	    getActiveId: function getActiveId() {
-	        var id = -1;
-	        _panelList.forEach(function (item, index, array) {
-	            if (item.active === true) {
-	                id = index;
-	            }
-	        });
-	        return id;
-	    },
-	    emitChange: function emitChange() {
-	        this.emit(CHANGE_EVENT);
-	    },
-	    addChangeListener: function addChangeListener(callback) {
-	        this.on(CHANGE_EVENT, callback);
-	    },
-	    removeChangeListener: function removeChangeListener(callback) {
-	        this.removeListener(CHANGE_EVENT, callback);
-	    }
-	});
-
-	function _setActive(id) {
-	    _panelList.forEach(function (item, index, array) {
-	        if (item.id === id) {
-	            item.active = true;
-	        } else {
-	            item.active = false;
-	        }
-	    });
-	}
-
-	function _inactivateAll() {
-	    _panelList.forEach(function (item, index, array) {
-	        item.active = false;
-	    });
-	}
-
-	_PagaendeDispatcher2.default.register(function (action) {
-	    switch (action.actionType) {
-	        case _PagaendeConstants2.default.SET_ACTIVE:
-	            _setActive(action.id);
-	            PagaendeStore.emitChange();
-	            break;
-	        case _PagaendeConstants2.default.INACTIVE_ALL:
-	            _inactivateAll();
-	            PagaendeStore.emitChange();
-	            break;
-	        default:
-	    }
-	});
-
-	exports.default = PagaendeStore;
-
-/***/ },
-/* 593 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -61773,15 +61654,289 @@ webpackJsonp([0],[
 	 */isValidKey=function(key){var minPurchaseDate,parts,purchaseDate,releaseDate;if($.inArray(key,PRESET_LICENSE_KEYS)!==-1){return true;}parts=(key||'').match(/^(\d+)\-fcs\-(\d+)$/);if(parts&&parts[1].length===10){purchaseDate=moment.utc(parseInt(parts[2])*1000);releaseDate=moment.utc(FC.mockSchedulerReleaseDate||RELEASE_DATE);if(releaseDate.isValid()){minPurchaseDate=releaseDate.clone().subtract(UPGRADE_WINDOW);if(purchaseDate.isAfter(minPurchaseDate)){return true;}}}return false;};isImmuneUrl=function(url){return Boolean(url.match(/\w+\:\/\/fullcalendar\.io\/|\/demos\/[\w-]+\.html$/));};renderingWarningInContainer=function(messageHtml,containerEl){return containerEl.append($('<div class="fc-license-message" />').html(messageHtml));};detectWarningInContainer=function(containerEl){return containerEl.find('.fc-license-message').length>=1;};});
 
 /***/ },
-/* 594 */,
-/* 595 */,
+/* 593 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(594);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(587)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./fullscheduler.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./fullscheduler.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 594 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(586)();
+	exports.push([module.id, "/*!\r\n * FullCalendar Scheduler v1.2.1\r\n * Docs & License: http://fullcalendar.io/scheduler/\r\n * (c) 2015 Adam Shaw\r\n */\r\n\r\n/* TODO: break this file up */\r\n\r\n/* Scroll Pane\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-scrollpane {\r\n\toverflow: hidden; /* for clipping scrollbars */\r\n\tposition: relative; /* so things like scrollfollowers can attach to this */\r\n}\r\n\r\n.fc-scrollpane-inner {\r\n\toverflow: hidden; /* for clipping inner content */\r\n\tposition: relative; /* origin for bg */\r\n\tbox-sizing: border-box; /* so that padding (for gutter) will be part of height */\r\n\tmin-height: 100%;\r\n}\r\n\r\n.fc-scrollpane-inner > .fc-bg {\r\n\tz-index: 1; /* make default? */\r\n}\r\n\r\n.fc-scrollpane-inner > .fc-content {\r\n\tz-index: 2; /* make default? */\r\n\tposition: relative; /* origin for inner content */\r\n}\r\n\r\n.fc-no-scrollbars::-webkit-scrollbar { /* might be applied to scrollpane-scroller */\r\n\t/* supresses rendering of native scrollbars */\r\n\twidth: 0;\r\n\theight: 0;\r\n}\r\n\r\n\r\n/* View Structure\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-rtl .fc-timeline {\r\n\tdirection: rtl;\r\n}\r\n\r\n.fc-timeline .fc-divider {\r\n\twidth: 3px;\r\n\tborder-style: double; /* overcome neighboring borders */\r\n}\r\n\r\n.fc-timeline .fc-head > tr > .fc-divider {\r\n\tborder-bottom: 0;\r\n}\r\n\r\n.fc-timeline .fc-body > tr > .fc-divider {\r\n\tborder-top: 0;\r\n}\r\n\r\n.fc-timeline .fc-body .fc-divider.ui-widget-header {\r\n\tbackground-image: none;\r\n}\r\n\r\n.fc-scrolled .fc-head .fc-scrollpane {\r\n\tz-index: 2; /* so drop shadow will go above body panes */\r\n}\r\n\r\n.fc-timeline.fc-scrolled .fc-head .fc-scrollpane {\r\n\tbox-shadow: 0 3px 4px rgba(0,0,0,0.075);\r\n}\r\n\r\n.fc-timeline .fc-body .fc-scrollpane {\r\n\tz-index: 1;\r\n}\r\n\r\n.fc-timeline .fc-scrollpane-inner > .fc-content,\r\n.fc-timeline .fc-scrollpane-inner > .fc-bg {\r\n\tmargin: -1px;\r\n}\r\n\r\n\r\n/* Table Cell Common\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-timeline th,\r\n.fc-timeline td {\r\n\twhite-space: nowrap;\r\n}\r\n\r\n.fc-timeline .fc-cell-content {\r\n\toverflow: hidden;\r\n}\r\n\r\n.fc-timeline .fc-cell-text {\r\n\tpadding-left: 4px;\r\n\tpadding-right: 4px;\r\n}\r\n\r\n.fc-timeline .fc-col-resizer {\r\n\tcursor: col-resize;\r\n}\r\n\r\n/*\r\nCells at the start of a week\r\nTODO: figure out better styling\r\n\r\n.fc-ltr .fc-timeline .fc-em-cell div {\r\n\tborder-left: 3px solid #eee;\r\n\theight: 100%;\r\n}\r\n.fc-rtl .fc-timeline .fc-em-cell {\r\n\tborder-right-width: 3px;\r\n}\r\n*/\r\n\r\n/* head */\r\n\r\n.fc-timeline th {\r\n\tvertical-align: middle;\r\n}\r\n\r\n.fc-timeline .fc-head .fc-cell-content {\r\n\tpadding-top: 3px;\r\n\tpadding-bottom: 3px;\r\n}\r\n\r\n/* body */\r\n\r\n.fc-timeline .fc-body .ui-widget-content {\r\n\tbackground-image: none;\r\n}\r\n\r\n\r\n/* Resource Area\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-resource-area {\r\n\twidth: 30%;\r\n}\r\n\r\n.fc-resource-area col {\r\n\twidth: 40%;\r\n\tmin-width: 70px; /* will be read by JS */\r\n}\r\n\r\n.fc-resource-area col.fc-main-col {\r\n\twidth: 60%; /* make the first column in a nested setup bigger */\r\n}\r\n\r\n\r\n.fc-flat .fc-expander-space { /* fc-flat is opposite of fc-nested */\r\n\tdisplay: none;\r\n}\r\n\r\n\r\n.fc-ltr .fc-resource-area tr > * {\r\n\ttext-align: left;\r\n}\r\n.fc-rtl .fc-resource-area tr > * {\r\n\ttext-align: right;\r\n}\r\n\r\n.fc-resource-area .fc-cell-content {\r\n\tpadding-left: 4px;\r\n\tpadding-right: 4px;\r\n}\r\n\r\n/* head */\r\n\r\n.fc-resource-area .fc-super th {\r\n\ttext-align: center;\r\n}\r\n\r\n.fc-resource-area th > div {\r\n\tposition: relative;\r\n}\r\n\r\n.fc-resource-area th .fc-cell-content {\r\n\tposition: relative;\r\n\tz-index: 1;\r\n}\r\n\r\n.fc-resource-area th .fc-col-resizer {\r\n\tposition: absolute;\r\n\tz-index: 2;\r\n\ttop: 0;\r\n\tbottom: 0;\r\n\twidth: 5px;\r\n}\r\n\r\n.fc-ltr .fc-resource-area th .fc-col-resizer {\r\n\tright: -3px;\r\n}\r\n.fc-rtl .fc-resource-area th .fc-col-resizer {\r\n\tleft: -3px;\r\n}\r\n\r\n/* body */\r\n\r\ntr.fc-collapsed > td, /* before the transition (prevents initial flicker) */\r\ntr.fc-transitioning > td { /* during the transition */\r\n\toverflow: hidden; /* prevents absolutely-positioned events from bleeding out */\r\n}\r\n\r\ntr.fc-transitioning > td > div {\r\n\ttransition: margin-top 0.2s;\r\n}\r\n\r\ntr.fc-collapsed > td > div {\r\n\tmargin-top: -10px;\r\n}\r\n\r\n\r\n.fc-body .fc-resource-area .fc-cell-content { /* might BE the cell */\r\n\tpadding-top: 8px;\r\n\tpadding-bottom: 8px;\r\n}\r\n\r\n.fc-no-overlap .fc-body .fc-resource-area .fc-cell-content { /* might BE the cell */\r\n\tpadding-top: 5px;\r\n\tpadding-bottom: 5px;\r\n}\r\n\r\n.fc-resource-area .fc-icon { /* the expander and spacers before the expander */\r\n\tfont-size: .9em;\r\n\tvertical-align: middle;\r\n\tmargin-top: -2%;\r\n}\r\n\r\n.fc-resource-area .fc-expander {\r\n\tcursor: pointer;\r\n\tcolor: #666;\r\n}\r\n\r\n\r\n/* Time Area\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-time-area col {\r\n\tmin-width: 2.2em; /* detected by JS */\r\n}\r\n\r\n/* head */\r\n\r\n.fc-ltr .fc-time-area .fc-chrono th {\r\n\ttext-align: left;\r\n}\r\n.fc-rtl .fc-time-area .fc-chrono th {\r\n\ttext-align: right;\r\n}\r\n\r\n/* body slats (vertical lines) */\r\n\r\n.fc-time-area .fc-slats { /* fc-bg is responsible for a lot of this now! */\r\n\tposition: absolute;\r\n\tz-index: 1;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tright: 0;\r\n\tbottom: 0;\r\n}\r\n\r\n.fc-time-area .fc-slats table {\r\n\theight: 100%;\r\n}\r\n\r\n.fc-time-area .fc-slats .fc-minor {\r\n\tborder-style: dotted;\r\n}\r\n\r\n.fc-time-area .fc-slats td {\r\n\tborder-width: 0 1px; /* need to do this. sometimes -1 margin wouldn't hide the dotted */\r\n}\r\n\r\n.fc-ltr .fc-time-area .fc-slats td {\r\n\tborder-right-width: 0;\r\n}\r\n.fc-rtl .fc-time-area .fc-slats td {\r\n\tborder-left-width: 0;\r\n}\r\n\r\n/* body content containers\r\n   can be within rows or directly within the pane's content\r\n*/\r\n\r\n.fc-time-area .fc-bgevent-container,\r\n.fc-time-area .fc-highlight-container {\r\n\tposition: absolute;\r\n\tz-index: 2; /* only for directly within pane. not for row. overridden later */\r\n\ttop: 0;\r\n\tbottom: 0;\r\n\twidth: 0;\r\n}\r\n\r\n.fc-ltr .fc-time-area .fc-helper-container, /* only within row */\r\n.fc-ltr .fc-time-area .fc-bgevent-container,\r\n.fc-ltr .fc-time-area .fc-highlight-container {\r\n\tleft: 0;\r\n}\r\n.fc-rtl .fc-time-area .fc-helper-container, /* only within row */\r\n.fc-rtl .fc-time-area .fc-bgevent-container,\r\n.fc-rtl .fc-time-area .fc-highlight-container {\r\n\tright: 0;\r\n}\r\n\r\n.fc-time-area .fc-bgevent,\r\n.fc-time-area .fc-highlight {\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tbottom: 0;\r\n}\r\n\r\n/* body resource rows */\r\n\r\n.fc-time-area .fc-rows {\r\n\tposition: relative;\r\n\tz-index: 3;\r\n}\r\n\r\n.fc-time-area .fc-rows .ui-widget-content {\r\n\tbackground: none;\r\n}\r\n\r\n.fc-time-area .fc-rows td > div {\r\n\tposition: relative;\r\n}\r\n\r\n.fc-time-area .fc-rows .fc-bgevent-container,\r\n.fc-time-area .fc-rows .fc-highlight-container {\r\n\tz-index: 1;\r\n}\r\n\r\n.fc-time-area .fc-event-container {\r\n\tposition: relative;\r\n\tz-index: 2; /* above bgevent and highlight */\r\n\twidth: 0; /* for event positioning. will end up on correct side based on dir */\r\n}\r\n\r\n.fc-time-area .fc-helper-container { /* also an fc-event-container */\r\n\tposition: absolute;\r\n\tz-index: 3;\r\n\ttop: 0;\r\n}\r\n\r\n.fc-time-area .fc-event-container {\r\n\tpadding-bottom: 8px;\r\n\ttop: -1px;\r\n}\r\n\r\n.fc-time-area tr:first-child .fc-event-container {\r\n\ttop: 0;\r\n}\r\n\r\n.fc-no-overlap .fc-time-area .fc-event-container {\r\n\tpadding-bottom: 0;\r\n\ttop: 0;\r\n}\r\n\r\n\r\n/* Now Indicator\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-timeline .fc-now-indicator { /* both the arrow and the line */\r\n\tz-index: 3; /* one above scroller's fc-content */\r\n\ttop: 0;\r\n}\r\n\r\n.fc-time-area .fc-now-indicator-arrow {\r\n\tmargin: 0 -6px; /* 5, then one more to counteract scroller's negative margins */\r\n\t/* triangle pointing down... */\r\n\tborder-width: 6px 5px 0 5px;\r\n\tborder-left-color: transparent;\r\n\tborder-right-color: transparent;\r\n}\r\n\r\n.fc-time-area .fc-now-indicator-line {\r\n\tmargin: 0 -1px; /* counteract scroller's negative margins */\r\n\tbottom: 0;\r\n\tborder-left-width: 1px;\r\n}\r\n\r\n\r\n/* Time Grid Events\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-timeline-event {\r\n\tposition: absolute;\r\n\tborder-radius: 0;\r\n\tpadding: 2px 0;\r\n\tmargin-bottom: 1px;\r\n}\r\n\r\n.fc-no-overlap .fc-timeline-event {\r\n\tpadding: 5px 0;\r\n\tmargin-bottom: 0;\r\n}\r\n\r\n/* don't overlap grid lines at the event's end */\r\n.fc-ltr .fc-timeline-event { margin-right: 1px }\r\n.fc-rtl .fc-timeline-event { margin-left: 1px }\r\n\r\n.fc-timeline-event .fc-content {\r\n\tpadding: 0 1px;\r\n\twhite-space: nowrap;\r\n\toverflow: hidden;\r\n}\r\n\r\n.fc-timeline-event .fc-time {\r\n\tfont-weight: bold;\r\n\tpadding: 0 1px;\r\n}\r\n\r\n.fc-rtl .fc-timeline-event .fc-time {\r\n\tdisplay: inline-block; /* will force it on the other side */\r\n}\r\n\r\n.fc-timeline-event .fc-title {\r\n\tpadding: 0 1px;\r\n}\r\n\r\n.fc-timeline-event .fc-resizer:after {\r\n\twidth: 1px; /* activate! */\r\n}\r\n\r\n\r\n/* follower logic */\r\n\r\n\r\n.fc-ltr .fc-timeline-event .fc-title {\r\n\tpadding-left: 10px;\r\n\tmargin-left: -8px;\r\n}\r\n.fc-rtl .fc-timeline-event .fc-title {\r\n\tpadding-right: 10px;\r\n\tmargin-right: -8px;\r\n}\r\n\r\n.fc-ltr .fc-timeline-event.fc-not-start .fc-title {\r\n\tmargin-left: -2px;\r\n}\r\n.fc-rtl .fc-timeline-event.fc-not-start .fc-title {\r\n\tmargin-right: -2px;\r\n}\r\n\r\n.fc-timeline-event.fc-not-start .fc-title,\r\n.fc-body .fc-time-area .fc-following {\r\n\tposition: relative;\r\n}\r\n\r\n.fc-timeline-event.fc-not-start .fc-title:before,\r\n.fc-body .fc-time-area .fc-following:before { /* generic arrow */\r\n\tcontent: \"\";\r\n\tposition: absolute;\r\n\ttop: 50%;\r\n\tmargin-top: -5px;\r\n\tborder: 5px solid #000;\r\n\tborder-top-color: transparent;\r\n\tborder-bottom-color: transparent;\r\n\topacity: .5;\r\n}\r\n\r\n.fc-ltr .fc-timeline-event.fc-not-start .fc-title:before,\r\n.fc-ltr .fc-body .fc-time-area .fc-following:before { /* LTR. left pointing arrow */\r\n\tborder-left: 0;\r\n\tleft: 2px;\r\n}\r\n\r\n.fc-rtl .fc-timeline-event.fc-not-start .fc-title:before,\r\n.fc-rtl .fc-body .fc-time-area .fc-following:before { /* RTL. right pointing arrow */\r\n\tborder-right: 0;\r\n\tright: 2px;\r\n}\r\n\r\n\r\n/* License Message\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-license-message {\r\n\tposition: absolute;\r\n\tz-index: 99999;\r\n\tbottom: 1px;\r\n\tleft: 1px;\r\n\tbackground: #eee;\r\n\tborder-color: #ddd;\r\n\tborder-style: solid;\r\n\tborder-width: 1px 1px 0 0;\r\n\tpadding: 2px 4px;\r\n\tfont-size: 12px;\r\n\tborder-top-right-radius: 3px;\r\n}\r\n", ""]);
+
+/***/ },
+/* 595 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(180);
+
+	var _PagaendeActions = __webpack_require__(471);
+
+	var _PagaendeActions2 = _interopRequireDefault(_PagaendeActions);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var IssueListView = function (_Component) {
+		_inherits(IssueListView, _Component);
+
+		function IssueListView(props) {
+			_classCallCheck(this, IssueListView);
+
+			return _possibleConstructorReturn(this, (IssueListView.__proto__ || Object.getPrototypeOf(IssueListView)).call(this, props));
+		}
+
+		_createClass(IssueListView, [{
+			key: 'displayStyle',
+			value: function displayStyle() {
+				return this.props.show ? 'block' : 'none';
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						_reactBootstrap.Row,
+						{ id: 'issue-list-view', style: { display: this.displayStyle() } },
+						_react2.default.createElement(
+							_reactBootstrap.Col,
+							{ md: 12 },
+							_react2.default.createElement(
+								'table',
+								{ id: 'issuelist-table', className: 'table table-striped table-hover' },
+								_react2.default.createElement(
+									'thead',
+									null,
+									_react2.default.createElement(
+										'tr',
+										null,
+										_react2.default.createElement('th', null),
+										_react2.default.createElement(
+											'th',
+											null,
+											'ID'
+										),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Prio'
+										),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Titel'
+										),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Adress'
+										),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Tilldelad'
+										),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement('th', null)
+									)
+								),
+								_react2.default.createElement('tbody', null),
+								_react2.default.createElement(
+									'tfoot',
+									null,
+									_react2.default.createElement(
+										'tr',
+										null,
+										_react2.default.createElement('th', null),
+										_react2.default.createElement(
+											'th',
+											null,
+											'ID'
+										),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Prio'
+										),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Titel'
+										),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Adress'
+										),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement(
+											'th',
+											null,
+											'Tilldelad'
+										),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement('th', null),
+										_react2.default.createElement('th', null)
+									)
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return IssueListView;
+	}(_react.Component);
+
+	exports.default = IssueListView;
+	;
+	IssueListView.propTypes = {
+		show: _react2.default.PropTypes.bool.isRequired
+	};
+
+/***/ },
 /* 596 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _events = __webpack_require__(460);
+
+	var _PagaendeDispatcher = __webpack_require__(472);
+
+	var _PagaendeDispatcher2 = _interopRequireDefault(_PagaendeDispatcher);
+
+	var _PagaendeConstants = __webpack_require__(473);
+
+	var _PagaendeConstants2 = _interopRequireDefault(_PagaendeConstants);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var _panelList = [{ id: 0, panel: "CreateIssuePanel", active: false }, { id: 1, panel: "IssueCalendarView", active: true }, { id: 2, panel: "IssueScheduleView", active: false }, { id: 3, panel: "IssueListView", active: false }];
+
+	var CHANGE_EVENT = 'change';
+	var PagaendeStore = Object.assign({}, _events.EventEmitter.prototype, {
+	    getPanels: function getPanels() {
+	        return _panelList;
+	    },
+	    getActiveId: function getActiveId() {
+	        var id = -1;
+	        _panelList.forEach(function (item, index, array) {
+	            if (item.active === true) {
+	                id = index;
+	            }
+	        });
+	        return id;
+	    },
+	    emitChange: function emitChange() {
+	        this.emit(CHANGE_EVENT);
+	    },
+	    addChangeListener: function addChangeListener(callback) {
+	        this.on(CHANGE_EVENT, callback);
+	    },
+	    removeChangeListener: function removeChangeListener(callback) {
+	        this.removeListener(CHANGE_EVENT, callback);
+	    }
+	});
+
+	function _setActive(id) {
+	    _panelList.forEach(function (item, index, array) {
+	        if (item.id === id) {
+	            item.active = true;
+	        } else {
+	            item.active = false;
+	        }
+	    });
+	}
+
+	function _inactivateAll() {
+	    _panelList.forEach(function (item, index, array) {
+	        item.active = false;
+	    });
+	}
+
+	_PagaendeDispatcher2.default.register(function (action) {
+	    switch (action.actionType) {
+	        case _PagaendeConstants2.default.SET_ACTIVE:
+	            _setActive(action.id);
+	            PagaendeStore.emitChange();
+	            break;
+	        case _PagaendeConstants2.default.INACTIVE_ALL:
+	            _inactivateAll();
+	            PagaendeStore.emitChange();
+	            break;
+	        default:
+	    }
+	});
+
+	exports.default = PagaendeStore;
+
+/***/ },
+/* 597 */,
+/* 598 */,
+/* 599 */
 /***/ function(module, exports) {
 
 	module.exports = "<div id=\"react-pagaende\" ></div>\r\n";
 
 /***/ },
-/* 597 */
+/* 600 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61794,13 +61949,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(598);
+	var _index = __webpack_require__(601);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(599);
+	var detailsTemplate = __webpack_require__(602);
 
 
 	var viewModel = kendo.observable({
@@ -61819,7 +61974,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 598 */
+/* 601 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61869,13 +62024,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 599 */
+/* 602 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-arkiverade\" ></div>\r\n";
 
 /***/ },
-/* 600 */
+/* 603 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61888,13 +62043,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(601);
+	var _index = __webpack_require__(604);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(602);
+	var detailsTemplate = __webpack_require__(605);
 
 
 	var viewModel = kendo.observable({
@@ -61913,7 +62068,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 601 */
+/* 604 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61963,13 +62118,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 602 */
+/* 605 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-nyheter\" ></div>\r\n";
 
 /***/ },
-/* 603 */
+/* 606 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -61982,13 +62137,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(604);
+	var _index = __webpack_require__(607);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(605);
+	var detailsTemplate = __webpack_require__(608);
 
 
 	var viewModel = kendo.observable({
@@ -62007,7 +62162,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 604 */
+/* 607 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62057,13 +62212,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 605 */
+/* 608 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-erbjudanden\"></div>\r\n";
 
 /***/ },
-/* 606 */
+/* 609 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62076,13 +62231,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(607);
+	var _index = __webpack_require__(610);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(608);
+	var detailsTemplate = __webpack_require__(611);
 
 
 	var viewModel = kendo.observable({
@@ -62101,7 +62256,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 607 */
+/* 610 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62151,13 +62306,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 608 */
+/* 611 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-kunder\" ></div>\r\n";
 
 /***/ },
-/* 609 */
+/* 612 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62170,13 +62325,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(610);
+	var _index = __webpack_require__(613);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(611);
+	var detailsTemplate = __webpack_require__(614);
 
 
 	var viewModel = kendo.observable({
@@ -62195,7 +62350,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 610 */
+/* 613 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62245,13 +62400,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 611 */
+/* 614 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-boende\" ></div>\r\n";
 
 /***/ },
-/* 612 */
+/* 615 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62264,13 +62419,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(613);
+	var _index = __webpack_require__(616);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(614);
+	var detailsTemplate = __webpack_require__(617);
 
 
 	var viewModel = kendo.observable({
@@ -62289,7 +62444,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 613 */
+/* 616 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62339,13 +62494,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 614 */
+/* 617 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-tidkoder\"></div>\r\n";
 
 /***/ },
-/* 615 */
+/* 618 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62358,13 +62513,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(616);
+	var _index = __webpack_require__(619);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(617);
+	var detailsTemplate = __webpack_require__(620);
 
 
 	var viewModel = kendo.observable({
@@ -62383,7 +62538,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 616 */
+/* 619 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62433,13 +62588,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 617 */
+/* 620 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-arendeKlasser\" >hej</div>\r\n";
 
 /***/ },
-/* 618 */
+/* 621 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62452,13 +62607,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _index = __webpack_require__(619);
+	var _index = __webpack_require__(622);
 
 	var _index2 = _interopRequireDefault(_index);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(620);
+	var detailsTemplate = __webpack_require__(623);
 
 
 	var viewModel = kendo.observable({
@@ -62477,7 +62632,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 619 */
+/* 622 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62527,13 +62682,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 620 */
+/* 623 */
 /***/ function(module, exports) {
 
 	module.exports = "<h1  style=\"padding-top:50px\" data-bind=\"html: title\"></h1>\r\n<div id=\"react-admin\" ></div>\r\n";
 
 /***/ },
-/* 621 */
+/* 624 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -62554,7 +62709,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 622 */
+/* 625 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62567,13 +62722,13 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _CalendarApp = __webpack_require__(623);
+	var _CalendarApp = __webpack_require__(626);
 
 	var _CalendarApp2 = _interopRequireDefault(_CalendarApp);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var detailsTemplate = __webpack_require__(625);
+	var detailsTemplate = __webpack_require__(628);
 
 
 	var viewModel = kendo.observable({
@@ -62591,7 +62746,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 623 */
+/* 626 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -62610,7 +62765,7 @@ webpackJsonp([0],[
 
 	var _Calendar2 = _interopRequireDefault(_Calendar);
 
-	var _External = __webpack_require__(624);
+	var _External = __webpack_require__(627);
 
 	var _External2 = _interopRequireDefault(_External);
 
@@ -62659,7 +62814,7 @@ webpackJsonp([0],[
 	exports.default = CalendarApp;
 
 /***/ },
-/* 624 */
+/* 627 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -62790,7 +62945,7 @@ webpackJsonp([0],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
-/* 625 */
+/* 628 */
 /***/ function(module, exports) {
 
 	module.exports = "<div id=\"react-calendar\" ></div>\r\n";

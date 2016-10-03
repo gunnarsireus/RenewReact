@@ -1,7 +1,6 @@
 ﻿import React, { Component } from 'react';
+import Scheduler from '../../Common/Scheduler.js';
 import { Grid, Row, Col, Glyphicon, Button } from 'react-bootstrap';
-
-import PagaendeActions from '../actions/PagaendeActions';
 
 export default class IssueScheduleView extends Component {
     displayName: 'IssueScheduleView';
@@ -10,11 +9,15 @@ export default class IssueScheduleView extends Component {
     };
     displayStyle() {
         return (this.props.show)?'block':'none';
-    };  
+    }; 
+    componentDidMount() {
+
+    }
     render() {
         return  <Row id="issue-schedule-view" style={{display:this.displayStyle()}}>
                     <Col md={12}>
-                     <div id="issueschedule-div"></div>
+                        <Scheduler divId={'issueschedule-div'}/>
+
                     </Col>
              </Row>
      ;}

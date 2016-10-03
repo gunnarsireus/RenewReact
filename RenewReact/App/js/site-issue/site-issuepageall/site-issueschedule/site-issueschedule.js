@@ -202,3 +202,4 @@ Site.IssueSchedule = function (createCB, openCB, statusCB) {
 
     this.schedule = new Site.Scheduler($('#issueschedule-div'), this.scheduleCreateItem, this.scheduleUpdateItem, this.schedulePopupItem, this.scheduleMoveItem, this.scheduleResizeItem);
 }
+module.exports.SiteIssueSchedule = Site.IssueSchedule;

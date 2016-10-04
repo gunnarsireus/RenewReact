@@ -4,7 +4,8 @@ import jqueryUi from 'jquery-ui';
 import moment from 'moment';
 import fullcalendar from 'fullcalendar';
 import styles from '../../css/Fullcalendar.css';
-import styles2 from '../../css/FullCalendar-2.6.1/fullcalendar.css'
+import styles2 from '../../css/FullCalendar-2.6.1/fullcalendar.css';
+import styles3 from '../../css/jquery-ui-1.11.2.css';
 
 export default class External extends Component {
     constructor(props) {
@@ -32,7 +33,7 @@ export default class External extends Component {
                 title: $.trim($(this).text()), // use the element's text as the event title
                 stick: true // maintain when user navigates (see docs on the renderEvent method)
             });
-            // make the event draggable using jQuery UI
+             //make the event draggable using jQuery UI
             //$(this).draggable({
             //    zIndex: 999,
             //    revert: true,      // will cause the event to go back to its

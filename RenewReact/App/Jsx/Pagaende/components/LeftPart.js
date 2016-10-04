@@ -1,5 +1,7 @@
 ﻿import React, { Component } from 'react';
 import Input from '../../Common/Input.js';
+import PagaendeActions from '../actions/PagaendeActions';
+import PagaendeStore from '../stores/PagaendeStore';
 
 import { Grid, Row, Col, Glyphicon, Button } from 'react-bootstrap';
 
@@ -7,6 +9,35 @@ export default class LeftPart extends Component {
     displayName: 'LeftPart';
     constructor(props) {
         super(props);
+        this.state = {
+            panelList: PagaendeStore.getPanels(),
+            activeId :PagaendeStore.getActiveId()
+        };
+        this.onChange = this.onChange.bind(this);
+        this.onCalendar = this.onCalendar.bind(this);
+        this.onSchedule = this.onSchedule.bind(this);
+        this.onList = this.onList.bind(this);
+    };
+    componentDidMount() {
+        PagaendeStore.addChangeListener(this.onChange);
+    };
+    componentWillUnmount() {
+        PagaendeStore.removeChangeListener(this.onChange);
+    };
+    onChange() {
+        this.setState({
+            panelList: PagaendeStore.getPanels(),
+            activeId: PagaendeStore.getActiveId()
+        });
+    };
+    onCalendar() {
+        PagaendeActions.setActive(1);
+    };
+    onSchedule() {
+        PagaendeActions.setActive(2);
+    };
+    onList() {
+        PagaendeActions.setActive(3);
     };
 
     render() {

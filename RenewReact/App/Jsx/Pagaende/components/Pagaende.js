@@ -5,6 +5,8 @@ import CreateIssuePanel from './CreateIssuePanel.js';
 import IssueCalendarView from './IssueCalendarView.js';
 import IssueScheduleView from './IssueScheduleView.js';
 import IssueListView from './IssueListView.js';
+import PagaendeActions from '../actions/PagaendeActions';
+import PagaendeStore from '../stores/PagaendeStore';
 
 import style from '../../../css/site.css';
 
@@ -14,7 +16,37 @@ export default class Pagaende extends Component {
     displayName: 'Pagaende';
     constructor(props) {
         super(props);
-    }
+        this.state = {
+            panelList: PagaendeStore.getPanels(),
+            activeId :PagaendeStore.getActiveId()
+        };
+        this.onChange = this.onChange.bind(this);
+        this.onCalendar = this.onCalendar.bind(this);
+        this.onSchedule = this.onSchedule.bind(this);
+        this.onList = this.onList.bind(this);
+    };
+    componentDidMount() {
+        PagaendeStore.addChangeListener(this.onChange);
+    };
+    componentWillUnmount() {
+        PagaendeStore.removeChangeListener(this.onChange);
+    };
+    onChange() {
+        this.setState({
+            panelList: PagaendeStore.getPanels(),
+            activeId: PagaendeStore.getActiveId()
+        });
+    };
+    onCalendar() {
+        PagaendeActions.setActive(1);
+    };
+    onSchedule() {
+        PagaendeActions.setActive(2);
+    };
+    onList() {
+        PagaendeActions.setActive(3);
+    };
+
     render() {
         return <div>
         <Row id="page-issue-all">

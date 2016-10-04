@@ -408,7 +408,6 @@
     <Content Include="App\Jsx\Pagaende\actions\PagaendeActions.js" />
     <Content Include="App\Jsx\Pagaende\components\CreateIssuePanel.js" />
     <Content Include="App\Jsx\Pagaende\components\IssueCalendarView.js" />
-    <Content Include="App\Jsx\Pagaende\components\LeftPart.js" />
     <Content Include="App\Jsx\Pagaende\components\Pagaende.js" />
     <Content Include="App\Jsx\Pagaende\components\IssueScheduleView.js" />
     <Content Include="App\Jsx\Pagaende\components\IssueListView.js" />

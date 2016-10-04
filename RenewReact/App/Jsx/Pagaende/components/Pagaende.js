@@ -1,6 +1,5 @@
 ﻿import React, { Component } from 'react';
 import Input from '../../Common/Input.js';
-import LeftPart from './LeftPart.js';
 import CreateIssuePanel from './CreateIssuePanel.js';
 import IssueCalendarView from './IssueCalendarView.js';
 import IssueScheduleView from './IssueScheduleView.js';

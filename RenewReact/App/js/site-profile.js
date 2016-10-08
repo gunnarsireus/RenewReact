@@ -1,4 +1,5 @@
-﻿var updateForm = null;
+﻿import SiteAutoAjax from './site-components/site-xcomp-autoajax.js';
+var updateForm = null;
 var secureForm = null;
 
 /* Callbacks */
@@ -8,12 +9,12 @@ function profileDeleted() {
 }
 
 function profileUpdated() {
-    Site.Dialogs.info('Kontoinformation uppdaterad');
+    alert('Kontoinformation uppdaterad');
 }
 
 function profileSecured() {
-    Site.AutoAjax.clearValues(secureForm);
-    Site.Dialogs.info('Lösenord uppdaterat');
+    //SiteAutoAjax.clearValues(secureForm);
+    alert('Lösenord uppdaterat');
 }
 
 /* Initialization */
@@ -23,12 +24,12 @@ $(function () {
     secureForm = $('#change-password-form');
 
     $('#delete-profile-button').click(function () {
-        Site.Dialogs.confirm('/img/delete.png', 'Ta bort konto', 'Vill du avsluta ditt konto?', 'Nej', 'Ja', function () {
+        SiteDialogs.confirm('/img/delete.png', 'Ta bort konto', 'Vill du avsluta ditt konto?', 'Nej', 'Ja', function () {
             siteAjaxPost('/Profile/DeleteProfile', null, profileDeleted);
         });
     });
 
-    Site.AutoAjax.clearValues(secureForm);
+    SiteAutoAjax.clearValues(secureForm);
     siteAjaxReadToForm('/Profile/ReadProfile', null, updateForm);
 
     /* Form buttons */

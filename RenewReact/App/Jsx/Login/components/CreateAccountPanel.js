@@ -47,8 +47,8 @@ export default class CreateAccountPanel extends Component {
                     <Input className="form-control"
                            dataAutoajax={true}
                            dataVal={true}
-                           dataValLengthMin="5"
-                           dataLalLengthMax="100"
+                           dataValLengthMin={5}
+                           dataLalLengthMax={100}
                            dataValLength="E-post måste vara mellan 5 och 100 tecken"
                            dataValRequired="E-psot får inte vara tom"
                            id="email"
@@ -68,7 +68,7 @@ export default class CreateAccountPanel extends Component {
                            dataAutoajax={true}
                            dataVal={true}
                            dataValLengthMin="2"
-                           dataValLengthMax="45"
+                           dataValLengthMax={45}
                            dataValLength="Förnamn måste vara mellan 2 och 45 tecken"
                            dataValRequired="Förnamn får inte vara tom"
                            id="firstname"
@@ -88,7 +88,7 @@ export default class CreateAccountPanel extends Component {
                            dataAutoajax={true}
                            dataVal={true}
                            dataValLengthMin="2"
-                           dataValLengthMax="45"
+                           dataValLengthMax={45}
                            dataValLength="Efternamn måste vara mellan 2 och 45 tecken"
                            dataValRequired="Efternamn får inte vara tom"
                            id="lastname"
@@ -109,7 +109,7 @@ export default class CreateAccountPanel extends Component {
                            dataAutoajax={true}
                            dataVal={true}
                            dataValLengthMin="2"
-                           dataValLengthMax="45"
+                           dataValLengthMax={45}
                            dataValLength="Telefonnr. får inte överstiga 45 tecken"
                            id="phone"
                            name="phone"
@@ -128,7 +128,7 @@ export default class CreateAccountPanel extends Component {
                     <Input className="form-control"
                            dataAutoajax={true}
                            dataVal={true}
-                           dataValLengthMax="45"
+                           dataValLengthMax={45}
                            dataValLength="Adress får inte överstiga 45 tecken"
                            id="phone"
                            name="phone"
@@ -146,7 +146,7 @@ export default class CreateAccountPanel extends Component {
                     <Input className="form-control"
                            dataAutoajax={true}
                            dataVal={true}
-                           dataValLengthMax="45"
+                           dataValLengthMax={45}
                            dataValLength="Våning får inte överstiga 45 tecken"
                            id="floor"
                            name="floor"
@@ -164,7 +164,7 @@ export default class CreateAccountPanel extends Component {
                     <Input className="form-control"
                            dataAutoajax={true}
                            dataVal={true}
-                           dataValLengthMax="45"
+                           dataValLengthMax={45}
                            dataValLength="Lägenhet får inte överstiga 45 tecken"
                            id="apartment"
                            name="apartment"

@@ -192,3 +192,4 @@ Site.Validation = Site.Validation || {
 String.prototype.endsWith = function (suffix) {
     return this.indexOf(suffix, this.length - suffix.length) !== -1;
 };
+module.exports.SiteValidation = Site.Validation;

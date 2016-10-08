@@ -97,3 +97,4 @@ Site.InputPanels = Site.InputPanels || {
         button.attr('disabled', !enabled);
     }
 };
+module.exports.SiteInputPanels = Site.InputPanels;

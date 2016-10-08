@@ -38,7 +38,7 @@ export default class ForgotAccountPanel extends Component {
                                     <Input className="form-control"
                                            dataAutoajax={true}
                                            daataVal={true}
-                                           dataValLengthMin="5"
+                                           dataValLengthMin={5}
                                            dataValLengthMax="100"
                                            dataValLength="E-post måste vara mellan 5 och 100 tecken"
                                            dataValRequired="E-post får inte vara tom"

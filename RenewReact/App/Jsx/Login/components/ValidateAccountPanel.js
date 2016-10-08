@@ -70,8 +70,8 @@ export default class ValidateAccountPanel extends Component {
                                     <Input className="form-control"
                                            dataAutoajax={true}
                                            dataVal={true}
-                                           dataValLengthMin="5"
-                                           dataLalLengthMax="100"
+                                           dataValLengthMin={5}
+                                           dataLalLengthMax={100}
                                            dataValLength="Användare måste vara mellan 5 och 100 tecken"
                                            dataValRequired="Användare får inte vara tom"
                                            id="email"
@@ -90,8 +90,8 @@ export default class ValidateAccountPanel extends Component {
                                     <Input className="form-control"
                                            dataAutoajax={true}
                                            dataVal={true}
-                                           dataValLengthMin="6"
-                                           dataValLengthMax="45"
+                                           dataValLengthMin={6}
+                                           dataValLengthMax={45}
                                            dataValLength="Lösenord måste vara mellan 6 och 45 tecken"
                                            dataValRequired="Lösenord får inte vara tom"
                                            id="password"

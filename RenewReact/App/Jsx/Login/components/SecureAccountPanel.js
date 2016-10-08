@@ -49,7 +49,7 @@ export default class SecureAccountPanel extends Component {
                                     <Input className="form-control"
                                            dataAutoajax={true}
                                            dataVal={true}
-                                           dataValLengthMin="6"
+                                           dataValLengthMin={6}
                                            dataValLengthMax="6"
                                            dataValLength="PIN-kod måste vara mellan 6 och 6 tecken"
                                            dataValRequired="PIN-kod får inte vara tom"
@@ -70,8 +70,8 @@ export default class SecureAccountPanel extends Component {
                                     <Input className="form-control"
                                            dataAutoajax={true}
                                            dataVal={true}
-                                           dataValLengthMin="6"
-                                           dataValLengthMax="45"
+                                           dataValLengthMin={6}
+                                           dataValLengthMax={45}
                                            dataValLength="Lösenord måste vara mellan 6 och 45 tecken"
                                            dataValRequired="Lösenord får inte vara tom"
                                            id="password1"
@@ -91,8 +91,8 @@ export default class SecureAccountPanel extends Component {
                                     <Input className="form-control"
                                            dataAutoajax={true}
                                            dataVal={true}
-                                           dataValLengthMin="6"
-                                           dataValLengthMax="45"
+                                           dataValLengthMin={6}
+                                           dataValLengthMax={45}
                                            dataValLength="Bekräfta måste vara mellan 6 och 45 tecken"
                                            dataValRequired="Bekräfta får inte vara tom"
                                            id="password2"

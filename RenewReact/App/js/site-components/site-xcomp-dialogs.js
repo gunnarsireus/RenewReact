@@ -128,4 +128,4 @@ $(function () {
         handle: '.modal-header'
     });
 });
-module.exports.SiteDialog = Site.Dialog;
+module.exports.SiteDialogs = Site.Dialogs;

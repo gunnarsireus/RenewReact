@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import style from '../../css/site.css';
-import {siteAjaxPost,siteGoTo} from '../../js/site-base.js';
+import {siteAjaxPost,siteGoTo,siteShowProgress,siteHideProgress} from '../../js/site-base.js';
 import {getFormData} from '../../js/site-components/site-xcomp-inputforms.js';
 import {clearValidationSummary} from '../../js/site-components/site-xcomp-validation.js';
 import {clearAll} from '../../js/site-components/site-xcomp-localstorage.js';
@@ -10,13 +10,53 @@ export default class Index extends Component {
         super(props);
         this.updateProfile = this.updateProfile.bind(this);
         this.updatePassword = this.updatePassword.bind(this);
+        this.state = {
+            value11: "",
+            value12: "",
+            value13: "",
+            value21: "",
+            value22: "",
+            value23: ""
+        };
+    };
+    siteAjaxReadToProps(url,result) {
+        siteShowProgress();
+        $.ajax({
+             url: url,
+            type: 'POST',
+            data: {},
+            success: function (response) {
+                siteHideProgress();
+                result=response;
+                alert("response" + response.phone);
+            },
+            error: function(response) {
+                alert('Ej inloggad');
+                var isUserAuthorized = "";
+                localStorage.setItem("isUserAuthorized", isUserAuthorized);
+                window.location.href = '/Home/Logout';
+            }
+        });
+    };
+    componentWillMount() {
+        var result = {};
+        this.siteAjaxReadToProps('/Profile/ReadProfile',result); //Needs Flux
+
+        this.setState({value11: 'Admin'});  //Needs Flux
+        this.setState({value12: 'Admin'});
+        this.setState({value13: '08-123456'});
     };
     updateProfile(){
         var updateForm = $('#update-profile-form');
         var data = getFormData(updateForm);
         if (data) {
             //clearValidationSummary(updateForm);
-            siteAjaxPost('/Profile/UpdateProfile', data, alert('Kontoinformation uppdaterad'));
+            var result;
+            siteAjaxPost('/Profile/UpdateProfile', data, result, alert('Kontoinformation uppdaterad'));
+            alert(result.firstname);
+            this.setState({value11: result.firstname});
+            this.setState({value12: result.lastname});
+            this.setState({value13: result.phone});
         }
     };
     updatePassword(){
@@ -69,6 +109,9 @@ export default class Index extends Component {
                              text1={'Förnamn'} 
                              text2={'Efternamn'}
                              text3={'Telefon'}
+                             value1={this.state.value11} 
+                             value2={this.state.value12}
+                             value3={this.state.value13}
                              icon1={'glyphicon glyphicon-user'}
                              icon2={'glyphicon glyphicon-user'}
                              icon3={'glyphicon glyphicon-phone-alt'}/>
@@ -84,6 +127,9 @@ export default class Index extends Component {
                              text1={'Gällande'} 
                              text2={'Nytt'}
                              text3={'Bekräfta'}
+                             value1={this.state.value21} 
+                             value2={this.state.value22}
+                             value3={this.state.value23}
                              icon1={'glyphicon glyphicon-lock'}
                              icon2={'glyphicon glyphicon-lock'}
                              icon3={'glyphicon glyphicon-lock'}/>

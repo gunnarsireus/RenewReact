@@ -34,7 +34,7 @@ dataValRequired={'Förnamn får inte vara tom'}
 id={this.props.input1Id}
 name={this.props.input1Id}
 type={'text'}
-value={''} />
+value={this.props.value1}/>
 </div>
 </div>
 <div className="form-group">
@@ -53,7 +53,7 @@ dataValRequired={'Efternamn får inte vara tom'}
 id={this.props.input2Id}
 name={this.props.input2Id}
 type={'text'}
-value={''}/>
+value={this.props.value2}/>
 </div>
 </div>
 <div className="form-group">
@@ -71,7 +71,8 @@ id={this.props.input3Id}
 name={this.props.input3Id}
 //onKeyPress = "return Site.Validation.isPhoneNumber(event)"
 type={'text'}
-value={''}/>
+value={this.props.value3}/>
+
 </div>
 </div>
 <div className="row">
@@ -96,6 +97,9 @@ Panels3.propTypes= {
     text1: React.PropTypes.string.isRequired,
     text2: React.PropTypes.string.isRequired,
     text3: React.PropTypes.string.isRequired,
+    value1: React.PropTypes.string.isRequired,
+    value2: React.PropTypes.string.isRequired,
+    value3: React.PropTypes.string.isRequired,
     icon1: React.PropTypes.string.isRequired,
     icon2: React.PropTypes.string.isRequired,
     icon3: React.PropTypes.string.isRequired,

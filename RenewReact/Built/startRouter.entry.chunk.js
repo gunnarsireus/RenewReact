@@ -65270,34 +65270,33 @@ webpackJsonp([0],[
 
 	    _createClass(Index, [{
 	        key: 'siteAjaxReadToProps',
-	        value: function siteAjaxReadToProps(url, result) {
+	        value: function siteAjaxReadToProps(url) {
 	            (0, _siteBase.siteShowProgress)();
 	            $.ajax({
 	                url: url,
 	                type: 'POST',
 	                data: {},
-	                success: function success(response) {
+	                success: function (response) {
 	                    (0, _siteBase.siteHideProgress)();
-	                    result = response;
-	                    alert("response" + response.phone);
-	                },
-	                error: function error(response) {
+	                    this.setState({ value11: response.firstname });
+	                    this.setState({ value12: response.lastname });
+	                    this.setState({ value13: response.phone }); //Needs flux
+	                }.bind(this),
+	                error: function (response) {
 	                    alert('Ej inloggad');
 	                    var isUserAuthorized = "";
 	                    localStorage.setItem("isUserAuthorized", isUserAuthorized);
 	                    window.location.href = '/Home/Logout';
-	                }
+	                }.bind(this)
 	            });
 	        }
 	    }, {
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
-	            var result = {};
-	            this.siteAjaxReadToProps('/Profile/ReadProfile', result); //Needs Flux
-
-	            this.setState({ value11: 'Admin' }); //Needs Flux
+	            this.siteAjaxReadToProps('/Profile/ReadProfile');
+	            this.setState({ value11: 'Admin' });
 	            this.setState({ value12: 'Admin' });
-	            this.setState({ value13: '08-123456' });
+	            this.setState({ value13: '08-123456' }); //Needs flux
 	        }
 	    }, {
 	        key: 'updateProfile',
@@ -65306,9 +65305,8 @@ webpackJsonp([0],[
 	            var data = (0, _siteXcompInputforms.getFormData)(updateForm);
 	            if (data) {
 	                //clearValidationSummary(updateForm);
-	                var result;
+	                var result = {};
 	                (0, _siteBase.siteAjaxPost)('/Profile/UpdateProfile', data, result, alert('Kontoinformation uppdaterad'));
-	                alert(result.firstname);
 	                this.setState({ value11: result.firstname });
 	                this.setState({ value12: result.lastname });
 	                this.setState({ value13: result.phone });

@@ -19,7 +19,7 @@ export default class Index extends Component {
             value23: ""
         };
     };
-    siteAjaxReadToProps(url,result) {
+    siteAjaxReadToProps(url) {
         siteShowProgress();
         $.ajax({
              url: url,
@@ -27,33 +27,31 @@ export default class Index extends Component {
             data: {},
             success: function (response) {
                 siteHideProgress();
-                result=response;
-                alert("response" + response.phone);
-            },
+                this.setState({value11: response.firstname}); 
+                this.setState({value12: response.lastname});
+                this.setState({value13: response.phone});  //Needs flux
+            }.bind(this),
             error: function(response) {
                 alert('Ej inloggad');
                 var isUserAuthorized = "";
                 localStorage.setItem("isUserAuthorized", isUserAuthorized);
                 window.location.href = '/Home/Logout';
-            }
+            }.bind(this)
         });
     };
     componentWillMount() {
-        var result = {};
-        this.siteAjaxReadToProps('/Profile/ReadProfile',result); //Needs Flux
-
-        this.setState({value11: 'Admin'});  //Needs Flux
+        this.siteAjaxReadToProps('/Profile/ReadProfile'); 
+        this.setState({value11: 'Admin'}); 
         this.setState({value12: 'Admin'});
-        this.setState({value13: '08-123456'});
+        this.setState({value13: '08-123456'});  //Needs flux
     };
     updateProfile(){
         var updateForm = $('#update-profile-form');
         var data = getFormData(updateForm);
         if (data) {
             //clearValidationSummary(updateForm);
-            var result;
+            var result={};
             siteAjaxPost('/Profile/UpdateProfile', data, result, alert('Kontoinformation uppdaterad'));
-            alert(result.firstname);
             this.setState({value11: result.firstname});
             this.setState({value12: result.lastname});
             this.setState({value13: result.phone});

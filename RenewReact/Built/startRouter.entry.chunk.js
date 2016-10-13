@@ -54,6 +54,7 @@ webpackJsonp([0],[
 
 	var login = __webpack_require__(437);
 	var calendar = __webpack_require__(627);
+	var test = __webpack_require__(647);
 
 	var router = new kendo.Router({
 	    init: function init() {
@@ -123,6 +124,10 @@ webpackJsonp([0],[
 
 	router.route('/', function (e) {
 	    layout.showIn("#content", home);
+	});
+
+	router.route('/test', function (e) {
+	    layout.showIn("#content", test);
 	});
 
 	module.exports = router;
@@ -21596,7 +21601,7 @@ webpackJsonp([0],[
 	// these links populate the navbar
 	var viewModel = kendo.observable({
 	    linksLeft: {
-	        list: [[{ title: 'Admin', href: '', icon: '' }, { title: 'Personal', href: '#/personal', icon: '' }, { title: 'Felanmälan', href: '#/felanmalan', icon: '' }], [{ title: 'Ärenden', href: '', icon: '' }, { title: 'Pågående', href: '#/pagaende', icon: '' }, { title: 'Arkiverade', href: '#/arkiverade', icon: '' }, { title: 'Kalender', href: '#/calendar', icon: '' }], [{ title: 'Meddelanden', href: '', icon: '' }, { title: 'Nyheter', href: '#/nyheter', icon: '' }, { title: 'Erbjudanden', href: '#/erbjudanden', icon: '' }], [{ title: 'Register', href: '', icon: '' }, { title: 'Kunder', href: '#/kunder', icon: '' }, { title: 'Boende', href: '#/boende', icon: '' }, { title: 'Tidkoder', href: '#/tidkoder', icon: '' }, { title: 'Ärendeklasser', href: '#/arendeKlasser', icon: '' }]]
+	        list: [[{ title: 'Admin', href: '', icon: '' }, { title: 'Personal', href: '#/personal', icon: '' }, { title: 'Felanmälan', href: '#/felanmalan', icon: '' }], [{ title: 'Ärenden', href: '', icon: '' }, { title: 'Pågående', href: '#/pagaende', icon: '' }, { title: 'Arkiverade', href: '#/arkiverade', icon: '' }, { title: 'Kalender', href: '#/calendar', icon: '' }, { title: 'Test', href: '#/test', icon: '' }], [{ title: 'Meddelanden', href: '', icon: '' }, { title: 'Nyheter', href: '#/nyheter', icon: '' }, { title: 'Erbjudanden', href: '#/erbjudanden', icon: '' }], [{ title: 'Register', href: '', icon: '' }, { title: 'Kunder', href: '#/kunder', icon: '' }, { title: 'Boende', href: '#/boende', icon: '' }, { title: 'Tidkoder', href: '#/tidkoder', icon: '' }, { title: 'Ärendeklasser', href: '#/arendeKlasser', icon: '' }]]
 	    },
 	    linksRight: {
 	        list: [[{ title: 'Admin Admin', href: '#/admin', icon: '' }], [{ title: 'Logga ut', href: '#/loggaut', icon: '' }]]
@@ -65496,13 +65501,49 @@ webpackJsonp([0],[
 	        var _this = _possibleConstructorReturn(this, (Panels3.__proto__ || Object.getPrototypeOf(Panels3)).call(this, props));
 
 	        _this.onclick = _this.onclick.bind(_this);
+	        _this.onChange1 = _this.onChange1.bind(_this);
+	        _this.onChange2 = _this.onChange2.bind(_this);
+	        _this.onChange3 = _this.onChange3.bind(_this);
+	        _this.state = {
+	            value1: _this.props.value1,
+	            value2: _this.props.value2,
+	            value3: _this.props.value3
+	        };
 	        return _this;
 	    }
 
 	    _createClass(Panels3, [{
 	        key: 'onclick',
-	        value: function onclick() {
-	            this.props.onClick();
+	        value: function onclick(event) {
+	            alert(this.props.value1);
+	        }
+	    }, {
+	        key: 'myFunc',
+	        value: function myFunc(val1, val2, val3) {
+	            this.state = {
+	                value1: val1,
+	                value2: val2,
+	                value3: val3
+	            };
+	            document.getElementById(this.props.input1Id).setAttribute('value', this.props.input1Id);
+	            document.getElementById(this.props.input2Id).setAttribute('value', 'vvvv');
+	            document.getElementById(this.props.input3Id).setAttribute('value', 'vvvvdddd');
+	            alert('myfunc' + this.state.value3);
+	        }
+	    }, {
+	        key: 'onChange1',
+	        value: function onChange1() {
+	            alert('change1');
+	        }
+	    }, {
+	        key: 'onChange2',
+	        value: function onChange2() {
+	            alert('change2');
+	        }
+	    }, {
+	        key: 'onChange3',
+	        value: function onChange3() {
+	            alert('change3');
 	        }
 	    }, {
 	        key: 'render',
@@ -65551,7 +65592,7 @@ webpackJsonp([0],[
 	                                    id: this.props.input1Id,
 	                                    name: this.props.input1Id,
 	                                    type: 'text',
-	                                    value: this.props.value1 })
+	                                    value: this.state.value1, onchange: this.onChange1 })
 	                            )
 	                        ),
 	                        _react2.default.createElement(
@@ -65580,7 +65621,7 @@ webpackJsonp([0],[
 	                                    id: this.props.input2Id,
 	                                    name: this.props.input2Id,
 	                                    type: 'text',
-	                                    value: this.props.value2 })
+	                                    value: this.state.value2, onchange: this.onChange2 })
 	                            )
 	                        ),
 	                        _react2.default.createElement(
@@ -65608,7 +65649,7 @@ webpackJsonp([0],[
 	                                    name: this.props.input3Id
 	                                    //onKeyPress = "return Site.Validation.isPhoneNumber(event)"
 	                                    , type: 'text',
-	                                    value: this.props.value3 })
+	                                    value: this.state.value3, onchange: this.onChange3 })
 	                            )
 	                        ),
 	                        _react2.default.createElement(
@@ -66044,6 +66085,222 @@ webpackJsonp([0],[
 /***/ function(module, exports) {
 
 	module.exports = "<div id=\"react-calendar\" ></div>\r\n";
+
+/***/ },
+/* 647 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(36);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _index = __webpack_require__(648);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var detailsTemplate = __webpack_require__(649);
+
+
+	var viewModel = kendo.observable({
+	    title: "test"
+	});
+
+	var view = new kendo.View(detailsTemplate, {
+	    model: viewModel,
+	    show: function show() {
+
+	        _reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById("react-test"));
+	        kendo.fx(this.element).fade('in').duration(100).play();
+	    }
+	});
+
+	module.exports = view;
+
+/***/ },
+/* 648 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _site = __webpack_require__(464);
+
+	var _site2 = _interopRequireDefault(_site);
+
+	var _siteBase = __webpack_require__(447);
+
+	var _siteXcompInputforms = __webpack_require__(445);
+
+	var _siteXcompValidation = __webpack_require__(623);
+
+	var _siteXcompLocalstorage = __webpack_require__(446);
+
+	var _Panels = __webpack_require__(624);
+
+	var _Panels2 = _interopRequireDefault(_Panels);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Index = function (_Component) {
+	    _inherits(Index, _Component);
+
+	    function Index(props) {
+	        _classCallCheck(this, Index);
+
+	        var _this = _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).call(this, props));
+
+	        _this.updateProfile = _this.updateProfile.bind(_this);
+	        _this.updatePassword = _this.updatePassword.bind(_this);
+	        _this.state = {
+	            value11: "",
+	            value12: "",
+	            value13: "",
+	            value21: "",
+	            value22: "",
+	            value23: ""
+	        };
+	        return _this;
+	    }
+
+	    _createClass(Index, [{
+	        key: 'siteAjaxReadToProps',
+	        value: function siteAjaxReadToProps(url) {
+	            (0, _siteBase.siteShowProgress)();
+	            $.ajax({
+	                url: url,
+	                type: 'POST',
+	                data: {},
+	                success: function (response) {
+	                    (0, _siteBase.siteHideProgress)();
+	                    this.setState({
+	                        value11: response.firstname,
+	                        value12: response.lastname,
+	                        value13: response.phone
+	                    });
+	                    var x = this.refs.foo.myFunc(this.state.value11, this.state.value12, this.state.value13);
+	                }.bind(this),
+	                error: function (response) {
+	                    alert('Ej inloggad');
+	                    var isUserAuthorized = "";
+	                    localStorage.setItem("isUserAuthorized", isUserAuthorized);
+	                    window.location.href = '/Home/Logout';
+	                }.bind(this)
+	            });
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.siteAjaxReadToProps('/Profile/ReadProfile');
+	        }
+	    }, {
+	        key: 'updateProfile',
+	        value: function updateProfile() {
+	            var updateForm = $('#update-profile-form');
+	            var data = (0, _siteXcompInputforms.getFormData)(updateForm);
+	            if (data) {
+	                //clearValidationSummary(updateForm);
+	                var result = {};
+	                (0, _siteBase.siteAjaxPost)('/Profile/UpdateProfile', data, result, alert('Kontoinformation uppdaterad'));
+	                this.setState({
+	                    value11: response.firstname,
+	                    value12: response.lastname,
+	                    value13: response.phone
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'updatePassword',
+	        value: function updatePassword() {
+	            var secureForm = $('#change-password-form');
+	            var data = (0, _siteXcompInputforms.getFormData)(secureForm);
+	            if (data) {
+	                //clearValidationSummary(secureForm);
+	                data && (0, _siteBase.siteAjaxPost)('/Profile/ChangePassword', data, alert('Lösenord uppdaterat'));
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'row' },
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    'value11:  ',
+	                    this.state.value11,
+	                    ' ',
+	                    _react2.default.createElement('br', null),
+	                    'value12:  ',
+	                    this.state.value12,
+	                    ' ',
+	                    _react2.default.createElement('br', null),
+	                    'value13:  ',
+	                    this.state.value13,
+	                    ' ',
+	                    _react2.default.createElement('br', null)
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'col-md-6' },
+	                    _react2.default.createElement(_Panels2.default, { ref: 'foo',
+	                        input1Id: 'firstname',
+	                        input2Id: 'lastname',
+	                        input3Id: 'phone',
+	                        formId: 'update-profile-form',
+	                        heading: 'Uppdatera kontoinformation',
+	                        buttonText: 'Spara',
+	                        onClick: this.updateProfile,
+	                        text1: 'Förnamn',
+	                        text2: 'Efternamn',
+	                        text3: 'Telefon',
+	                        value1: this.state.value11,
+	                        value2: this.state.value12,
+	                        value3: this.state.value13,
+	                        icon1: 'glyphicon glyphicon-user',
+	                        icon2: 'glyphicon glyphicon-user',
+	                        icon3: 'glyphicon glyphicon-phone-alt' })
+	                ),
+	                _react2.default.createElement('div', { className: 'col-md-6' })
+	            );
+	        }
+	    }]);
+
+	    return Index;
+	}(_react.Component);
+
+	exports.default = Index;
+	;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ },
+/* 649 */
+/***/ function(module, exports) {
+
+	module.exports = "<div id=\"react-test\" ></div>\r\n";
 
 /***/ }
 ]);

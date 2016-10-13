@@ -416,6 +416,7 @@
     <Content Include="App\Jsx\Pagaende\dispatcher\PagaendeDispatcher.js" />
     <Content Include="App\Jsx\Pagaende\Index.js" />
     <Content Include="App\Jsx\Pagaende\stores\PagaendeStore.js" />
+    <Content Include="App\Jsx\Test\Index.js" />
     <Content Include="App\js\DataTables-1.10.4\dataTables.autoFill.js" />
     <Content Include="App\js\DataTables-1.10.4\dataTables.autoFill.min.js" />
     <Content Include="App\js\DataTables-1.10.4\dataTables.bootstrap.js" />
@@ -546,6 +547,8 @@
     <Content Include="App\Views\Pagaende\pagaende.js" />
     <Content Include="App\Views\Personal\personal.html" />
     <Content Include="App\Views\Personal\personal.js" />
+    <Content Include="App\Views\Test\test.html" />
+    <Content Include="App\Views\Test\test.js" />
     <Content Include="App\Views\Tidkoder\tidkoder.html" />
     <Content Include="App\Views\Tidkoder\tidkoder.js" />
     <Content Include="Built\commons.chunk.js" />

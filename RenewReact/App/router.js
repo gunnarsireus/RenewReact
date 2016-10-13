@@ -20,6 +20,7 @@ var loggaut = require('../App/Views/Loggaut/loggaut');
 
 var login = require('../App/Views/Login/login');
 var calendar = require('../App/Views/Calendar/calendar');
+var test = require('../App/Views/Test/test');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -93,6 +94,10 @@ router.route('/calendar', function (e) {
 
 router.route('/', function (e) {
     layout.showIn("#content", home);
+});
+
+router.route('/test', function (e) {
+    layout.showIn("#content", test);
 });
 
 module.exports = router;

@@ -7,9 +7,7 @@ export default class Panels3 extends Component {
     constructor(props) {
         super(props);
         this.onclick = this.onclick.bind(this);
-        this.onChange1 = this.onChange1.bind(this);
-        this.onChange2 = this.onChange2.bind(this);
-        this.onChange3 = this.onChange3.bind(this);
+        this.onChange1 = this.handleChange1.bind(this);
         this.state = {
             value1: this.props.value1,
             value2: this.props.value2,
@@ -25,19 +23,9 @@ export default class Panels3 extends Component {
             value2: val2,
             value3: val3
         };
-        document.getElementById(this.props.input1Id).setAttribute('value',this.props.input1Id);
-        document.getElementById(this.props.input2Id).setAttribute('value','vvvv');
-        document.getElementById(this.props.input3Id).setAttribute('value','vvvvdddd');
-        alert('myfunc' + this.state.value3);
     }
-    onChange1() {
+    handleChange1() {
         alert('change1');
-    };
-    onChange2() {
-        alert('change2');
-    };
-    onChange3() {
-        alert('change3');
     };
     render() {
         return  <div className="panel panel-default">
@@ -59,7 +47,7 @@ export default class Panels3 extends Component {
     dataValLengthMax={45}
     dataValLength={'Förnamn måste vara mellan 2 och 45 tecken'}
 dataValRequired={'Förnamn får inte vara tom'}
-id={this.props.input1Id}
+id={'firstname'}
 name={this.props.input1Id}
 type={'text'}
 value={this.state.value1} onchange={this.onChange1}/>

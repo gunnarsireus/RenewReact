@@ -65501,9 +65501,7 @@ webpackJsonp([0],[
 	        var _this = _possibleConstructorReturn(this, (Panels3.__proto__ || Object.getPrototypeOf(Panels3)).call(this, props));
 
 	        _this.onclick = _this.onclick.bind(_this);
-	        _this.onChange1 = _this.onChange1.bind(_this);
-	        _this.onChange2 = _this.onChange2.bind(_this);
-	        _this.onChange3 = _this.onChange3.bind(_this);
+	        _this.onChange1 = _this.handleChange1.bind(_this);
 	        _this.state = {
 	            value1: _this.props.value1,
 	            value2: _this.props.value2,
@@ -65525,25 +65523,11 @@ webpackJsonp([0],[
 	                value2: val2,
 	                value3: val3
 	            };
-	            document.getElementById(this.props.input1Id).setAttribute('value', this.props.input1Id);
-	            document.getElementById(this.props.input2Id).setAttribute('value', 'vvvv');
-	            document.getElementById(this.props.input3Id).setAttribute('value', 'vvvvdddd');
-	            alert('myfunc' + this.state.value3);
 	        }
 	    }, {
-	        key: 'onChange1',
-	        value: function onChange1() {
+	        key: 'handleChange1',
+	        value: function handleChange1() {
 	            alert('change1');
-	        }
-	    }, {
-	        key: 'onChange2',
-	        value: function onChange2() {
-	            alert('change2');
-	        }
-	    }, {
-	        key: 'onChange3',
-	        value: function onChange3() {
-	            alert('change3');
 	        }
 	    }, {
 	        key: 'render',
@@ -65589,7 +65573,7 @@ webpackJsonp([0],[
 	                                    dataValLengthMax: 45,
 	                                    dataValLength: 'Förnamn måste vara mellan 2 och 45 tecken',
 	                                    dataValRequired: 'Förnamn får inte vara tom',
-	                                    id: this.props.input1Id,
+	                                    id: 'firstname',
 	                                    name: this.props.input1Id,
 	                                    type: 'text',
 	                                    value: this.state.value1, onchange: this.onChange1 })
@@ -66200,7 +66184,10 @@ webpackJsonp([0],[
 	                        value12: response.lastname,
 	                        value13: response.phone
 	                    });
-	                    var x = this.refs.foo.myFunc(this.state.value11, this.state.value12, this.state.value13);
+	                    $("#firstname").trigger('change');
+	                    $("#firstname").val(this.state.value11);
+	                    $("#lastname").val(this.state.value12);
+	                    $("#phone").val(this.state.value13);
 	                }.bind(this),
 	                error: function (response) {
 	                    alert('Ej inloggad');

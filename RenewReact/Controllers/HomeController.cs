@@ -13,6 +13,7 @@ namespace RenewReact.Controllers
             Account account = base.GetLoginAccount(false);
             if (account == null || !HomeOperations.CanRender(account))
             {
+                ViewBag.UserAuthorized = "";
                 return base.ToLoginPage();
             }
             ViewBag.UserAuthorized = "UserAuthorized";

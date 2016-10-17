@@ -7,7 +7,6 @@ export default class Panels3 extends Component {
     constructor(props) {
         super(props);
         this.onclick = this.onclick.bind(this);
-        this.onChange1 = this.handleChange1.bind(this);
         this.state = {
             value1: this.props.value1,
             value2: this.props.value2,
@@ -15,18 +14,8 @@ export default class Panels3 extends Component {
         };
     };
     onclick(event){
-        alert(this.props.value1);
+        alert(this.state.value1);
     }
-    myFunc(val1,val2,val3) {
-        this.state = {
-            value1: val1,
-            value2: val2,
-            value3: val3
-        };
-    }
-    handleChange1() {
-        alert('change1');
-    };
     render() {
         return  <div className="panel panel-default">
 <div className="panel-heading">
@@ -50,7 +39,7 @@ dataValRequired={'Förnamn får inte vara tom'}
 id={'firstname'}
 name={this.props.input1Id}
 type={'text'}
-value={this.state.value1} onchange={this.onChange1}/>
+value={this.state.value1}/>
 
 </div>
 </div>
@@ -70,7 +59,7 @@ dataValRequired={'Efternamn får inte vara tom'}
 id={this.props.input2Id}
 name={this.props.input2Id}
 type={'text'}
-value={this.state.value2} onchange={this.onChange2}/>
+value={this.state.value2}/>
 </div>
 </div>
 <div className="form-group">
@@ -88,7 +77,7 @@ id={this.props.input3Id}
 name={this.props.input3Id}
 //onKeyPress = "return Site.Validation.isPhoneNumber(event)"
 type={'text'}
-value={this.state.value3} onchange={this.onChange3}/>
+value={this.state.value3}/>
 
 </div>
 </div>

@@ -1,7 +1,7 @@
 ﻿var detailsTemplate = require('./admin.html');
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Index from '../../Jsx/Admin/index.js';
+import Index from '../../Jsx/Admin/components/index.js';
 
 
 var viewModel = kendo.observable({

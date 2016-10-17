@@ -33,8 +33,7 @@ export default class ValidateAccountPanel extends Component {
         function navigateToHome() {
             //clearAll();   
             LoginActions.inactivateAll();
-            var isUserAuthorized = "UserAuthorized";
-            localStorage.setItem("isUserAuthorized", isUserAuthorized);
+            localStorage.setItem("isUserAuthorized", "UserAuthorized");
             var host = window.location.href + "#/";
             host = host.replace("Login", ""); //Remove Login from browser url
             window.location.href = host;

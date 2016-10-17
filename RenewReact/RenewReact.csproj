@@ -239,6 +239,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\css\Fullcalendar.css" />
+    <Content Include="App\Jsx\Admin\dispatcher\AdminDispatcher.js" />
+    <Content Include="App\Jsx\Admin\stores\AdminStore.js" />
     <Content Include="App\Jsx\ArendeKlasser\Index.js" />
     <Content Include="App\Jsx\Arkiverade\Index.js" />
     <Content Include="App\Jsx\Boende\Index.js" />
@@ -394,12 +396,14 @@
     <Content Include="App\img\statusrejectednext.png" />
     <Content Include="App\img\statusrejectedto.png" />
     <Content Include="App\img\view.png" />
-    <Content Include="App\Jsx\Admin\Index.js" />
+    <Content Include="App\Jsx\Admin\components\Index.js" />
     <Content Include="App\Jsx\Common\Input.js" />
+    <Content Include="App\Jsx\Admin\actions\AdminActions.js" />
     <Content Include="App\Jsx\Login\actions\LoginActions.js" />
     <Content Include="App\Jsx\Login\components\Bot.js" />
     <Content Include="App\Jsx\Login\components\Login.js" />
     <Content Include="App\Jsx\Login\components\CreateAccountPanel.js" />
+    <Content Include="App\Jsx\Admin\constants\AdminConstants.js" />
     <Content Include="App\Jsx\Login\constants\LoginConstants.js" />
     <Content Include="App\Jsx\Login\dispatcher\LoginDispatcher.js" />
     <Content Include="App\Jsx\Login\components\SecureAccountPanel.js" />
@@ -551,9 +555,6 @@
     <Content Include="App\Views\Test\test.js" />
     <Content Include="App\Views\Tidkoder\tidkoder.html" />
     <Content Include="App\Views\Tidkoder\tidkoder.js" />
-    <Content Include="Built\commons.chunk.js" />
-    <Content Include="Built\startRouter.entry.chunk.js" />
-    <Content Include="Built\vendor.entry.chunk.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
@@ -1445,6 +1446,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
+    <Folder Include="Built\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

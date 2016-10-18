@@ -11,7 +11,7 @@ let _valueList = [
     {id:4, name: "Value22", value: '5'},
     {id:5, name: "Value23", value: '6'}
 ];
-
+alert('_valueList[2].value' + _valueList[2].value );
 const CHANGE_EVENT = 'change';
 let AdminStore = Object.assign({}, EventEmitter.prototype, {
     getValues: function () {

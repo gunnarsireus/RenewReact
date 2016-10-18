@@ -21673,7 +21673,7 @@ webpackJsonp([0],[
 	var view = new kendo.View(homeTemplate, {
 	    model: viewModel,
 	    show: function show() {
-	        var isUserAuthorized = localStorage.getItem("isUserAuthorized");
+	        var dmin = localStorage.getItem("isUserAuthorized");
 	        if (document.getElementById("isUserAuthorized").innerHTML === 'UserAuthorized' || isUserAuthorized === 'UserAuthorized') {
 	            document.getElementsByTagName("header")[0].classList.remove("hidden");
 	            _reactDom2.default.render(_react2.default.createElement(_home2.default, null), document.getElementById("react-home"));
@@ -65718,7 +65718,7 @@ webpackJsonp([0],[
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var _valueList = [{ id: 0, name: "Value11", value: '1' }, { id: 1, name: "Value12", value: '2' }, { id: 2, name: "Value13", value: '3' }, { id: 3, name: "Value21", value: '4' }, { id: 4, name: "Value22", value: '5' }, { id: 5, name: "Value23", value: '6' }];
-
+	alert('_valueList[2].value' + _valueList[2].value);
 	var CHANGE_EVENT = 'change';
 	var AdminStore = Object.assign({}, _events.EventEmitter.prototype, {
 	    getValues: function getValues() {

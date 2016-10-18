@@ -38,7 +38,7 @@ export default class Index extends Component {
                     value12: AdminStore.getValue12(),
                     value13: AdminStore.getValue13()
                 });
-                alert('success' + this.state.value13);
+                alert('success ' + this.state.value13);
             }.bind(this),
             error: function(response) {
                 alert('Ej inloggad');

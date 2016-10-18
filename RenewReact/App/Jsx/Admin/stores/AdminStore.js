@@ -3,19 +3,32 @@
 import AdminDispatcher from '../dispatcher/AdminDispatcher';
 import AdminConstants from '../constants/AdminConstants';
 
-let _valueList = [
-    {id:0, name: "Value11", value: '1'},
-    {id:1, name: "Value12", value: '2'},
-    {id:2, name: "Value13", value: '3'},
-    {id:3, name: "Value21", value: '4'},
-    {id:4, name: "Value22", value: '5'},
-    {id:5, name: "Value23", value: '6'}
-];
-alert('_valueList[2].value' + _valueList[2].value );
+let _value11 = '1';
+let _value12 = '2';
+let _value13 = '3';
+let _value21 = '4';
+let _value22 = '5';
+let _value23 = '6';
+alert('_value13 ' + _value13 );
 const CHANGE_EVENT = 'change';
 let AdminStore = Object.assign({}, EventEmitter.prototype, {
-    getValues: function () {
-        return _valueList;
+    getValue11: function () {
+        return _value11;
+    },
+    getValue12: function () {
+        return _value12;
+    },
+    getValue13: function () {
+        return _value13;
+    },
+    getValue21: function () {
+        return _value21;
+    },
+    getValue22: function () {
+        return _value22;
+    },
+    getValue23: function () {
+        return _value23;
     },
     emitChange: function () {
         this.emit(CHANGE_EVENT);
@@ -29,22 +42,22 @@ let AdminStore = Object.assign({}, EventEmitter.prototype, {
 });
 
 function _setValue11(value) {
-    _valueList[0].value=value
+    _value11=value
 }
 function _setValue12(value) {
-    _valueList[1].value=value
+    _value12=value
 }
 function _setValue13(value) {
-    _valueList[2].value=value
+    _value13=value
 }
 function _setValue21(value) {
-    _valueList[3].value=value
+    _value21=value
 }
 function _setValue22(value) {
-    _valueList[4].value=value
+    _value22=value
 }
 function _setValue23(value) {
-    _valueList[5].value=value
+    _value23=value
 }
 
 

@@ -3,9 +3,6 @@ export default class Input extends Component {
     displayName: 'Input';
     constructor(props) {
         super(props);
-        this.state = {
-            value: this.props.value
-        };
         this.handleChange = this.handleChange.bind(this);
     };
     handleChange(event) {
@@ -22,7 +19,6 @@ export default class Input extends Component {
                     id={this.props.id}
                     name={this.props.name}
                     type={this.props.type}
-                    value={this.state.value}
                     onChange={this.handleChange} />
 
 ;}
@@ -30,7 +26,6 @@ export default class Input extends Component {
 Input.propTypes= 
 {
     className:React.PropTypes.string,
-    value: React.PropTypes.string,
     dataAutoajax: React.PropTypes.bool,
     dataVal:React.PropTypes.bool,
     dataValLengthMin:React.PropTypes.number,
@@ -45,7 +40,6 @@ Input.propTypes=
 Input.defaultProps =
 {
     className:'form-control',
-    value:'Hello',
     dataAutoajax: true,
     dataVal:true,
     dataValLengthMin:5,

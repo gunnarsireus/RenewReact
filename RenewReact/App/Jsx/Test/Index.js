@@ -10,14 +10,6 @@ export default class Index extends Component {
         super(props);
         this.updateProfile = this.updateProfile.bind(this);
         this.updatePassword = this.updatePassword.bind(this);
-        this.state = {
-            value11: "",
-            value12: "",
-            value13: "",
-            value21: "",
-            value22: "",
-            value23: ""
-        };
     };
     siteAjaxReadToProps(url) {
         siteShowProgress();
@@ -27,11 +19,6 @@ export default class Index extends Component {
             data: {},
             success: function (response) {
                 siteHideProgress();
-                this.setState({
-                    value11: response.firstname,
-                    value12: response.lastname,
-                    value13: response.phone
-                });
                 $("#firstname").trigger('change');
                 $("#firstname").val(this.state.value11);
                 $("#lastname").val(this.state.value12);
@@ -54,11 +41,6 @@ export default class Index extends Component {
             //clearValidationSummary(updateForm);
             var result={};
             siteAjaxPost('/Profile/UpdateProfile', data, result, alert('Kontoinformation uppdaterad'));
-            this.setState({
-                value11: response.firstname,
-                value12: response.lastname,
-                value13: response.phone
-            });
         }
     };
     updatePassword(){
@@ -71,9 +53,6 @@ export default class Index extends Component {
     };
     render() {
         return <div className="row"><div>
-            value11:  {this.state.value11} <br/>
-            value12:  {this.state.value12} <br/>
-            value13:  {this.state.value13} <br/>
             </div>
                  <div className="col-md-6">
                     <Panels3 ref='foo'
@@ -87,9 +66,6 @@ export default class Index extends Component {
                              text1={'Förnamn'} 
                              text2={'Efternamn'}
                              text3={'Telefon'}
-                             value1={this.state.value11} 
-                             value2={this.state.value12}
-                             value3={this.state.value13}
                              icon1={'glyphicon glyphicon-user'}
                              icon2={'glyphicon glyphicon-user'}
                              icon3={'glyphicon glyphicon-phone-alt'}/>

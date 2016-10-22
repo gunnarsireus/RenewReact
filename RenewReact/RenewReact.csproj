@@ -239,8 +239,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\css\Fullcalendar.css" />
-    <Content Include="App\Jsx\Admin\dispatcher\AdminDispatcher.js" />
-    <Content Include="App\Jsx\Admin\stores\AdminStore.js" />
     <Content Include="App\Jsx\ArendeKlasser\Index.js" />
     <Content Include="App\Jsx\Arkiverade\Index.js" />
     <Content Include="App\Jsx\Boende\Index.js" />
@@ -396,14 +394,12 @@
     <Content Include="App\img\statusrejectednext.png" />
     <Content Include="App\img\statusrejectedto.png" />
     <Content Include="App\img\view.png" />
-    <Content Include="App\Jsx\Admin\components\Index.js" />
+    <Content Include="App\Jsx\Admin\Index.js" />
     <Content Include="App\Jsx\Common\Input.js" />
-    <Content Include="App\Jsx\Admin\actions\AdminActions.js" />
     <Content Include="App\Jsx\Login\actions\LoginActions.js" />
     <Content Include="App\Jsx\Login\components\Bot.js" />
     <Content Include="App\Jsx\Login\components\Login.js" />
     <Content Include="App\Jsx\Login\components\CreateAccountPanel.js" />
-    <Content Include="App\Jsx\Admin\constants\AdminConstants.js" />
     <Content Include="App\Jsx\Login\constants\LoginConstants.js" />
     <Content Include="App\Jsx\Login\dispatcher\LoginDispatcher.js" />
     <Content Include="App\Jsx\Login\components\SecureAccountPanel.js" />

@@ -1,7 +1,7 @@
 ﻿var detailsTemplate = require('./admin.html');
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Index from '../../Jsx/Admin/components/index.js';
+import Index from '../../Jsx/Admin/index.js';
 
 
 var viewModel = kendo.observable({
@@ -13,7 +13,13 @@ var view = new kendo.View(detailsTemplate, {
     show: function () {
 
         ReactDOM.render(
-            <Index />,
+            <Index input11Id={'firstname'}
+                   input12Id={'lastname'}
+                   input13Id={'phone'}   
+                   input21Id={'password'}  
+                   input22Id={'newpassword1'}   
+                   input23Id={'newpassword2'}  
+    />,
             document.getElementById("react-admin"));
         kendo.fx(this.element).fade('in').duration(100).play();
     }

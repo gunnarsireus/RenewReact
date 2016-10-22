@@ -7,14 +7,9 @@ export default class Panels3 extends Component {
     constructor(props) {
         super(props);
         this.onclick = this.onclick.bind(this);
-        this.state = {
-            value1: this.props.value1,
-            value2: this.props.value2,
-            value3: this.props.value3
-        };
     };
     onclick(event){
-        alert(this.state.value1);
+        alert('Button clicked');
     }
     render() {
         return  <div className="panel panel-default">
@@ -38,8 +33,7 @@ export default class Panels3 extends Component {
 dataValRequired={'Förnamn får inte vara tom'}
 id={'firstname'}
 name={this.props.input1Id}
-type={'text'}
-value={this.state.value1}/>
+type={'text'}/>
 
 </div>
 </div>
@@ -58,8 +52,7 @@ dataValLength={'Efternamn måste vara mellan 2 och 45 tecken'}
 dataValRequired={'Efternamn får inte vara tom'}
 id={this.props.input2Id}
 name={this.props.input2Id}
-type={'text'}
-value={this.state.value2}/>
+type={'text'}/>
 </div>
 </div>
 <div className="form-group">
@@ -76,8 +69,7 @@ dataValLength={'Telefon får inte överstiga 45 tecken'}
 id={this.props.input3Id}
 name={this.props.input3Id}
 //onKeyPress = "return Site.Validation.isPhoneNumber(event)"
-type={'text'}
-value={this.state.value3}/>
+type={'text'}/>
 
 </div>
 </div>
@@ -103,9 +95,6 @@ Panels3.propTypes= {
     text1: React.PropTypes.string.isRequired,
     text2: React.PropTypes.string.isRequired,
     text3: React.PropTypes.string.isRequired,
-    value1: React.PropTypes.string.isRequired,
-    value2: React.PropTypes.string.isRequired,
-    value3: React.PropTypes.string.isRequired,
     icon1: React.PropTypes.string.isRequired,
     icon2: React.PropTypes.string.isRequired,
     icon3: React.PropTypes.string.isRequired,

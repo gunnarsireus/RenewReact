@@ -1,24 +1,14 @@
 ﻿import React, { Component } from 'react';
-import style from '../../../css/site.css';
-import {siteAjaxPost,siteGoTo,siteShowProgress,siteHideProgress} from '../../../js/site-base.js';
-import {getFormData} from '../../../js/site-components/site-xcomp-inputforms.js';
-import {clearValidationSummary} from '../../../js/site-components/site-xcomp-validation.js';
-import {clearAll} from '../../../js/site-components/site-xcomp-localstorage.js';
-import Panels3 from '../../Common/Panels3.js';
-import AdminStore from '../stores/AdminStore';
-import AdminActions from '../actions/AdminActions';
+import style from '../../css/site.css';
+import {siteAjaxPost,siteGoTo,siteShowProgress,siteHideProgress} from '../../js/site-base.js';
+import {getFormData} from '../../js/site-components/site-xcomp-inputforms.js';
+import {clearValidationSummary} from '../../js/site-components/site-xcomp-validation.js';
+import {clearAll} from '../../js/site-components/site-xcomp-localstorage.js';
+import Panels3 from '../Common/Panels3.js';
 import { Grid, Row, Col, Glyphicon, Button } from 'react-bootstrap';
 export default class Index extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            value11: AdminStore.getValue11(),
-            value12: AdminStore.getValue12(),
-            value13: AdminStore.getValue13(),
-            value21: AdminStore.getValue21(),
-            value22: AdminStore.getValue22(),
-            value23: AdminStore.getValue23()
-        };
         this.onChange = this.onChange.bind(this);
         this.onClick = this.onClick.bind(this);
     };
@@ -30,15 +20,9 @@ export default class Index extends Component {
             data: {},
             success: function (response) {
                 siteHideProgress();
-                AdminActions.setValue11(response.firstname); 
-                AdminActions.setValue12(response.lastname); 
-                AdminActions.setValue13(response.phone); 
-                this.setState({
-                    value11: AdminStore.getValue11(),
-                    value12: AdminStore.getValue12(),
-                    value13: AdminStore.getValue13()
-                });
-                alert('success ' + this.state.value13);
+                document.getElementById(this.props.input11Id).value=response.firstname;
+                document.getElementById(this.props.input12Id).value=response.lastname;
+                document.getElementById(this.props.input13Id).value=response.phone;
             }.bind(this),
             error: function(response) {
                 alert('Ej inloggad');
@@ -48,11 +32,9 @@ export default class Index extends Component {
         });
     };
     componentDidMount() {
-        AdminStore.addChangeListener(this.onChange);
         this.siteAjaxReadToProps('/Profile/ReadProfile'); 
     };
     componentWillUnmount() {
-        AdminStore.removeChangeListener(this.onChange);
     };
     updateProfile(){
         var updateForm = $('#update-profile-form');
@@ -75,25 +57,10 @@ export default class Index extends Component {
         }
     };
     onChange() {
-        this.setState({
-            value11: AdminStore.getValue11(),
-            value12: AdminStore.getValue12(),
-            value13: AdminStore.getValue13(),
-            value21: AdminStore.getValue21(),
-            value22: AdminStore.getValue22(),
-            value23: AdminStore.getValue23()
-        });
+        alert('onChange()');
     };
     onClick() {
-        this.setState({
-            value11: AdminStore.getValue11(),
-            value12: AdminStore.getValue12(),
-            value13: AdminStore.getValue13(),
-            value21: AdminStore.getValue21(),
-            value22: AdminStore.getValue22(),
-            value23: AdminStore.getValue23()
-        });
-        alert('onClick()' + this.state.value13);
+        alert('onClick()');
     };
     render() {
         return      <div className="row">
@@ -138,9 +105,6 @@ export default class Index extends Component {
                              text1={'Förnamn'} 
                              text2={'Efternamn'}
                              text3={'Telefon'}
-                             value1={this.state.value11}
-                             value2={this.state.value12}
-                             value3={this.state.value13}
                              icon1={'glyphicon glyphicon-user'}
                              icon2={'glyphicon glyphicon-user'}
                              icon3={'glyphicon glyphicon-phone-alt'}/>
@@ -156,9 +120,6 @@ export default class Index extends Component {
                              text1={'Gällande'} 
                              text2={'Nytt'}
                              text3={'Bekräfta'}
-                             value1={this.state.value21}
-                             value2={this.state.value22}
-                             value3={this.state.value23}
                              icon1={'glyphicon glyphicon-lock'}
                              icon2={'glyphicon glyphicon-lock'}
                              icon3={'glyphicon glyphicon-lock'}/>
@@ -168,4 +129,12 @@ export default class Index extends Component {
     </div>
         ;
     }
+};
+Index.propTypes= {
+    input11Id: React.PropTypes.string.isRequired,
+    input12Id: React.PropTypes.string.isRequired,
+    input13Id: React.PropTypes.string.isRequired,
+    input21Id: React.PropTypes.string.isRequired,
+    input22Id: React.PropTypes.string.isRequired,
+    input23Id: React.PropTypes.string.isRequired
 };

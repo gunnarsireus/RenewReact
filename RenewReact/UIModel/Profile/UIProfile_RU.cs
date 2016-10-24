@@ -13,6 +13,10 @@ namespace RenewReact.UIModel
         public string address   { get; set; }
         public string floor     { get; set; }
         public string apartment { get; set; }
+        public string username { get; set; }
+        public string customername { get; set; }
+        public string authorization { get; set; }
+        public string lastlogin { get; set; }
 
         public UIProfile_RU()
         {

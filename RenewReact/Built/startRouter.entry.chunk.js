@@ -65276,9 +65276,13 @@ webpackJsonp([0],[
 	                data: {},
 	                success: function (response) {
 	                    (0, _siteBase.siteHideProgress)();
-	                    document.getElementById(this.props.input11Id).value = response.firstname;
-	                    document.getElementById(this.props.input12Id).value = response.lastname;
-	                    document.getElementById(this.props.input13Id).value = response.phone;
+	                    $('#' + this.props.input11Id).val(response.firstname);
+	                    $('#' + this.props.input12Id).val(response.lastname);
+	                    $('#' + this.props.input13Id).val(response.phone);
+	                    $('#username').html(response.username);
+	                    $('#customername').html(response.customername);
+	                    $('#authorization').html(response.authorization);
+	                    $('#lastlogin').html(response.lastlogin);
 	                }.bind(this),
 	                error: function (response) {
 	                    alert('Ej inloggad');
@@ -65354,7 +65358,7 @@ webpackJsonp([0],[
 	                                null,
 	                                'Användare'
 	                            ),
-	                            'admin'
+	                            _react2.default.createElement('div', { id: 'username' })
 	                        ),
 	                        _react2.default.createElement(
 	                            _reactBootstrap.Button,
@@ -65373,7 +65377,7 @@ webpackJsonp([0],[
 	                                null,
 	                                'Förening'
 	                            ),
-	                            '--'
+	                            _react2.default.createElement('div', { id: 'customername' })
 	                        )
 	                    ),
 	                    _react2.default.createElement(
@@ -65387,7 +65391,7 @@ webpackJsonp([0],[
 	                                null,
 	                                'Behörighet'
 	                            ),
-	                            'Admin'
+	                            _react2.default.createElement('div', { id: 'authorization' })
 	                        )
 	                    ),
 	                    _react2.default.createElement(
@@ -65401,7 +65405,7 @@ webpackJsonp([0],[
 	                                null,
 	                                'Inloggad sedan'
 	                            ),
-	                            '2016-10-05 18:52'
+	                            _react2.default.createElement('div', { id: 'lastlogin' })
 	                        )
 	                    )
 	                ),

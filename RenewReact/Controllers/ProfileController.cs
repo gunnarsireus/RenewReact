@@ -9,6 +9,8 @@ using ServerLibrary.Operations;
 using ServerLibrary.Collections;
 
 using RenewReact.UIModel;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace RenewReact.Controllers
 {
@@ -47,8 +49,16 @@ namespace RenewReact.Controllers
                 try
                 {
                     Account account = base.GetLoginAccount();
+                    Customer customer = account.customerid == Customer.CUSTOMER_ANY ? null : context.Customers.Find(account.customerid);
                     Account dbm = ProfileOperations.TryRead(account, context, account.id);
-                    return Json(new UIProfile_RU(dbm));
+                    string CustomerName = (customer == null) ? "--" : customer.name;
+                    UIProfile_RU j = new UIProfile_RU(dbm);
+                    j.username = account.email;
+                    j.customername = CustomerName;
+                    j.authorization = Account.AuthzAsString(account.authz);
+                    j.lastlogin = DateUtils.ConvertToDateTimeString(account.lastlogin);
+
+                    return Json(j);
                 }
                 catch (Exception e)
                 {

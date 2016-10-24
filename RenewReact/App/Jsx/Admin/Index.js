@@ -20,9 +20,13 @@ export default class Index extends Component {
             data: {},
             success: function (response) {
                 siteHideProgress();
-                document.getElementById(this.props.input11Id).value=response.firstname;
-                document.getElementById(this.props.input12Id).value=response.lastname;
-                document.getElementById(this.props.input13Id).value=response.phone;
+                $('#' + this.props.input11Id).val(response.firstname);
+                $('#' + this.props.input12Id).val(response.lastname);
+                $('#' + this.props.input13Id).val(response.phone);
+                $('#username').html(response.username);
+                $('#customername').html(response.customername);
+                $('#authorization').html(response.authorization);
+                $('#lastlogin').html(response.lastlogin);
             }.bind(this),
             error: function(response) {
                 alert('Ej inloggad');
@@ -69,26 +73,26 @@ export default class Index extends Component {
             <div className="row">
                 <div className="col-md-12">
                     <h4>Användare</h4>
-                    admin
+                    <div id="username"></div>
                 </div>
                 <Button onClick={this.onClick}>Test</Button>
             </div>
             <div className="row site-row-spacing">
                 <div className="col-md-12">
                     <h4>Förening</h4>
-                    --
+                    <div id="customername"></div>
                 </div>
             </div>
             <div className="row site-row-spacing">
                 <div className="col-md-12">
                     <h4>Behörighet</h4>
-                    Admin
+                    <div id="authorization"></div>
                 </div>
             </div>
             <div className="row site-row-spacing">
                 <div className="col-md-12">
                     <h4>Inloggad sedan</h4>
-                    2016-10-05 18:52
+                    <div id="lastlogin"></div>
                 </div>
             </div>
         </div>

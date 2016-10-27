@@ -9,8 +9,43 @@ import { Grid, Row, Col, Glyphicon, Button } from 'react-bootstrap';
 export default class Index extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            value1: this.props.value1,
+            value2: this.props.value2,
+            value3: this.props.value3,
+            value4: this.props.value4,
+            value5: this.props.value5,
+            value6: this.props.value6
+        };
         this.onChange = this.onChange.bind(this);
         this.onClick = this.onClick.bind(this);
+        console.log('Index constructor value1 ' + this.props.value1);
+    };
+    componentWillReceiveProps(nextProps) {
+        console.log('Index componentWillReceiveProps value1:' + nextProps.value1);
+        if (this.props.value1 != nextProps.value1) {
+            this.setState({ value1: nextProps.value1 });
+        };
+        console.log('Index componentWillReceiveProps value2:' + nextProps.value2);
+        if (this.props.value2 != nextProps.value2) {
+            this.setState({ value2: nextProps.value2 });
+        };
+        console.log('Index componentWillReceiveProps value3:' + nextProps.value3);
+        if (this.props.value3 != nextProps.value3) {
+            this.setState({ value3: nextProps.value3 });
+        };
+        console.log('Index componentWillReceiveProps value4:' + nextProps.value4);
+        if (this.props.value4 != nextProps.value4) {
+            this.setState({ value4: nextProps.value4 });
+        };
+        console.log('Index componentWillReceiveProps value5:' + nextProps.value5);
+        if (this.props.value5 != nextProps.value5) {
+            this.setState({ value5: nextProps.value5 });
+        };
+        console.log('Index componentWillReceiveProps value6:' + nextProps.value6);
+        if (this.props.value6 != nextProps.value6) {
+            this.setState({ value6: nextProps.value6 });
+        };
     };
     siteAjaxReadToProps(url) {
         siteShowProgress();
@@ -20,9 +55,9 @@ export default class Index extends Component {
             data: {},
             success: function (response) {
                 siteHideProgress();
-                $('#' + this.props.input11Id).val(response.firstname);
-                $('#' + this.props.input12Id).val(response.lastname);
-                $('#' + this.props.input13Id).val(response.phone);
+                this.setState({ value1: response.firstname });
+                this.setState({ value2: response.lastname });
+                this.setState({ value3: response.phone });
                 $('#username').html(response.username);
                 $('#customername').html(response.customername);
                 $('#authorization').html(response.authorization);
@@ -99,7 +134,10 @@ export default class Index extends Component {
         <div className="col-md-10 site-page-content">
             <div className="row">
                 <div className="col-md-6">
-                    <Panels3 input1Id={'firstname'}
+                    <Panels3 value1={this.state.value1}
+                             value2={this.state.value2}
+                             value3={this.state.value3}
+                             input1Id={'firstname'}
                              input2Id={'lastname'}
                              input3Id={'phone'}
                              formId={'update-profile-form'}
@@ -114,7 +152,10 @@ export default class Index extends Component {
                              icon3={'glyphicon glyphicon-phone-alt'}/>
                 </div>
                 <div className="col-md-6">
-                    <Panels3 input1Id={'password'}
+                    <Panels3 value1={this.state.value4}
+                             value2={this.state.value5}
+                             value3={this.state.value6}
+                             input1Id={'password'}
                              input2Id={'newpassword1'}
                              input3Id={'newpassword2'}
                              formId={'change-password-form'}
@@ -135,6 +176,12 @@ export default class Index extends Component {
     }
 };
 Index.propTypes= {
+    value1: React.PropTypes.string.isRequired,
+    value2: React.PropTypes.string.isRequired,
+    value3: React.PropTypes.string.isRequired,
+    value4: React.PropTypes.string.isRequired,
+    value5: React.PropTypes.string.isRequired,
+    value6: React.PropTypes.string.isRequired,
     input11Id: React.PropTypes.string.isRequired,
     input12Id: React.PropTypes.string.isRequired,
     input13Id: React.PropTypes.string.isRequired,

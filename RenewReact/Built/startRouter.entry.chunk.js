@@ -43658,6 +43658,8 @@ webpackJsonp([0],[
 
 	        var _this = _possibleConstructorReturn(this, (ValidateAccountPanel.__proto__ || Object.getPrototypeOf(ValidateAccountPanel)).call(this, props));
 
+	        value1: _this.props.value1;
+	        value2: _this.props.value2;
 	        _this.onLogin = _this.onLogin.bind(_this);
 	        _this.onForgot = _this.onForgot.bind(_this);
 	        _this.onKeyDown = _this.onKeyDown.bind(_this); //Not working
@@ -43666,6 +43668,18 @@ webpackJsonp([0],[
 	    }
 
 	    _createClass(ValidateAccountPanel, [{
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            console.log('Panels3 componentWillReceiveProps value1:' + nextProps.value1);
+	            if (this.props.value1 != nextProps.value1) {
+	                this.setState({ value1: nextProps.value1 });
+	            };
+	            console.log('Panels3 componentWillReceiveProps value2:' + nextProps.value2);
+	            if (this.props.value2 != nextProps.value2) {
+	                this.setState({ value2: nextProps.value2 });
+	            };
+	        }
+	    }, {
 	        key: 'displayStyle',
 	        value: function displayStyle() {
 	            return this.props.show ? 'block' : 'none';
@@ -44078,11 +44092,22 @@ webpackJsonp([0],[
 
 	        var _this = _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
 
+	        _this.state = {
+	            value: _this.props.value
+	        };
 	        _this.handleChange = _this.handleChange.bind(_this);
 	        return _this;
 	    }
 
 	    _createClass(Input, [{
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            console.log('Input componentWillReceiveProps value:' + nextProps.value);
+	            if (this.props.value != nextProps.value) {
+	                this.setState({ value: nextProps.value });
+	            }
+	        }
+	    }, {
 	        key: 'handleChange',
 	        value: function handleChange(event) {
 	            this.setState({ value: event.target.value });
@@ -44090,7 +44115,8 @@ webpackJsonp([0],[
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement('input', { className: this.props.className,
+	            return _react2.default.createElement('input', { value: this.state.value,
+	                className: this.props.className,
 	                'data-autoajax': this.props.dataAutoajax,
 	                'data-val': this.props.dataVal,
 	                'data-val-length-min': this.props.dataValLengthMin,
@@ -44110,6 +44136,7 @@ webpackJsonp([0],[
 	exports.default = Input;
 	;
 	Input.propTypes = {
+	    value: _react2.default.PropTypes.string,
 	    className: _react2.default.PropTypes.string,
 	    dataAutoajax: _react2.default.PropTypes.bool,
 	    dataVal: _react2.default.PropTypes.bool,
@@ -44123,6 +44150,7 @@ webpackJsonp([0],[
 	    readOnly: _react2.default.PropTypes.bool
 	};
 	Input.defaultProps = {
+	    value: '',
 	    className: 'form-control',
 	    dataAutoajax: true,
 	    dataVal: true,
@@ -65198,7 +65226,13 @@ webpackJsonp([0],[
 	    model: viewModel,
 	    show: function show() {
 
-	        _reactDom2.default.render(_react2.default.createElement(_index2.default, { input11Id: 'firstname',
+	        _reactDom2.default.render(_react2.default.createElement(_index2.default, { value1: '',
+	            value2: '',
+	            value3: '',
+	            value4: '',
+	            value5: '',
+	            value6: '',
+	            input11Id: 'firstname',
 	            input12Id: 'lastname',
 	            input13Id: 'phone',
 	            input21Id: 'password',
@@ -65261,12 +65295,49 @@ webpackJsonp([0],[
 
 	        var _this = _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).call(this, props));
 
+	        _this.state = {
+	            value1: _this.props.value1,
+	            value2: _this.props.value2,
+	            value3: _this.props.value3,
+	            value4: _this.props.value4,
+	            value5: _this.props.value5,
+	            value6: _this.props.value6
+	        };
 	        _this.onChange = _this.onChange.bind(_this);
 	        _this.onClick = _this.onClick.bind(_this);
+	        console.log('Index constructor value1 ' + _this.props.value1);
 	        return _this;
 	    }
 
 	    _createClass(Index, [{
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            console.log('Index componentWillReceiveProps value1:' + nextProps.value1);
+	            if (this.props.value1 != nextProps.value1) {
+	                this.setState({ value1: nextProps.value1 });
+	            };
+	            console.log('Index componentWillReceiveProps value2:' + nextProps.value2);
+	            if (this.props.value2 != nextProps.value2) {
+	                this.setState({ value2: nextProps.value2 });
+	            };
+	            console.log('Index componentWillReceiveProps value3:' + nextProps.value3);
+	            if (this.props.value3 != nextProps.value3) {
+	                this.setState({ value3: nextProps.value3 });
+	            };
+	            console.log('Index componentWillReceiveProps value4:' + nextProps.value4);
+	            if (this.props.value4 != nextProps.value4) {
+	                this.setState({ value4: nextProps.value4 });
+	            };
+	            console.log('Index componentWillReceiveProps value5:' + nextProps.value5);
+	            if (this.props.value5 != nextProps.value5) {
+	                this.setState({ value5: nextProps.value5 });
+	            };
+	            console.log('Index componentWillReceiveProps value6:' + nextProps.value6);
+	            if (this.props.value6 != nextProps.value6) {
+	                this.setState({ value6: nextProps.value6 });
+	            };
+	        }
+	    }, {
 	        key: 'siteAjaxReadToProps',
 	        value: function siteAjaxReadToProps(url) {
 	            (0, _siteBase.siteShowProgress)();
@@ -65276,9 +65347,9 @@ webpackJsonp([0],[
 	                data: {},
 	                success: function (response) {
 	                    (0, _siteBase.siteHideProgress)();
-	                    $('#' + this.props.input11Id).val(response.firstname);
-	                    $('#' + this.props.input12Id).val(response.lastname);
-	                    $('#' + this.props.input13Id).val(response.phone);
+	                    this.setState({ value1: response.firstname });
+	                    this.setState({ value2: response.lastname });
+	                    this.setState({ value3: response.phone });
 	                    $('#username').html(response.username);
 	                    $('#customername').html(response.customername);
 	                    $('#authorization').html(response.authorization);
@@ -65418,7 +65489,10 @@ webpackJsonp([0],[
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'col-md-6' },
-	                            _react2.default.createElement(_Panels2.default, { input1Id: 'firstname',
+	                            _react2.default.createElement(_Panels2.default, { value1: this.state.value1,
+	                                value2: this.state.value2,
+	                                value3: this.state.value3,
+	                                input1Id: 'firstname',
 	                                input2Id: 'lastname',
 	                                input3Id: 'phone',
 	                                formId: 'update-profile-form',
@@ -65435,7 +65509,10 @@ webpackJsonp([0],[
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'col-md-6' },
-	                            _react2.default.createElement(_Panels2.default, { input1Id: 'password',
+	                            _react2.default.createElement(_Panels2.default, { value1: this.state.value4,
+	                                value2: this.state.value5,
+	                                value3: this.state.value6,
+	                                input1Id: 'password',
 	                                input2Id: 'newpassword1',
 	                                input3Id: 'newpassword2',
 	                                formId: 'change-password-form',
@@ -65461,6 +65538,12 @@ webpackJsonp([0],[
 	exports.default = Index;
 	;
 	Index.propTypes = {
+	    value1: _react2.default.PropTypes.string.isRequired,
+	    value2: _react2.default.PropTypes.string.isRequired,
+	    value3: _react2.default.PropTypes.string.isRequired,
+	    value4: _react2.default.PropTypes.string.isRequired,
+	    value5: _react2.default.PropTypes.string.isRequired,
+	    value6: _react2.default.PropTypes.string.isRequired,
 	    input11Id: _react2.default.PropTypes.string.isRequired,
 	    input12Id: _react2.default.PropTypes.string.isRequired,
 	    input13Id: _react2.default.PropTypes.string.isRequired,
@@ -65513,11 +65596,33 @@ webpackJsonp([0],[
 
 	        var _this = _possibleConstructorReturn(this, (Panels3.__proto__ || Object.getPrototypeOf(Panels3)).call(this, props));
 
+	        _this.state = {
+	            value1: _this.props.value1,
+	            value2: _this.props.value2,
+	            value3: _this.props.value3
+	        };
+
 	        _this.onclick = _this.onclick.bind(_this);
 	        return _this;
 	    }
 
 	    _createClass(Panels3, [{
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            console.log('Panels3 componentWillReceiveProps value1:' + nextProps.value1);
+	            if (this.props.value1 != nextProps.value1) {
+	                this.setState({ value1: nextProps.value1 });
+	            };
+	            console.log('Panels3 componentWillReceiveProps value2:' + nextProps.value2);
+	            if (this.props.value2 != nextProps.value2) {
+	                this.setState({ value2: nextProps.value2 });
+	            };
+	            console.log('Panels3 componentWillReceiveProps value3:' + nextProps.value3);
+	            if (this.props.value3 != nextProps.value3) {
+	                this.setState({ value3: nextProps.value3 });
+	            };
+	        }
+	    }, {
 	        key: 'onclick',
 	        value: function onclick(event) {
 	            alert('Button clicked');
@@ -65560,6 +65665,7 @@ webpackJsonp([0],[
 	                                    _react2.default.createElement('span', { className: this.props.icon1 })
 	                                ),
 	                                _react2.default.createElement(_Input2.default, { className: 'form-control',
+	                                    value: this.state.value1,
 	                                    dataAutoajax: true,
 	                                    dataVal: true,
 	                                    dataValLengthMin: 2,
@@ -65588,6 +65694,7 @@ webpackJsonp([0],[
 	                                    _react2.default.createElement('span', { className: this.props.icon2 })
 	                                ),
 	                                _react2.default.createElement(_Input2.default, { className: 'form-control',
+	                                    value: this.state.value2,
 	                                    dataAutoajax: true,
 	                                    dataVal: true,
 	                                    dataValLengthMin: 2,
@@ -65616,6 +65723,7 @@ webpackJsonp([0],[
 	                                    _react2.default.createElement('span', { className: this.props.icon3 })
 	                                ),
 	                                _react2.default.createElement(_Input2.default, { className: 'form-control',
+	                                    value: this.state.value3,
 	                                    dataAutoajax: true,
 	                                    dataVal: true,
 	                                    dataValLengthMax: 45,
@@ -65652,6 +65760,9 @@ webpackJsonp([0],[
 	exports.default = Panels3;
 	;
 	Panels3.propTypes = {
+	    value1: _react2.default.PropTypes.string.isRequired,
+	    value2: _react2.default.PropTypes.string.isRequired,
+	    value3: _react2.default.PropTypes.string.isRequired,
 	    input1Id: _react2.default.PropTypes.string.isRequired,
 	    input2Id: _react2.default.PropTypes.string.isRequired,
 	    input3Id: _react2.default.PropTypes.string.isRequired,

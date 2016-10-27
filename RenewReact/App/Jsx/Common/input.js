@@ -3,13 +3,23 @@ export default class Input extends Component {
     displayName: 'Input';
     constructor(props) {
         super(props);
+        this.state = {
+            value: this.props.value
+        };
         this.handleChange = this.handleChange.bind(this);
+    };
+    componentWillReceiveProps(nextProps) {
+        console.log('Input componentWillReceiveProps value:' + nextProps.value);
+        if (this.props.value != nextProps.value) {
+            this.setState({ value: nextProps.value });
+        }
     };
     handleChange(event) {
         this.setState({value: event.target.value});
     };
     render() {
-        return <input className={this.props.className}
+        return <input value={this.state.value} 
+                    className={this.props.className}
                     data-autoajax={this.props.dataAutoajax}
                     data-val={this.props.dataVal}
                     data-val-length-min={this.props.dataValLengthMin}
@@ -25,6 +35,7 @@ export default class Input extends Component {
 };
 Input.propTypes= 
 {
+    value:React.PropTypes.string,
     className:React.PropTypes.string,
     dataAutoajax: React.PropTypes.bool,
     dataVal:React.PropTypes.bool,
@@ -39,6 +50,7 @@ Input.propTypes=
 }
 Input.defaultProps =
 {
+    value:'',
     className:'form-control',
     dataAutoajax: true,
     dataVal:true,

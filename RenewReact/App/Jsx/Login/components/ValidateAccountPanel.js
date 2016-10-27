@@ -12,10 +12,22 @@ export default class ValidateAccountPanel extends Component {
     displayName: 'ValidateAccountPanel';
     constructor(props) {
         super(props);
+        value1: this.props.value1;
+        value2: this.props.value2;
         this.onLogin = this.onLogin.bind(this);
         this.onForgot = this.onForgot.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);  //Not working
         this.onRegister = this.onRegister.bind(this);
+    };
+    componentWillReceiveProps(nextProps) {
+        console.log('Panels3 componentWillReceiveProps value1:' + nextProps.value1);
+        if (this.props.value1 != nextProps.value1) {
+            this.setState({ value1: nextProps.value1 });
+        };
+        console.log('Panels3 componentWillReceiveProps value2:' + nextProps.value2);
+        if (this.props.value2 != nextProps.value2) {
+            this.setState({ value2: nextProps.value2 });
+        };
     };
     displayStyle() {
         return (this.props.show)?'block':'none';

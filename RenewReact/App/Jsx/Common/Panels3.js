@@ -6,7 +6,27 @@ export default class Panels3 extends Component {
     displayName: 'Panels3';
     constructor(props) {
         super(props);
+        this.state = {
+            value1: this.props.value1,
+            value2: this.props.value2,
+            value3: this.props.value3
+        };
+
         this.onclick = this.onclick.bind(this);
+    };
+    componentWillReceiveProps(nextProps) {
+        console.log('Panels3 componentWillReceiveProps value1:' + nextProps.value1);
+        if (this.props.value1 != nextProps.value1) {
+            this.setState({ value1: nextProps.value1 });
+        };
+        console.log('Panels3 componentWillReceiveProps value2:' + nextProps.value2);
+        if (this.props.value2 != nextProps.value2) {
+            this.setState({ value2: nextProps.value2 });
+        };
+        console.log('Panels3 componentWillReceiveProps value3:' + nextProps.value3);
+        if (this.props.value3 != nextProps.value3) {
+            this.setState({ value3: nextProps.value3 });
+        };
     };
     onclick(event){
         alert('Button clicked');
@@ -25,15 +45,16 @@ export default class Panels3 extends Component {
 <span className={this.props.icon1}></span>
 </span>
 <Input className="form-control"
+    value={this.state.value1}
     dataAutoajax={true}
     dataVal={true}
     dataValLengthMin={2}
     dataValLengthMax={45}
     dataValLength={'Förnamn måste vara mellan 2 och 45 tecken'}
-dataValRequired={'Förnamn får inte vara tom'}
-id={'firstname'}
-name={this.props.input1Id}
-type={'text'}/>
+    dataValRequired={'Förnamn får inte vara tom'}
+    id={'firstname'}
+    name={this.props.input1Id}
+    type={'text'}/>
 
 </div>
 </div>
@@ -44,15 +65,16 @@ type={'text'}/>
 <span className={this.props.icon2}></span>
 </span>
 <Input className="form-control"
-dataAutoajax={true}
-dataVal={true}
-dataValLengthMin={2}
-dataValLengthMax={45}
-dataValLength={'Efternamn måste vara mellan 2 och 45 tecken'}
-dataValRequired={'Efternamn får inte vara tom'}
-id={this.props.input2Id}
-name={this.props.input2Id}
-type={'text'}/>
+    value={this.state.value2}
+    dataAutoajax={true}
+    dataVal={true}
+    dataValLengthMin={2}
+    dataValLengthMax={45}
+    dataValLength={'Efternamn måste vara mellan 2 och 45 tecken'}
+    dataValRequired={'Efternamn får inte vara tom'}
+    id={this.props.input2Id}
+    name={this.props.input2Id}
+    type={'text'}/>
 </div>
 </div>
 <div className="form-group">
@@ -62,14 +84,15 @@ type={'text'}/>
 <span className={this.props.icon3}></span>
 </span>
 <Input className="form-control"
-dataAutoajax={true}
-dataVal={true}
-dataValLengthMax={45}
-dataValLength={'Telefon får inte överstiga 45 tecken'}
-id={this.props.input3Id}
-name={this.props.input3Id}
-//onKeyPress = "return Site.Validation.isPhoneNumber(event)"
-type={'text'}/>
+    value={this.state.value3}
+    dataAutoajax={true}
+    dataVal={true}
+    dataValLengthMax={45}
+    dataValLength={'Telefon får inte överstiga 45 tecken'}
+    id={this.props.input3Id}
+    name={this.props.input3Id}
+    //onKeyPress = "return Site.Validation.isPhoneNumber(event)"
+    type={'text'}/>
 
 </div>
 </div>
@@ -85,6 +108,9 @@ type={'text'}/>
     }
 };
 Panels3.propTypes= {
+    value1: React.PropTypes.string.isRequired,
+    value2: React.PropTypes.string.isRequired,
+    value3: React.PropTypes.string.isRequired,
     input1Id: React.PropTypes.string.isRequired,
     input2Id: React.PropTypes.string.isRequired,
     input3Id: React.PropTypes.string.isRequired,

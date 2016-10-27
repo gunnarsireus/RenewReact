@@ -114,8 +114,8 @@ export default class CreateAccountPanel extends Component {
                            id="phone"
                            name="phone"
                                 //onkeypress = "return Site.Validation.isPhoneNumber(event)"
-                    type="text"
-                    value="" />
+                            type="text"
+                            value="" />
                     </Col>
                 </div>
 

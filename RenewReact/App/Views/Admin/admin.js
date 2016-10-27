@@ -13,7 +13,13 @@ var view = new kendo.View(detailsTemplate, {
     show: function () {
 
         ReactDOM.render(
-            <Index input11Id={'firstname'}
+            <Index value1={''}
+                   value2={''}
+                   value3={''}
+                   value4={''}
+                   value5={''}
+                   value6={''}
+                   input11Id={'firstname'}
                    input12Id={'lastname'}
                    input13Id={'phone'}   
                    input21Id={'password'}  

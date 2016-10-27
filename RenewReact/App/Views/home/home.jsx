@@ -1,6 +1,6 @@
 ﻿var homeTemplate = require('./home.html');
 var layout = require('../Layout/layout.js');
-var login = require('../Login/login.js');
+var login = require('../Login/login.jsx');
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Home from '../../Jsx/Home/components/home.js';

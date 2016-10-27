@@ -30,7 +30,8 @@ module.exports = {
             { test: /\.css$/, loader: "style!css" },
             { test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.woff2$|\.ttf$|\.eot$/, loader: "url" },
             { test: /\.html$/, loader: "html" },
-            { test: /\.js$/, loader: "babel"}
+            { test: /\.js$/, loader: "babel" },
+            { test: /\.jsx$/, loader: "babel" }
         ]
     },
     resolve: {

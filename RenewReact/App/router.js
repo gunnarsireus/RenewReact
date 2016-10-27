@@ -1,26 +1,26 @@
 ﻿var layout = require('../App/Views/Layout/layout');
-var home = require('../App/Views/Home/home');
+var home = require('../App/Views/Home/home.jsx');
 
-var personal = require('../App/Views/Personal/personal');
-var felanmalan = require('../App/Views/Felanmalan/felanmalan');
+var personal = require('../App/Views/Personal/personal.jsx');
+var felanmalan = require('../App/Views/Felanmalan/felanmalan.jsx');
 
-var pagaende = require('../App/Views/Pagaende/pagaende');
-var arkiverade = require('../App/Views/Arkiverade/arkiverade');
+var pagaende = require('../App/Views/Pagaende/pagaende.jsx');
+var arkiverade = require('../App/Views/Arkiverade/arkiverade.jsx');
 
-var nyheter = require('../App/Views/nyheter/nyheter');
-var erbjudanden = require('../App/Views/Erbjudanden/erbjudanden');
+var nyheter = require('../App/Views/nyheter/nyheter.jsx');
+var erbjudanden = require('../App/Views/Erbjudanden/erbjudanden.jsx');
 
-var kunder = require('../App/Views/Kunder/kunder');
-var boende = require('../App/Views/Boende/boende');
-var tidkoder = require('../App/Views/Tidkoder/tidkoder');
-var arendeKlasser = require('../App/Views/ArendeKlasser/arendeKlasser');
+var kunder = require('../App/Views/Kunder/kunder.jsx');
+var boende = require('../App/Views/Boende/boende.jsx');
+var tidkoder = require('../App/Views/Tidkoder/tidkoder.jsx');
+var arendeKlasser = require('../App/Views/ArendeKlasser/arendeKlasser.jsx');
 
-var admin = require('../App/Views/Admin/admin');
+var admin = require('../App/Views/Admin/admin.jsx');
 var loggaut = require('../App/Views/Loggaut/loggaut');
 
-var login = require('../App/Views/Login/login');
-var calendar = require('../App/Views/Calendar/calendar');
-var test = require('../App/Views/Test/test');
+var login = require('../App/Views/Login/login.jsx');
+var calendar = require('../App/Views/Calendar/calendar.jsx');
+var test = require('../App/Views/Test/test.jsx');
 
 import React from 'react';
 import ReactDOM from 'react-dom';

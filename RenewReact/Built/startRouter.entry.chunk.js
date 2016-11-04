@@ -52,7 +52,7 @@ webpackJsonp([0],[
 	var admin = __webpack_require__(621);
 	var loggaut = __webpack_require__(626);
 
-	var login = __webpack_require__(437);
+	var login = __webpack_require__(436);
 	var calendar = __webpack_require__(627);
 	var test = __webpack_require__(647);
 
@@ -1126,14 +1126,6 @@ webpackJsonp([0],[
 	  var source = null;
 
 	  if (config != null) {
-	    if (process.env.NODE_ENV !== 'production') {
-	      process.env.NODE_ENV !== 'production' ? warning(
-	      /* eslint-disable no-proto */
-	      config.__proto__ == null || config.__proto__ === Object.prototype,
-	      /* eslint-enable no-proto */
-	      'React.createElement(...): Expected props argument to be a plain object. ' + 'Properties defined in its prototype chain will be ignored.') : void 0;
-	    }
-
 	    if (hasValidRef(config)) {
 	      ref = config.ref;
 	    }
@@ -1234,14 +1226,6 @@ webpackJsonp([0],[
 	  var owner = element._owner;
 
 	  if (config != null) {
-	    if (process.env.NODE_ENV !== 'production') {
-	      process.env.NODE_ENV !== 'production' ? warning(
-	      /* eslint-disable no-proto */
-	      config.__proto__ == null || config.__proto__ === Object.prototype,
-	      /* eslint-enable no-proto */
-	      'React.cloneElement(...): Expected props argument to be a plain object. ' + 'Properties defined in its prototype chain will be ignored.') : void 0;
-	    }
-
 	    if (hasValidRef(config)) {
 	      // Silently steal the ref from the parent.
 	      ref = config.ref;
@@ -4275,7 +4259,7 @@ webpackJsonp([0],[
 
 	'use strict';
 
-	module.exports = '15.3.1';
+	module.exports = '15.3.2';
 
 /***/ },
 /* 35 */
@@ -5256,8 +5240,10 @@ webpackJsonp([0],[
 	function getFallbackBeforeInputChars(topLevelType, nativeEvent) {
 	  // If we are currently composing (IME) and using a fallback to do so,
 	  // try to extract the composed characters from the fallback object.
+	  // If composition event is available, we extract a string only at
+	  // compositionevent, otherwise extract it at fallback events.
 	  if (currentComposition) {
-	    if (topLevelType === topLevelTypes.topCompositionEnd || isFallbackCompositionEnd(topLevelType, nativeEvent)) {
+	    if (topLevelType === topLevelTypes.topCompositionEnd || !canUseCompositionEvent && isFallbackCompositionEnd(topLevelType, nativeEvent)) {
 	      var chars = currentComposition.getData();
 	      FallbackCompositionState.release(currentComposition);
 	      currentComposition = null;
@@ -6866,7 +6852,8 @@ webpackJsonp([0],[
 
 	    if (event.preventDefault) {
 	      event.preventDefault();
-	    } else {
+	    } else if (typeof event.returnValue !== 'unknown') {
+	      // eslint-disable-line valid-typeof
 	      event.returnValue = false;
 	    }
 	    this.isDefaultPrevented = emptyFunction.thatReturnsTrue;
@@ -7123,7 +7110,7 @@ webpackJsonp([0],[
 	var doesChangeEventBubble = false;
 	if (ExecutionEnvironment.canUseDOM) {
 	  // See `handleChange` comment below
-	  doesChangeEventBubble = isEventSupported('change') && (!('documentMode' in document) || document.documentMode > 8);
+	  doesChangeEventBubble = isEventSupported('change') && (!document.documentMode || document.documentMode > 8);
 	}
 
 	function manualDispatchChangeEvent(nativeEvent) {
@@ -7189,7 +7176,7 @@ webpackJsonp([0],[
 	  // deleting text, so we ignore its input events.
 	  // IE10+ fire input events to often, such when a placeholder
 	  // changes or when an input with a placeholder is focused.
-	  isInputEventSupported = isEventSupported('input') && (!('documentMode' in document) || document.documentMode > 11);
+	  isInputEventSupported = isEventSupported('input') && (!document.documentMode || document.documentMode > 11);
 	}
 
 	/**
@@ -8418,12 +8405,6 @@ webpackJsonp([0],[
 	    endLifeCycleTimer(debugID, timerType);
 	    emitEvent('onEndLifeCycleTimer', debugID, timerType);
 	  },
-	  onError: function (debugID) {
-	    if (currentTimerDebugID != null) {
-	      endLifeCycleTimer(currentTimerDebugID, currentTimerType);
-	    }
-	    emitEvent('onError', debugID);
-	  },
 	  onBeginProcessingChildContext: function () {
 	    emitEvent('onBeginProcessingChildContext');
 	  },
@@ -9497,6 +9478,8 @@ webpackJsonp([0],[
 	    allowFullScreen: HAS_BOOLEAN_VALUE,
 	    allowTransparency: 0,
 	    alt: 0,
+	    // specifies target context for links with `preload` type
+	    as: 0,
 	    async: HAS_BOOLEAN_VALUE,
 	    autoComplete: 0,
 	    // autoFocus is polyfilled/normalized by AutoFocusUtils
@@ -9577,6 +9560,7 @@ webpackJsonp([0],[
 	    optimum: 0,
 	    pattern: 0,
 	    placeholder: 0,
+	    playsInline: HAS_BOOLEAN_VALUE,
 	    poster: 0,
 	    preload: 0,
 	    profile: 0,
@@ -10099,9 +10083,9 @@ webpackJsonp([0],[
 	  if (node.namespaceURI === DOMNamespaces.svg && !('innerHTML' in node)) {
 	    reusableSVGContainer = reusableSVGContainer || document.createElement('div');
 	    reusableSVGContainer.innerHTML = '<svg>' + html + '</svg>';
-	    var newNodes = reusableSVGContainer.firstChild.childNodes;
-	    for (var i = 0; i < newNodes.length; i++) {
-	      node.appendChild(newNodes[i]);
+	    var svgNode = reusableSVGContainer.firstChild;
+	    while (svgNode.firstChild) {
+	      node.appendChild(svgNode.firstChild);
 	    }
 	  } else {
 	    node.innerHTML = html;
@@ -11029,9 +11013,9 @@ webpackJsonp([0],[
 	  ReactDOMOption.postMountWrapper(inst);
 	}
 
-	var setContentChildForInstrumentation = emptyFunction;
+	var setAndValidateContentChildDev = emptyFunction;
 	if (process.env.NODE_ENV !== 'production') {
-	  setContentChildForInstrumentation = function (content) {
+	  setAndValidateContentChildDev = function (content) {
 	    var hasExistingContent = this._contentDebugID != null;
 	    var debugID = this._debugID;
 	    // This ID represents the inlined child that has no backing instance:
@@ -11045,6 +11029,7 @@ webpackJsonp([0],[
 	      return;
 	    }
 
+	    validateDOMNesting(null, String(content), this, this._ancestorInfo);
 	    this._contentDebugID = contentDebugID;
 	    if (hasExistingContent) {
 	      ReactInstrumentation.debugTool.onBeforeUpdateComponent(contentDebugID, content);
@@ -11219,7 +11204,7 @@ webpackJsonp([0],[
 	  this._flags = 0;
 	  if (process.env.NODE_ENV !== 'production') {
 	    this._ancestorInfo = null;
-	    setContentChildForInstrumentation.call(this, null);
+	    setAndValidateContentChildDev.call(this, null);
 	  }
 	}
 
@@ -11319,7 +11304,7 @@ webpackJsonp([0],[
 	      if (parentInfo) {
 	        // parentInfo should always be present except for the top-level
 	        // component when server rendering
-	        validateDOMNesting(this._tag, this, parentInfo);
+	        validateDOMNesting(this._tag, null, this, parentInfo);
 	      }
 	      this._ancestorInfo = validateDOMNesting.updatedAncestorInfo(parentInfo, this._tag, this);
 	    }
@@ -11488,7 +11473,7 @@ webpackJsonp([0],[
 	        // TODO: Validate that text is allowed as a child of this node
 	        ret = escapeTextContentForBrowser(contentToUse);
 	        if (process.env.NODE_ENV !== 'production') {
-	          setContentChildForInstrumentation.call(this, contentToUse);
+	          setAndValidateContentChildDev.call(this, contentToUse);
 	        }
 	      } else if (childrenToUse != null) {
 	        var mountImages = this.mountChildren(childrenToUse, transaction, context);
@@ -11525,7 +11510,7 @@ webpackJsonp([0],[
 	      if (contentToUse != null) {
 	        // TODO: Validate that text is allowed as a child of this node
 	        if (process.env.NODE_ENV !== 'production') {
-	          setContentChildForInstrumentation.call(this, contentToUse);
+	          setAndValidateContentChildDev.call(this, contentToUse);
 	        }
 	        DOMLazyTree.queueText(lazyTree, contentToUse);
 	      } else if (childrenToUse != null) {
@@ -11757,7 +11742,7 @@ webpackJsonp([0],[
 	      if (lastContent !== nextContent) {
 	        this.updateTextContent('' + nextContent);
 	        if (process.env.NODE_ENV !== 'production') {
-	          setContentChildForInstrumentation.call(this, nextContent);
+	          setAndValidateContentChildDev.call(this, nextContent);
 	        }
 	      }
 	    } else if (nextHtml != null) {
@@ -11769,7 +11754,7 @@ webpackJsonp([0],[
 	      }
 	    } else if (nextChildren != null) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        setContentChildForInstrumentation.call(this, null);
+	        setAndValidateContentChildDev.call(this, null);
 	      }
 
 	      this.updateChildren(nextChildren, transaction, context);
@@ -11824,7 +11809,7 @@ webpackJsonp([0],[
 	    this._wrapperState = null;
 
 	    if (process.env.NODE_ENV !== 'production') {
-	      setContentChildForInstrumentation.call(this, null);
+	      setAndValidateContentChildDev.call(this, null);
 	    }
 	  },
 
@@ -13097,6 +13082,19 @@ webpackJsonp([0],[
 	  },
 
 	  /**
+	   * Protect against document.createEvent() returning null
+	   * Some popup blocker extensions appear to do this:
+	   * https://github.com/facebook/react/issues/6887
+	   */
+	  supportsEventPageXY: function () {
+	    if (!document.createEvent) {
+	      return false;
+	    }
+	    var ev = document.createEvent('MouseEvent');
+	    return ev != null && 'pageX' in ev;
+	  },
+
+	  /**
 	   * Listens to window scroll and resize events. We cache scroll values so that
 	   * application code can access them without triggering reflows.
 	   *
@@ -13109,7 +13107,7 @@ webpackJsonp([0],[
 	   */
 	  ensureScrollValueMonitoring: function () {
 	    if (hasEventPageXY === undefined) {
-	      hasEventPageXY = document.createEvent && 'pageX' in document.createEvent('MouseEvent');
+	      hasEventPageXY = ReactBrowserEventEmitter.supportsEventPageXY();
 	    }
 	    if (!hasEventPageXY && !isMonitoringScrollValue) {
 	      var refresh = ViewportMetrics.refreshScrollValues;
@@ -13395,7 +13393,7 @@ webpackJsonp([0],[
 
 	function isControlled(props) {
 	  var usesChecked = props.type === 'checkbox' || props.type === 'radio';
-	  return usesChecked ? props.checked !== undefined : props.value !== undefined;
+	  return usesChecked ? props.checked != null : props.value != null;
 	}
 
 	/**
@@ -15168,34 +15166,29 @@ webpackJsonp([0],[
 	  }
 	}
 
-	function invokeComponentDidMountWithTimer() {
-	  var publicInstance = this._instance;
-	  if (this._debugID !== 0) {
-	    ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'componentDidMount');
-	  }
-	  publicInstance.componentDidMount();
-	  if (this._debugID !== 0) {
-	    ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'componentDidMount');
-	  }
-	}
-
-	function invokeComponentDidUpdateWithTimer(prevProps, prevState, prevContext) {
-	  var publicInstance = this._instance;
-	  if (this._debugID !== 0) {
-	    ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'componentDidUpdate');
-	  }
-	  publicInstance.componentDidUpdate(prevProps, prevState, prevContext);
-	  if (this._debugID !== 0) {
-	    ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'componentDidUpdate');
-	  }
-	}
-
 	function shouldConstruct(Component) {
 	  return !!(Component.prototype && Component.prototype.isReactComponent);
 	}
 
 	function isPureComponent(Component) {
 	  return !!(Component.prototype && Component.prototype.isPureReactComponent);
+	}
+
+	// Separated into a function to contain deoptimizations caused by try/finally.
+	function measureLifeCyclePerf(fn, debugID, timerType) {
+	  if (debugID === 0) {
+	    // Top-level wrappers (see ReactMount) and empty components (see
+	    // ReactDOMEmptyComponent) are invisible to hooks and devtools.
+	    // Both are implementation details that should go away in the future.
+	    return fn();
+	  }
+
+	  ReactInstrumentation.debugTool.onBeginLifeCycleTimer(debugID, timerType);
+	  try {
+	    return fn();
+	  } finally {
+	    ReactInstrumentation.debugTool.onEndLifeCycleTimer(debugID, timerType);
+	  }
 	}
 
 	/**
@@ -15289,6 +15282,8 @@ webpackJsonp([0],[
 	   * @internal
 	   */
 	  mountComponent: function (transaction, hostParent, hostContainerInfo, context) {
+	    var _this = this;
+
 	    this._context = context;
 	    this._mountOrder = nextMountID++;
 	    this._hostParent = hostParent;
@@ -15378,7 +15373,11 @@ webpackJsonp([0],[
 
 	    if (inst.componentDidMount) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        transaction.getReactMountReady().enqueue(invokeComponentDidMountWithTimer, this);
+	        transaction.getReactMountReady().enqueue(function () {
+	          measureLifeCyclePerf(function () {
+	            return inst.componentDidMount();
+	          }, _this._debugID, 'componentDidMount');
+	        });
 	      } else {
 	        transaction.getReactMountReady().enqueue(inst.componentDidMount, inst);
 	      }
@@ -15402,35 +15401,26 @@ webpackJsonp([0],[
 
 	  _constructComponentWithoutOwner: function (doConstruct, publicProps, publicContext, updateQueue) {
 	    var Component = this._currentElement.type;
-	    var instanceOrElement;
+
 	    if (doConstruct) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'ctor');
-	        }
-	      }
-	      instanceOrElement = new Component(publicProps, publicContext, updateQueue);
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'ctor');
-	        }
-	      }
-	    } else {
-	      // This can still be an instance in case of factory components
-	      // but we'll count this as time spent rendering as the more common case.
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'render');
-	        }
-	      }
-	      instanceOrElement = Component(publicProps, publicContext, updateQueue);
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'render');
-	        }
+	        return measureLifeCyclePerf(function () {
+	          return new Component(publicProps, publicContext, updateQueue);
+	        }, this._debugID, 'ctor');
+	      } else {
+	        return new Component(publicProps, publicContext, updateQueue);
 	      }
 	    }
-	    return instanceOrElement;
+
+	    // This can still be an instance in case of factory components
+	    // but we'll count this as time spent rendering as the more common case.
+	    if (process.env.NODE_ENV !== 'production') {
+	      return measureLifeCyclePerf(function () {
+	        return Component(publicProps, publicContext, updateQueue);
+	      }, this._debugID, 'render');
+	    } else {
+	      return Component(publicProps, publicContext, updateQueue);
+	    }
 	  },
 
 	  performInitialMountWithErrorHandling: function (renderedElement, hostParent, hostContainerInfo, transaction, context) {
@@ -15439,11 +15429,6 @@ webpackJsonp([0],[
 	    try {
 	      markup = this.performInitialMount(renderedElement, hostParent, hostContainerInfo, transaction, context);
 	    } catch (e) {
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onError();
-	        }
-	      }
 	      // Roll back to checkpoint, handle error (which may add items to the transaction), and take a new checkpoint
 	      transaction.rollback(checkpoint);
 	      this._instance.unstable_handleError(e);
@@ -15464,17 +15449,19 @@ webpackJsonp([0],[
 
 	  performInitialMount: function (renderedElement, hostParent, hostContainerInfo, transaction, context) {
 	    var inst = this._instance;
+
+	    var debugID = 0;
+	    if (process.env.NODE_ENV !== 'production') {
+	      debugID = this._debugID;
+	    }
+
 	    if (inst.componentWillMount) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'componentWillMount');
-	        }
-	      }
-	      inst.componentWillMount();
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'componentWillMount');
-	        }
+	        measureLifeCyclePerf(function () {
+	          return inst.componentWillMount();
+	        }, debugID, 'componentWillMount');
+	      } else {
+	        inst.componentWillMount();
 	      }
 	      // When mounting, calls to `setState` by `componentWillMount` will set
 	      // `this._pendingStateQueue` without triggering a re-render.
@@ -15494,15 +15481,12 @@ webpackJsonp([0],[
 	    );
 	    this._renderedComponent = child;
 
-	    var selfDebugID = 0;
-	    if (process.env.NODE_ENV !== 'production') {
-	      selfDebugID = this._debugID;
-	    }
-	    var markup = ReactReconciler.mountComponent(child, transaction, hostParent, hostContainerInfo, this._processChildContext(context), selfDebugID);
+	    var markup = ReactReconciler.mountComponent(child, transaction, hostParent, hostContainerInfo, this._processChildContext(context), debugID);
 
 	    if (process.env.NODE_ENV !== 'production') {
-	      if (this._debugID !== 0) {
-	        ReactInstrumentation.debugTool.onSetChildren(this._debugID, child._debugID !== 0 ? [child._debugID] : []);
+	      if (debugID !== 0) {
+	        var childDebugIDs = child._debugID !== 0 ? [child._debugID] : [];
+	        ReactInstrumentation.debugTool.onSetChildren(debugID, childDebugIDs);
 	      }
 	    }
 
@@ -15523,24 +15507,22 @@ webpackJsonp([0],[
 	    if (!this._renderedComponent) {
 	      return;
 	    }
+
 	    var inst = this._instance;
 
 	    if (inst.componentWillUnmount && !inst._calledComponentWillUnmount) {
 	      inst._calledComponentWillUnmount = true;
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'componentWillUnmount');
-	        }
-	      }
+
 	      if (safely) {
 	        var name = this.getName() + '.componentWillUnmount()';
 	        ReactErrorUtils.invokeGuardedCallback(name, inst.componentWillUnmount.bind(inst));
 	      } else {
-	        inst.componentWillUnmount();
-	      }
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'componentWillUnmount');
+	        if (process.env.NODE_ENV !== 'production') {
+	          measureLifeCyclePerf(function () {
+	            return inst.componentWillUnmount();
+	          }, this._debugID, 'componentWillUnmount');
+	        } else {
+	          inst.componentWillUnmount();
 	        }
 	      }
 	    }
@@ -15627,13 +15609,21 @@ webpackJsonp([0],[
 	  _processChildContext: function (currentContext) {
 	    var Component = this._currentElement.type;
 	    var inst = this._instance;
-	    if (process.env.NODE_ENV !== 'production') {
-	      ReactInstrumentation.debugTool.onBeginProcessingChildContext();
+	    var childContext;
+
+	    if (inst.getChildContext) {
+	      if (process.env.NODE_ENV !== 'production') {
+	        ReactInstrumentation.debugTool.onBeginProcessingChildContext();
+	        try {
+	          childContext = inst.getChildContext();
+	        } finally {
+	          ReactInstrumentation.debugTool.onEndProcessingChildContext();
+	        }
+	      } else {
+	        childContext = inst.getChildContext();
+	      }
 	    }
-	    var childContext = inst.getChildContext && inst.getChildContext();
-	    if (process.env.NODE_ENV !== 'production') {
-	      ReactInstrumentation.debugTool.onEndProcessingChildContext();
-	    }
+
 	    if (childContext) {
 	      !(typeof Component.childContextTypes === 'object') ? process.env.NODE_ENV !== 'production' ? invariant(false, '%s.getChildContext(): childContextTypes must be defined in order to use getChildContext().', this.getName() || 'ReactCompositeComponent') : _prodInvariant('107', this.getName() || 'ReactCompositeComponent') : void 0;
 	      if (process.env.NODE_ENV !== 'production') {
@@ -15728,15 +15718,11 @@ webpackJsonp([0],[
 	    // immediately reconciled instead of waiting for the next batch.
 	    if (willReceive && inst.componentWillReceiveProps) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'componentWillReceiveProps');
-	        }
-	      }
-	      inst.componentWillReceiveProps(nextProps, nextContext);
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'componentWillReceiveProps');
-	        }
+	        measureLifeCyclePerf(function () {
+	          return inst.componentWillReceiveProps(nextProps, nextContext);
+	        }, this._debugID, 'componentWillReceiveProps');
+	      } else {
+	        inst.componentWillReceiveProps(nextProps, nextContext);
 	      }
 	    }
 
@@ -15746,15 +15732,11 @@ webpackJsonp([0],[
 	    if (!this._pendingForceUpdate) {
 	      if (inst.shouldComponentUpdate) {
 	        if (process.env.NODE_ENV !== 'production') {
-	          if (this._debugID !== 0) {
-	            ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'shouldComponentUpdate');
-	          }
-	        }
-	        shouldUpdate = inst.shouldComponentUpdate(nextProps, nextState, nextContext);
-	        if (process.env.NODE_ENV !== 'production') {
-	          if (this._debugID !== 0) {
-	            ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'shouldComponentUpdate');
-	          }
+	          shouldUpdate = measureLifeCyclePerf(function () {
+	            return inst.shouldComponentUpdate(nextProps, nextState, nextContext);
+	          }, this._debugID, 'shouldComponentUpdate');
+	        } else {
+	          shouldUpdate = inst.shouldComponentUpdate(nextProps, nextState, nextContext);
 	        }
 	      } else {
 	        if (this._compositeType === CompositeTypes.PureClass) {
@@ -15820,6 +15802,8 @@ webpackJsonp([0],[
 	   * @private
 	   */
 	  _performComponentUpdate: function (nextElement, nextProps, nextState, nextContext, transaction, unmaskedContext) {
+	    var _this2 = this;
+
 	    var inst = this._instance;
 
 	    var hasComponentDidUpdate = Boolean(inst.componentDidUpdate);
@@ -15834,15 +15818,11 @@ webpackJsonp([0],[
 
 	    if (inst.componentWillUpdate) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'componentWillUpdate');
-	        }
-	      }
-	      inst.componentWillUpdate(nextProps, nextState, nextContext);
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'componentWillUpdate');
-	        }
+	        measureLifeCyclePerf(function () {
+	          return inst.componentWillUpdate(nextProps, nextState, nextContext);
+	        }, this._debugID, 'componentWillUpdate');
+	      } else {
+	        inst.componentWillUpdate(nextProps, nextState, nextContext);
 	      }
 	    }
 
@@ -15856,7 +15836,9 @@ webpackJsonp([0],[
 
 	    if (hasComponentDidUpdate) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        transaction.getReactMountReady().enqueue(invokeComponentDidUpdateWithTimer.bind(this, prevProps, prevState, prevContext), this);
+	        transaction.getReactMountReady().enqueue(function () {
+	          measureLifeCyclePerf(inst.componentDidUpdate.bind(inst, prevProps, prevState, prevContext), _this2._debugID, 'componentDidUpdate');
+	        });
 	      } else {
 	        transaction.getReactMountReady().enqueue(inst.componentDidUpdate.bind(inst, prevProps, prevState, prevContext), inst);
 	      }
@@ -15873,6 +15855,12 @@ webpackJsonp([0],[
 	    var prevComponentInstance = this._renderedComponent;
 	    var prevRenderedElement = prevComponentInstance._currentElement;
 	    var nextRenderedElement = this._renderValidatedComponent();
+
+	    var debugID = 0;
+	    if (process.env.NODE_ENV !== 'production') {
+	      debugID = this._debugID;
+	    }
+
 	    if (shouldUpdateReactComponent(prevRenderedElement, nextRenderedElement)) {
 	      ReactReconciler.receiveComponent(prevComponentInstance, nextRenderedElement, transaction, this._processChildContext(context));
 	    } else {
@@ -15885,15 +15873,12 @@ webpackJsonp([0],[
 	      );
 	      this._renderedComponent = child;
 
-	      var selfDebugID = 0;
-	      if (process.env.NODE_ENV !== 'production') {
-	        selfDebugID = this._debugID;
-	      }
-	      var nextMarkup = ReactReconciler.mountComponent(child, transaction, this._hostParent, this._hostContainerInfo, this._processChildContext(context), selfDebugID);
+	      var nextMarkup = ReactReconciler.mountComponent(child, transaction, this._hostParent, this._hostContainerInfo, this._processChildContext(context), debugID);
 
 	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onSetChildren(this._debugID, child._debugID !== 0 ? [child._debugID] : []);
+	        if (debugID !== 0) {
+	          var childDebugIDs = child._debugID !== 0 ? [child._debugID] : [];
+	          ReactInstrumentation.debugTool.onSetChildren(debugID, childDebugIDs);
 	        }
 	      }
 
@@ -15915,17 +15900,14 @@ webpackJsonp([0],[
 	   */
 	  _renderValidatedComponentWithoutOwnerOrContext: function () {
 	    var inst = this._instance;
+	    var renderedComponent;
 
 	    if (process.env.NODE_ENV !== 'production') {
-	      if (this._debugID !== 0) {
-	        ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'render');
-	      }
-	    }
-	    var renderedComponent = inst.render();
-	    if (process.env.NODE_ENV !== 'production') {
-	      if (this._debugID !== 0) {
-	        ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'render');
-	      }
+	      renderedComponent = measureLifeCyclePerf(function () {
+	        return inst.render();
+	      }, this._debugID, 'render');
+	    } else {
+	      renderedComponent = inst.render();
 	    }
 
 	    if (process.env.NODE_ENV !== 'production') {
@@ -15976,7 +15958,7 @@ webpackJsonp([0],[
 	    var publicComponentInstance = component.getPublicInstance();
 	    if (process.env.NODE_ENV !== 'production') {
 	      var componentName = component && component.getName ? component.getName() : 'a component';
-	      process.env.NODE_ENV !== 'production' ? warning(publicComponentInstance != null, 'Stateless function components cannot be given refs ' + '(See ref "%s" in %s created by %s). ' + 'Attempts to access this ref will fail.', ref, componentName, this.getName()) : void 0;
+	      process.env.NODE_ENV !== 'production' ? warning(publicComponentInstance != null || component._compositeType !== CompositeTypes.StatelessFunctional, 'Stateless function components cannot be given refs ' + '(See ref "%s" in %s created by %s). ' + 'Attempts to access this ref will fail.', ref, componentName, this.getName()) : void 0;
 	    }
 	    var refs = inst.refs === emptyObject ? inst.refs = {} : inst.refs;
 	    refs[ref] = publicComponentInstance;
@@ -16113,7 +16095,8 @@ webpackJsonp([0],[
 	  if (x === y) {
 	    // Steps 1-5, 7-10
 	    // Steps 6.b-6.e: +0 != -0
-	    return x !== 0 || 1 / x === 1 / y;
+	    // Added the nonzero y check to make Flow happy, but it is redundant
+	    return x !== 0 || y !== 0 || 1 / x === 1 / y;
 	  } else {
 	    // Step 6.a: NaN == NaN
 	    return x !== x && y !== y;
@@ -17166,10 +17149,15 @@ webpackJsonp([0],[
 
 	  var didWarn = {};
 
-	  validateDOMNesting = function (childTag, childInstance, ancestorInfo) {
+	  validateDOMNesting = function (childTag, childText, childInstance, ancestorInfo) {
 	    ancestorInfo = ancestorInfo || emptyAncestorInfo;
 	    var parentInfo = ancestorInfo.current;
 	    var parentTag = parentInfo && parentInfo.tag;
+
+	    if (childText != null) {
+	      process.env.NODE_ENV !== 'production' ? warning(childTag == null, 'validateDOMNesting: when childText is passed, childTag should be null') : void 0;
+	      childTag = '#text';
+	    }
 
 	    var invalidParent = isTagValidWithParent(childTag, parentTag) ? null : parentInfo;
 	    var invalidAncestor = invalidParent ? null : findInvalidAncestorForTag(childTag, ancestorInfo);
@@ -17218,7 +17206,15 @@ webpackJsonp([0],[
 	      didWarn[warnKey] = true;
 
 	      var tagDisplayName = childTag;
-	      if (childTag !== '#text') {
+	      var whitespaceInfo = '';
+	      if (childTag === '#text') {
+	        if (/\S/.test(childText)) {
+	          tagDisplayName = 'Text nodes';
+	        } else {
+	          tagDisplayName = 'Whitespace text nodes';
+	          whitespaceInfo = ' Make sure you don\'t have any extra whitespace between tags on ' + 'each line of your source code.';
+	        }
+	      } else {
 	        tagDisplayName = '<' + childTag + '>';
 	      }
 
@@ -17227,7 +17223,7 @@ webpackJsonp([0],[
 	        if (ancestorTag === 'table' && childTag === 'tr') {
 	          info += ' Add a <tbody> to your code to match the DOM tree generated by ' + 'the browser.';
 	        }
-	        process.env.NODE_ENV !== 'production' ? warning(false, 'validateDOMNesting(...): %s cannot appear as a child of <%s>. ' + 'See %s.%s', tagDisplayName, ancestorTag, ownerInfo, info) : void 0;
+	        process.env.NODE_ENV !== 'production' ? warning(false, 'validateDOMNesting(...): %s cannot appear as a child of <%s>.%s ' + 'See %s.%s', tagDisplayName, ancestorTag, whitespaceInfo, ownerInfo, info) : void 0;
 	      } else {
 	        process.env.NODE_ENV !== 'production' ? warning(false, 'validateDOMNesting(...): %s cannot appear as a descendant of ' + '<%s>. See %s.', tagDisplayName, ancestorTag, ownerInfo) : void 0;
 	      }
@@ -17534,7 +17530,7 @@ webpackJsonp([0],[
 	      if (parentInfo) {
 	        // parentInfo should always be present except for the top-level
 	        // component when server rendering
-	        validateDOMNesting('#text', this, parentInfo);
+	        validateDOMNesting(null, this._stringText, this, parentInfo);
 	      }
 	    }
 
@@ -19129,7 +19125,7 @@ webpackJsonp([0],[
 	      bubbled: keyOf({ onSelect: null }),
 	      captured: keyOf({ onSelectCapture: null })
 	    },
-	    dependencies: [topLevelTypes.topBlur, topLevelTypes.topContextMenu, topLevelTypes.topFocus, topLevelTypes.topKeyDown, topLevelTypes.topMouseDown, topLevelTypes.topMouseUp, topLevelTypes.topSelectionChange]
+	    dependencies: [topLevelTypes.topBlur, topLevelTypes.topContextMenu, topLevelTypes.topFocus, topLevelTypes.topKeyDown, topLevelTypes.topKeyUp, topLevelTypes.topMouseDown, topLevelTypes.topMouseUp, topLevelTypes.topSelectionChange]
 	  }
 	};
 
@@ -21662,9 +21658,9 @@ webpackJsonp([0],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var homeTemplate = __webpack_require__(436);
+	var homeTemplate = __webpack_require__(435);
 	var layout = __webpack_require__(176);
-	var login = __webpack_require__(437);
+	var login = __webpack_require__(436);
 
 	var viewModel = kendo.observable({
 	    title: "Home"
@@ -21704,11 +21700,11 @@ webpackJsonp([0],[
 
 	var _reactBootstrap = __webpack_require__(180);
 
-	var _leftpart = __webpack_require__(433);
+	var _leftpart = __webpack_require__(432);
 
 	var _leftpart2 = _interopRequireDefault(_leftpart);
 
-	var _rightpart = __webpack_require__(435);
+	var _rightpart = __webpack_require__(434);
 
 	var _rightpart2 = _interopRequireDefault(_rightpart);
 
@@ -21820,23 +21816,23 @@ webpackJsonp([0],[
 
 	var _Dropdown3 = _interopRequireDefault(_Dropdown2);
 
-	var _DropdownButton2 = __webpack_require__(341);
+	var _DropdownButton2 = __webpack_require__(340);
 
 	var _DropdownButton3 = _interopRequireDefault(_DropdownButton2);
 
-	var _Fade2 = __webpack_require__(343);
+	var _Fade2 = __webpack_require__(342);
 
 	var _Fade3 = _interopRequireDefault(_Fade2);
 
-	var _Form2 = __webpack_require__(344);
+	var _Form2 = __webpack_require__(343);
 
 	var _Form3 = _interopRequireDefault(_Form2);
 
-	var _FormControl2 = __webpack_require__(345);
+	var _FormControl2 = __webpack_require__(344);
 
 	var _FormControl3 = _interopRequireDefault(_FormControl2);
 
-	var _FormGroup2 = __webpack_require__(348);
+	var _FormGroup2 = __webpack_require__(347);
 
 	var _FormGroup3 = _interopRequireDefault(_FormGroup2);
 
@@ -21844,111 +21840,111 @@ webpackJsonp([0],[
 
 	var _Glyphicon3 = _interopRequireDefault(_Glyphicon2);
 
-	var _Grid2 = __webpack_require__(349);
+	var _Grid2 = __webpack_require__(348);
 
 	var _Grid3 = _interopRequireDefault(_Grid2);
 
-	var _HelpBlock2 = __webpack_require__(350);
+	var _HelpBlock2 = __webpack_require__(349);
 
 	var _HelpBlock3 = _interopRequireDefault(_HelpBlock2);
 
-	var _Image2 = __webpack_require__(351);
+	var _Image2 = __webpack_require__(350);
 
 	var _Image3 = _interopRequireDefault(_Image2);
 
-	var _InputGroup2 = __webpack_require__(352);
+	var _InputGroup2 = __webpack_require__(351);
 
 	var _InputGroup3 = _interopRequireDefault(_InputGroup2);
 
-	var _Jumbotron2 = __webpack_require__(355);
+	var _Jumbotron2 = __webpack_require__(354);
 
 	var _Jumbotron3 = _interopRequireDefault(_Jumbotron2);
 
-	var _Label2 = __webpack_require__(356);
+	var _Label2 = __webpack_require__(355);
 
 	var _Label3 = _interopRequireDefault(_Label2);
 
-	var _ListGroup2 = __webpack_require__(357);
+	var _ListGroup2 = __webpack_require__(356);
 
 	var _ListGroup3 = _interopRequireDefault(_ListGroup2);
 
-	var _ListGroupItem2 = __webpack_require__(358);
+	var _ListGroupItem2 = __webpack_require__(357);
 
 	var _ListGroupItem3 = _interopRequireDefault(_ListGroupItem2);
 
-	var _Media2 = __webpack_require__(359);
+	var _Media2 = __webpack_require__(358);
 
 	var _Media3 = _interopRequireDefault(_Media2);
 
-	var _MenuItem2 = __webpack_require__(366);
+	var _MenuItem2 = __webpack_require__(365);
 
 	var _MenuItem3 = _interopRequireDefault(_MenuItem2);
 
-	var _Modal2 = __webpack_require__(367);
+	var _Modal2 = __webpack_require__(366);
 
 	var _Modal3 = _interopRequireDefault(_Modal2);
 
-	var _ModalBody2 = __webpack_require__(385);
+	var _ModalBody2 = __webpack_require__(384);
 
 	var _ModalBody3 = _interopRequireDefault(_ModalBody2);
 
-	var _ModalFooter2 = __webpack_require__(387);
+	var _ModalFooter2 = __webpack_require__(386);
 
 	var _ModalFooter3 = _interopRequireDefault(_ModalFooter2);
 
-	var _ModalHeader2 = __webpack_require__(388);
+	var _ModalHeader2 = __webpack_require__(387);
 
 	var _ModalHeader3 = _interopRequireDefault(_ModalHeader2);
 
-	var _ModalTitle2 = __webpack_require__(389);
+	var _ModalTitle2 = __webpack_require__(388);
 
 	var _ModalTitle3 = _interopRequireDefault(_ModalTitle2);
 
-	var _Nav2 = __webpack_require__(390);
+	var _Nav2 = __webpack_require__(389);
 
 	var _Nav3 = _interopRequireDefault(_Nav2);
 
-	var _Navbar2 = __webpack_require__(391);
+	var _Navbar2 = __webpack_require__(390);
 
 	var _Navbar3 = _interopRequireDefault(_Navbar2);
 
-	var _NavbarBrand2 = __webpack_require__(392);
+	var _NavbarBrand2 = __webpack_require__(391);
 
 	var _NavbarBrand3 = _interopRequireDefault(_NavbarBrand2);
 
-	var _NavDropdown2 = __webpack_require__(396);
+	var _NavDropdown2 = __webpack_require__(395);
 
 	var _NavDropdown3 = _interopRequireDefault(_NavDropdown2);
 
-	var _NavItem2 = __webpack_require__(397);
+	var _NavItem2 = __webpack_require__(396);
 
 	var _NavItem3 = _interopRequireDefault(_NavItem2);
 
-	var _Overlay2 = __webpack_require__(398);
+	var _Overlay2 = __webpack_require__(397);
 
 	var _Overlay3 = _interopRequireDefault(_Overlay2);
 
-	var _OverlayTrigger2 = __webpack_require__(407);
+	var _OverlayTrigger2 = __webpack_require__(406);
 
 	var _OverlayTrigger3 = _interopRequireDefault(_OverlayTrigger2);
 
-	var _PageHeader2 = __webpack_require__(408);
+	var _PageHeader2 = __webpack_require__(407);
 
 	var _PageHeader3 = _interopRequireDefault(_PageHeader2);
 
-	var _PageItem2 = __webpack_require__(409);
+	var _PageItem2 = __webpack_require__(408);
 
 	var _PageItem3 = _interopRequireDefault(_PageItem2);
 
-	var _Pager2 = __webpack_require__(412);
+	var _Pager2 = __webpack_require__(411);
 
 	var _Pager3 = _interopRequireDefault(_Pager2);
 
-	var _Pagination2 = __webpack_require__(413);
+	var _Pagination2 = __webpack_require__(412);
 
 	var _Pagination3 = _interopRequireDefault(_Pagination2);
 
-	var _Panel2 = __webpack_require__(415);
+	var _Panel2 = __webpack_require__(414);
 
 	var _Panel3 = _interopRequireDefault(_Panel2);
 
@@ -21956,23 +21952,23 @@ webpackJsonp([0],[
 
 	var _PanelGroup3 = _interopRequireDefault(_PanelGroup2);
 
-	var _Popover2 = __webpack_require__(416);
+	var _Popover2 = __webpack_require__(415);
 
 	var _Popover3 = _interopRequireDefault(_Popover2);
 
-	var _ProgressBar2 = __webpack_require__(417);
+	var _ProgressBar2 = __webpack_require__(416);
 
 	var _ProgressBar3 = _interopRequireDefault(_ProgressBar2);
 
-	var _Radio2 = __webpack_require__(418);
+	var _Radio2 = __webpack_require__(417);
 
 	var _Radio3 = _interopRequireDefault(_Radio2);
 
-	var _ResponsiveEmbed2 = __webpack_require__(419);
+	var _ResponsiveEmbed2 = __webpack_require__(418);
 
 	var _ResponsiveEmbed3 = _interopRequireDefault(_ResponsiveEmbed2);
 
-	var _Row2 = __webpack_require__(420);
+	var _Row2 = __webpack_require__(419);
 
 	var _Row3 = _interopRequireDefault(_Row2);
 
@@ -21980,47 +21976,47 @@ webpackJsonp([0],[
 
 	var _SafeAnchor3 = _interopRequireDefault(_SafeAnchor2);
 
-	var _SplitButton2 = __webpack_require__(421);
+	var _SplitButton2 = __webpack_require__(420);
 
 	var _SplitButton3 = _interopRequireDefault(_SplitButton2);
 
-	var _Tab2 = __webpack_require__(423);
+	var _Tab2 = __webpack_require__(422);
 
 	var _Tab3 = _interopRequireDefault(_Tab2);
 
-	var _TabContainer2 = __webpack_require__(424);
+	var _TabContainer2 = __webpack_require__(423);
 
 	var _TabContainer3 = _interopRequireDefault(_TabContainer2);
 
-	var _TabContent2 = __webpack_require__(425);
+	var _TabContent2 = __webpack_require__(424);
 
 	var _TabContent3 = _interopRequireDefault(_TabContent2);
 
-	var _Table2 = __webpack_require__(427);
+	var _Table2 = __webpack_require__(426);
 
 	var _Table3 = _interopRequireDefault(_Table2);
 
-	var _TabPane2 = __webpack_require__(426);
+	var _TabPane2 = __webpack_require__(425);
 
 	var _TabPane3 = _interopRequireDefault(_TabPane2);
 
-	var _Tabs2 = __webpack_require__(428);
+	var _Tabs2 = __webpack_require__(427);
 
 	var _Tabs3 = _interopRequireDefault(_Tabs2);
 
-	var _Thumbnail2 = __webpack_require__(429);
+	var _Thumbnail2 = __webpack_require__(428);
 
 	var _Thumbnail3 = _interopRequireDefault(_Thumbnail2);
 
-	var _Tooltip2 = __webpack_require__(430);
+	var _Tooltip2 = __webpack_require__(429);
 
 	var _Tooltip3 = _interopRequireDefault(_Tooltip2);
 
-	var _Well2 = __webpack_require__(431);
+	var _Well2 = __webpack_require__(430);
 
 	var _Well3 = _interopRequireDefault(_Well2);
 
-	var _utils2 = __webpack_require__(432);
+	var _utils2 = __webpack_require__(431);
 
 	var _utils = _interopRequireWildcard(_utils2);
 
@@ -22768,7 +22764,7 @@ webpackJsonp([0],[
 	var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) {
 	  return typeof obj;
 	} : function (obj) {
-	  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default ? "symbol" : typeof obj;
+	  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj;
 	};
 
 	function _interopRequireDefault(obj) {
@@ -22778,7 +22774,7 @@ webpackJsonp([0],[
 	exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.default) === "symbol" ? function (obj) {
 	  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
 	} : function (obj) {
-	  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
+	  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
 	};
 
 /***/ },
@@ -24634,7 +24630,7 @@ webpackJsonp([0],[
 	      onClick: onDismiss,
 	      'aria-hidden': 'true',
 	      tabIndex: '-1'
-	    }, _react2['default'].createElement('span', null, '×'));
+	    }, _react2['default'].createElement('span', null, '\xD7'));
 	  };
 
 	  Alert.prototype.renderSrOnlyDismissButton = function renderSrOnlyDismissButton(onDismiss, closeLabel) {
@@ -27358,12 +27354,11 @@ webpackJsonp([0],[
 	  Collapse.prototype.handleExit = function handleExit(elem) {
 	    var dimension = this._dimension();
 	    elem.style[dimension] = this.props.getDimensionValue(dimension, elem) + 'px';
+	    triggerBrowserReflow(elem);
 	  };
 
 	  Collapse.prototype.handleExiting = function handleExiting(elem) {
 	    var dimension = this._dimension();
-
-	    triggerBrowserReflow(elem);
 	    elem.style[dimension] = '0';
 	  };
 
@@ -27720,7 +27715,7 @@ webpackJsonp([0],[
 	  function Transition(props, context) {
 	    _classCallCheck(this, Transition);
 
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Transition).call(this, props, context));
+	    var _this = _possibleConstructorReturn(this, (Transition.__proto__ || Object.getPrototypeOf(Transition)).call(this, props, context));
 
 	    var initialStatus = void 0;
 	    if (props.in) {
@@ -28190,7 +28185,7 @@ webpackJsonp([0],[
 
 	var _DropdownMenu2 = _interopRequireDefault(_DropdownMenu);
 
-	var _DropdownToggle = __webpack_require__(339);
+	var _DropdownToggle = __webpack_require__(338);
 
 	var _DropdownToggle2 = _interopRequireDefault(_DropdownToggle);
 
@@ -28200,7 +28195,7 @@ webpackJsonp([0],[
 
 	var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
 
-	var _PropTypes = __webpack_require__(340);
+	var _PropTypes = __webpack_require__(339);
 
 	var _ValidComponentChildren = __webpack_require__(276);
 
@@ -29286,7 +29281,10 @@ webpackJsonp([0],[
 
 	    var classes = (0, _extends4['default'])({}, (0, _bootstrapUtils.getClassSet)(bsProps), (_extends2 = {}, _extends2[(0, _bootstrapUtils.prefix)(bsProps, 'right')] = pullRight, _extends2));
 
-	    var list = _react2['default'].createElement('ul', (0, _extends4['default'])({}, elementProps, {
+	    return _react2['default'].createElement(_RootCloseWrapper2['default'], {
+	      disabled: !open,
+	      onRootClose: onClose
+	    }, _react2['default'].createElement('ul', (0, _extends4['default'])({}, elementProps, {
 	      role: 'menu',
 	      className: (0, _classnames2['default'])(className, classes),
 	      'aria-labelledby': labelledBy
@@ -29295,13 +29293,7 @@ webpackJsonp([0],[
 	        onKeyDown: (0, _createChainedFunction2['default'])(child.props.onKeyDown, _this2.handleKeyDown),
 	        onSelect: (0, _createChainedFunction2['default'])(child.props.onSelect, onSelect)
 	      });
-	    }));
-
-	    if (open) {
-	      return _react2['default'].createElement(_RootCloseWrapper2['default'], { noWrap: true, onRootClose: onClose }, list);
-	    }
-
-	    return list;
+	    })));
 	  };
 
 	  return DropdownMenu;
@@ -29514,6 +29506,10 @@ webpackJsonp([0],[
 	  };
 	}();
 
+	var _contains = __webpack_require__(318);
+
+	var _contains2 = _interopRequireDefault(_contains);
+
 	var _react = __webpack_require__(3);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -29526,24 +29522,12 @@ webpackJsonp([0],[
 
 	var _addEventListener2 = _interopRequireDefault(_addEventListener);
 
-	var _createChainedFunction = __webpack_require__(337);
-
-	var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
-
-	var _ownerDocument = __webpack_require__(338);
+	var _ownerDocument = __webpack_require__(337);
 
 	var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
 
 	function _interopRequireDefault(obj) {
 	  return obj && obj.__esModule ? obj : { default: obj };
-	}
-
-	function _defineProperty(obj, key, value) {
-	  if (key in obj) {
-	    Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });
-	  } else {
-	    obj[key] = value;
-	  }return obj;
 	}
 
 	function _classCallCheck(instance, Constructor) {
@@ -29564,11 +29548,6 @@ webpackJsonp([0],[
 	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	}
 
-	// TODO: Consider using an ES6 symbol here, once we use babel-runtime.
-	var CLICK_WAS_INSIDE = '__click_was_inside';
-
-	var counter = 0;
-
 	function isLeftClickEvent(event) {
 	  return event.button === 0;
 	}
@@ -29577,121 +29556,92 @@ webpackJsonp([0],[
 	  return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
 	}
 
-	function getSuppressRootClose() {
-	  var id = CLICK_WAS_INSIDE + '_' + counter++;
-	  return {
-	    id: id,
-	    suppressRootClose: function suppressRootClose(event) {
-	      // Tag the native event to prevent the root close logic on document click.
-	      // This seems safer than using event.nativeEvent.stopImmediatePropagation(),
-	      // which is only supported in IE >= 9.
-	      event.nativeEvent[id] = true;
-	    }
-	  };
-	}
-
 	var RootCloseWrapper = function (_React$Component) {
 	  _inherits(RootCloseWrapper, _React$Component);
 
-	  function RootCloseWrapper(props) {
+	  function RootCloseWrapper(props, context) {
 	    _classCallCheck(this, RootCloseWrapper);
 
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(RootCloseWrapper).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (RootCloseWrapper.__proto__ || Object.getPrototypeOf(RootCloseWrapper)).call(this, props, context));
 
-	    _this.handleDocumentMouse = _this.handleDocumentMouse.bind(_this);
-	    _this.handleDocumentKeyUp = _this.handleDocumentKeyUp.bind(_this);
+	    _this.handleMouseCapture = function (e) {
+	      _this.preventMouseRootClose = isModifiedEvent(e) || !isLeftClickEvent(e) || (0, _contains2.default)(_reactDom2.default.findDOMNode(_this), e.target);
+	    };
 
-	    var _getSuppressRootClose = getSuppressRootClose();
+	    _this.handleMouse = function () {
+	      if (!_this.preventMouseRootClose && _this.props.onRootClose) {
+	        _this.props.onRootClose();
+	      }
+	    };
 
-	    var id = _getSuppressRootClose.id;
-	    var suppressRootClose = _getSuppressRootClose.suppressRootClose;
+	    _this.handleKeyUp = function (e) {
+	      if (e.keyCode === 27 && _this.props.onRootClose) {
+	        _this.props.onRootClose();
+	      }
+	    };
 
-	    _this._suppressRootId = id;
-
-	    _this._suppressRootCloseHandler = suppressRootClose;
+	    _this.preventMouseRootClose = false;
 	    return _this;
 	  }
 
 	  _createClass(RootCloseWrapper, [{
-	    key: 'bindRootCloseHandlers',
-	    value: function bindRootCloseHandlers() {
-	      var doc = (0, _ownerDocument2.default)(this);
-
-	      this._onDocumentMouseListener = (0, _addEventListener2.default)(doc, this.props.event, this.handleDocumentMouse);
-
-	      this._onDocumentKeyupListener = (0, _addEventListener2.default)(doc, 'keyup', this.handleDocumentKeyUp);
-	    }
-	  }, {
-	    key: 'handleDocumentMouse',
-	    value: function handleDocumentMouse(e) {
-	      // This is now the native event.
-	      if (e[this._suppressRootId]) {
-	        return;
-	      }
-
-	      if (this.props.disabled || isModifiedEvent(e) || !isLeftClickEvent(e)) {
-	        return;
-	      }
-
-	      this.props.onRootClose && this.props.onRootClose();
-	    }
-	  }, {
-	    key: 'handleDocumentKeyUp',
-	    value: function handleDocumentKeyUp(e) {
-	      if (e.keyCode === 27 && this.props.onRootClose) {
-	        this.props.onRootClose();
-	      }
-	    }
-	  }, {
-	    key: 'unbindRootCloseHandlers',
-	    value: function unbindRootCloseHandlers() {
-	      if (this._onDocumentMouseListener) {
-	        this._onDocumentMouseListener.remove();
-	      }
-
-	      if (this._onDocumentKeyupListener) {
-	        this._onDocumentKeyupListener.remove();
-	      }
-	    }
-	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      this.bindRootCloseHandlers();
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _props = this.props;
-	      var event = _props.event;
-	      var noWrap = _props.noWrap;
-	      var children = _props.children;
-
-	      var child = _react2.default.Children.only(children);
-
-	      var handlerName = event == 'click' ? 'onClick' : 'onMouseDown';
-
-	      if (noWrap) {
-	        return _react2.default.cloneElement(child, _defineProperty({}, handlerName, (0, _createChainedFunction2.default)(this._suppressRootCloseHandler, child.props[handlerName])));
+	      if (!this.props.disabled) {
+	        this.addEventListeners();
 	      }
-
-	      // Wrap the child in a new element, so the child won't have to handle
-	      // potentially combining multiple onClick listeners.
-	      return _react2.default.createElement('div', _defineProperty({}, handlerName, this._suppressRootCloseHandler), child);
 	    }
 	  }, {
-	    key: 'getWrappedDOMNode',
-	    value: function getWrappedDOMNode() {
-	      // We can't use a ref to identify the wrapped child, since we might be
-	      // stealing the ref from the owner, but we know exactly the DOM structure
-	      // that will be rendered, so we can just do this to get the child's DOM
-	      // node for doing size calculations in OverlayMixin.
-	      var node = _reactDom2.default.findDOMNode(this);
-	      return this.props.noWrap ? node : node.firstChild;
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate(prevProps) {
+	      if (!this.props.disabled && prevProps.disabled) {
+	        this.addEventListeners();
+	      } else if (this.props.disabled && !prevProps.disabled) {
+	        this.removeEventListeners();
+	      }
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
-	      this.unbindRootCloseHandlers();
+	      if (!this.props.disabled) {
+	        this.removeEventListeners();
+	      }
+	    }
+	  }, {
+	    key: 'addEventListeners',
+	    value: function addEventListeners() {
+	      var event = this.props.event;
+
+	      var doc = (0, _ownerDocument2.default)(this);
+
+	      // Use capture for this listener so it fires before React's listener, to
+	      // avoid false positives in the contains() check below if the target DOM
+	      // element is removed in the React mouse callback.
+	      this.documentMouseCaptureListener = (0, _addEventListener2.default)(doc, event, this.handleMouseCapture, true);
+
+	      this.documentMouseListener = (0, _addEventListener2.default)(doc, event, this.handleMouse);
+
+	      this.documentKeyupListener = (0, _addEventListener2.default)(doc, 'keyup', this.handleKeyUp);
+	    }
+	  }, {
+	    key: 'removeEventListeners',
+	    value: function removeEventListeners() {
+	      if (this.documentMouseCaptureListener) {
+	        this.documentMouseCaptureListener.remove();
+	      }
+
+	      if (this.documentMouseListener) {
+	        this.documentMouseListener.remove();
+	      }
+
+	      if (this.documentKeyupListener) {
+	        this.documentKeyupListener.remove();
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return this.props.children;
 	    }
 	  }]);
 
@@ -29704,18 +29654,13 @@ webpackJsonp([0],[
 
 	RootCloseWrapper.propTypes = {
 	  onRootClose: _react2.default.PropTypes.func,
+	  children: _react2.default.PropTypes.element,
 
 	  /**
 	   * Disable the the RootCloseWrapper, preventing it from triggering
 	   * `onRootClose`.
 	   */
 	  disabled: _react2.default.PropTypes.bool,
-	  /**
-	   * Passes the suppress click handler directly to the child component instead
-	   * of placing it on a wrapping div. Only use when you can be sure the child
-	   * properly handle the click event.
-	   */
-	  noWrap: _react2.default.PropTypes.bool,
 	  /**
 	   * Choose which document mouse event to bind to
 	   */
@@ -29737,11 +29682,12 @@ webpackJsonp([0],[
 	  value: true
 	});
 
-	exports.default = function (node, event, handler) {
-	  (0, _on2.default)(node, event, handler);
+	exports.default = function (node, event, handler, capture) {
+	  (0, _on2.default)(node, event, handler, capture);
+
 	  return {
 	    remove: function remove() {
-	      (0, _off2.default)(node, event, handler);
+	      (0, _off2.default)(node, event, handler, capture);
 	    }
 	  };
 	};
@@ -29785,54 +29731,6 @@ webpackJsonp([0],[
 
 /***/ },
 /* 337 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	/**
-	 * Safe chained function
-	 *
-	 * Will only create a new function if needed,
-	 * otherwise will pass back existing functions or null.
-	 *
-	 * @param {function} functions to chain
-	 * @returns {function|null}
-	 */
-	function createChainedFunction() {
-	  for (var _len = arguments.length, funcs = Array(_len), _key = 0; _key < _len; _key++) {
-	    funcs[_key] = arguments[_key];
-	  }
-
-	  return funcs.filter(function (f) {
-	    return f != null;
-	  }).reduce(function (acc, f) {
-	    if (typeof f !== 'function') {
-	      throw new Error('Invalid Argument Type, must only provide functions, undefined, or null.');
-	    }
-
-	    if (acc === null) {
-	      return f;
-	    }
-
-	    return function chainedFunction() {
-	      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-	        args[_key2] = arguments[_key2];
-	      }
-
-	      acc.apply(this, args);
-	      f.apply(this, args);
-	    };
-	  }, null);
-	}
-
-	exports.default = createChainedFunction;
-	module.exports = exports['default'];
-
-/***/ },
-/* 338 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29860,7 +29758,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 339 */
+/* 338 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29968,7 +29866,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 340 */
+/* 339 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30046,7 +29944,7 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 341 */
+/* 340 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30081,7 +29979,7 @@ webpackJsonp([0],[
 
 	var _Dropdown2 = _interopRequireDefault(_Dropdown);
 
-	var _splitComponentProps2 = __webpack_require__(342);
+	var _splitComponentProps2 = __webpack_require__(341);
 
 	var _splitComponentProps3 = _interopRequireDefault(_splitComponentProps2);
 
@@ -30143,7 +30041,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 342 */
+/* 341 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30182,7 +30080,7 @@ webpackJsonp([0],[
 	module.exports = exports["default"];
 
 /***/ },
-/* 343 */
+/* 342 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30304,7 +30202,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 344 */
+/* 343 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30405,7 +30303,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 345 */
+/* 344 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -30448,11 +30346,11 @@ webpackJsonp([0],[
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _FormControlFeedback = __webpack_require__(346);
+	var _FormControlFeedback = __webpack_require__(345);
 
 	var _FormControlFeedback2 = _interopRequireDefault(_FormControlFeedback);
 
-	var _FormControlStatic = __webpack_require__(347);
+	var _FormControlStatic = __webpack_require__(346);
 
 	var _FormControlStatic2 = _interopRequireDefault(_FormControlStatic);
 
@@ -30537,7 +30435,7 @@ webpackJsonp([0],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 346 */
+/* 345 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30656,7 +30554,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 347 */
+/* 346 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30745,7 +30643,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 348 */
+/* 347 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30867,7 +30765,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 349 */
+/* 348 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30967,7 +30865,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 350 */
+/* 349 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31040,7 +30938,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 351 */
+/* 350 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31151,7 +31049,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 352 */
+/* 351 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31186,11 +31084,11 @@ webpackJsonp([0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _InputGroupAddon = __webpack_require__(353);
+	var _InputGroupAddon = __webpack_require__(352);
 
 	var _InputGroupAddon2 = _interopRequireDefault(_InputGroupAddon);
 
-	var _InputGroupButton = __webpack_require__(354);
+	var _InputGroupButton = __webpack_require__(353);
 
 	var _InputGroupButton2 = _interopRequireDefault(_InputGroupButton);
 
@@ -31237,7 +31135,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 353 */
+/* 352 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31310,7 +31208,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 354 */
+/* 353 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31383,7 +31281,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 355 */
+/* 354 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31472,7 +31370,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 356 */
+/* 355 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31572,7 +31470,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 357 */
+/* 356 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31611,7 +31509,7 @@ webpackJsonp([0],[
 
 	var _elementType2 = _interopRequireDefault(_elementType);
 
-	var _ListGroupItem = __webpack_require__(358);
+	var _ListGroupItem = __webpack_require__(357);
 
 	var _ListGroupItem2 = _interopRequireDefault(_ListGroupItem);
 
@@ -31693,7 +31591,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 358 */
+/* 357 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31825,7 +31723,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 359 */
+/* 358 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31864,27 +31762,27 @@ webpackJsonp([0],[
 
 	var _elementType2 = _interopRequireDefault(_elementType);
 
-	var _MediaBody = __webpack_require__(360);
+	var _MediaBody = __webpack_require__(359);
 
 	var _MediaBody2 = _interopRequireDefault(_MediaBody);
 
-	var _MediaHeading = __webpack_require__(361);
+	var _MediaHeading = __webpack_require__(360);
 
 	var _MediaHeading2 = _interopRequireDefault(_MediaHeading);
 
-	var _MediaLeft = __webpack_require__(362);
+	var _MediaLeft = __webpack_require__(361);
 
 	var _MediaLeft2 = _interopRequireDefault(_MediaLeft);
 
-	var _MediaList = __webpack_require__(363);
+	var _MediaList = __webpack_require__(362);
 
 	var _MediaList2 = _interopRequireDefault(_MediaList);
 
-	var _MediaListItem = __webpack_require__(364);
+	var _MediaListItem = __webpack_require__(363);
 
 	var _MediaListItem2 = _interopRequireDefault(_MediaListItem);
 
-	var _MediaRight = __webpack_require__(365);
+	var _MediaRight = __webpack_require__(364);
 
 	var _MediaRight2 = _interopRequireDefault(_MediaRight);
 
@@ -31945,7 +31843,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 360 */
+/* 359 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32034,7 +31932,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 361 */
+/* 360 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32123,7 +32021,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 362 */
+/* 361 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32158,7 +32056,7 @@ webpackJsonp([0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Media = __webpack_require__(359);
+	var _Media = __webpack_require__(358);
 
 	var _Media2 = _interopRequireDefault(_Media);
 
@@ -32215,7 +32113,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 363 */
+/* 362 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32288,7 +32186,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 364 */
+/* 363 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32361,7 +32259,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 365 */
+/* 364 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32396,7 +32294,7 @@ webpackJsonp([0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Media = __webpack_require__(359);
+	var _Media = __webpack_require__(358);
 
 	var _Media2 = _interopRequireDefault(_Media);
 
@@ -32453,7 +32351,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 366 */
+/* 365 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32651,7 +32549,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 367 */
+/* 366 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32682,7 +32580,7 @@ webpackJsonp([0],[
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _events = __webpack_require__(368);
+	var _events = __webpack_require__(367);
 
 	var _events2 = _interopRequireDefault(_events);
 
@@ -32694,7 +32592,7 @@ webpackJsonp([0],[
 
 	var _inDOM2 = _interopRequireDefault(_inDOM);
 
-	var _scrollbarSize = __webpack_require__(371);
+	var _scrollbarSize = __webpack_require__(370);
 
 	var _scrollbarSize2 = _interopRequireDefault(_scrollbarSize);
 
@@ -32706,11 +32604,11 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _Modal = __webpack_require__(372);
+	var _Modal = __webpack_require__(371);
 
 	var _Modal2 = _interopRequireDefault(_Modal);
 
-	var _isOverflowing = __webpack_require__(381);
+	var _isOverflowing = __webpack_require__(380);
 
 	var _isOverflowing2 = _interopRequireDefault(_isOverflowing);
 
@@ -32718,27 +32616,27 @@ webpackJsonp([0],[
 
 	var _elementType2 = _interopRequireDefault(_elementType);
 
-	var _Fade = __webpack_require__(343);
+	var _Fade = __webpack_require__(342);
 
 	var _Fade2 = _interopRequireDefault(_Fade);
 
-	var _ModalBody = __webpack_require__(385);
+	var _ModalBody = __webpack_require__(384);
 
 	var _ModalBody2 = _interopRequireDefault(_ModalBody);
 
-	var _ModalDialog = __webpack_require__(386);
+	var _ModalDialog = __webpack_require__(385);
 
 	var _ModalDialog2 = _interopRequireDefault(_ModalDialog);
 
-	var _ModalFooter = __webpack_require__(387);
+	var _ModalFooter = __webpack_require__(386);
 
 	var _ModalFooter2 = _interopRequireDefault(_ModalFooter);
 
-	var _ModalHeader = __webpack_require__(388);
+	var _ModalHeader = __webpack_require__(387);
 
 	var _ModalHeader2 = _interopRequireDefault(_ModalHeader);
 
-	var _ModalTitle = __webpack_require__(389);
+	var _ModalTitle = __webpack_require__(388);
 
 	var _ModalTitle2 = _interopRequireDefault(_ModalTitle);
 
@@ -32748,7 +32646,7 @@ webpackJsonp([0],[
 
 	var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
 
-	var _splitComponentProps2 = __webpack_require__(342);
+	var _splitComponentProps2 = __webpack_require__(341);
 
 	var _splitComponentProps3 = _interopRequireDefault(_splitComponentProps2);
 
@@ -32994,25 +32892,25 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 368 */
+/* 367 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var on = __webpack_require__(314),
 	    off = __webpack_require__(336),
-	    filter = __webpack_require__(369);
+	    filter = __webpack_require__(368);
 
 	module.exports = { on: on, off: off, filter: filter };
 
 /***/ },
-/* 369 */
+/* 368 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var contains = __webpack_require__(318),
-	    qsa = __webpack_require__(370);
+	    qsa = __webpack_require__(369);
 
 	module.exports = function (selector, handler) {
 	  return function (e) {
@@ -33027,7 +32925,7 @@ webpackJsonp([0],[
 	};
 
 /***/ },
-/* 370 */
+/* 369 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -33060,7 +32958,7 @@ webpackJsonp([0],[
 	};
 
 /***/ },
-/* 371 */
+/* 370 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33090,7 +32988,7 @@ webpackJsonp([0],[
 	};
 
 /***/ },
-/* 372 */
+/* 371 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33117,7 +33015,7 @@ webpackJsonp([0],[
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _componentOrElement = __webpack_require__(373);
+	var _componentOrElement = __webpack_require__(372);
 
 	var _componentOrElement2 = _interopRequireDefault(_componentOrElement);
 
@@ -33125,15 +33023,15 @@ webpackJsonp([0],[
 
 	var _elementType2 = _interopRequireDefault(_elementType);
 
-	var _Portal = __webpack_require__(374);
+	var _Portal = __webpack_require__(373);
 
 	var _Portal2 = _interopRequireDefault(_Portal);
 
-	var _ModalManager = __webpack_require__(376);
+	var _ModalManager = __webpack_require__(375);
 
 	var _ModalManager2 = _interopRequireDefault(_ModalManager);
 
-	var _ownerDocument = __webpack_require__(338);
+	var _ownerDocument = __webpack_require__(337);
 
 	var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
 
@@ -33141,7 +33039,7 @@ webpackJsonp([0],[
 
 	var _addEventListener2 = _interopRequireDefault(_addEventListener);
 
-	var _addFocusListener = __webpack_require__(384);
+	var _addFocusListener = __webpack_require__(383);
 
 	var _addFocusListener2 = _interopRequireDefault(_addFocusListener);
 
@@ -33157,7 +33055,7 @@ webpackJsonp([0],[
 
 	var _contains2 = _interopRequireDefault(_contains);
 
-	var _getContainer = __webpack_require__(375);
+	var _getContainer = __webpack_require__(374);
 
 	var _getContainer2 = _interopRequireDefault(_getContainer);
 
@@ -33222,6 +33120,16 @@ webpackJsonp([0],[
 	     * Include a backdrop component.
 	     */
 	    backdrop: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.bool, _react2.default.PropTypes.oneOf(['static'])]),
+
+	    /**
+	     * A function that returns a backdrop component. Useful for custom
+	     * backdrop rendering.
+	     *
+	     * ```js
+	     *  renderBackdrop={props => <MyBackdrop {...props} />}
+	     * ```
+	     */
+	    renderBackdrop: _react2.default.PropTypes.func,
 
 	    /**
 	     * A callback fired when the escape key, if specified in `keyboard`, is pressed.
@@ -33321,8 +33229,13 @@ webpackJsonp([0],[
 	    /**
 	     * Callback fired after the Modal finishes transitioning out
 	     */
-	    onExited: _react2.default.PropTypes.func
+	    onExited: _react2.default.PropTypes.func,
 
+	    /**
+	     * A ModalManager instance used to track and manage the state of open
+	     * Modals. Useful when customizing how modals interact within a container
+	     */
+	    manager: _react2.default.PropTypes.object.isRequired
 	  }),
 
 	  getDefaultProps: function getDefaultProps() {
@@ -33334,7 +33247,11 @@ webpackJsonp([0],[
 	      keyboard: true,
 	      autoFocus: true,
 	      enforceFocus: true,
-	      onHide: noop
+	      onHide: noop,
+	      manager: modalManager,
+	      renderBackdrop: function renderBackdrop(props) {
+	        return _react2.default.createElement('div', props);
+	      }
 	    };
 	  },
 	  getInitialState: function getInitialState() {
@@ -33400,11 +33317,21 @@ webpackJsonp([0],[
 	    }, backdrop && this.renderBackdrop(), dialog));
 	  },
 	  renderBackdrop: function renderBackdrop() {
+	    var _this = this;
+
 	    var _props2 = this.props;
+	    var backdropStyle = _props2.backdropStyle;
+	    var backdropClassName = _props2.backdropClassName;
+	    var renderBackdrop = _props2.renderBackdrop;
 	    var Transition = _props2.transition;
 	    var backdropTransitionTimeout = _props2.backdropTransitionTimeout;
 
-	    var backdrop = _react2.default.createElement('div', { ref: 'backdrop',
+	    var backdropRef = function backdropRef(ref) {
+	      return _this.backdrop = ref;
+	    };
+
+	    var backdrop = _react2.default.createElement('div', {
+	      ref: backdropRef,
 	      style: this.props.backdropStyle,
 	      className: this.props.backdropClassName,
 	      onClick: this.handleBackdropClick
@@ -33414,7 +33341,12 @@ webpackJsonp([0],[
 	      backdrop = _react2.default.createElement(Transition, { transitionAppear: true,
 	        'in': this.props.show,
 	        timeout: backdropTransitionTimeout
-	      }, backdrop);
+	      }, renderBackdrop({
+	        ref: backdropRef,
+	        style: backdropStyle,
+	        className: backdropClassName,
+	        onClick: this.handleBackdropClick
+	      }));
 	    }
 
 	    return backdrop;
@@ -33460,7 +33392,7 @@ webpackJsonp([0],[
 	    var doc = (0, _ownerDocument2.default)(this);
 	    var container = (0, _getContainer2.default)(this.props.container, doc.body);
 
-	    modalManager.add(this, container, this.props.containerClassName);
+	    this.props.manager.add(this, container, this.props.containerClassName);
 
 	    this._onDocumentKeyupListener = (0, _addEventListener2.default)(doc, 'keyup', this.handleDocumentKeyUp);
 
@@ -33473,7 +33405,7 @@ webpackJsonp([0],[
 	    }
 	  },
 	  onHide: function onHide() {
-	    modalManager.remove(this);
+	    this.props.manager.remove(this);
 
 	    this._onDocumentKeyupListener.remove();
 
@@ -33565,17 +33497,17 @@ webpackJsonp([0],[
 	    return node && node.lastChild;
 	  },
 	  isTopModal: function isTopModal() {
-	    return modalManager.isTopModal(this);
+	    return this.props.manager.isTopModal(this);
 	  }
 	});
 
-	Modal.manager = modalManager;
+	Modal.Manager = _ModalManager2.default;
 
 	exports.default = Modal;
 	module.exports = exports['default'];
 
 /***/ },
-/* 373 */
+/* 372 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33618,7 +33550,7 @@ webpackJsonp([0],[
 	exports.default = (0, _createChainableTypeChecker2.default)(validate);
 
 /***/ },
-/* 374 */
+/* 373 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33635,15 +33567,15 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _componentOrElement = __webpack_require__(373);
+	var _componentOrElement = __webpack_require__(372);
 
 	var _componentOrElement2 = _interopRequireDefault(_componentOrElement);
 
-	var _ownerDocument = __webpack_require__(338);
+	var _ownerDocument = __webpack_require__(337);
 
 	var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
 
-	var _getContainer = __webpack_require__(375);
+	var _getContainer = __webpack_require__(374);
 
 	var _getContainer2 = _interopRequireDefault(_getContainer);
 
@@ -33731,11 +33663,7 @@ webpackJsonp([0],[
 	    }
 
 	    if (this._overlayInstance) {
-	      if (this._overlayInstance.getWrappedDOMNode) {
-	        return this._overlayInstance.getWrappedDOMNode();
-	      } else {
-	        return _reactDom2.default.findDOMNode(this._overlayInstance);
-	      }
+	      return _reactDom2.default.findDOMNode(this._overlayInstance);
 	    }
 
 	    return null;
@@ -33746,7 +33674,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 375 */
+/* 374 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33771,7 +33699,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 376 */
+/* 375 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33794,19 +33722,19 @@ webpackJsonp([0],[
 
 	var _style2 = _interopRequireDefault(_style);
 
-	var _class = __webpack_require__(377);
+	var _class = __webpack_require__(376);
 
 	var _class2 = _interopRequireDefault(_class);
 
-	var _scrollbarSize = __webpack_require__(371);
+	var _scrollbarSize = __webpack_require__(370);
 
 	var _scrollbarSize2 = _interopRequireDefault(_scrollbarSize);
 
-	var _isOverflowing = __webpack_require__(381);
+	var _isOverflowing = __webpack_require__(380);
 
 	var _isOverflowing2 = _interopRequireDefault(_isOverflowing);
 
-	var _manageAriaHidden = __webpack_require__(383);
+	var _manageAriaHidden = __webpack_require__(382);
 
 	function _interopRequireDefault(obj) {
 	  return obj && obj.__esModule ? obj : { default: obj };
@@ -33835,6 +33763,32 @@ webpackJsonp([0],[
 	  });
 	}
 
+	function setContainerStyle(state, container) {
+	  var style = { overflow: 'hidden' };
+
+	  // we are only interested in the actual `style` here
+	  // becasue we will override it
+	  state.style = {
+	    overflow: container.style.overflow,
+	    paddingRight: container.style.paddingRight
+	  };
+
+	  if (state.overflowing) {
+	    // use computed style, here to get the real padding
+	    // to add our scrollbar width
+	    style.paddingRight = parseInt((0, _style2.default)(container, 'paddingRight') || 0, 10) + (0, _scrollbarSize2.default)() + 'px';
+	  }
+
+	  (0, _style2.default)(container, style);
+	}
+
+	function removeContainerStyle(_ref, container) {
+	  var style = _ref.style;
+
+	  Object.keys(style).forEach(function (key) {
+	    return container.style[key] = style[key];
+	  });
+	}
 	/**
 	 * Proper state managment for containers and the modals in those containers.
 	 *
@@ -33843,11 +33797,17 @@ webpackJsonp([0],[
 
 	var ModalManager = function () {
 	  function ModalManager() {
-	    var hideSiblingNodes = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
+	    var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+	    var _ref2$hideSiblingNode = _ref2.hideSiblingNodes;
+	    var hideSiblingNodes = _ref2$hideSiblingNode === undefined ? true : _ref2$hideSiblingNode;
+	    var _ref2$handleContainer = _ref2.handleContainerOverflow;
+	    var handleContainerOverflow = _ref2$handleContainer === undefined ? true : _ref2$handleContainer;
 
 	    _classCallCheck(this, ModalManager);
 
 	    this.hideSiblingNodes = hideSiblingNodes;
+	    this.handleContainerOverflow = handleContainerOverflow;
 	    this.modals = [];
 	    this.containers = [];
 	    this.data = [];
@@ -33879,24 +33839,13 @@ webpackJsonp([0],[
 	        modals: [modal],
 	        //right now only the first modal of a container will have its classes applied
 	        classes: className ? className.split(/\s+/) : [],
-	        //we are only interested in the actual `style` here becasue we will override it
-	        style: {
-	          overflow: container.style.overflow,
-	          paddingRight: container.style.paddingRight
-	        }
+
+	        overflowing: (0, _isOverflowing2.default)(container)
 	      };
 
-	      var style = { overflow: 'hidden' };
-
-	      data.overflowing = (0, _isOverflowing2.default)(container);
-
-	      if (data.overflowing) {
-	        // use computed style, here to get the real padding
-	        // to add our scrollbar width
-	        style.paddingRight = parseInt((0, _style2.default)(container, 'paddingRight') || 0, 10) + (0, _scrollbarSize2.default)() + 'px';
+	      if (this.handleContainerOverflow) {
+	        setContainerStyle(data, container);
 	      }
-
-	      (0, _style2.default)(container, style);
 
 	      data.classes.forEach(_class2.default.addClass.bind(null, container));
 
@@ -33923,13 +33872,13 @@ webpackJsonp([0],[
 	      this.modals.splice(modalIdx, 1);
 
 	      // if that was the last modal in a container,
-	      // clean up the container stylinhg.
+	      // clean up the container
 	      if (data.modals.length === 0) {
-	        Object.keys(data.style).forEach(function (key) {
-	          return container.style[key] = data.style[key];
-	        });
-
 	        data.classes.forEach(_class2.default.removeClass.bind(null, container));
+
+	        if (this.handleContainerOverflow) {
+	          removeContainerStyle(data, container);
+	        }
 
 	        if (this.hideSiblingNodes) {
 	          (0, _manageAriaHidden.showSiblings)(container, modal.mountNode);
@@ -33955,31 +33904,31 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 377 */
+/* 376 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = {
-	  addClass: __webpack_require__(378),
-	  removeClass: __webpack_require__(380),
-	  hasClass: __webpack_require__(379)
+	  addClass: __webpack_require__(377),
+	  removeClass: __webpack_require__(379),
+	  hasClass: __webpack_require__(378)
 	};
 
 /***/ },
-/* 378 */
+/* 377 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var hasClass = __webpack_require__(379);
+	var hasClass = __webpack_require__(378);
 
 	module.exports = function addClass(element, className) {
 	  if (element.classList) element.classList.add(className);else if (!hasClass(element)) element.className = element.className + ' ' + className;
 	};
 
 /***/ },
-/* 379 */
+/* 378 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -33989,7 +33938,7 @@ webpackJsonp([0],[
 	};
 
 /***/ },
-/* 380 */
+/* 379 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -33999,7 +33948,7 @@ webpackJsonp([0],[
 	};
 
 /***/ },
-/* 381 */
+/* 380 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34009,7 +33958,7 @@ webpackJsonp([0],[
 	});
 	exports.default = isOverflowing;
 
-	var _isWindow = __webpack_require__(382);
+	var _isWindow = __webpack_require__(381);
 
 	var _isWindow2 = _interopRequireDefault(_isWindow);
 
@@ -34047,7 +33996,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 382 */
+/* 381 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -34057,7 +34006,7 @@ webpackJsonp([0],[
 	};
 
 /***/ },
-/* 383 */
+/* 382 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -34111,7 +34060,7 @@ webpackJsonp([0],[
 	}
 
 /***/ },
-/* 384 */
+/* 383 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -34147,7 +34096,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 385 */
+/* 384 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34220,7 +34169,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 386 */
+/* 385 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34316,7 +34265,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 387 */
+/* 386 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34389,7 +34338,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 388 */
+/* 387 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34501,7 +34450,7 @@ webpackJsonp([0],[
 	      className: 'close',
 	      'aria-label': label,
 	      onClick: (0, _createChainedFunction2['default'])(modal.onHide, onHide)
-	    }, _react2['default'].createElement('span', { 'aria-hidden': 'true' }, '×')), children);
+	    }, _react2['default'].createElement('span', { 'aria-hidden': 'true' }, '\xD7')), children);
 	  };
 
 	  return ModalHeader;
@@ -34515,7 +34464,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 389 */
+/* 388 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34588,7 +34537,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 390 */
+/* 389 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -34991,7 +34940,7 @@ webpackJsonp([0],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 391 */
+/* 390 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35034,23 +34983,23 @@ webpackJsonp([0],[
 
 	var _uncontrollable2 = _interopRequireDefault(_uncontrollable);
 
-	var _Grid = __webpack_require__(349);
+	var _Grid = __webpack_require__(348);
 
 	var _Grid2 = _interopRequireDefault(_Grid);
 
-	var _NavbarBrand = __webpack_require__(392);
+	var _NavbarBrand = __webpack_require__(391);
 
 	var _NavbarBrand2 = _interopRequireDefault(_NavbarBrand);
 
-	var _NavbarCollapse = __webpack_require__(393);
+	var _NavbarCollapse = __webpack_require__(392);
 
 	var _NavbarCollapse2 = _interopRequireDefault(_NavbarCollapse);
 
-	var _NavbarHeader = __webpack_require__(394);
+	var _NavbarHeader = __webpack_require__(393);
 
 	var _NavbarHeader2 = _interopRequireDefault(_NavbarHeader);
 
-	var _NavbarToggle = __webpack_require__(395);
+	var _NavbarToggle = __webpack_require__(394);
 
 	var _NavbarToggle2 = _interopRequireDefault(_NavbarToggle);
 
@@ -35262,7 +35211,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 392 */
+/* 391 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35345,7 +35294,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 393 */
+/* 392 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35422,7 +35371,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 394 */
+/* 393 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35498,7 +35447,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 395 */
+/* 394 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35600,7 +35549,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 396 */
+/* 395 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35639,7 +35588,7 @@ webpackJsonp([0],[
 
 	var _Dropdown2 = _interopRequireDefault(_Dropdown);
 
-	var _splitComponentProps2 = __webpack_require__(342);
+	var _splitComponentProps2 = __webpack_require__(341);
 
 	var _splitComponentProps3 = _interopRequireDefault(_splitComponentProps2);
 
@@ -35682,10 +35631,10 @@ webpackJsonp([0],[
 	      return true;
 	    }
 
-	    if (props.children) {
-	      return _ValidComponentChildren2['default'].some(props.children, function (child) {
-	        return _this2.isActive(child, activeKey, activeHref);
-	      });
+	    if (_ValidComponentChildren2['default'].some(props.children, function (child) {
+	      return _this2.isActive(child, activeKey, activeHref);
+	    })) {
+	      return true;
 	    }
 
 	    return props.active;
@@ -35735,7 +35684,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 397 */
+/* 396 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35863,7 +35812,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 398 */
+/* 397 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35898,7 +35847,7 @@ webpackJsonp([0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Overlay = __webpack_require__(399);
+	var _Overlay = __webpack_require__(398);
 
 	var _Overlay2 = _interopRequireDefault(_Overlay);
 
@@ -35906,7 +35855,7 @@ webpackJsonp([0],[
 
 	var _elementType2 = _interopRequireDefault(_elementType);
 
-	var _Fade = __webpack_require__(343);
+	var _Fade = __webpack_require__(342);
 
 	var _Fade2 = _interopRequireDefault(_Fade);
 
@@ -36013,7 +35962,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 399 */
+/* 398 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36046,11 +35995,11 @@ webpackJsonp([0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Portal = __webpack_require__(374);
+	var _Portal = __webpack_require__(373);
 
 	var _Portal2 = _interopRequireDefault(_Portal);
 
-	var _Position = __webpack_require__(400);
+	var _Position = __webpack_require__(399);
 
 	var _Position2 = _interopRequireDefault(_Position);
 
@@ -36099,7 +36048,7 @@ webpackJsonp([0],[
 	  function Overlay(props, context) {
 	    _classCallCheck(this, Overlay);
 
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Overlay).call(this, props, context));
+	    var _this = _possibleConstructorReturn(this, (Overlay.__proto__ || Object.getPrototypeOf(Overlay)).call(this, props, context));
 
 	    _this.state = { exited: !props.show };
 	    _this.onHiddenListener = _this.handleHidden.bind(_this);
@@ -36263,7 +36212,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 400 */
+/* 399 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36304,19 +36253,19 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _componentOrElement = __webpack_require__(373);
+	var _componentOrElement = __webpack_require__(372);
 
 	var _componentOrElement2 = _interopRequireDefault(_componentOrElement);
 
-	var _calculatePosition = __webpack_require__(401);
+	var _calculatePosition = __webpack_require__(400);
 
 	var _calculatePosition2 = _interopRequireDefault(_calculatePosition);
 
-	var _getContainer = __webpack_require__(375);
+	var _getContainer = __webpack_require__(374);
 
 	var _getContainer2 = _interopRequireDefault(_getContainer);
 
-	var _ownerDocument = __webpack_require__(338);
+	var _ownerDocument = __webpack_require__(337);
 
 	var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
 
@@ -36363,7 +36312,7 @@ webpackJsonp([0],[
 	  function Position(props, context) {
 	    _classCallCheck(this, Position);
 
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Position).call(this, props, context));
+	    var _this = _possibleConstructorReturn(this, (Position.__proto__ || Object.getPrototypeOf(Position)).call(this, props, context));
 
 	    _this.state = {
 	      positionLeft: 0,
@@ -36513,7 +36462,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 401 */
+/* 400 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36523,19 +36472,19 @@ webpackJsonp([0],[
 	});
 	exports.default = calculatePosition;
 
-	var _offset = __webpack_require__(402);
+	var _offset = __webpack_require__(401);
 
 	var _offset2 = _interopRequireDefault(_offset);
 
-	var _position = __webpack_require__(403);
+	var _position = __webpack_require__(402);
 
 	var _position2 = _interopRequireDefault(_position);
 
-	var _scrollTop = __webpack_require__(405);
+	var _scrollTop = __webpack_require__(404);
 
 	var _scrollTop2 = _interopRequireDefault(_scrollTop);
 
-	var _ownerDocument = __webpack_require__(338);
+	var _ownerDocument = __webpack_require__(337);
 
 	var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
 
@@ -36648,13 +36597,13 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 402 */
+/* 401 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var contains = __webpack_require__(318),
-	    getWindow = __webpack_require__(382),
+	    getWindow = __webpack_require__(381),
 	    ownerDocument = __webpack_require__(317);
 
 	module.exports = function offset(node) {
@@ -36684,7 +36633,7 @@ webpackJsonp([0],[
 	};
 
 /***/ },
-/* 403 */
+/* 402 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36694,19 +36643,19 @@ webpackJsonp([0],[
 	exports.__esModule = true;
 	exports['default'] = position;
 
-	var _offset = __webpack_require__(402);
+	var _offset = __webpack_require__(401);
 
 	var _offset2 = babelHelpers.interopRequireDefault(_offset);
 
-	var _offsetParent = __webpack_require__(404);
+	var _offsetParent = __webpack_require__(403);
 
 	var _offsetParent2 = babelHelpers.interopRequireDefault(_offsetParent);
 
-	var _scrollTop = __webpack_require__(405);
+	var _scrollTop = __webpack_require__(404);
 
 	var _scrollTop2 = babelHelpers.interopRequireDefault(_scrollTop);
 
-	var _scrollLeft = __webpack_require__(406);
+	var _scrollLeft = __webpack_require__(405);
 
 	var _scrollLeft2 = babelHelpers.interopRequireDefault(_scrollLeft);
 
@@ -36746,7 +36695,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 404 */
+/* 403 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36782,12 +36731,12 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 405 */
+/* 404 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var getWindow = __webpack_require__(382);
+	var getWindow = __webpack_require__(381);
 
 	module.exports = function scrollTop(node, val) {
 	  var win = getWindow(node);
@@ -36798,12 +36747,12 @@ webpackJsonp([0],[
 	};
 
 /***/ },
-/* 406 */
+/* 405 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var getWindow = __webpack_require__(382);
+	var getWindow = __webpack_require__(381);
 
 	module.exports = function scrollTop(node, val) {
 	  var win = getWindow(node);
@@ -36814,7 +36763,7 @@ webpackJsonp([0],[
 	};
 
 /***/ },
-/* 407 */
+/* 406 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -36857,7 +36806,7 @@ webpackJsonp([0],[
 
 	var _warning2 = _interopRequireDefault(_warning);
 
-	var _Overlay = __webpack_require__(398);
+	var _Overlay = __webpack_require__(397);
 
 	var _Overlay2 = _interopRequireDefault(_Overlay);
 
@@ -37163,7 +37112,7 @@ webpackJsonp([0],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 408 */
+/* 407 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37237,18 +37186,18 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 409 */
+/* 408 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	var _PagerItem = __webpack_require__(410);
+	var _PagerItem = __webpack_require__(409);
 
 	var _PagerItem2 = _interopRequireDefault(_PagerItem);
 
-	var _deprecationWarning = __webpack_require__(411);
+	var _deprecationWarning = __webpack_require__(410);
 
 	var _deprecationWarning2 = _interopRequireDefault(_deprecationWarning);
 
@@ -37260,7 +37209,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 410 */
+/* 409 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37385,7 +37334,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 411 */
+/* 410 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -37479,7 +37428,7 @@ webpackJsonp([0],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 412 */
+/* 411 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37514,7 +37463,7 @@ webpackJsonp([0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _PagerItem = __webpack_require__(410);
+	var _PagerItem = __webpack_require__(409);
 
 	var _PagerItem2 = _interopRequireDefault(_PagerItem);
 
@@ -37578,7 +37527,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 413 */
+/* 412 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37617,7 +37566,7 @@ webpackJsonp([0],[
 
 	var _elementType2 = _interopRequireDefault(_elementType);
 
-	var _PaginationButton = __webpack_require__(414);
+	var _PaginationButton = __webpack_require__(413);
 
 	var _PaginationButton2 = _interopRequireDefault(_PaginationButton);
 
@@ -37704,8 +37653,8 @@ webpackJsonp([0],[
 
 	    if (maxButtons) {
 	      var hiddenPagesBefore = activePage - parseInt(maxButtons / 2, 10);
-	      startPage = hiddenPagesBefore > 1 ? hiddenPagesBefore : 1;
-	      hasHiddenPagesAfter = startPage + maxButtons <= items;
+	      startPage = hiddenPagesBefore > 2 ? hiddenPagesBefore : 1;
+	      hasHiddenPagesAfter = startPage + maxButtons < items;
 
 	      if (!hasHiddenPagesAfter) {
 	        endPage = items;
@@ -37734,7 +37683,7 @@ webpackJsonp([0],[
 	        key: 'ellipsisFirst',
 	        disabled: true,
 	        componentClass: buttonProps.componentClass
-	      }, _react2['default'].createElement('span', { 'aria-label': 'More' }, ellipsis === true ? '…' : ellipsis)));
+	      }, _react2['default'].createElement('span', { 'aria-label': 'More' }, ellipsis === true ? '\u2026' : ellipsis)));
 
 	      pageButtons.unshift(_react2['default'].createElement(_PaginationButton2['default'], (0, _extends3['default'])({}, buttonProps, {
 	        key: 1,
@@ -37748,7 +37697,7 @@ webpackJsonp([0],[
 	        key: 'ellipsis',
 	        disabled: true,
 	        componentClass: buttonProps.componentClass
-	      }, _react2['default'].createElement('span', { 'aria-label': 'More' }, ellipsis === true ? '…' : ellipsis)));
+	      }, _react2['default'].createElement('span', { 'aria-label': 'More' }, ellipsis === true ? '\u2026' : ellipsis)));
 
 	      if (boundaryLinks && endPage !== items) {
 	        pageButtons.push(_react2['default'].createElement(_PaginationButton2['default'], (0, _extends3['default'])({}, buttonProps, {
@@ -37795,16 +37744,16 @@ webpackJsonp([0],[
 	    }), first && _react2['default'].createElement(_PaginationButton2['default'], (0, _extends3['default'])({}, buttonProps, {
 	      eventKey: 1,
 	      disabled: activePage === 1
-	    }), _react2['default'].createElement('span', { 'aria-label': 'First' }, first === true ? '«' : first)), prev && _react2['default'].createElement(_PaginationButton2['default'], (0, _extends3['default'])({}, buttonProps, {
+	    }), _react2['default'].createElement('span', { 'aria-label': 'First' }, first === true ? '\xAB' : first)), prev && _react2['default'].createElement(_PaginationButton2['default'], (0, _extends3['default'])({}, buttonProps, {
 	      eventKey: activePage - 1,
 	      disabled: activePage === 1
-	    }), _react2['default'].createElement('span', { 'aria-label': 'Previous' }, prev === true ? '‹' : prev)), this.renderPageButtons(activePage, items, maxButtons, boundaryLinks, ellipsis, buttonProps), next && _react2['default'].createElement(_PaginationButton2['default'], (0, _extends3['default'])({}, buttonProps, {
+	    }), _react2['default'].createElement('span', { 'aria-label': 'Previous' }, prev === true ? '\u2039' : prev)), this.renderPageButtons(activePage, items, maxButtons, boundaryLinks, ellipsis, buttonProps), next && _react2['default'].createElement(_PaginationButton2['default'], (0, _extends3['default'])({}, buttonProps, {
 	      eventKey: activePage + 1,
 	      disabled: activePage >= items
-	    }), _react2['default'].createElement('span', { 'aria-label': 'Next' }, next === true ? '›' : next)), last && _react2['default'].createElement(_PaginationButton2['default'], (0, _extends3['default'])({}, buttonProps, {
+	    }), _react2['default'].createElement('span', { 'aria-label': 'Next' }, next === true ? '\u203A' : next)), last && _react2['default'].createElement(_PaginationButton2['default'], (0, _extends3['default'])({}, buttonProps, {
 	      eventKey: items,
 	      disabled: activePage >= items
-	    }), _react2['default'].createElement('span', { 'aria-label': 'Last' }, last === true ? '»' : last)));
+	    }), _react2['default'].createElement('span', { 'aria-label': 'Last' }, last === true ? '\xBB' : last)));
 	  };
 
 	  return Pagination;
@@ -37817,7 +37766,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 414 */
+/* 413 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37951,7 +37900,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 415 */
+/* 414 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38188,7 +38137,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 416 */
+/* 415 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38332,7 +38281,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 417 */
+/* 416 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38525,7 +38474,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 418 */
+/* 417 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -38655,7 +38604,7 @@ webpackJsonp([0],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 419 */
+/* 418 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -38766,7 +38715,7 @@ webpackJsonp([0],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 420 */
+/* 419 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38855,7 +38804,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 421 */
+/* 420 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38894,11 +38843,11 @@ webpackJsonp([0],[
 
 	var _Dropdown2 = _interopRequireDefault(_Dropdown);
 
-	var _SplitToggle = __webpack_require__(422);
+	var _SplitToggle = __webpack_require__(421);
 
 	var _SplitToggle2 = _interopRequireDefault(_SplitToggle);
 
-	var _splitComponentProps2 = __webpack_require__(342);
+	var _splitComponentProps2 = __webpack_require__(341);
 
 	var _splitComponentProps3 = _interopRequireDefault(_splitComponentProps2);
 
@@ -38976,7 +38925,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 422 */
+/* 421 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39003,7 +38952,7 @@ webpackJsonp([0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _DropdownToggle = __webpack_require__(339);
+	var _DropdownToggle = __webpack_require__(338);
 
 	var _DropdownToggle2 = _interopRequireDefault(_DropdownToggle);
 
@@ -39035,7 +38984,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 423 */
+/* 422 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39062,15 +39011,15 @@ webpackJsonp([0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _TabContainer = __webpack_require__(424);
+	var _TabContainer = __webpack_require__(423);
 
 	var _TabContainer2 = _interopRequireDefault(_TabContainer);
 
-	var _TabContent = __webpack_require__(425);
+	var _TabContent = __webpack_require__(424);
 
 	var _TabContent2 = _interopRequireDefault(_TabContent);
 
-	var _TabPane = __webpack_require__(426);
+	var _TabPane = __webpack_require__(425);
 
 	var _TabPane2 = _interopRequireDefault(_TabPane);
 
@@ -39122,7 +39071,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 424 */
+/* 423 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39277,7 +39226,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 425 */
+/* 424 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39489,7 +39438,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 426 */
+/* 425 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -39538,7 +39487,7 @@ webpackJsonp([0],[
 
 	var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
 
-	var _Fade = __webpack_require__(343);
+	var _Fade = __webpack_require__(342);
 
 	var _Fade2 = _interopRequireDefault(_Fade);
 
@@ -39801,7 +39750,7 @@ webpackJsonp([0],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 427 */
+/* 426 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39906,7 +39855,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 428 */
+/* 427 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39945,19 +39894,19 @@ webpackJsonp([0],[
 
 	var _uncontrollable2 = _interopRequireDefault(_uncontrollable);
 
-	var _Nav = __webpack_require__(390);
+	var _Nav = __webpack_require__(389);
 
 	var _Nav2 = _interopRequireDefault(_Nav);
 
-	var _NavItem = __webpack_require__(397);
+	var _NavItem = __webpack_require__(396);
 
 	var _NavItem2 = _interopRequireDefault(_NavItem);
 
-	var _TabContainer = __webpack_require__(424);
+	var _TabContainer = __webpack_require__(423);
 
 	var _TabContainer2 = _interopRequireDefault(_TabContainer);
 
-	var _TabContent = __webpack_require__(425);
+	var _TabContent = __webpack_require__(424);
 
 	var _TabContent2 = _interopRequireDefault(_TabContent);
 
@@ -40094,7 +40043,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 429 */
+/* 428 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40183,7 +40132,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 430 */
+/* 429 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40320,7 +40269,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 431 */
+/* 430 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40395,7 +40344,7 @@ webpackJsonp([0],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 432 */
+/* 431 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40436,7 +40385,7 @@ webpackJsonp([0],[
 	exports.ValidComponentChildren = _ValidComponentChildren3['default'];
 
 /***/ },
-/* 433 */
+/* 432 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40453,7 +40402,7 @@ webpackJsonp([0],[
 
 	var _reactBootstrap = __webpack_require__(180);
 
-	var _logotype = __webpack_require__(434);
+	var _logotype = __webpack_require__(433);
 
 	var _logotype2 = _interopRequireDefault(_logotype);
 
@@ -40495,7 +40444,7 @@ webpackJsonp([0],[
 	                        _react2.default.createElement(
 	                            'p',
 	                            { className: 'site-itemmargin-top' },
-	                            'Fastighetsförvaltning'
+	                            'Fastighetsf\xF6rvaltning'
 	                        ),
 	                        _react2.default.createElement(
 	                            'p',
@@ -40506,18 +40455,18 @@ webpackJsonp([0],[
 	                            _react2.default.createElement('br', null),
 	                            'Box 936',
 	                            _react2.default.createElement('br', null),
-	                            'Bjursvägen 29',
+	                            'Bjursv\xE4gen 29',
 	                            _react2.default.createElement('br', null),
-	                            '194 29 Upplands Väsby'
+	                            '194 29 Upplands V\xE4sby'
 	                        ),
 	                        _react2.default.createElement(
 	                            'p',
 	                            null,
 	                            _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'phone-alt', style: { color: "grey" } }),
-	                            ' 08 34 38 00',
+	                            '\xA008 34 38 00',
 	                            _react2.default.createElement('br', null),
 	                            _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'envelope', style: { color: "grey" } }),
-	                            ' info@renewservice.se'
+	                            '\xA0info@renewservice.se'
 	                        )
 	                    )
 	                )
@@ -40532,13 +40481,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 434 */
+/* 433 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,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"
 
 /***/ },
-/* 435 */
+/* 434 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40584,7 +40533,7 @@ webpackJsonp([0],[
 	          _react2.default.createElement(
 	            _reactBootstrap.Col,
 	            { md: 12 },
-	            'Här kommer dashboard med statistik visas',
+	            'H\xE4r kommer dashboard med statistik visas',
 	            _react2.default.createElement('div', null)
 	          )
 	        )
@@ -40599,13 +40548,13 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 436 */
+/* 435 */
 /***/ function(module, exports) {
 
 	module.exports = "<div id=\"react-home\"></div>\r\n";
 
 /***/ },
-/* 437 */
+/* 436 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40618,7 +40567,7 @@ webpackJsonp([0],[
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _Login = __webpack_require__(438);
+	var _Login = __webpack_require__(437);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
@@ -40643,7 +40592,7 @@ webpackJsonp([0],[
 	module.exports = view;
 
 /***/ },
-/* 438 */
+/* 437 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40658,11 +40607,11 @@ webpackJsonp([0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _jqueryUi = __webpack_require__(439);
+	var _jqueryUi = __webpack_require__(438);
 
 	var _jqueryUi2 = _interopRequireDefault(_jqueryUi);
 
-	var _jqueryValidation = __webpack_require__(441);
+	var _jqueryValidation = __webpack_require__(440);
 
 	var _jqueryValidation2 = _interopRequireDefault(_jqueryValidation);
 
@@ -40757,7 +40706,7 @@ webpackJsonp([0],[
 	;
 
 /***/ },
-/* 439 */
+/* 438 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -40779,7 +40728,7 @@ webpackJsonp([0],[
 		if (true) {
 
 			// AMD. Register as an anonymous module.
-			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2), __webpack_require__(440)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2), __webpack_require__(439)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 		} else {
 
 			// Browser globals
@@ -41464,7 +41413,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 440 */
+/* 439 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (factory) {
@@ -41485,7 +41434,7 @@ webpackJsonp([0],[
 	});
 
 /***/ },
-/* 441 */
+/* 440 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -41498,7 +41447,7 @@ webpackJsonp([0],[
 	 */
 	(function (factory) {
 		if (true) {
-			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(441)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 		} else if (typeof module === "object" && module.exports) {
 			module.exports = factory(require("jquery"));
 		} else {
@@ -43035,6 +42984,1586 @@ webpackJsonp([0],[
 	});
 
 /***/ },
+/* 441 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	 * jQuery JavaScript Library v2.2.4
+	 * http://jquery.com/
+	 *
+	 * Includes Sizzle.js
+	 * http://sizzlejs.com/
+	 *
+	 * Copyright jQuery Foundation and other contributors
+	 * Released under the MIT license
+	 * http://jquery.org/license
+	 *
+	 * Date: 2016-05-20T17:23Z
+	 */(function(global,factory){if(typeof module==="object"&&typeof module.exports==="object"){// For CommonJS and CommonJS-like environments where a proper `window`
+	// is present, execute the factory and get jQuery.
+	// For environments that do not have a `window` with a `document`
+	// (such as Node.js), expose a factory as module.exports.
+	// This accentuates the need for the creation of a real `window`.
+	// e.g. var jQuery = require("jquery")(window);
+	// See ticket #14549 for more info.
+	module.exports=global.document?factory(global,true):function(w){if(!w.document){throw new Error("jQuery requires a window with a document");}return factory(w);};}else{factory(global);}// Pass this if window is not defined yet
+	})(typeof window!=="undefined"?window:this,function(window,noGlobal){// Support: Firefox 18+
+	// Can't be in strict mode, several libs including ASP.NET trace
+	// the stack via arguments.caller.callee and Firefox dies if
+	// you try to trace through "use strict" call chains. (#13335)
+	//"use strict";
+	var arr=[];var document=window.document;var slice=arr.slice;var concat=arr.concat;var push=arr.push;var indexOf=arr.indexOf;var class2type={};var toString=class2type.toString;var hasOwn=class2type.hasOwnProperty;var support={};var version="2.2.4",// Define a local copy of jQuery
+	jQuery=function(selector,context){// The jQuery object is actually just the init constructor 'enhanced'
+	// Need init if jQuery is called (just allow error to be thrown if not included)
+	return new jQuery.fn.init(selector,context);},// Support: Android<4.1
+	// Make sure we trim BOM and NBSP
+	rtrim=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,// Matches dashed string for camelizing
+	rmsPrefix=/^-ms-/,rdashAlpha=/-([\da-z])/gi,// Used by jQuery.camelCase as callback to replace()
+	fcamelCase=function(all,letter){return letter.toUpperCase();};jQuery.fn=jQuery.prototype={// The current version of jQuery being used
+	jquery:version,constructor:jQuery,// Start with an empty selector
+	selector:"",// The default length of a jQuery object is 0
+	length:0,toArray:function(){return slice.call(this);},// Get the Nth element in the matched element set OR
+	// Get the whole matched element set as a clean array
+	get:function(num){return num!=null?// Return just the one element from the set
+	num<0?this[num+this.length]:this[num]:// Return all the elements in a clean array
+	slice.call(this);},// Take an array of elements and push it onto the stack
+	// (returning the new matched element set)
+	pushStack:function(elems){// Build a new jQuery matched element set
+	var ret=jQuery.merge(this.constructor(),elems);// Add the old object onto the stack (as a reference)
+	ret.prevObject=this;ret.context=this.context;// Return the newly-formed element set
+	return ret;},// Execute a callback for every element in the matched set.
+	each:function(callback){return jQuery.each(this,callback);},map:function(callback){return this.pushStack(jQuery.map(this,function(elem,i){return callback.call(elem,i,elem);}));},slice:function(){return this.pushStack(slice.apply(this,arguments));},first:function(){return this.eq(0);},last:function(){return this.eq(-1);},eq:function(i){var len=this.length,j=+i+(i<0?len:0);return this.pushStack(j>=0&&j<len?[this[j]]:[]);},end:function(){return this.prevObject||this.constructor();},// For internal use only.
+	// Behaves like an Array's method, not like a jQuery method.
+	push:push,sort:arr.sort,splice:arr.splice};jQuery.extend=jQuery.fn.extend=function(){var options,name,src,copy,copyIsArray,clone,target=arguments[0]||{},i=1,length=arguments.length,deep=false;// Handle a deep copy situation
+	if(typeof target==="boolean"){deep=target;// Skip the boolean and the target
+	target=arguments[i]||{};i++;}// Handle case when target is a string or something (possible in deep copy)
+	if(typeof target!=="object"&&!jQuery.isFunction(target)){target={};}// Extend jQuery itself if only one argument is passed
+	if(i===length){target=this;i--;}for(;i<length;i++){// Only deal with non-null/undefined values
+	if((options=arguments[i])!=null){// Extend the base object
+	for(name in options){src=target[name];copy=options[name];// Prevent never-ending loop
+	if(target===copy){continue;}// Recurse if we're merging plain objects or arrays
+	if(deep&&copy&&(jQuery.isPlainObject(copy)||(copyIsArray=jQuery.isArray(copy)))){if(copyIsArray){copyIsArray=false;clone=src&&jQuery.isArray(src)?src:[];}else{clone=src&&jQuery.isPlainObject(src)?src:{};}// Never move original objects, clone them
+	target[name]=jQuery.extend(deep,clone,copy);// Don't bring in undefined values
+	}else if(copy!==undefined){target[name]=copy;}}}}// Return the modified object
+	return target;};jQuery.extend({// Unique for each copy of jQuery on the page
+	expando:"jQuery"+(version+Math.random()).replace(/\D/g,""),// Assume jQuery is ready without the ready module
+	isReady:true,error:function(msg){throw new Error(msg);},noop:function(){},isFunction:function(obj){return jQuery.type(obj)==="function";},isArray:Array.isArray,isWindow:function(obj){return obj!=null&&obj===obj.window;},isNumeric:function(obj){// parseFloat NaNs numeric-cast false positives (null|true|false|"")
+	// ...but misinterprets leading-number strings, particularly hex literals ("0x...")
+	// subtraction forces infinities to NaN
+	// adding 1 corrects loss of precision from parseFloat (#15100)
+	var realStringObj=obj&&obj.toString();return!jQuery.isArray(obj)&&realStringObj-parseFloat(realStringObj)+1>=0;},isPlainObject:function(obj){var key;// Not plain objects:
+	// - Any object or value whose internal [[Class]] property is not "[object Object]"
+	// - DOM nodes
+	// - window
+	if(jQuery.type(obj)!=="object"||obj.nodeType||jQuery.isWindow(obj)){return false;}// Not own constructor property must be Object
+	if(obj.constructor&&!hasOwn.call(obj,"constructor")&&!hasOwn.call(obj.constructor.prototype||{},"isPrototypeOf")){return false;}// Own properties are enumerated firstly, so to speed up,
+	// if last one is own, then all properties are own
+	for(key in obj){}return key===undefined||hasOwn.call(obj,key);},isEmptyObject:function(obj){var name;for(name in obj){return false;}return true;},type:function(obj){if(obj==null){return obj+"";}// Support: Android<4.0, iOS<6 (functionish RegExp)
+	return typeof obj==="object"||typeof obj==="function"?class2type[toString.call(obj)]||"object":typeof obj;},// Evaluates a script in a global context
+	globalEval:function(code){var script,indirect=eval;code=jQuery.trim(code);if(code){// If the code includes a valid, prologue position
+	// strict mode pragma, execute code by injecting a
+	// script tag into the document.
+	if(code.indexOf("use strict")===1){script=document.createElement("script");script.text=code;document.head.appendChild(script).parentNode.removeChild(script);}else{// Otherwise, avoid the DOM node creation, insertion
+	// and removal by using an indirect global eval
+	indirect(code);}}},// Convert dashed to camelCase; used by the css and data modules
+	// Support: IE9-11+
+	// Microsoft forgot to hump their vendor prefix (#9572)
+	camelCase:function(string){return string.replace(rmsPrefix,"ms-").replace(rdashAlpha,fcamelCase);},nodeName:function(elem,name){return elem.nodeName&&elem.nodeName.toLowerCase()===name.toLowerCase();},each:function(obj,callback){var length,i=0;if(isArrayLike(obj)){length=obj.length;for(;i<length;i++){if(callback.call(obj[i],i,obj[i])===false){break;}}}else{for(i in obj){if(callback.call(obj[i],i,obj[i])===false){break;}}}return obj;},// Support: Android<4.1
+	trim:function(text){return text==null?"":(text+"").replace(rtrim,"");},// results is for internal usage only
+	makeArray:function(arr,results){var ret=results||[];if(arr!=null){if(isArrayLike(Object(arr))){jQuery.merge(ret,typeof arr==="string"?[arr]:arr);}else{push.call(ret,arr);}}return ret;},inArray:function(elem,arr,i){return arr==null?-1:indexOf.call(arr,elem,i);},merge:function(first,second){var len=+second.length,j=0,i=first.length;for(;j<len;j++){first[i++]=second[j];}first.length=i;return first;},grep:function(elems,callback,invert){var callbackInverse,matches=[],i=0,length=elems.length,callbackExpect=!invert;// Go through the array, only saving the items
+	// that pass the validator function
+	for(;i<length;i++){callbackInverse=!callback(elems[i],i);if(callbackInverse!==callbackExpect){matches.push(elems[i]);}}return matches;},// arg is for internal usage only
+	map:function(elems,callback,arg){var length,value,i=0,ret=[];// Go through the array, translating each of the items to their new values
+	if(isArrayLike(elems)){length=elems.length;for(;i<length;i++){value=callback(elems[i],i,arg);if(value!=null){ret.push(value);}}// Go through every key on the object,
+	}else{for(i in elems){value=callback(elems[i],i,arg);if(value!=null){ret.push(value);}}}// Flatten any nested arrays
+	return concat.apply([],ret);},// A global GUID counter for objects
+	guid:1,// Bind a function to a context, optionally partially applying any
+	// arguments.
+	proxy:function(fn,context){var tmp,args,proxy;if(typeof context==="string"){tmp=fn[context];context=fn;fn=tmp;}// Quick check to determine if target is callable, in the spec
+	// this throws a TypeError, but we will just return undefined.
+	if(!jQuery.isFunction(fn)){return undefined;}// Simulated bind
+	args=slice.call(arguments,2);proxy=function(){return fn.apply(context||this,args.concat(slice.call(arguments)));};// Set the guid of unique handler to the same of original handler, so it can be removed
+	proxy.guid=fn.guid=fn.guid||jQuery.guid++;return proxy;},now:Date.now,// jQuery.support is not used in Core but other projects attach their
+	// properties to it so it needs to exist.
+	support:support});// JSHint would error on this code due to the Symbol not being defined in ES5.
+	// Defining this global in .jshintrc would create a danger of using the global
+	// unguarded in another place, it seems safer to just disable JSHint for these
+	// three lines.
+	/* jshint ignore: start */if(typeof Symbol==="function"){jQuery.fn[Symbol.iterator]=arr[Symbol.iterator];}/* jshint ignore: end */// Populate the class2type map
+	jQuery.each("Boolean Number String Function Array Date RegExp Object Error Symbol".split(" "),function(i,name){class2type["[object "+name+"]"]=name.toLowerCase();});function isArrayLike(obj){// Support: iOS 8.2 (not reproducible in simulator)
+	// `in` check used to prevent JIT error (gh-2145)
+	// hasOwn isn't used here due to false negatives
+	// regarding Nodelist length in IE
+	var length=!!obj&&"length"in obj&&obj.length,type=jQuery.type(obj);if(type==="function"||jQuery.isWindow(obj)){return false;}return type==="array"||length===0||typeof length==="number"&&length>0&&length-1 in obj;}var Sizzle=/*!
+	 * Sizzle CSS Selector Engine v2.2.1
+	 * http://sizzlejs.com/
+	 *
+	 * Copyright jQuery Foundation and other contributors
+	 * Released under the MIT license
+	 * http://jquery.org/license
+	 *
+	 * Date: 2015-10-17
+	 */function(window){var i,support,Expr,getText,isXML,tokenize,compile,select,outermostContext,sortInput,hasDuplicate,// Local document vars
+	setDocument,document,docElem,documentIsHTML,rbuggyQSA,rbuggyMatches,matches,contains,// Instance-specific data
+	expando="sizzle"+1*new Date(),preferredDoc=window.document,dirruns=0,done=0,classCache=createCache(),tokenCache=createCache(),compilerCache=createCache(),sortOrder=function(a,b){if(a===b){hasDuplicate=true;}return 0;},// General-purpose constants
+	MAX_NEGATIVE=1<<31,// Instance methods
+	hasOwn={}.hasOwnProperty,arr=[],pop=arr.pop,push_native=arr.push,push=arr.push,slice=arr.slice,// Use a stripped-down indexOf as it's faster than native
+	// http://jsperf.com/thor-indexof-vs-for/5
+	indexOf=function(list,elem){var i=0,len=list.length;for(;i<len;i++){if(list[i]===elem){return i;}}return-1;},booleans="checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",// Regular expressions
+	// http://www.w3.org/TR/css3-selectors/#whitespace
+	whitespace="[\\x20\\t\\r\\n\\f]",// http://www.w3.org/TR/CSS21/syndata.html#value-def-identifier
+	identifier="(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",// Attribute selectors: http://www.w3.org/TR/selectors/#attribute-selectors
+	attributes="\\["+whitespace+"*("+identifier+")(?:"+whitespace+// Operator (capture 2)
+	"*([*^$|!~]?=)"+whitespace+// "Attribute values must be CSS identifiers [capture 5] or strings [capture 3 or capture 4]"
+	"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|("+identifier+"))|)"+whitespace+"*\\]",pseudos=":("+identifier+")(?:\\(("+// To reduce the number of selectors needing tokenize in the preFilter, prefer arguments:
+	// 1. quoted (capture 3; capture 4 or capture 5)
+	"('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|"+// 2. simple (capture 6)
+	"((?:\\\\.|[^\\\\()[\\]]|"+attributes+")*)|"+// 3. anything else (capture 2)
+	".*"+")\\)|)",// Leading and non-escaped trailing whitespace, capturing some non-whitespace characters preceding the latter
+	rwhitespace=new RegExp(whitespace+"+","g"),rtrim=new RegExp("^"+whitespace+"+|((?:^|[^\\\\])(?:\\\\.)*)"+whitespace+"+$","g"),rcomma=new RegExp("^"+whitespace+"*,"+whitespace+"*"),rcombinators=new RegExp("^"+whitespace+"*([>+~]|"+whitespace+")"+whitespace+"*"),rattributeQuotes=new RegExp("="+whitespace+"*([^\\]'\"]*?)"+whitespace+"*\\]","g"),rpseudo=new RegExp(pseudos),ridentifier=new RegExp("^"+identifier+"$"),matchExpr={"ID":new RegExp("^#("+identifier+")"),"CLASS":new RegExp("^\\.("+identifier+")"),"TAG":new RegExp("^("+identifier+"|[*])"),"ATTR":new RegExp("^"+attributes),"PSEUDO":new RegExp("^"+pseudos),"CHILD":new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\("+whitespace+"*(even|odd|(([+-]|)(\\d*)n|)"+whitespace+"*(?:([+-]|)"+whitespace+"*(\\d+)|))"+whitespace+"*\\)|)","i"),"bool":new RegExp("^(?:"+booleans+")$","i"),// For use in libraries implementing .is()
+	// We use this for POS matching in `select`
+	"needsContext":new RegExp("^"+whitespace+"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\("+whitespace+"*((?:-\\d)?\\d*)"+whitespace+"*\\)|)(?=[^-]|$)","i")},rinputs=/^(?:input|select|textarea|button)$/i,rheader=/^h\d$/i,rnative=/^[^{]+\{\s*\[native \w/,// Easily-parseable/retrievable ID or TAG or CLASS selectors
+	rquickExpr=/^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,rsibling=/[+~]/,rescape=/'|\\/g,// CSS escapes http://www.w3.org/TR/CSS21/syndata.html#escaped-characters
+	runescape=new RegExp("\\\\([\\da-f]{1,6}"+whitespace+"?|("+whitespace+")|.)","ig"),funescape=function(_,escaped,escapedWhitespace){var high="0x"+escaped-0x10000;// NaN means non-codepoint
+	// Support: Firefox<24
+	// Workaround erroneous numeric interpretation of +"0x"
+	return high!==high||escapedWhitespace?escaped:high<0?// BMP codepoint
+	String.fromCharCode(high+0x10000):// Supplemental Plane codepoint (surrogate pair)
+	String.fromCharCode(high>>10|0xD800,high&0x3FF|0xDC00);},// Used for iframes
+	// See setDocument()
+	// Removing the function wrapper causes a "Permission Denied"
+	// error in IE
+	unloadHandler=function(){setDocument();};// Optimize for push.apply( _, NodeList )
+	try{push.apply(arr=slice.call(preferredDoc.childNodes),preferredDoc.childNodes);// Support: Android<4.0
+	// Detect silently failing push.apply
+	arr[preferredDoc.childNodes.length].nodeType;}catch(e){push={apply:arr.length?// Leverage slice if possible
+	function(target,els){push_native.apply(target,slice.call(els));}:// Support: IE<9
+	// Otherwise append directly
+	function(target,els){var j=target.length,i=0;// Can't trust NodeList.length
+	while(target[j++]=els[i++]){}target.length=j-1;}};}function Sizzle(selector,context,results,seed){var m,i,elem,nid,nidselect,match,groups,newSelector,newContext=context&&context.ownerDocument,// nodeType defaults to 9, since context defaults to document
+	nodeType=context?context.nodeType:9;results=results||[];// Return early from calls with invalid selector or context
+	if(typeof selector!=="string"||!selector||nodeType!==1&&nodeType!==9&&nodeType!==11){return results;}// Try to shortcut find operations (as opposed to filters) in HTML documents
+	if(!seed){if((context?context.ownerDocument||context:preferredDoc)!==document){setDocument(context);}context=context||document;if(documentIsHTML){// If the selector is sufficiently simple, try using a "get*By*" DOM method
+	// (excepting DocumentFragment context, where the methods don't exist)
+	if(nodeType!==11&&(match=rquickExpr.exec(selector))){// ID selector
+	if(m=match[1]){// Document context
+	if(nodeType===9){if(elem=context.getElementById(m)){// Support: IE, Opera, Webkit
+	// TODO: identify versions
+	// getElementById can match elements by name instead of ID
+	if(elem.id===m){results.push(elem);return results;}}else{return results;}// Element context
+	}else{// Support: IE, Opera, Webkit
+	// TODO: identify versions
+	// getElementById can match elements by name instead of ID
+	if(newContext&&(elem=newContext.getElementById(m))&&contains(context,elem)&&elem.id===m){results.push(elem);return results;}}// Type selector
+	}else if(match[2]){push.apply(results,context.getElementsByTagName(selector));return results;// Class selector
+	}else if((m=match[3])&&support.getElementsByClassName&&context.getElementsByClassName){push.apply(results,context.getElementsByClassName(m));return results;}}// Take advantage of querySelectorAll
+	if(support.qsa&&!compilerCache[selector+" "]&&(!rbuggyQSA||!rbuggyQSA.test(selector))){if(nodeType!==1){newContext=context;newSelector=selector;// qSA looks outside Element context, which is not what we want
+	// Thanks to Andrew Dupont for this workaround technique
+	// Support: IE <=8
+	// Exclude object elements
+	}else if(context.nodeName.toLowerCase()!=="object"){// Capture the context ID, setting it first if necessary
+	if(nid=context.getAttribute("id")){nid=nid.replace(rescape,"\\$&");}else{context.setAttribute("id",nid=expando);}// Prefix every selector in the list
+	groups=tokenize(selector);i=groups.length;nidselect=ridentifier.test(nid)?"#"+nid:"[id='"+nid+"']";while(i--){groups[i]=nidselect+" "+toSelector(groups[i]);}newSelector=groups.join(",");// Expand context for sibling selectors
+	newContext=rsibling.test(selector)&&testContext(context.parentNode)||context;}if(newSelector){try{push.apply(results,newContext.querySelectorAll(newSelector));return results;}catch(qsaError){}finally{if(nid===expando){context.removeAttribute("id");}}}}}}// All others
+	return select(selector.replace(rtrim,"$1"),context,results,seed);}/**
+	 * Create key-value caches of limited size
+	 * @returns {function(string, object)} Returns the Object data after storing it on itself with
+	 *	property name the (space-suffixed) string and (if the cache is larger than Expr.cacheLength)
+	 *	deleting the oldest entry
+	 */function createCache(){var keys=[];function cache(key,value){// Use (key + " ") to avoid collision with native prototype properties (see Issue #157)
+	if(keys.push(key+" ")>Expr.cacheLength){// Only keep the most recent entries
+	delete cache[keys.shift()];}return cache[key+" "]=value;}return cache;}/**
+	 * Mark a function for special use by Sizzle
+	 * @param {Function} fn The function to mark
+	 */function markFunction(fn){fn[expando]=true;return fn;}/**
+	 * Support testing using an element
+	 * @param {Function} fn Passed the created div and expects a boolean result
+	 */function assert(fn){var div=document.createElement("div");try{return!!fn(div);}catch(e){return false;}finally{// Remove from its parent by default
+	if(div.parentNode){div.parentNode.removeChild(div);}// release memory in IE
+	div=null;}}/**
+	 * Adds the same handler for all of the specified attrs
+	 * @param {String} attrs Pipe-separated list of attributes
+	 * @param {Function} handler The method that will be applied
+	 */function addHandle(attrs,handler){var arr=attrs.split("|"),i=arr.length;while(i--){Expr.attrHandle[arr[i]]=handler;}}/**
+	 * Checks document order of two siblings
+	 * @param {Element} a
+	 * @param {Element} b
+	 * @returns {Number} Returns less than 0 if a precedes b, greater than 0 if a follows b
+	 */function siblingCheck(a,b){var cur=b&&a,diff=cur&&a.nodeType===1&&b.nodeType===1&&(~b.sourceIndex||MAX_NEGATIVE)-(~a.sourceIndex||MAX_NEGATIVE);// Use IE sourceIndex if available on both nodes
+	if(diff){return diff;}// Check if b follows a
+	if(cur){while(cur=cur.nextSibling){if(cur===b){return-1;}}}return a?1:-1;}/**
+	 * Returns a function to use in pseudos for input types
+	 * @param {String} type
+	 */function createInputPseudo(type){return function(elem){var name=elem.nodeName.toLowerCase();return name==="input"&&elem.type===type;};}/**
+	 * Returns a function to use in pseudos for buttons
+	 * @param {String} type
+	 */function createButtonPseudo(type){return function(elem){var name=elem.nodeName.toLowerCase();return(name==="input"||name==="button")&&elem.type===type;};}/**
+	 * Returns a function to use in pseudos for positionals
+	 * @param {Function} fn
+	 */function createPositionalPseudo(fn){return markFunction(function(argument){argument=+argument;return markFunction(function(seed,matches){var j,matchIndexes=fn([],seed.length,argument),i=matchIndexes.length;// Match elements found at the specified indexes
+	while(i--){if(seed[j=matchIndexes[i]]){seed[j]=!(matches[j]=seed[j]);}}});});}/**
+	 * Checks a node for validity as a Sizzle context
+	 * @param {Element|Object=} context
+	 * @returns {Element|Object|Boolean} The input node if acceptable, otherwise a falsy value
+	 */function testContext(context){return context&&typeof context.getElementsByTagName!=="undefined"&&context;}// Expose support vars for convenience
+	support=Sizzle.support={};/**
+	 * Detects XML nodes
+	 * @param {Element|Object} elem An element or a document
+	 * @returns {Boolean} True iff elem is a non-HTML XML node
+	 */isXML=Sizzle.isXML=function(elem){// documentElement is verified for cases where it doesn't yet exist
+	// (such as loading iframes in IE - #4833)
+	var documentElement=elem&&(elem.ownerDocument||elem).documentElement;return documentElement?documentElement.nodeName!=="HTML":false;};/**
+	 * Sets document-related variables once based on the current document
+	 * @param {Element|Object} [doc] An element or document object to use to set the document
+	 * @returns {Object} Returns the current document
+	 */setDocument=Sizzle.setDocument=function(node){var hasCompare,parent,doc=node?node.ownerDocument||node:preferredDoc;// Return early if doc is invalid or already selected
+	if(doc===document||doc.nodeType!==9||!doc.documentElement){return document;}// Update global variables
+	document=doc;docElem=document.documentElement;documentIsHTML=!isXML(document);// Support: IE 9-11, Edge
+	// Accessing iframe documents after unload throws "permission denied" errors (jQuery #13936)
+	if((parent=document.defaultView)&&parent.top!==parent){// Support: IE 11
+	if(parent.addEventListener){parent.addEventListener("unload",unloadHandler,false);// Support: IE 9 - 10 only
+	}else if(parent.attachEvent){parent.attachEvent("onunload",unloadHandler);}}/* Attributes
+		---------------------------------------------------------------------- */// Support: IE<8
+	// Verify that getAttribute really returns attributes and not properties
+	// (excepting IE8 booleans)
+	support.attributes=assert(function(div){div.className="i";return!div.getAttribute("className");});/* getElement(s)By*
+		---------------------------------------------------------------------- */// Check if getElementsByTagName("*") returns only elements
+	support.getElementsByTagName=assert(function(div){div.appendChild(document.createComment(""));return!div.getElementsByTagName("*").length;});// Support: IE<9
+	support.getElementsByClassName=rnative.test(document.getElementsByClassName);// Support: IE<10
+	// Check if getElementById returns elements by name
+	// The broken getElementById methods don't pick up programatically-set names,
+	// so use a roundabout getElementsByName test
+	support.getById=assert(function(div){docElem.appendChild(div).id=expando;return!document.getElementsByName||!document.getElementsByName(expando).length;});// ID find and filter
+	if(support.getById){Expr.find["ID"]=function(id,context){if(typeof context.getElementById!=="undefined"&&documentIsHTML){var m=context.getElementById(id);return m?[m]:[];}};Expr.filter["ID"]=function(id){var attrId=id.replace(runescape,funescape);return function(elem){return elem.getAttribute("id")===attrId;};};}else{// Support: IE6/7
+	// getElementById is not reliable as a find shortcut
+	delete Expr.find["ID"];Expr.filter["ID"]=function(id){var attrId=id.replace(runescape,funescape);return function(elem){var node=typeof elem.getAttributeNode!=="undefined"&&elem.getAttributeNode("id");return node&&node.value===attrId;};};}// Tag
+	Expr.find["TAG"]=support.getElementsByTagName?function(tag,context){if(typeof context.getElementsByTagName!=="undefined"){return context.getElementsByTagName(tag);// DocumentFragment nodes don't have gEBTN
+	}else if(support.qsa){return context.querySelectorAll(tag);}}:function(tag,context){var elem,tmp=[],i=0,// By happy coincidence, a (broken) gEBTN appears on DocumentFragment nodes too
+	results=context.getElementsByTagName(tag);// Filter out possible comments
+	if(tag==="*"){while(elem=results[i++]){if(elem.nodeType===1){tmp.push(elem);}}return tmp;}return results;};// Class
+	Expr.find["CLASS"]=support.getElementsByClassName&&function(className,context){if(typeof context.getElementsByClassName!=="undefined"&&documentIsHTML){return context.getElementsByClassName(className);}};/* QSA/matchesSelector
+		---------------------------------------------------------------------- */// QSA and matchesSelector support
+	// matchesSelector(:active) reports false when true (IE9/Opera 11.5)
+	rbuggyMatches=[];// qSa(:focus) reports false when true (Chrome 21)
+	// We allow this because of a bug in IE8/9 that throws an error
+	// whenever `document.activeElement` is accessed on an iframe
+	// So, we allow :focus to pass through QSA all the time to avoid the IE error
+	// See http://bugs.jquery.com/ticket/13378
+	rbuggyQSA=[];if(support.qsa=rnative.test(document.querySelectorAll)){// Build QSA regex
+	// Regex strategy adopted from Diego Perini
+	assert(function(div){// Select is set to empty string on purpose
+	// This is to test IE's treatment of not explicitly
+	// setting a boolean content attribute,
+	// since its presence should be enough
+	// http://bugs.jquery.com/ticket/12359
+	docElem.appendChild(div).innerHTML="<a id='"+expando+"'></a>"+"<select id='"+expando+"-\r\\' msallowcapture=''>"+"<option selected=''></option></select>";// Support: IE8, Opera 11-12.16
+	// Nothing should be selected when empty strings follow ^= or $= or *=
+	// The test attribute must be unknown in Opera but "safe" for WinRT
+	// http://msdn.microsoft.com/en-us/library/ie/hh465388.aspx#attribute_section
+	if(div.querySelectorAll("[msallowcapture^='']").length){rbuggyQSA.push("[*^$]="+whitespace+"*(?:''|\"\")");}// Support: IE8
+	// Boolean attributes and "value" are not treated correctly
+	if(!div.querySelectorAll("[selected]").length){rbuggyQSA.push("\\["+whitespace+"*(?:value|"+booleans+")");}// Support: Chrome<29, Android<4.4, Safari<7.0+, iOS<7.0+, PhantomJS<1.9.8+
+	if(!div.querySelectorAll("[id~="+expando+"-]").length){rbuggyQSA.push("~=");}// Webkit/Opera - :checked should return selected option elements
+	// http://www.w3.org/TR/2011/REC-css3-selectors-20110929/#checked
+	// IE8 throws error here and will not see later tests
+	if(!div.querySelectorAll(":checked").length){rbuggyQSA.push(":checked");}// Support: Safari 8+, iOS 8+
+	// https://bugs.webkit.org/show_bug.cgi?id=136851
+	// In-page `selector#id sibing-combinator selector` fails
+	if(!div.querySelectorAll("a#"+expando+"+*").length){rbuggyQSA.push(".#.+[+~]");}});assert(function(div){// Support: Windows 8 Native Apps
+	// The type and name attributes are restricted during .innerHTML assignment
+	var input=document.createElement("input");input.setAttribute("type","hidden");div.appendChild(input).setAttribute("name","D");// Support: IE8
+	// Enforce case-sensitivity of name attribute
+	if(div.querySelectorAll("[name=d]").length){rbuggyQSA.push("name"+whitespace+"*[*^$|!~]?=");}// FF 3.5 - :enabled/:disabled and hidden elements (hidden elements are still enabled)
+	// IE8 throws error here and will not see later tests
+	if(!div.querySelectorAll(":enabled").length){rbuggyQSA.push(":enabled",":disabled");}// Opera 10-11 does not throw on post-comma invalid pseudos
+	div.querySelectorAll("*,:x");rbuggyQSA.push(",.*:");});}if(support.matchesSelector=rnative.test(matches=docElem.matches||docElem.webkitMatchesSelector||docElem.mozMatchesSelector||docElem.oMatchesSelector||docElem.msMatchesSelector)){assert(function(div){// Check to see if it's possible to do matchesSelector
+	// on a disconnected node (IE 9)
+	support.disconnectedMatch=matches.call(div,"div");// This should fail with an exception
+	// Gecko does not error, returns false instead
+	matches.call(div,"[s!='']:x");rbuggyMatches.push("!=",pseudos);});}rbuggyQSA=rbuggyQSA.length&&new RegExp(rbuggyQSA.join("|"));rbuggyMatches=rbuggyMatches.length&&new RegExp(rbuggyMatches.join("|"));/* Contains
+		---------------------------------------------------------------------- */hasCompare=rnative.test(docElem.compareDocumentPosition);// Element contains another
+	// Purposefully self-exclusive
+	// As in, an element does not contain itself
+	contains=hasCompare||rnative.test(docElem.contains)?function(a,b){var adown=a.nodeType===9?a.documentElement:a,bup=b&&b.parentNode;return a===bup||!!(bup&&bup.nodeType===1&&(adown.contains?adown.contains(bup):a.compareDocumentPosition&&a.compareDocumentPosition(bup)&16));}:function(a,b){if(b){while(b=b.parentNode){if(b===a){return true;}}}return false;};/* Sorting
+		---------------------------------------------------------------------- */// Document order sorting
+	sortOrder=hasCompare?function(a,b){// Flag for duplicate removal
+	if(a===b){hasDuplicate=true;return 0;}// Sort on method existence if only one input has compareDocumentPosition
+	var compare=!a.compareDocumentPosition-!b.compareDocumentPosition;if(compare){return compare;}// Calculate position if both inputs belong to the same document
+	compare=(a.ownerDocument||a)===(b.ownerDocument||b)?a.compareDocumentPosition(b):// Otherwise we know they are disconnected
+	1;// Disconnected nodes
+	if(compare&1||!support.sortDetached&&b.compareDocumentPosition(a)===compare){// Choose the first element that is related to our preferred document
+	if(a===document||a.ownerDocument===preferredDoc&&contains(preferredDoc,a)){return-1;}if(b===document||b.ownerDocument===preferredDoc&&contains(preferredDoc,b)){return 1;}// Maintain original order
+	return sortInput?indexOf(sortInput,a)-indexOf(sortInput,b):0;}return compare&4?-1:1;}:function(a,b){// Exit early if the nodes are identical
+	if(a===b){hasDuplicate=true;return 0;}var cur,i=0,aup=a.parentNode,bup=b.parentNode,ap=[a],bp=[b];// Parentless nodes are either documents or disconnected
+	if(!aup||!bup){return a===document?-1:b===document?1:aup?-1:bup?1:sortInput?indexOf(sortInput,a)-indexOf(sortInput,b):0;// If the nodes are siblings, we can do a quick check
+	}else if(aup===bup){return siblingCheck(a,b);}// Otherwise we need full lists of their ancestors for comparison
+	cur=a;while(cur=cur.parentNode){ap.unshift(cur);}cur=b;while(cur=cur.parentNode){bp.unshift(cur);}// Walk down the tree looking for a discrepancy
+	while(ap[i]===bp[i]){i++;}return i?// Do a sibling check if the nodes have a common ancestor
+	siblingCheck(ap[i],bp[i]):// Otherwise nodes in our document sort first
+	ap[i]===preferredDoc?-1:bp[i]===preferredDoc?1:0;};return document;};Sizzle.matches=function(expr,elements){return Sizzle(expr,null,null,elements);};Sizzle.matchesSelector=function(elem,expr){// Set document vars if needed
+	if((elem.ownerDocument||elem)!==document){setDocument(elem);}// Make sure that attribute selectors are quoted
+	expr=expr.replace(rattributeQuotes,"='$1']");if(support.matchesSelector&&documentIsHTML&&!compilerCache[expr+" "]&&(!rbuggyMatches||!rbuggyMatches.test(expr))&&(!rbuggyQSA||!rbuggyQSA.test(expr))){try{var ret=matches.call(elem,expr);// IE 9's matchesSelector returns false on disconnected nodes
+	if(ret||support.disconnectedMatch||// As well, disconnected nodes are said to be in a document
+	// fragment in IE 9
+	elem.document&&elem.document.nodeType!==11){return ret;}}catch(e){}}return Sizzle(expr,document,null,[elem]).length>0;};Sizzle.contains=function(context,elem){// Set document vars if needed
+	if((context.ownerDocument||context)!==document){setDocument(context);}return contains(context,elem);};Sizzle.attr=function(elem,name){// Set document vars if needed
+	if((elem.ownerDocument||elem)!==document){setDocument(elem);}var fn=Expr.attrHandle[name.toLowerCase()],// Don't get fooled by Object.prototype properties (jQuery #13807)
+	val=fn&&hasOwn.call(Expr.attrHandle,name.toLowerCase())?fn(elem,name,!documentIsHTML):undefined;return val!==undefined?val:support.attributes||!documentIsHTML?elem.getAttribute(name):(val=elem.getAttributeNode(name))&&val.specified?val.value:null;};Sizzle.error=function(msg){throw new Error("Syntax error, unrecognized expression: "+msg);};/**
+	 * Document sorting and removing duplicates
+	 * @param {ArrayLike} results
+	 */Sizzle.uniqueSort=function(results){var elem,duplicates=[],j=0,i=0;// Unless we *know* we can detect duplicates, assume their presence
+	hasDuplicate=!support.detectDuplicates;sortInput=!support.sortStable&&results.slice(0);results.sort(sortOrder);if(hasDuplicate){while(elem=results[i++]){if(elem===results[i]){j=duplicates.push(i);}}while(j--){results.splice(duplicates[j],1);}}// Clear input after sorting to release objects
+	// See https://github.com/jquery/sizzle/pull/225
+	sortInput=null;return results;};/**
+	 * Utility function for retrieving the text value of an array of DOM nodes
+	 * @param {Array|Element} elem
+	 */getText=Sizzle.getText=function(elem){var node,ret="",i=0,nodeType=elem.nodeType;if(!nodeType){// If no nodeType, this is expected to be an array
+	while(node=elem[i++]){// Do not traverse comment nodes
+	ret+=getText(node);}}else if(nodeType===1||nodeType===9||nodeType===11){// Use textContent for elements
+	// innerText usage removed for consistency of new lines (jQuery #11153)
+	if(typeof elem.textContent==="string"){return elem.textContent;}else{// Traverse its children
+	for(elem=elem.firstChild;elem;elem=elem.nextSibling){ret+=getText(elem);}}}else if(nodeType===3||nodeType===4){return elem.nodeValue;}// Do not include comment or processing instruction nodes
+	return ret;};Expr=Sizzle.selectors={// Can be adjusted by the user
+	cacheLength:50,createPseudo:markFunction,match:matchExpr,attrHandle:{},find:{},relative:{">":{dir:"parentNode",first:true}," ":{dir:"parentNode"},"+":{dir:"previousSibling",first:true},"~":{dir:"previousSibling"}},preFilter:{"ATTR":function(match){match[1]=match[1].replace(runescape,funescape);// Move the given value to match[3] whether quoted or unquoted
+	match[3]=(match[3]||match[4]||match[5]||"").replace(runescape,funescape);if(match[2]==="~="){match[3]=" "+match[3]+" ";}return match.slice(0,4);},"CHILD":function(match){/* matches from matchExpr["CHILD"]
+					1 type (only|nth|...)
+					2 what (child|of-type)
+					3 argument (even|odd|\d*|\d*n([+-]\d+)?|...)
+					4 xn-component of xn+y argument ([+-]?\d*n|)
+					5 sign of xn-component
+					6 x of xn-component
+					7 sign of y-component
+					8 y of y-component
+				*/match[1]=match[1].toLowerCase();if(match[1].slice(0,3)==="nth"){// nth-* requires argument
+	if(!match[3]){Sizzle.error(match[0]);}// numeric x and y parameters for Expr.filter.CHILD
+	// remember that false/true cast respectively to 0/1
+	match[4]=+(match[4]?match[5]+(match[6]||1):2*(match[3]==="even"||match[3]==="odd"));match[5]=+(match[7]+match[8]||match[3]==="odd");// other types prohibit arguments
+	}else if(match[3]){Sizzle.error(match[0]);}return match;},"PSEUDO":function(match){var excess,unquoted=!match[6]&&match[2];if(matchExpr["CHILD"].test(match[0])){return null;}// Accept quoted arguments as-is
+	if(match[3]){match[2]=match[4]||match[5]||"";// Strip excess characters from unquoted arguments
+	}else if(unquoted&&rpseudo.test(unquoted)&&(// Get excess from tokenize (recursively)
+	excess=tokenize(unquoted,true))&&(// advance to the next closing parenthesis
+	excess=unquoted.indexOf(")",unquoted.length-excess)-unquoted.length)){// excess is a negative index
+	match[0]=match[0].slice(0,excess);match[2]=unquoted.slice(0,excess);}// Return only captures needed by the pseudo filter method (type and argument)
+	return match.slice(0,3);}},filter:{"TAG":function(nodeNameSelector){var nodeName=nodeNameSelector.replace(runescape,funescape).toLowerCase();return nodeNameSelector==="*"?function(){return true;}:function(elem){return elem.nodeName&&elem.nodeName.toLowerCase()===nodeName;};},"CLASS":function(className){var pattern=classCache[className+" "];return pattern||(pattern=new RegExp("(^|"+whitespace+")"+className+"("+whitespace+"|$)"))&&classCache(className,function(elem){return pattern.test(typeof elem.className==="string"&&elem.className||typeof elem.getAttribute!=="undefined"&&elem.getAttribute("class")||"");});},"ATTR":function(name,operator,check){return function(elem){var result=Sizzle.attr(elem,name);if(result==null){return operator==="!=";}if(!operator){return true;}result+="";return operator==="="?result===check:operator==="!="?result!==check:operator==="^="?check&&result.indexOf(check)===0:operator==="*="?check&&result.indexOf(check)>-1:operator==="$="?check&&result.slice(-check.length)===check:operator==="~="?(" "+result.replace(rwhitespace," ")+" ").indexOf(check)>-1:operator==="|="?result===check||result.slice(0,check.length+1)===check+"-":false;};},"CHILD":function(type,what,argument,first,last){var simple=type.slice(0,3)!=="nth",forward=type.slice(-4)!=="last",ofType=what==="of-type";return first===1&&last===0?// Shortcut for :nth-*(n)
+	function(elem){return!!elem.parentNode;}:function(elem,context,xml){var cache,uniqueCache,outerCache,node,nodeIndex,start,dir=simple!==forward?"nextSibling":"previousSibling",parent=elem.parentNode,name=ofType&&elem.nodeName.toLowerCase(),useCache=!xml&&!ofType,diff=false;if(parent){// :(first|last|only)-(child|of-type)
+	if(simple){while(dir){node=elem;while(node=node[dir]){if(ofType?node.nodeName.toLowerCase()===name:node.nodeType===1){return false;}}// Reverse direction for :only-* (if we haven't yet done so)
+	start=dir=type==="only"&&!start&&"nextSibling";}return true;}start=[forward?parent.firstChild:parent.lastChild];// non-xml :nth-child(...) stores cache data on `parent`
+	if(forward&&useCache){// Seek `elem` from a previously-cached index
+	// ...in a gzip-friendly way
+	node=parent;outerCache=node[expando]||(node[expando]={});// Support: IE <9 only
+	// Defend against cloned attroperties (jQuery gh-1709)
+	uniqueCache=outerCache[node.uniqueID]||(outerCache[node.uniqueID]={});cache=uniqueCache[type]||[];nodeIndex=cache[0]===dirruns&&cache[1];diff=nodeIndex&&cache[2];node=nodeIndex&&parent.childNodes[nodeIndex];while(node=++nodeIndex&&node&&node[dir]||(// Fallback to seeking `elem` from the start
+	diff=nodeIndex=0)||start.pop()){// When found, cache indexes on `parent` and break
+	if(node.nodeType===1&&++diff&&node===elem){uniqueCache[type]=[dirruns,nodeIndex,diff];break;}}}else{// Use previously-cached element index if available
+	if(useCache){// ...in a gzip-friendly way
+	node=elem;outerCache=node[expando]||(node[expando]={});// Support: IE <9 only
+	// Defend against cloned attroperties (jQuery gh-1709)
+	uniqueCache=outerCache[node.uniqueID]||(outerCache[node.uniqueID]={});cache=uniqueCache[type]||[];nodeIndex=cache[0]===dirruns&&cache[1];diff=nodeIndex;}// xml :nth-child(...)
+	// or :nth-last-child(...) or :nth(-last)?-of-type(...)
+	if(diff===false){// Use the same loop as above to seek `elem` from the start
+	while(node=++nodeIndex&&node&&node[dir]||(diff=nodeIndex=0)||start.pop()){if((ofType?node.nodeName.toLowerCase()===name:node.nodeType===1)&&++diff){// Cache the index of each encountered element
+	if(useCache){outerCache=node[expando]||(node[expando]={});// Support: IE <9 only
+	// Defend against cloned attroperties (jQuery gh-1709)
+	uniqueCache=outerCache[node.uniqueID]||(outerCache[node.uniqueID]={});uniqueCache[type]=[dirruns,diff];}if(node===elem){break;}}}}}// Incorporate the offset, then check against cycle size
+	diff-=last;return diff===first||diff%first===0&&diff/first>=0;}};},"PSEUDO":function(pseudo,argument){// pseudo-class names are case-insensitive
+	// http://www.w3.org/TR/selectors/#pseudo-classes
+	// Prioritize by case sensitivity in case custom pseudos are added with uppercase letters
+	// Remember that setFilters inherits from pseudos
+	var args,fn=Expr.pseudos[pseudo]||Expr.setFilters[pseudo.toLowerCase()]||Sizzle.error("unsupported pseudo: "+pseudo);// The user may use createPseudo to indicate that
+	// arguments are needed to create the filter function
+	// just as Sizzle does
+	if(fn[expando]){return fn(argument);}// But maintain support for old signatures
+	if(fn.length>1){args=[pseudo,pseudo,"",argument];return Expr.setFilters.hasOwnProperty(pseudo.toLowerCase())?markFunction(function(seed,matches){var idx,matched=fn(seed,argument),i=matched.length;while(i--){idx=indexOf(seed,matched[i]);seed[idx]=!(matches[idx]=matched[i]);}}):function(elem){return fn(elem,0,args);};}return fn;}},pseudos:{// Potentially complex pseudos
+	"not":markFunction(function(selector){// Trim the selector passed to compile
+	// to avoid treating leading and trailing
+	// spaces as combinators
+	var input=[],results=[],matcher=compile(selector.replace(rtrim,"$1"));return matcher[expando]?markFunction(function(seed,matches,context,xml){var elem,unmatched=matcher(seed,null,xml,[]),i=seed.length;// Match elements unmatched by `matcher`
+	while(i--){if(elem=unmatched[i]){seed[i]=!(matches[i]=elem);}}}):function(elem,context,xml){input[0]=elem;matcher(input,null,xml,results);// Don't keep the element (issue #299)
+	input[0]=null;return!results.pop();};}),"has":markFunction(function(selector){return function(elem){return Sizzle(selector,elem).length>0;};}),"contains":markFunction(function(text){text=text.replace(runescape,funescape);return function(elem){return(elem.textContent||elem.innerText||getText(elem)).indexOf(text)>-1;};}),// "Whether an element is represented by a :lang() selector
+	// is based solely on the element's language value
+	// being equal to the identifier C,
+	// or beginning with the identifier C immediately followed by "-".
+	// The matching of C against the element's language value is performed case-insensitively.
+	// The identifier C does not have to be a valid language name."
+	// http://www.w3.org/TR/selectors/#lang-pseudo
+	"lang":markFunction(function(lang){// lang value must be a valid identifier
+	if(!ridentifier.test(lang||"")){Sizzle.error("unsupported lang: "+lang);}lang=lang.replace(runescape,funescape).toLowerCase();return function(elem){var elemLang;do{if(elemLang=documentIsHTML?elem.lang:elem.getAttribute("xml:lang")||elem.getAttribute("lang")){elemLang=elemLang.toLowerCase();return elemLang===lang||elemLang.indexOf(lang+"-")===0;}}while((elem=elem.parentNode)&&elem.nodeType===1);return false;};}),// Miscellaneous
+	"target":function(elem){var hash=window.location&&window.location.hash;return hash&&hash.slice(1)===elem.id;},"root":function(elem){return elem===docElem;},"focus":function(elem){return elem===document.activeElement&&(!document.hasFocus||document.hasFocus())&&!!(elem.type||elem.href||~elem.tabIndex);},// Boolean properties
+	"enabled":function(elem){return elem.disabled===false;},"disabled":function(elem){return elem.disabled===true;},"checked":function(elem){// In CSS3, :checked should return both checked and selected elements
+	// http://www.w3.org/TR/2011/REC-css3-selectors-20110929/#checked
+	var nodeName=elem.nodeName.toLowerCase();return nodeName==="input"&&!!elem.checked||nodeName==="option"&&!!elem.selected;},"selected":function(elem){// Accessing this property makes selected-by-default
+	// options in Safari work properly
+	if(elem.parentNode){elem.parentNode.selectedIndex;}return elem.selected===true;},// Contents
+	"empty":function(elem){// http://www.w3.org/TR/selectors/#empty-pseudo
+	// :empty is negated by element (1) or content nodes (text: 3; cdata: 4; entity ref: 5),
+	//   but not by others (comment: 8; processing instruction: 7; etc.)
+	// nodeType < 6 works because attributes (2) do not appear as children
+	for(elem=elem.firstChild;elem;elem=elem.nextSibling){if(elem.nodeType<6){return false;}}return true;},"parent":function(elem){return!Expr.pseudos["empty"](elem);},// Element/input types
+	"header":function(elem){return rheader.test(elem.nodeName);},"input":function(elem){return rinputs.test(elem.nodeName);},"button":function(elem){var name=elem.nodeName.toLowerCase();return name==="input"&&elem.type==="button"||name==="button";},"text":function(elem){var attr;return elem.nodeName.toLowerCase()==="input"&&elem.type==="text"&&(// Support: IE<8
+	// New HTML5 attribute values (e.g., "search") appear with elem.type === "text"
+	(attr=elem.getAttribute("type"))==null||attr.toLowerCase()==="text");},// Position-in-collection
+	"first":createPositionalPseudo(function(){return[0];}),"last":createPositionalPseudo(function(matchIndexes,length){return[length-1];}),"eq":createPositionalPseudo(function(matchIndexes,length,argument){return[argument<0?argument+length:argument];}),"even":createPositionalPseudo(function(matchIndexes,length){var i=0;for(;i<length;i+=2){matchIndexes.push(i);}return matchIndexes;}),"odd":createPositionalPseudo(function(matchIndexes,length){var i=1;for(;i<length;i+=2){matchIndexes.push(i);}return matchIndexes;}),"lt":createPositionalPseudo(function(matchIndexes,length,argument){var i=argument<0?argument+length:argument;for(;--i>=0;){matchIndexes.push(i);}return matchIndexes;}),"gt":createPositionalPseudo(function(matchIndexes,length,argument){var i=argument<0?argument+length:argument;for(;++i<length;){matchIndexes.push(i);}return matchIndexes;})}};Expr.pseudos["nth"]=Expr.pseudos["eq"];// Add button/input type pseudos
+	for(i in{radio:true,checkbox:true,file:true,password:true,image:true}){Expr.pseudos[i]=createInputPseudo(i);}for(i in{submit:true,reset:true}){Expr.pseudos[i]=createButtonPseudo(i);}// Easy API for creating new setFilters
+	function setFilters(){}setFilters.prototype=Expr.filters=Expr.pseudos;Expr.setFilters=new setFilters();tokenize=Sizzle.tokenize=function(selector,parseOnly){var matched,match,tokens,type,soFar,groups,preFilters,cached=tokenCache[selector+" "];if(cached){return parseOnly?0:cached.slice(0);}soFar=selector;groups=[];preFilters=Expr.preFilter;while(soFar){// Comma and first run
+	if(!matched||(match=rcomma.exec(soFar))){if(match){// Don't consume trailing commas as valid
+	soFar=soFar.slice(match[0].length)||soFar;}groups.push(tokens=[]);}matched=false;// Combinators
+	if(match=rcombinators.exec(soFar)){matched=match.shift();tokens.push({value:matched,// Cast descendant combinators to space
+	type:match[0].replace(rtrim," ")});soFar=soFar.slice(matched.length);}// Filters
+	for(type in Expr.filter){if((match=matchExpr[type].exec(soFar))&&(!preFilters[type]||(match=preFilters[type](match)))){matched=match.shift();tokens.push({value:matched,type:type,matches:match});soFar=soFar.slice(matched.length);}}if(!matched){break;}}// Return the length of the invalid excess
+	// if we're just parsing
+	// Otherwise, throw an error or return tokens
+	return parseOnly?soFar.length:soFar?Sizzle.error(selector):// Cache the tokens
+	tokenCache(selector,groups).slice(0);};function toSelector(tokens){var i=0,len=tokens.length,selector="";for(;i<len;i++){selector+=tokens[i].value;}return selector;}function addCombinator(matcher,combinator,base){var dir=combinator.dir,checkNonElements=base&&dir==="parentNode",doneName=done++;return combinator.first?// Check against closest ancestor/preceding element
+	function(elem,context,xml){while(elem=elem[dir]){if(elem.nodeType===1||checkNonElements){return matcher(elem,context,xml);}}}:// Check against all ancestor/preceding elements
+	function(elem,context,xml){var oldCache,uniqueCache,outerCache,newCache=[dirruns,doneName];// We can't set arbitrary data on XML nodes, so they don't benefit from combinator caching
+	if(xml){while(elem=elem[dir]){if(elem.nodeType===1||checkNonElements){if(matcher(elem,context,xml)){return true;}}}}else{while(elem=elem[dir]){if(elem.nodeType===1||checkNonElements){outerCache=elem[expando]||(elem[expando]={});// Support: IE <9 only
+	// Defend against cloned attroperties (jQuery gh-1709)
+	uniqueCache=outerCache[elem.uniqueID]||(outerCache[elem.uniqueID]={});if((oldCache=uniqueCache[dir])&&oldCache[0]===dirruns&&oldCache[1]===doneName){// Assign to newCache so results back-propagate to previous elements
+	return newCache[2]=oldCache[2];}else{// Reuse newcache so results back-propagate to previous elements
+	uniqueCache[dir]=newCache;// A match means we're done; a fail means we have to keep checking
+	if(newCache[2]=matcher(elem,context,xml)){return true;}}}}}};}function elementMatcher(matchers){return matchers.length>1?function(elem,context,xml){var i=matchers.length;while(i--){if(!matchers[i](elem,context,xml)){return false;}}return true;}:matchers[0];}function multipleContexts(selector,contexts,results){var i=0,len=contexts.length;for(;i<len;i++){Sizzle(selector,contexts[i],results);}return results;}function condense(unmatched,map,filter,context,xml){var elem,newUnmatched=[],i=0,len=unmatched.length,mapped=map!=null;for(;i<len;i++){if(elem=unmatched[i]){if(!filter||filter(elem,context,xml)){newUnmatched.push(elem);if(mapped){map.push(i);}}}}return newUnmatched;}function setMatcher(preFilter,selector,matcher,postFilter,postFinder,postSelector){if(postFilter&&!postFilter[expando]){postFilter=setMatcher(postFilter);}if(postFinder&&!postFinder[expando]){postFinder=setMatcher(postFinder,postSelector);}return markFunction(function(seed,results,context,xml){var temp,i,elem,preMap=[],postMap=[],preexisting=results.length,// Get initial elements from seed or context
+	elems=seed||multipleContexts(selector||"*",context.nodeType?[context]:context,[]),// Prefilter to get matcher input, preserving a map for seed-results synchronization
+	matcherIn=preFilter&&(seed||!selector)?condense(elems,preMap,preFilter,context,xml):elems,matcherOut=matcher?// If we have a postFinder, or filtered seed, or non-seed postFilter or preexisting results,
+	postFinder||(seed?preFilter:preexisting||postFilter)?// ...intermediate processing is necessary
+	[]:// ...otherwise use results directly
+	results:matcherIn;// Find primary matches
+	if(matcher){matcher(matcherIn,matcherOut,context,xml);}// Apply postFilter
+	if(postFilter){temp=condense(matcherOut,postMap);postFilter(temp,[],context,xml);// Un-match failing elements by moving them back to matcherIn
+	i=temp.length;while(i--){if(elem=temp[i]){matcherOut[postMap[i]]=!(matcherIn[postMap[i]]=elem);}}}if(seed){if(postFinder||preFilter){if(postFinder){// Get the final matcherOut by condensing this intermediate into postFinder contexts
+	temp=[];i=matcherOut.length;while(i--){if(elem=matcherOut[i]){// Restore matcherIn since elem is not yet a final match
+	temp.push(matcherIn[i]=elem);}}postFinder(null,matcherOut=[],temp,xml);}// Move matched elements from seed to results to keep them synchronized
+	i=matcherOut.length;while(i--){if((elem=matcherOut[i])&&(temp=postFinder?indexOf(seed,elem):preMap[i])>-1){seed[temp]=!(results[temp]=elem);}}}// Add elements to results, through postFinder if defined
+	}else{matcherOut=condense(matcherOut===results?matcherOut.splice(preexisting,matcherOut.length):matcherOut);if(postFinder){postFinder(null,results,matcherOut,xml);}else{push.apply(results,matcherOut);}}});}function matcherFromTokens(tokens){var checkContext,matcher,j,len=tokens.length,leadingRelative=Expr.relative[tokens[0].type],implicitRelative=leadingRelative||Expr.relative[" "],i=leadingRelative?1:0,// The foundational matcher ensures that elements are reachable from top-level context(s)
+	matchContext=addCombinator(function(elem){return elem===checkContext;},implicitRelative,true),matchAnyContext=addCombinator(function(elem){return indexOf(checkContext,elem)>-1;},implicitRelative,true),matchers=[function(elem,context,xml){var ret=!leadingRelative&&(xml||context!==outermostContext)||((checkContext=context).nodeType?matchContext(elem,context,xml):matchAnyContext(elem,context,xml));// Avoid hanging onto element (issue #299)
+	checkContext=null;return ret;}];for(;i<len;i++){if(matcher=Expr.relative[tokens[i].type]){matchers=[addCombinator(elementMatcher(matchers),matcher)];}else{matcher=Expr.filter[tokens[i].type].apply(null,tokens[i].matches);// Return special upon seeing a positional matcher
+	if(matcher[expando]){// Find the next relative operator (if any) for proper handling
+	j=++i;for(;j<len;j++){if(Expr.relative[tokens[j].type]){break;}}return setMatcher(i>1&&elementMatcher(matchers),i>1&&toSelector(// If the preceding token was a descendant combinator, insert an implicit any-element `*`
+	tokens.slice(0,i-1).concat({value:tokens[i-2].type===" "?"*":""})).replace(rtrim,"$1"),matcher,i<j&&matcherFromTokens(tokens.slice(i,j)),j<len&&matcherFromTokens(tokens=tokens.slice(j)),j<len&&toSelector(tokens));}matchers.push(matcher);}}return elementMatcher(matchers);}function matcherFromGroupMatchers(elementMatchers,setMatchers){var bySet=setMatchers.length>0,byElement=elementMatchers.length>0,superMatcher=function(seed,context,xml,results,outermost){var elem,j,matcher,matchedCount=0,i="0",unmatched=seed&&[],setMatched=[],contextBackup=outermostContext,// We must always have either seed elements or outermost context
+	elems=seed||byElement&&Expr.find["TAG"]("*",outermost),// Use integer dirruns iff this is the outermost matcher
+	dirrunsUnique=dirruns+=contextBackup==null?1:Math.random()||0.1,len=elems.length;if(outermost){outermostContext=context===document||context||outermost;}// Add elements passing elementMatchers directly to results
+	// Support: IE<9, Safari
+	// Tolerate NodeList properties (IE: "length"; Safari: <number>) matching elements by id
+	for(;i!==len&&(elem=elems[i])!=null;i++){if(byElement&&elem){j=0;if(!context&&elem.ownerDocument!==document){setDocument(elem);xml=!documentIsHTML;}while(matcher=elementMatchers[j++]){if(matcher(elem,context||document,xml)){results.push(elem);break;}}if(outermost){dirruns=dirrunsUnique;}}// Track unmatched elements for set filters
+	if(bySet){// They will have gone through all possible matchers
+	if(elem=!matcher&&elem){matchedCount--;}// Lengthen the array for every element, matched or not
+	if(seed){unmatched.push(elem);}}}// `i` is now the count of elements visited above, and adding it to `matchedCount`
+	// makes the latter nonnegative.
+	matchedCount+=i;// Apply set filters to unmatched elements
+	// NOTE: This can be skipped if there are no unmatched elements (i.e., `matchedCount`
+	// equals `i`), unless we didn't visit _any_ elements in the above loop because we have
+	// no element matchers and no seed.
+	// Incrementing an initially-string "0" `i` allows `i` to remain a string only in that
+	// case, which will result in a "00" `matchedCount` that differs from `i` but is also
+	// numerically zero.
+	if(bySet&&i!==matchedCount){j=0;while(matcher=setMatchers[j++]){matcher(unmatched,setMatched,context,xml);}if(seed){// Reintegrate element matches to eliminate the need for sorting
+	if(matchedCount>0){while(i--){if(!(unmatched[i]||setMatched[i])){setMatched[i]=pop.call(results);}}}// Discard index placeholder values to get only actual matches
+	setMatched=condense(setMatched);}// Add matches to results
+	push.apply(results,setMatched);// Seedless set matches succeeding multiple successful matchers stipulate sorting
+	if(outermost&&!seed&&setMatched.length>0&&matchedCount+setMatchers.length>1){Sizzle.uniqueSort(results);}}// Override manipulation of globals by nested matchers
+	if(outermost){dirruns=dirrunsUnique;outermostContext=contextBackup;}return unmatched;};return bySet?markFunction(superMatcher):superMatcher;}compile=Sizzle.compile=function(selector,match/* Internal Use Only */){var i,setMatchers=[],elementMatchers=[],cached=compilerCache[selector+" "];if(!cached){// Generate a function of recursive functions that can be used to check each element
+	if(!match){match=tokenize(selector);}i=match.length;while(i--){cached=matcherFromTokens(match[i]);if(cached[expando]){setMatchers.push(cached);}else{elementMatchers.push(cached);}}// Cache the compiled function
+	cached=compilerCache(selector,matcherFromGroupMatchers(elementMatchers,setMatchers));// Save selector and tokenization
+	cached.selector=selector;}return cached;};/**
+	 * A low-level selection function that works with Sizzle's compiled
+	 *  selector functions
+	 * @param {String|Function} selector A selector or a pre-compiled
+	 *  selector function built with Sizzle.compile
+	 * @param {Element} context
+	 * @param {Array} [results]
+	 * @param {Array} [seed] A set of elements to match against
+	 */select=Sizzle.select=function(selector,context,results,seed){var i,tokens,token,type,find,compiled=typeof selector==="function"&&selector,match=!seed&&tokenize(selector=compiled.selector||selector);results=results||[];// Try to minimize operations if there is only one selector in the list and no seed
+	// (the latter of which guarantees us context)
+	if(match.length===1){// Reduce context if the leading compound selector is an ID
+	tokens=match[0]=match[0].slice(0);if(tokens.length>2&&(token=tokens[0]).type==="ID"&&support.getById&&context.nodeType===9&&documentIsHTML&&Expr.relative[tokens[1].type]){context=(Expr.find["ID"](token.matches[0].replace(runescape,funescape),context)||[])[0];if(!context){return results;// Precompiled matchers will still verify ancestry, so step up a level
+	}else if(compiled){context=context.parentNode;}selector=selector.slice(tokens.shift().value.length);}// Fetch a seed set for right-to-left matching
+	i=matchExpr["needsContext"].test(selector)?0:tokens.length;while(i--){token=tokens[i];// Abort if we hit a combinator
+	if(Expr.relative[type=token.type]){break;}if(find=Expr.find[type]){// Search, expanding context for leading sibling combinators
+	if(seed=find(token.matches[0].replace(runescape,funescape),rsibling.test(tokens[0].type)&&testContext(context.parentNode)||context)){// If seed is empty or no tokens remain, we can return early
+	tokens.splice(i,1);selector=seed.length&&toSelector(tokens);if(!selector){push.apply(results,seed);return results;}break;}}}}// Compile and execute a filtering function if one is not provided
+	// Provide `match` to avoid retokenization if we modified the selector above
+	(compiled||compile(selector,match))(seed,context,!documentIsHTML,results,!context||rsibling.test(selector)&&testContext(context.parentNode)||context);return results;};// One-time assignments
+	// Sort stability
+	support.sortStable=expando.split("").sort(sortOrder).join("")===expando;// Support: Chrome 14-35+
+	// Always assume duplicates if they aren't passed to the comparison function
+	support.detectDuplicates=!!hasDuplicate;// Initialize against the default document
+	setDocument();// Support: Webkit<537.32 - Safari 6.0.3/Chrome 25 (fixed in Chrome 27)
+	// Detached nodes confoundingly follow *each other*
+	support.sortDetached=assert(function(div1){// Should return 1, but returns 4 (following)
+	return div1.compareDocumentPosition(document.createElement("div"))&1;});// Support: IE<8
+	// Prevent attribute/property "interpolation"
+	// http://msdn.microsoft.com/en-us/library/ms536429%28VS.85%29.aspx
+	if(!assert(function(div){div.innerHTML="<a href='#'></a>";return div.firstChild.getAttribute("href")==="#";})){addHandle("type|href|height|width",function(elem,name,isXML){if(!isXML){return elem.getAttribute(name,name.toLowerCase()==="type"?1:2);}});}// Support: IE<9
+	// Use defaultValue in place of getAttribute("value")
+	if(!support.attributes||!assert(function(div){div.innerHTML="<input/>";div.firstChild.setAttribute("value","");return div.firstChild.getAttribute("value")==="";})){addHandle("value",function(elem,name,isXML){if(!isXML&&elem.nodeName.toLowerCase()==="input"){return elem.defaultValue;}});}// Support: IE<9
+	// Use getAttributeNode to fetch booleans when getAttribute lies
+	if(!assert(function(div){return div.getAttribute("disabled")==null;})){addHandle(booleans,function(elem,name,isXML){var val;if(!isXML){return elem[name]===true?name.toLowerCase():(val=elem.getAttributeNode(name))&&val.specified?val.value:null;}});}return Sizzle;}(window);jQuery.find=Sizzle;jQuery.expr=Sizzle.selectors;jQuery.expr[":"]=jQuery.expr.pseudos;jQuery.uniqueSort=jQuery.unique=Sizzle.uniqueSort;jQuery.text=Sizzle.getText;jQuery.isXMLDoc=Sizzle.isXML;jQuery.contains=Sizzle.contains;var dir=function(elem,dir,until){var matched=[],truncate=until!==undefined;while((elem=elem[dir])&&elem.nodeType!==9){if(elem.nodeType===1){if(truncate&&jQuery(elem).is(until)){break;}matched.push(elem);}}return matched;};var siblings=function(n,elem){var matched=[];for(;n;n=n.nextSibling){if(n.nodeType===1&&n!==elem){matched.push(n);}}return matched;};var rneedsContext=jQuery.expr.match.needsContext;var rsingleTag=/^<([\w-]+)\s*\/?>(?:<\/\1>|)$/;var risSimple=/^.[^:#\[\.,]*$/;// Implement the identical functionality for filter and not
+	function winnow(elements,qualifier,not){if(jQuery.isFunction(qualifier)){return jQuery.grep(elements,function(elem,i){/* jshint -W018 */return!!qualifier.call(elem,i,elem)!==not;});}if(qualifier.nodeType){return jQuery.grep(elements,function(elem){return elem===qualifier!==not;});}if(typeof qualifier==="string"){if(risSimple.test(qualifier)){return jQuery.filter(qualifier,elements,not);}qualifier=jQuery.filter(qualifier,elements);}return jQuery.grep(elements,function(elem){return indexOf.call(qualifier,elem)>-1!==not;});}jQuery.filter=function(expr,elems,not){var elem=elems[0];if(not){expr=":not("+expr+")";}return elems.length===1&&elem.nodeType===1?jQuery.find.matchesSelector(elem,expr)?[elem]:[]:jQuery.find.matches(expr,jQuery.grep(elems,function(elem){return elem.nodeType===1;}));};jQuery.fn.extend({find:function(selector){var i,len=this.length,ret=[],self=this;if(typeof selector!=="string"){return this.pushStack(jQuery(selector).filter(function(){for(i=0;i<len;i++){if(jQuery.contains(self[i],this)){return true;}}}));}for(i=0;i<len;i++){jQuery.find(selector,self[i],ret);}// Needed because $( selector, context ) becomes $( context ).find( selector )
+	ret=this.pushStack(len>1?jQuery.unique(ret):ret);ret.selector=this.selector?this.selector+" "+selector:selector;return ret;},filter:function(selector){return this.pushStack(winnow(this,selector||[],false));},not:function(selector){return this.pushStack(winnow(this,selector||[],true));},is:function(selector){return!!winnow(this,// If this is a positional/relative selector, check membership in the returned set
+	// so $("p:first").is("p:last") won't return true for a doc with two "p".
+	typeof selector==="string"&&rneedsContext.test(selector)?jQuery(selector):selector||[],false).length;}});// Initialize a jQuery object
+	// A central reference to the root jQuery(document)
+	var rootjQuery,// A simple way to check for HTML strings
+	// Prioritize #id over <tag> to avoid XSS via location.hash (#9521)
+	// Strict HTML recognition (#11290: must start with <)
+	rquickExpr=/^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,init=jQuery.fn.init=function(selector,context,root){var match,elem;// HANDLE: $(""), $(null), $(undefined), $(false)
+	if(!selector){return this;}// Method init() accepts an alternate rootjQuery
+	// so migrate can support jQuery.sub (gh-2101)
+	root=root||rootjQuery;// Handle HTML strings
+	if(typeof selector==="string"){if(selector[0]==="<"&&selector[selector.length-1]===">"&&selector.length>=3){// Assume that strings that start and end with <> are HTML and skip the regex check
+	match=[null,selector,null];}else{match=rquickExpr.exec(selector);}// Match html or make sure no context is specified for #id
+	if(match&&(match[1]||!context)){// HANDLE: $(html) -> $(array)
+	if(match[1]){context=context instanceof jQuery?context[0]:context;// Option to run scripts is true for back-compat
+	// Intentionally let the error be thrown if parseHTML is not present
+	jQuery.merge(this,jQuery.parseHTML(match[1],context&&context.nodeType?context.ownerDocument||context:document,true));// HANDLE: $(html, props)
+	if(rsingleTag.test(match[1])&&jQuery.isPlainObject(context)){for(match in context){// Properties of context are called as methods if possible
+	if(jQuery.isFunction(this[match])){this[match](context[match]);// ...and otherwise set as attributes
+	}else{this.attr(match,context[match]);}}}return this;// HANDLE: $(#id)
+	}else{elem=document.getElementById(match[2]);// Support: Blackberry 4.6
+	// gEBID returns nodes no longer in the document (#6963)
+	if(elem&&elem.parentNode){// Inject the element directly into the jQuery object
+	this.length=1;this[0]=elem;}this.context=document;this.selector=selector;return this;}// HANDLE: $(expr, $(...))
+	}else if(!context||context.jquery){return(context||root).find(selector);// HANDLE: $(expr, context)
+	// (which is just equivalent to: $(context).find(expr)
+	}else{return this.constructor(context).find(selector);}// HANDLE: $(DOMElement)
+	}else if(selector.nodeType){this.context=this[0]=selector;this.length=1;return this;// HANDLE: $(function)
+	// Shortcut for document ready
+	}else if(jQuery.isFunction(selector)){return root.ready!==undefined?root.ready(selector):// Execute immediately if ready is not present
+	selector(jQuery);}if(selector.selector!==undefined){this.selector=selector.selector;this.context=selector.context;}return jQuery.makeArray(selector,this);};// Give the init function the jQuery prototype for later instantiation
+	init.prototype=jQuery.fn;// Initialize central reference
+	rootjQuery=jQuery(document);var rparentsprev=/^(?:parents|prev(?:Until|All))/,// Methods guaranteed to produce a unique set when starting from a unique set
+	guaranteedUnique={children:true,contents:true,next:true,prev:true};jQuery.fn.extend({has:function(target){var targets=jQuery(target,this),l=targets.length;return this.filter(function(){var i=0;for(;i<l;i++){if(jQuery.contains(this,targets[i])){return true;}}});},closest:function(selectors,context){var cur,i=0,l=this.length,matched=[],pos=rneedsContext.test(selectors)||typeof selectors!=="string"?jQuery(selectors,context||this.context):0;for(;i<l;i++){for(cur=this[i];cur&&cur!==context;cur=cur.parentNode){// Always skip document fragments
+	if(cur.nodeType<11&&(pos?pos.index(cur)>-1:// Don't pass non-elements to Sizzle
+	cur.nodeType===1&&jQuery.find.matchesSelector(cur,selectors))){matched.push(cur);break;}}}return this.pushStack(matched.length>1?jQuery.uniqueSort(matched):matched);},// Determine the position of an element within the set
+	index:function(elem){// No argument, return index in parent
+	if(!elem){return this[0]&&this[0].parentNode?this.first().prevAll().length:-1;}// Index in selector
+	if(typeof elem==="string"){return indexOf.call(jQuery(elem),this[0]);}// Locate the position of the desired element
+	return indexOf.call(this,// If it receives a jQuery object, the first element is used
+	elem.jquery?elem[0]:elem);},add:function(selector,context){return this.pushStack(jQuery.uniqueSort(jQuery.merge(this.get(),jQuery(selector,context))));},addBack:function(selector){return this.add(selector==null?this.prevObject:this.prevObject.filter(selector));}});function sibling(cur,dir){while((cur=cur[dir])&&cur.nodeType!==1){}return cur;}jQuery.each({parent:function(elem){var parent=elem.parentNode;return parent&&parent.nodeType!==11?parent:null;},parents:function(elem){return dir(elem,"parentNode");},parentsUntil:function(elem,i,until){return dir(elem,"parentNode",until);},next:function(elem){return sibling(elem,"nextSibling");},prev:function(elem){return sibling(elem,"previousSibling");},nextAll:function(elem){return dir(elem,"nextSibling");},prevAll:function(elem){return dir(elem,"previousSibling");},nextUntil:function(elem,i,until){return dir(elem,"nextSibling",until);},prevUntil:function(elem,i,until){return dir(elem,"previousSibling",until);},siblings:function(elem){return siblings((elem.parentNode||{}).firstChild,elem);},children:function(elem){return siblings(elem.firstChild);},contents:function(elem){return elem.contentDocument||jQuery.merge([],elem.childNodes);}},function(name,fn){jQuery.fn[name]=function(until,selector){var matched=jQuery.map(this,fn,until);if(name.slice(-5)!=="Until"){selector=until;}if(selector&&typeof selector==="string"){matched=jQuery.filter(selector,matched);}if(this.length>1){// Remove duplicates
+	if(!guaranteedUnique[name]){jQuery.uniqueSort(matched);}// Reverse order for parents* and prev-derivatives
+	if(rparentsprev.test(name)){matched.reverse();}}return this.pushStack(matched);};});var rnotwhite=/\S+/g;// Convert String-formatted options into Object-formatted ones
+	function createOptions(options){var object={};jQuery.each(options.match(rnotwhite)||[],function(_,flag){object[flag]=true;});return object;}/*
+	 * Create a callback list using the following parameters:
+	 *
+	 *	options: an optional list of space-separated options that will change how
+	 *			the callback list behaves or a more traditional option object
+	 *
+	 * By default a callback list will act like an event callback list and can be
+	 * "fired" multiple times.
+	 *
+	 * Possible options:
+	 *
+	 *	once:			will ensure the callback list can only be fired once (like a Deferred)
+	 *
+	 *	memory:			will keep track of previous values and will call any callback added
+	 *					after the list has been fired right away with the latest "memorized"
+	 *					values (like a Deferred)
+	 *
+	 *	unique:			will ensure a callback can only be added once (no duplicate in the list)
+	 *
+	 *	stopOnFalse:	interrupt callings when a callback returns false
+	 *
+	 */jQuery.Callbacks=function(options){// Convert options from String-formatted to Object-formatted if needed
+	// (we check in cache first)
+	options=typeof options==="string"?createOptions(options):jQuery.extend({},options);var// Flag to know if list is currently firing
+	firing,// Last fire value for non-forgettable lists
+	memory,// Flag to know if list was already fired
+	fired,// Flag to prevent firing
+	locked,// Actual callback list
+	list=[],// Queue of execution data for repeatable lists
+	queue=[],// Index of currently firing callback (modified by add/remove as needed)
+	firingIndex=-1,// Fire callbacks
+	fire=function(){// Enforce single-firing
+	locked=options.once;// Execute callbacks for all pending executions,
+	// respecting firingIndex overrides and runtime changes
+	fired=firing=true;for(;queue.length;firingIndex=-1){memory=queue.shift();while(++firingIndex<list.length){// Run callback and check for early termination
+	if(list[firingIndex].apply(memory[0],memory[1])===false&&options.stopOnFalse){// Jump to end and forget the data so .add doesn't re-fire
+	firingIndex=list.length;memory=false;}}}// Forget the data if we're done with it
+	if(!options.memory){memory=false;}firing=false;// Clean up if we're done firing for good
+	if(locked){// Keep an empty list if we have data for future add calls
+	if(memory){list=[];// Otherwise, this object is spent
+	}else{list="";}}},// Actual Callbacks object
+	self={// Add a callback or a collection of callbacks to the list
+	add:function(){if(list){// If we have memory from a past run, we should fire after adding
+	if(memory&&!firing){firingIndex=list.length-1;queue.push(memory);}(function add(args){jQuery.each(args,function(_,arg){if(jQuery.isFunction(arg)){if(!options.unique||!self.has(arg)){list.push(arg);}}else if(arg&&arg.length&&jQuery.type(arg)!=="string"){// Inspect recursively
+	add(arg);}});})(arguments);if(memory&&!firing){fire();}}return this;},// Remove a callback from the list
+	remove:function(){jQuery.each(arguments,function(_,arg){var index;while((index=jQuery.inArray(arg,list,index))>-1){list.splice(index,1);// Handle firing indexes
+	if(index<=firingIndex){firingIndex--;}}});return this;},// Check if a given callback is in the list.
+	// If no argument is given, return whether or not list has callbacks attached.
+	has:function(fn){return fn?jQuery.inArray(fn,list)>-1:list.length>0;},// Remove all callbacks from the list
+	empty:function(){if(list){list=[];}return this;},// Disable .fire and .add
+	// Abort any current/pending executions
+	// Clear all callbacks and values
+	disable:function(){locked=queue=[];list=memory="";return this;},disabled:function(){return!list;},// Disable .fire
+	// Also disable .add unless we have memory (since it would have no effect)
+	// Abort any pending executions
+	lock:function(){locked=queue=[];if(!memory){list=memory="";}return this;},locked:function(){return!!locked;},// Call all callbacks with the given context and arguments
+	fireWith:function(context,args){if(!locked){args=args||[];args=[context,args.slice?args.slice():args];queue.push(args);if(!firing){fire();}}return this;},// Call all the callbacks with the given arguments
+	fire:function(){self.fireWith(this,arguments);return this;},// To know if the callbacks have already been called at least once
+	fired:function(){return!!fired;}};return self;};jQuery.extend({Deferred:function(func){var tuples=[// action, add listener, listener list, final state
+	["resolve","done",jQuery.Callbacks("once memory"),"resolved"],["reject","fail",jQuery.Callbacks("once memory"),"rejected"],["notify","progress",jQuery.Callbacks("memory")]],state="pending",promise={state:function(){return state;},always:function(){deferred.done(arguments).fail(arguments);return this;},then:function()/* fnDone, fnFail, fnProgress */{var fns=arguments;return jQuery.Deferred(function(newDefer){jQuery.each(tuples,function(i,tuple){var fn=jQuery.isFunction(fns[i])&&fns[i];// deferred[ done | fail | progress ] for forwarding actions to newDefer
+	deferred[tuple[1]](function(){var returned=fn&&fn.apply(this,arguments);if(returned&&jQuery.isFunction(returned.promise)){returned.promise().progress(newDefer.notify).done(newDefer.resolve).fail(newDefer.reject);}else{newDefer[tuple[0]+"With"](this===promise?newDefer.promise():this,fn?[returned]:arguments);}});});fns=null;}).promise();},// Get a promise for this deferred
+	// If obj is provided, the promise aspect is added to the object
+	promise:function(obj){return obj!=null?jQuery.extend(obj,promise):promise;}},deferred={};// Keep pipe for back-compat
+	promise.pipe=promise.then;// Add list-specific methods
+	jQuery.each(tuples,function(i,tuple){var list=tuple[2],stateString=tuple[3];// promise[ done | fail | progress ] = list.add
+	promise[tuple[1]]=list.add;// Handle state
+	if(stateString){list.add(function(){// state = [ resolved | rejected ]
+	state=stateString;// [ reject_list | resolve_list ].disable; progress_list.lock
+	},tuples[i^1][2].disable,tuples[2][2].lock);}// deferred[ resolve | reject | notify ]
+	deferred[tuple[0]]=function(){deferred[tuple[0]+"With"](this===deferred?promise:this,arguments);return this;};deferred[tuple[0]+"With"]=list.fireWith;});// Make the deferred a promise
+	promise.promise(deferred);// Call given func if any
+	if(func){func.call(deferred,deferred);}// All done!
+	return deferred;},// Deferred helper
+	when:function(subordinate/* , ..., subordinateN */){var i=0,resolveValues=slice.call(arguments),length=resolveValues.length,// the count of uncompleted subordinates
+	remaining=length!==1||subordinate&&jQuery.isFunction(subordinate.promise)?length:0,// the master Deferred.
+	// If resolveValues consist of only a single Deferred, just use that.
+	deferred=remaining===1?subordinate:jQuery.Deferred(),// Update function for both resolve and progress values
+	updateFunc=function(i,contexts,values){return function(value){contexts[i]=this;values[i]=arguments.length>1?slice.call(arguments):value;if(values===progressValues){deferred.notifyWith(contexts,values);}else if(! --remaining){deferred.resolveWith(contexts,values);}};},progressValues,progressContexts,resolveContexts;// Add listeners to Deferred subordinates; treat others as resolved
+	if(length>1){progressValues=new Array(length);progressContexts=new Array(length);resolveContexts=new Array(length);for(;i<length;i++){if(resolveValues[i]&&jQuery.isFunction(resolveValues[i].promise)){resolveValues[i].promise().progress(updateFunc(i,progressContexts,progressValues)).done(updateFunc(i,resolveContexts,resolveValues)).fail(deferred.reject);}else{--remaining;}}}// If we're not waiting on anything, resolve the master
+	if(!remaining){deferred.resolveWith(resolveContexts,resolveValues);}return deferred.promise();}});// The deferred used on DOM ready
+	var readyList;jQuery.fn.ready=function(fn){// Add the callback
+	jQuery.ready.promise().done(fn);return this;};jQuery.extend({// Is the DOM ready to be used? Set to true once it occurs.
+	isReady:false,// A counter to track how many items to wait for before
+	// the ready event fires. See #6781
+	readyWait:1,// Hold (or release) the ready event
+	holdReady:function(hold){if(hold){jQuery.readyWait++;}else{jQuery.ready(true);}},// Handle when the DOM is ready
+	ready:function(wait){// Abort if there are pending holds or we're already ready
+	if(wait===true?--jQuery.readyWait:jQuery.isReady){return;}// Remember that the DOM is ready
+	jQuery.isReady=true;// If a normal DOM Ready event fired, decrement, and wait if need be
+	if(wait!==true&&--jQuery.readyWait>0){return;}// If there are functions bound, to execute
+	readyList.resolveWith(document,[jQuery]);// Trigger any bound ready events
+	if(jQuery.fn.triggerHandler){jQuery(document).triggerHandler("ready");jQuery(document).off("ready");}}});/**
+	 * The ready event handler and self cleanup method
+	 */function completed(){document.removeEventListener("DOMContentLoaded",completed);window.removeEventListener("load",completed);jQuery.ready();}jQuery.ready.promise=function(obj){if(!readyList){readyList=jQuery.Deferred();// Catch cases where $(document).ready() is called
+	// after the browser event has already occurred.
+	// Support: IE9-10 only
+	// Older IE sometimes signals "interactive" too soon
+	if(document.readyState==="complete"||document.readyState!=="loading"&&!document.documentElement.doScroll){// Handle it asynchronously to allow scripts the opportunity to delay ready
+	window.setTimeout(jQuery.ready);}else{// Use the handy event callback
+	document.addEventListener("DOMContentLoaded",completed);// A fallback to window.onload, that will always work
+	window.addEventListener("load",completed);}}return readyList.promise(obj);};// Kick off the DOM ready check even if the user does not
+	jQuery.ready.promise();// Multifunctional method to get and set values of a collection
+	// The value/s can optionally be executed if it's a function
+	var access=function(elems,fn,key,value,chainable,emptyGet,raw){var i=0,len=elems.length,bulk=key==null;// Sets many values
+	if(jQuery.type(key)==="object"){chainable=true;for(i in key){access(elems,fn,i,key[i],true,emptyGet,raw);}// Sets one value
+	}else if(value!==undefined){chainable=true;if(!jQuery.isFunction(value)){raw=true;}if(bulk){// Bulk operations run against the entire set
+	if(raw){fn.call(elems,value);fn=null;// ...except when executing function values
+	}else{bulk=fn;fn=function(elem,key,value){return bulk.call(jQuery(elem),value);};}}if(fn){for(;i<len;i++){fn(elems[i],key,raw?value:value.call(elems[i],i,fn(elems[i],key)));}}}return chainable?elems:// Gets
+	bulk?fn.call(elems):len?fn(elems[0],key):emptyGet;};var acceptData=function(owner){// Accepts only:
+	//  - Node
+	//    - Node.ELEMENT_NODE
+	//    - Node.DOCUMENT_NODE
+	//  - Object
+	//    - Any
+	/* jshint -W018 */return owner.nodeType===1||owner.nodeType===9||!+owner.nodeType;};function Data(){this.expando=jQuery.expando+Data.uid++;}Data.uid=1;Data.prototype={register:function(owner,initial){var value=initial||{};// If it is a node unlikely to be stringify-ed or looped over
+	// use plain assignment
+	if(owner.nodeType){owner[this.expando]=value;// Otherwise secure it in a non-enumerable, non-writable property
+	// configurability must be true to allow the property to be
+	// deleted with the delete operator
+	}else{Object.defineProperty(owner,this.expando,{value:value,writable:true,configurable:true});}return owner[this.expando];},cache:function(owner){// We can accept data for non-element nodes in modern browsers,
+	// but we should not, see #8335.
+	// Always return an empty object.
+	if(!acceptData(owner)){return{};}// Check if the owner object already has a cache
+	var value=owner[this.expando];// If not, create one
+	if(!value){value={};// We can accept data for non-element nodes in modern browsers,
+	// but we should not, see #8335.
+	// Always return an empty object.
+	if(acceptData(owner)){// If it is a node unlikely to be stringify-ed or looped over
+	// use plain assignment
+	if(owner.nodeType){owner[this.expando]=value;// Otherwise secure it in a non-enumerable property
+	// configurable must be true to allow the property to be
+	// deleted when data is removed
+	}else{Object.defineProperty(owner,this.expando,{value:value,configurable:true});}}}return value;},set:function(owner,data,value){var prop,cache=this.cache(owner);// Handle: [ owner, key, value ] args
+	if(typeof data==="string"){cache[data]=value;// Handle: [ owner, { properties } ] args
+	}else{// Copy the properties one-by-one to the cache object
+	for(prop in data){cache[prop]=data[prop];}}return cache;},get:function(owner,key){return key===undefined?this.cache(owner):owner[this.expando]&&owner[this.expando][key];},access:function(owner,key,value){var stored;// In cases where either:
+	//
+	//   1. No key was specified
+	//   2. A string key was specified, but no value provided
+	//
+	// Take the "read" path and allow the get method to determine
+	// which value to return, respectively either:
+	//
+	//   1. The entire cache object
+	//   2. The data stored at the key
+	//
+	if(key===undefined||key&&typeof key==="string"&&value===undefined){stored=this.get(owner,key);return stored!==undefined?stored:this.get(owner,jQuery.camelCase(key));}// When the key is not a string, or both a key and value
+	// are specified, set or extend (existing objects) with either:
+	//
+	//   1. An object of properties
+	//   2. A key and value
+	//
+	this.set(owner,key,value);// Since the "set" path can have two possible entry points
+	// return the expected data based on which path was taken[*]
+	return value!==undefined?value:key;},remove:function(owner,key){var i,name,camel,cache=owner[this.expando];if(cache===undefined){return;}if(key===undefined){this.register(owner);}else{// Support array or space separated string of keys
+	if(jQuery.isArray(key)){// If "name" is an array of keys...
+	// When data is initially created, via ("key", "val") signature,
+	// keys will be converted to camelCase.
+	// Since there is no way to tell _how_ a key was added, remove
+	// both plain key and camelCase key. #12786
+	// This will only penalize the array argument path.
+	name=key.concat(key.map(jQuery.camelCase));}else{camel=jQuery.camelCase(key);// Try the string as a key before any manipulation
+	if(key in cache){name=[key,camel];}else{// If a key with the spaces exists, use it.
+	// Otherwise, create an array by matching non-whitespace
+	name=camel;name=name in cache?[name]:name.match(rnotwhite)||[];}}i=name.length;while(i--){delete cache[name[i]];}}// Remove the expando if there's no more data
+	if(key===undefined||jQuery.isEmptyObject(cache)){// Support: Chrome <= 35-45+
+	// Webkit & Blink performance suffers when deleting properties
+	// from DOM nodes, so set to undefined instead
+	// https://code.google.com/p/chromium/issues/detail?id=378607
+	if(owner.nodeType){owner[this.expando]=undefined;}else{delete owner[this.expando];}}},hasData:function(owner){var cache=owner[this.expando];return cache!==undefined&&!jQuery.isEmptyObject(cache);}};var dataPriv=new Data();var dataUser=new Data();//	Implementation Summary
+	//
+	//	1. Enforce API surface and semantic compatibility with 1.9.x branch
+	//	2. Improve the module's maintainability by reducing the storage
+	//		paths to a single mechanism.
+	//	3. Use the same single mechanism to support "private" and "user" data.
+	//	4. _Never_ expose "private" data to user code (TODO: Drop _data, _removeData)
+	//	5. Avoid exposing implementation details on user objects (eg. expando properties)
+	//	6. Provide a clear path for implementation upgrade to WeakMap in 2014
+	var rbrace=/^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,rmultiDash=/[A-Z]/g;function dataAttr(elem,key,data){var name;// If nothing was found internally, try to fetch any
+	// data from the HTML5 data-* attribute
+	if(data===undefined&&elem.nodeType===1){name="data-"+key.replace(rmultiDash,"-$&").toLowerCase();data=elem.getAttribute(name);if(typeof data==="string"){try{data=data==="true"?true:data==="false"?false:data==="null"?null:// Only convert to a number if it doesn't change the string
+	+data+""===data?+data:rbrace.test(data)?jQuery.parseJSON(data):data;}catch(e){}// Make sure we set the data so it isn't changed later
+	dataUser.set(elem,key,data);}else{data=undefined;}}return data;}jQuery.extend({hasData:function(elem){return dataUser.hasData(elem)||dataPriv.hasData(elem);},data:function(elem,name,data){return dataUser.access(elem,name,data);},removeData:function(elem,name){dataUser.remove(elem,name);},// TODO: Now that all calls to _data and _removeData have been replaced
+	// with direct calls to dataPriv methods, these can be deprecated.
+	_data:function(elem,name,data){return dataPriv.access(elem,name,data);},_removeData:function(elem,name){dataPriv.remove(elem,name);}});jQuery.fn.extend({data:function(key,value){var i,name,data,elem=this[0],attrs=elem&&elem.attributes;// Gets all values
+	if(key===undefined){if(this.length){data=dataUser.get(elem);if(elem.nodeType===1&&!dataPriv.get(elem,"hasDataAttrs")){i=attrs.length;while(i--){// Support: IE11+
+	// The attrs elements can be null (#14894)
+	if(attrs[i]){name=attrs[i].name;if(name.indexOf("data-")===0){name=jQuery.camelCase(name.slice(5));dataAttr(elem,name,data[name]);}}}dataPriv.set(elem,"hasDataAttrs",true);}}return data;}// Sets multiple values
+	if(typeof key==="object"){return this.each(function(){dataUser.set(this,key);});}return access(this,function(value){var data,camelKey;// The calling jQuery object (element matches) is not empty
+	// (and therefore has an element appears at this[ 0 ]) and the
+	// `value` parameter was not undefined. An empty jQuery object
+	// will result in `undefined` for elem = this[ 0 ] which will
+	// throw an exception if an attempt to read a data cache is made.
+	if(elem&&value===undefined){// Attempt to get data from the cache
+	// with the key as-is
+	data=dataUser.get(elem,key)||// Try to find dashed key if it exists (gh-2779)
+	// This is for 2.2.x only
+	dataUser.get(elem,key.replace(rmultiDash,"-$&").toLowerCase());if(data!==undefined){return data;}camelKey=jQuery.camelCase(key);// Attempt to get data from the cache
+	// with the key camelized
+	data=dataUser.get(elem,camelKey);if(data!==undefined){return data;}// Attempt to "discover" the data in
+	// HTML5 custom data-* attrs
+	data=dataAttr(elem,camelKey,undefined);if(data!==undefined){return data;}// We tried really hard, but the data doesn't exist.
+	return;}// Set the data...
+	camelKey=jQuery.camelCase(key);this.each(function(){// First, attempt to store a copy or reference of any
+	// data that might've been store with a camelCased key.
+	var data=dataUser.get(this,camelKey);// For HTML5 data-* attribute interop, we have to
+	// store property names with dashes in a camelCase form.
+	// This might not apply to all properties...*
+	dataUser.set(this,camelKey,value);// *... In the case of properties that might _actually_
+	// have dashes, we need to also store a copy of that
+	// unchanged property.
+	if(key.indexOf("-")>-1&&data!==undefined){dataUser.set(this,key,value);}});},null,value,arguments.length>1,null,true);},removeData:function(key){return this.each(function(){dataUser.remove(this,key);});}});jQuery.extend({queue:function(elem,type,data){var queue;if(elem){type=(type||"fx")+"queue";queue=dataPriv.get(elem,type);// Speed up dequeue by getting out quickly if this is just a lookup
+	if(data){if(!queue||jQuery.isArray(data)){queue=dataPriv.access(elem,type,jQuery.makeArray(data));}else{queue.push(data);}}return queue||[];}},dequeue:function(elem,type){type=type||"fx";var queue=jQuery.queue(elem,type),startLength=queue.length,fn=queue.shift(),hooks=jQuery._queueHooks(elem,type),next=function(){jQuery.dequeue(elem,type);};// If the fx queue is dequeued, always remove the progress sentinel
+	if(fn==="inprogress"){fn=queue.shift();startLength--;}if(fn){// Add a progress sentinel to prevent the fx queue from being
+	// automatically dequeued
+	if(type==="fx"){queue.unshift("inprogress");}// Clear up the last queue stop function
+	delete hooks.stop;fn.call(elem,next,hooks);}if(!startLength&&hooks){hooks.empty.fire();}},// Not public - generate a queueHooks object, or return the current one
+	_queueHooks:function(elem,type){var key=type+"queueHooks";return dataPriv.get(elem,key)||dataPriv.access(elem,key,{empty:jQuery.Callbacks("once memory").add(function(){dataPriv.remove(elem,[type+"queue",key]);})});}});jQuery.fn.extend({queue:function(type,data){var setter=2;if(typeof type!=="string"){data=type;type="fx";setter--;}if(arguments.length<setter){return jQuery.queue(this[0],type);}return data===undefined?this:this.each(function(){var queue=jQuery.queue(this,type,data);// Ensure a hooks for this queue
+	jQuery._queueHooks(this,type);if(type==="fx"&&queue[0]!=="inprogress"){jQuery.dequeue(this,type);}});},dequeue:function(type){return this.each(function(){jQuery.dequeue(this,type);});},clearQueue:function(type){return this.queue(type||"fx",[]);},// Get a promise resolved when queues of a certain type
+	// are emptied (fx is the type by default)
+	promise:function(type,obj){var tmp,count=1,defer=jQuery.Deferred(),elements=this,i=this.length,resolve=function(){if(! --count){defer.resolveWith(elements,[elements]);}};if(typeof type!=="string"){obj=type;type=undefined;}type=type||"fx";while(i--){tmp=dataPriv.get(elements[i],type+"queueHooks");if(tmp&&tmp.empty){count++;tmp.empty.add(resolve);}}resolve();return defer.promise(obj);}});var pnum=/[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/.source;var rcssNum=new RegExp("^(?:([+-])=|)("+pnum+")([a-z%]*)$","i");var cssExpand=["Top","Right","Bottom","Left"];var isHidden=function(elem,el){// isHidden might be called from jQuery#filter function;
+	// in that case, element will be second argument
+	elem=el||elem;return jQuery.css(elem,"display")==="none"||!jQuery.contains(elem.ownerDocument,elem);};function adjustCSS(elem,prop,valueParts,tween){var adjusted,scale=1,maxIterations=20,currentValue=tween?function(){return tween.cur();}:function(){return jQuery.css(elem,prop,"");},initial=currentValue(),unit=valueParts&&valueParts[3]||(jQuery.cssNumber[prop]?"":"px"),// Starting value computation is required for potential unit mismatches
+	initialInUnit=(jQuery.cssNumber[prop]||unit!=="px"&&+initial)&&rcssNum.exec(jQuery.css(elem,prop));if(initialInUnit&&initialInUnit[3]!==unit){// Trust units reported by jQuery.css
+	unit=unit||initialInUnit[3];// Make sure we update the tween properties later on
+	valueParts=valueParts||[];// Iteratively approximate from a nonzero starting point
+	initialInUnit=+initial||1;do{// If previous iteration zeroed out, double until we get *something*.
+	// Use string for doubling so we don't accidentally see scale as unchanged below
+	scale=scale||".5";// Adjust and apply
+	initialInUnit=initialInUnit/scale;jQuery.style(elem,prop,initialInUnit+unit);// Update scale, tolerating zero or NaN from tween.cur()
+	// Break the loop if scale is unchanged or perfect, or if we've just had enough.
+	}while(scale!==(scale=currentValue()/initial)&&scale!==1&&--maxIterations);}if(valueParts){initialInUnit=+initialInUnit||+initial||0;// Apply relative offset (+=/-=) if specified
+	adjusted=valueParts[1]?initialInUnit+(valueParts[1]+1)*valueParts[2]:+valueParts[2];if(tween){tween.unit=unit;tween.start=initialInUnit;tween.end=adjusted;}}return adjusted;}var rcheckableType=/^(?:checkbox|radio)$/i;var rtagName=/<([\w:-]+)/;var rscriptType=/^$|\/(?:java|ecma)script/i;// We have to close these tags to support XHTML (#13200)
+	var wrapMap={// Support: IE9
+	option:[1,"<select multiple='multiple'>","</select>"],// XHTML parsers do not magically insert elements in the
+	// same way that tag soup parsers do. So we cannot shorten
+	// this by omitting <tbody> or other required elements.
+	thead:[1,"<table>","</table>"],col:[2,"<table><colgroup>","</colgroup></table>"],tr:[2,"<table><tbody>","</tbody></table>"],td:[3,"<table><tbody><tr>","</tr></tbody></table>"],_default:[0,"",""]};// Support: IE9
+	wrapMap.optgroup=wrapMap.option;wrapMap.tbody=wrapMap.tfoot=wrapMap.colgroup=wrapMap.caption=wrapMap.thead;wrapMap.th=wrapMap.td;function getAll(context,tag){// Support: IE9-11+
+	// Use typeof to avoid zero-argument method invocation on host objects (#15151)
+	var ret=typeof context.getElementsByTagName!=="undefined"?context.getElementsByTagName(tag||"*"):typeof context.querySelectorAll!=="undefined"?context.querySelectorAll(tag||"*"):[];return tag===undefined||tag&&jQuery.nodeName(context,tag)?jQuery.merge([context],ret):ret;}// Mark scripts as having already been evaluated
+	function setGlobalEval(elems,refElements){var i=0,l=elems.length;for(;i<l;i++){dataPriv.set(elems[i],"globalEval",!refElements||dataPriv.get(refElements[i],"globalEval"));}}var rhtml=/<|&#?\w+;/;function buildFragment(elems,context,scripts,selection,ignored){var elem,tmp,tag,wrap,contains,j,fragment=context.createDocumentFragment(),nodes=[],i=0,l=elems.length;for(;i<l;i++){elem=elems[i];if(elem||elem===0){// Add nodes directly
+	if(jQuery.type(elem)==="object"){// Support: Android<4.1, PhantomJS<2
+	// push.apply(_, arraylike) throws on ancient WebKit
+	jQuery.merge(nodes,elem.nodeType?[elem]:elem);// Convert non-html into a text node
+	}else if(!rhtml.test(elem)){nodes.push(context.createTextNode(elem));// Convert html into DOM nodes
+	}else{tmp=tmp||fragment.appendChild(context.createElement("div"));// Deserialize a standard representation
+	tag=(rtagName.exec(elem)||["",""])[1].toLowerCase();wrap=wrapMap[tag]||wrapMap._default;tmp.innerHTML=wrap[1]+jQuery.htmlPrefilter(elem)+wrap[2];// Descend through wrappers to the right content
+	j=wrap[0];while(j--){tmp=tmp.lastChild;}// Support: Android<4.1, PhantomJS<2
+	// push.apply(_, arraylike) throws on ancient WebKit
+	jQuery.merge(nodes,tmp.childNodes);// Remember the top-level container
+	tmp=fragment.firstChild;// Ensure the created nodes are orphaned (#12392)
+	tmp.textContent="";}}}// Remove wrapper from fragment
+	fragment.textContent="";i=0;while(elem=nodes[i++]){// Skip elements already in the context collection (trac-4087)
+	if(selection&&jQuery.inArray(elem,selection)>-1){if(ignored){ignored.push(elem);}continue;}contains=jQuery.contains(elem.ownerDocument,elem);// Append to fragment
+	tmp=getAll(fragment.appendChild(elem),"script");// Preserve script evaluation history
+	if(contains){setGlobalEval(tmp);}// Capture executables
+	if(scripts){j=0;while(elem=tmp[j++]){if(rscriptType.test(elem.type||"")){scripts.push(elem);}}}}return fragment;}(function(){var fragment=document.createDocumentFragment(),div=fragment.appendChild(document.createElement("div")),input=document.createElement("input");// Support: Android 4.0-4.3, Safari<=5.1
+	// Check state lost if the name is set (#11217)
+	// Support: Windows Web Apps (WWA)
+	// `name` and `type` must use .setAttribute for WWA (#14901)
+	input.setAttribute("type","radio");input.setAttribute("checked","checked");input.setAttribute("name","t");div.appendChild(input);// Support: Safari<=5.1, Android<4.2
+	// Older WebKit doesn't clone checked state correctly in fragments
+	support.checkClone=div.cloneNode(true).cloneNode(true).lastChild.checked;// Support: IE<=11+
+	// Make sure textarea (and checkbox) defaultValue is properly cloned
+	div.innerHTML="<textarea>x</textarea>";support.noCloneChecked=!!div.cloneNode(true).lastChild.defaultValue;})();var rkeyEvent=/^key/,rmouseEvent=/^(?:mouse|pointer|contextmenu|drag|drop)|click/,rtypenamespace=/^([^.]*)(?:\.(.+)|)/;function returnTrue(){return true;}function returnFalse(){return false;}// Support: IE9
+	// See #13393 for more info
+	function safeActiveElement(){try{return document.activeElement;}catch(err){}}function on(elem,types,selector,data,fn,one){var origFn,type;// Types can be a map of types/handlers
+	if(typeof types==="object"){// ( types-Object, selector, data )
+	if(typeof selector!=="string"){// ( types-Object, data )
+	data=data||selector;selector=undefined;}for(type in types){on(elem,type,selector,data,types[type],one);}return elem;}if(data==null&&fn==null){// ( types, fn )
+	fn=selector;data=selector=undefined;}else if(fn==null){if(typeof selector==="string"){// ( types, selector, fn )
+	fn=data;data=undefined;}else{// ( types, data, fn )
+	fn=data;data=selector;selector=undefined;}}if(fn===false){fn=returnFalse;}else if(!fn){return elem;}if(one===1){origFn=fn;fn=function(event){// Can use an empty set, since event contains the info
+	jQuery().off(event);return origFn.apply(this,arguments);};// Use same guid so caller can remove using origFn
+	fn.guid=origFn.guid||(origFn.guid=jQuery.guid++);}return elem.each(function(){jQuery.event.add(this,types,fn,data,selector);});}/*
+	 * Helper functions for managing events -- not part of the public interface.
+	 * Props to Dean Edwards' addEvent library for many of the ideas.
+	 */jQuery.event={global:{},add:function(elem,types,handler,data,selector){var handleObjIn,eventHandle,tmp,events,t,handleObj,special,handlers,type,namespaces,origType,elemData=dataPriv.get(elem);// Don't attach events to noData or text/comment nodes (but allow plain objects)
+	if(!elemData){return;}// Caller can pass in an object of custom data in lieu of the handler
+	if(handler.handler){handleObjIn=handler;handler=handleObjIn.handler;selector=handleObjIn.selector;}// Make sure that the handler has a unique ID, used to find/remove it later
+	if(!handler.guid){handler.guid=jQuery.guid++;}// Init the element's event structure and main handler, if this is the first
+	if(!(events=elemData.events)){events=elemData.events={};}if(!(eventHandle=elemData.handle)){eventHandle=elemData.handle=function(e){// Discard the second event of a jQuery.event.trigger() and
+	// when an event is called after a page has unloaded
+	return typeof jQuery!=="undefined"&&jQuery.event.triggered!==e.type?jQuery.event.dispatch.apply(elem,arguments):undefined;};}// Handle multiple events separated by a space
+	types=(types||"").match(rnotwhite)||[""];t=types.length;while(t--){tmp=rtypenamespace.exec(types[t])||[];type=origType=tmp[1];namespaces=(tmp[2]||"").split(".").sort();// There *must* be a type, no attaching namespace-only handlers
+	if(!type){continue;}// If event changes its type, use the special event handlers for the changed type
+	special=jQuery.event.special[type]||{};// If selector defined, determine special event api type, otherwise given type
+	type=(selector?special.delegateType:special.bindType)||type;// Update special based on newly reset type
+	special=jQuery.event.special[type]||{};// handleObj is passed to all event handlers
+	handleObj=jQuery.extend({type:type,origType:origType,data:data,handler:handler,guid:handler.guid,selector:selector,needsContext:selector&&jQuery.expr.match.needsContext.test(selector),namespace:namespaces.join(".")},handleObjIn);// Init the event handler queue if we're the first
+	if(!(handlers=events[type])){handlers=events[type]=[];handlers.delegateCount=0;// Only use addEventListener if the special events handler returns false
+	if(!special.setup||special.setup.call(elem,data,namespaces,eventHandle)===false){if(elem.addEventListener){elem.addEventListener(type,eventHandle);}}}if(special.add){special.add.call(elem,handleObj);if(!handleObj.handler.guid){handleObj.handler.guid=handler.guid;}}// Add to the element's handler list, delegates in front
+	if(selector){handlers.splice(handlers.delegateCount++,0,handleObj);}else{handlers.push(handleObj);}// Keep track of which events have ever been used, for event optimization
+	jQuery.event.global[type]=true;}},// Detach an event or set of events from an element
+	remove:function(elem,types,handler,selector,mappedTypes){var j,origCount,tmp,events,t,handleObj,special,handlers,type,namespaces,origType,elemData=dataPriv.hasData(elem)&&dataPriv.get(elem);if(!elemData||!(events=elemData.events)){return;}// Once for each type.namespace in types; type may be omitted
+	types=(types||"").match(rnotwhite)||[""];t=types.length;while(t--){tmp=rtypenamespace.exec(types[t])||[];type=origType=tmp[1];namespaces=(tmp[2]||"").split(".").sort();// Unbind all events (on this namespace, if provided) for the element
+	if(!type){for(type in events){jQuery.event.remove(elem,type+types[t],handler,selector,true);}continue;}special=jQuery.event.special[type]||{};type=(selector?special.delegateType:special.bindType)||type;handlers=events[type]||[];tmp=tmp[2]&&new RegExp("(^|\\.)"+namespaces.join("\\.(?:.*\\.|)")+"(\\.|$)");// Remove matching events
+	origCount=j=handlers.length;while(j--){handleObj=handlers[j];if((mappedTypes||origType===handleObj.origType)&&(!handler||handler.guid===handleObj.guid)&&(!tmp||tmp.test(handleObj.namespace))&&(!selector||selector===handleObj.selector||selector==="**"&&handleObj.selector)){handlers.splice(j,1);if(handleObj.selector){handlers.delegateCount--;}if(special.remove){special.remove.call(elem,handleObj);}}}// Remove generic event handler if we removed something and no more handlers exist
+	// (avoids potential for endless recursion during removal of special event handlers)
+	if(origCount&&!handlers.length){if(!special.teardown||special.teardown.call(elem,namespaces,elemData.handle)===false){jQuery.removeEvent(elem,type,elemData.handle);}delete events[type];}}// Remove data and the expando if it's no longer used
+	if(jQuery.isEmptyObject(events)){dataPriv.remove(elem,"handle events");}},dispatch:function(event){// Make a writable jQuery.Event from the native event object
+	event=jQuery.event.fix(event);var i,j,ret,matched,handleObj,handlerQueue=[],args=slice.call(arguments),handlers=(dataPriv.get(this,"events")||{})[event.type]||[],special=jQuery.event.special[event.type]||{};// Use the fix-ed jQuery.Event rather than the (read-only) native event
+	args[0]=event;event.delegateTarget=this;// Call the preDispatch hook for the mapped type, and let it bail if desired
+	if(special.preDispatch&&special.preDispatch.call(this,event)===false){return;}// Determine handlers
+	handlerQueue=jQuery.event.handlers.call(this,event,handlers);// Run delegates first; they may want to stop propagation beneath us
+	i=0;while((matched=handlerQueue[i++])&&!event.isPropagationStopped()){event.currentTarget=matched.elem;j=0;while((handleObj=matched.handlers[j++])&&!event.isImmediatePropagationStopped()){// Triggered event must either 1) have no namespace, or 2) have namespace(s)
+	// a subset or equal to those in the bound event (both can have no namespace).
+	if(!event.rnamespace||event.rnamespace.test(handleObj.namespace)){event.handleObj=handleObj;event.data=handleObj.data;ret=((jQuery.event.special[handleObj.origType]||{}).handle||handleObj.handler).apply(matched.elem,args);if(ret!==undefined){if((event.result=ret)===false){event.preventDefault();event.stopPropagation();}}}}}// Call the postDispatch hook for the mapped type
+	if(special.postDispatch){special.postDispatch.call(this,event);}return event.result;},handlers:function(event,handlers){var i,matches,sel,handleObj,handlerQueue=[],delegateCount=handlers.delegateCount,cur=event.target;// Support (at least): Chrome, IE9
+	// Find delegate handlers
+	// Black-hole SVG <use> instance trees (#13180)
+	//
+	// Support: Firefox<=42+
+	// Avoid non-left-click in FF but don't block IE radio events (#3861, gh-2343)
+	if(delegateCount&&cur.nodeType&&(event.type!=="click"||isNaN(event.button)||event.button<1)){for(;cur!==this;cur=cur.parentNode||this){// Don't check non-elements (#13208)
+	// Don't process clicks on disabled elements (#6911, #8165, #11382, #11764)
+	if(cur.nodeType===1&&(cur.disabled!==true||event.type!=="click")){matches=[];for(i=0;i<delegateCount;i++){handleObj=handlers[i];// Don't conflict with Object.prototype properties (#13203)
+	sel=handleObj.selector+" ";if(matches[sel]===undefined){matches[sel]=handleObj.needsContext?jQuery(sel,this).index(cur)>-1:jQuery.find(sel,this,null,[cur]).length;}if(matches[sel]){matches.push(handleObj);}}if(matches.length){handlerQueue.push({elem:cur,handlers:matches});}}}}// Add the remaining (directly-bound) handlers
+	if(delegateCount<handlers.length){handlerQueue.push({elem:this,handlers:handlers.slice(delegateCount)});}return handlerQueue;},// Includes some event props shared by KeyEvent and MouseEvent
+	props:("altKey bubbles cancelable ctrlKey currentTarget detail eventPhase "+"metaKey relatedTarget shiftKey target timeStamp view which").split(" "),fixHooks:{},keyHooks:{props:"char charCode key keyCode".split(" "),filter:function(event,original){// Add which for key events
+	if(event.which==null){event.which=original.charCode!=null?original.charCode:original.keyCode;}return event;}},mouseHooks:{props:("button buttons clientX clientY offsetX offsetY pageX pageY "+"screenX screenY toElement").split(" "),filter:function(event,original){var eventDoc,doc,body,button=original.button;// Calculate pageX/Y if missing and clientX/Y available
+	if(event.pageX==null&&original.clientX!=null){eventDoc=event.target.ownerDocument||document;doc=eventDoc.documentElement;body=eventDoc.body;event.pageX=original.clientX+(doc&&doc.scrollLeft||body&&body.scrollLeft||0)-(doc&&doc.clientLeft||body&&body.clientLeft||0);event.pageY=original.clientY+(doc&&doc.scrollTop||body&&body.scrollTop||0)-(doc&&doc.clientTop||body&&body.clientTop||0);}// Add which for click: 1 === left; 2 === middle; 3 === right
+	// Note: button is not normalized, so don't use it
+	if(!event.which&&button!==undefined){event.which=button&1?1:button&2?3:button&4?2:0;}return event;}},fix:function(event){if(event[jQuery.expando]){return event;}// Create a writable copy of the event object and normalize some properties
+	var i,prop,copy,type=event.type,originalEvent=event,fixHook=this.fixHooks[type];if(!fixHook){this.fixHooks[type]=fixHook=rmouseEvent.test(type)?this.mouseHooks:rkeyEvent.test(type)?this.keyHooks:{};}copy=fixHook.props?this.props.concat(fixHook.props):this.props;event=new jQuery.Event(originalEvent);i=copy.length;while(i--){prop=copy[i];event[prop]=originalEvent[prop];}// Support: Cordova 2.5 (WebKit) (#13255)
+	// All events should have a target; Cordova deviceready doesn't
+	if(!event.target){event.target=document;}// Support: Safari 6.0+, Chrome<28
+	// Target should not be a text node (#504, #13143)
+	if(event.target.nodeType===3){event.target=event.target.parentNode;}return fixHook.filter?fixHook.filter(event,originalEvent):event;},special:{load:{// Prevent triggered image.load events from bubbling to window.load
+	noBubble:true},focus:{// Fire native event if possible so blur/focus sequence is correct
+	trigger:function(){if(this!==safeActiveElement()&&this.focus){this.focus();return false;}},delegateType:"focusin"},blur:{trigger:function(){if(this===safeActiveElement()&&this.blur){this.blur();return false;}},delegateType:"focusout"},click:{// For checkbox, fire native event so checked state will be right
+	trigger:function(){if(this.type==="checkbox"&&this.click&&jQuery.nodeName(this,"input")){this.click();return false;}},// For cross-browser consistency, don't fire native .click() on links
+	_default:function(event){return jQuery.nodeName(event.target,"a");}},beforeunload:{postDispatch:function(event){// Support: Firefox 20+
+	// Firefox doesn't alert if the returnValue field is not set.
+	if(event.result!==undefined&&event.originalEvent){event.originalEvent.returnValue=event.result;}}}}};jQuery.removeEvent=function(elem,type,handle){// This "if" is needed for plain objects
+	if(elem.removeEventListener){elem.removeEventListener(type,handle);}};jQuery.Event=function(src,props){// Allow instantiation without the 'new' keyword
+	if(!(this instanceof jQuery.Event)){return new jQuery.Event(src,props);}// Event object
+	if(src&&src.type){this.originalEvent=src;this.type=src.type;// Events bubbling up the document may have been marked as prevented
+	// by a handler lower down the tree; reflect the correct value.
+	this.isDefaultPrevented=src.defaultPrevented||src.defaultPrevented===undefined&&// Support: Android<4.0
+	src.returnValue===false?returnTrue:returnFalse;// Event type
+	}else{this.type=src;}// Put explicitly provided properties onto the event object
+	if(props){jQuery.extend(this,props);}// Create a timestamp if incoming event doesn't have one
+	this.timeStamp=src&&src.timeStamp||jQuery.now();// Mark it as fixed
+	this[jQuery.expando]=true;};// jQuery.Event is based on DOM3 Events as specified by the ECMAScript Language Binding
+	// http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
+	jQuery.Event.prototype={constructor:jQuery.Event,isDefaultPrevented:returnFalse,isPropagationStopped:returnFalse,isImmediatePropagationStopped:returnFalse,isSimulated:false,preventDefault:function(){var e=this.originalEvent;this.isDefaultPrevented=returnTrue;if(e&&!this.isSimulated){e.preventDefault();}},stopPropagation:function(){var e=this.originalEvent;this.isPropagationStopped=returnTrue;if(e&&!this.isSimulated){e.stopPropagation();}},stopImmediatePropagation:function(){var e=this.originalEvent;this.isImmediatePropagationStopped=returnTrue;if(e&&!this.isSimulated){e.stopImmediatePropagation();}this.stopPropagation();}};// Create mouseenter/leave events using mouseover/out and event-time checks
+	// so that event delegation works in jQuery.
+	// Do the same for pointerenter/pointerleave and pointerover/pointerout
+	//
+	// Support: Safari 7 only
+	// Safari sends mouseenter too often; see:
+	// https://code.google.com/p/chromium/issues/detail?id=470258
+	// for the description of the bug (it existed in older Chrome versions as well).
+	jQuery.each({mouseenter:"mouseover",mouseleave:"mouseout",pointerenter:"pointerover",pointerleave:"pointerout"},function(orig,fix){jQuery.event.special[orig]={delegateType:fix,bindType:fix,handle:function(event){var ret,target=this,related=event.relatedTarget,handleObj=event.handleObj;// For mouseenter/leave call the handler if related is outside the target.
+	// NB: No relatedTarget if the mouse left/entered the browser window
+	if(!related||related!==target&&!jQuery.contains(target,related)){event.type=handleObj.origType;ret=handleObj.handler.apply(this,arguments);event.type=fix;}return ret;}};});jQuery.fn.extend({on:function(types,selector,data,fn){return on(this,types,selector,data,fn);},one:function(types,selector,data,fn){return on(this,types,selector,data,fn,1);},off:function(types,selector,fn){var handleObj,type;if(types&&types.preventDefault&&types.handleObj){// ( event )  dispatched jQuery.Event
+	handleObj=types.handleObj;jQuery(types.delegateTarget).off(handleObj.namespace?handleObj.origType+"."+handleObj.namespace:handleObj.origType,handleObj.selector,handleObj.handler);return this;}if(typeof types==="object"){// ( types-object [, selector] )
+	for(type in types){this.off(type,selector,types[type]);}return this;}if(selector===false||typeof selector==="function"){// ( types [, fn] )
+	fn=selector;selector=undefined;}if(fn===false){fn=returnFalse;}return this.each(function(){jQuery.event.remove(this,types,fn,selector);});}});var rxhtmlTag=/<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:-]+)[^>]*)\/>/gi,// Support: IE 10-11, Edge 10240+
+	// In IE/Edge using regex groups here causes severe slowdowns.
+	// See https://connect.microsoft.com/IE/feedback/details/1736512/
+	rnoInnerhtml=/<script|<style|<link/i,// checked="checked" or checked
+	rchecked=/checked\s*(?:[^=]|=\s*.checked.)/i,rscriptTypeMasked=/^true\/(.*)/,rcleanScript=/^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g;// Manipulating tables requires a tbody
+	function manipulationTarget(elem,content){return jQuery.nodeName(elem,"table")&&jQuery.nodeName(content.nodeType!==11?content:content.firstChild,"tr")?elem.getElementsByTagName("tbody")[0]||elem.appendChild(elem.ownerDocument.createElement("tbody")):elem;}// Replace/restore the type attribute of script elements for safe DOM manipulation
+	function disableScript(elem){elem.type=(elem.getAttribute("type")!==null)+"/"+elem.type;return elem;}function restoreScript(elem){var match=rscriptTypeMasked.exec(elem.type);if(match){elem.type=match[1];}else{elem.removeAttribute("type");}return elem;}function cloneCopyEvent(src,dest){var i,l,type,pdataOld,pdataCur,udataOld,udataCur,events;if(dest.nodeType!==1){return;}// 1. Copy private data: events, handlers, etc.
+	if(dataPriv.hasData(src)){pdataOld=dataPriv.access(src);pdataCur=dataPriv.set(dest,pdataOld);events=pdataOld.events;if(events){delete pdataCur.handle;pdataCur.events={};for(type in events){for(i=0,l=events[type].length;i<l;i++){jQuery.event.add(dest,type,events[type][i]);}}}}// 2. Copy user data
+	if(dataUser.hasData(src)){udataOld=dataUser.access(src);udataCur=jQuery.extend({},udataOld);dataUser.set(dest,udataCur);}}// Fix IE bugs, see support tests
+	function fixInput(src,dest){var nodeName=dest.nodeName.toLowerCase();// Fails to persist the checked state of a cloned checkbox or radio button.
+	if(nodeName==="input"&&rcheckableType.test(src.type)){dest.checked=src.checked;// Fails to return the selected option to the default selected state when cloning options
+	}else if(nodeName==="input"||nodeName==="textarea"){dest.defaultValue=src.defaultValue;}}function domManip(collection,args,callback,ignored){// Flatten any nested arrays
+	args=concat.apply([],args);var fragment,first,scripts,hasScripts,node,doc,i=0,l=collection.length,iNoClone=l-1,value=args[0],isFunction=jQuery.isFunction(value);// We can't cloneNode fragments that contain checked, in WebKit
+	if(isFunction||l>1&&typeof value==="string"&&!support.checkClone&&rchecked.test(value)){return collection.each(function(index){var self=collection.eq(index);if(isFunction){args[0]=value.call(this,index,self.html());}domManip(self,args,callback,ignored);});}if(l){fragment=buildFragment(args,collection[0].ownerDocument,false,collection,ignored);first=fragment.firstChild;if(fragment.childNodes.length===1){fragment=first;}// Require either new content or an interest in ignored elements to invoke the callback
+	if(first||ignored){scripts=jQuery.map(getAll(fragment,"script"),disableScript);hasScripts=scripts.length;// Use the original fragment for the last item
+	// instead of the first because it can end up
+	// being emptied incorrectly in certain situations (#8070).
+	for(;i<l;i++){node=fragment;if(i!==iNoClone){node=jQuery.clone(node,true,true);// Keep references to cloned scripts for later restoration
+	if(hasScripts){// Support: Android<4.1, PhantomJS<2
+	// push.apply(_, arraylike) throws on ancient WebKit
+	jQuery.merge(scripts,getAll(node,"script"));}}callback.call(collection[i],node,i);}if(hasScripts){doc=scripts[scripts.length-1].ownerDocument;// Reenable scripts
+	jQuery.map(scripts,restoreScript);// Evaluate executable scripts on first document insertion
+	for(i=0;i<hasScripts;i++){node=scripts[i];if(rscriptType.test(node.type||"")&&!dataPriv.access(node,"globalEval")&&jQuery.contains(doc,node)){if(node.src){// Optional AJAX dependency, but won't run scripts if not present
+	if(jQuery._evalUrl){jQuery._evalUrl(node.src);}}else{jQuery.globalEval(node.textContent.replace(rcleanScript,""));}}}}}}return collection;}function remove(elem,selector,keepData){var node,nodes=selector?jQuery.filter(selector,elem):elem,i=0;for(;(node=nodes[i])!=null;i++){if(!keepData&&node.nodeType===1){jQuery.cleanData(getAll(node));}if(node.parentNode){if(keepData&&jQuery.contains(node.ownerDocument,node)){setGlobalEval(getAll(node,"script"));}node.parentNode.removeChild(node);}}return elem;}jQuery.extend({htmlPrefilter:function(html){return html.replace(rxhtmlTag,"<$1></$2>");},clone:function(elem,dataAndEvents,deepDataAndEvents){var i,l,srcElements,destElements,clone=elem.cloneNode(true),inPage=jQuery.contains(elem.ownerDocument,elem);// Fix IE cloning issues
+	if(!support.noCloneChecked&&(elem.nodeType===1||elem.nodeType===11)&&!jQuery.isXMLDoc(elem)){// We eschew Sizzle here for performance reasons: http://jsperf.com/getall-vs-sizzle/2
+	destElements=getAll(clone);srcElements=getAll(elem);for(i=0,l=srcElements.length;i<l;i++){fixInput(srcElements[i],destElements[i]);}}// Copy the events from the original to the clone
+	if(dataAndEvents){if(deepDataAndEvents){srcElements=srcElements||getAll(elem);destElements=destElements||getAll(clone);for(i=0,l=srcElements.length;i<l;i++){cloneCopyEvent(srcElements[i],destElements[i]);}}else{cloneCopyEvent(elem,clone);}}// Preserve script evaluation history
+	destElements=getAll(clone,"script");if(destElements.length>0){setGlobalEval(destElements,!inPage&&getAll(elem,"script"));}// Return the cloned set
+	return clone;},cleanData:function(elems){var data,elem,type,special=jQuery.event.special,i=0;for(;(elem=elems[i])!==undefined;i++){if(acceptData(elem)){if(data=elem[dataPriv.expando]){if(data.events){for(type in data.events){if(special[type]){jQuery.event.remove(elem,type);// This is a shortcut to avoid jQuery.event.remove's overhead
+	}else{jQuery.removeEvent(elem,type,data.handle);}}}// Support: Chrome <= 35-45+
+	// Assign undefined instead of using delete, see Data#remove
+	elem[dataPriv.expando]=undefined;}if(elem[dataUser.expando]){// Support: Chrome <= 35-45+
+	// Assign undefined instead of using delete, see Data#remove
+	elem[dataUser.expando]=undefined;}}}}});jQuery.fn.extend({// Keep domManip exposed until 3.0 (gh-2225)
+	domManip:domManip,detach:function(selector){return remove(this,selector,true);},remove:function(selector){return remove(this,selector);},text:function(value){return access(this,function(value){return value===undefined?jQuery.text(this):this.empty().each(function(){if(this.nodeType===1||this.nodeType===11||this.nodeType===9){this.textContent=value;}});},null,value,arguments.length);},append:function(){return domManip(this,arguments,function(elem){if(this.nodeType===1||this.nodeType===11||this.nodeType===9){var target=manipulationTarget(this,elem);target.appendChild(elem);}});},prepend:function(){return domManip(this,arguments,function(elem){if(this.nodeType===1||this.nodeType===11||this.nodeType===9){var target=manipulationTarget(this,elem);target.insertBefore(elem,target.firstChild);}});},before:function(){return domManip(this,arguments,function(elem){if(this.parentNode){this.parentNode.insertBefore(elem,this);}});},after:function(){return domManip(this,arguments,function(elem){if(this.parentNode){this.parentNode.insertBefore(elem,this.nextSibling);}});},empty:function(){var elem,i=0;for(;(elem=this[i])!=null;i++){if(elem.nodeType===1){// Prevent memory leaks
+	jQuery.cleanData(getAll(elem,false));// Remove any remaining nodes
+	elem.textContent="";}}return this;},clone:function(dataAndEvents,deepDataAndEvents){dataAndEvents=dataAndEvents==null?false:dataAndEvents;deepDataAndEvents=deepDataAndEvents==null?dataAndEvents:deepDataAndEvents;return this.map(function(){return jQuery.clone(this,dataAndEvents,deepDataAndEvents);});},html:function(value){return access(this,function(value){var elem=this[0]||{},i=0,l=this.length;if(value===undefined&&elem.nodeType===1){return elem.innerHTML;}// See if we can take a shortcut and just use innerHTML
+	if(typeof value==="string"&&!rnoInnerhtml.test(value)&&!wrapMap[(rtagName.exec(value)||["",""])[1].toLowerCase()]){value=jQuery.htmlPrefilter(value);try{for(;i<l;i++){elem=this[i]||{};// Remove element nodes and prevent memory leaks
+	if(elem.nodeType===1){jQuery.cleanData(getAll(elem,false));elem.innerHTML=value;}}elem=0;// If using innerHTML throws an exception, use the fallback method
+	}catch(e){}}if(elem){this.empty().append(value);}},null,value,arguments.length);},replaceWith:function(){var ignored=[];// Make the changes, replacing each non-ignored context element with the new content
+	return domManip(this,arguments,function(elem){var parent=this.parentNode;if(jQuery.inArray(this,ignored)<0){jQuery.cleanData(getAll(this));if(parent){parent.replaceChild(elem,this);}}// Force callback invocation
+	},ignored);}});jQuery.each({appendTo:"append",prependTo:"prepend",insertBefore:"before",insertAfter:"after",replaceAll:"replaceWith"},function(name,original){jQuery.fn[name]=function(selector){var elems,ret=[],insert=jQuery(selector),last=insert.length-1,i=0;for(;i<=last;i++){elems=i===last?this:this.clone(true);jQuery(insert[i])[original](elems);// Support: QtWebKit
+	// .get() because push.apply(_, arraylike) throws
+	push.apply(ret,elems.get());}return this.pushStack(ret);};});var iframe,elemdisplay={// Support: Firefox
+	// We have to pre-define these values for FF (#10227)
+	HTML:"block",BODY:"block"};/**
+	 * Retrieve the actual display of a element
+	 * @param {String} name nodeName of the element
+	 * @param {Object} doc Document object
+	 */// Called only from within defaultDisplay
+	function actualDisplay(name,doc){var elem=jQuery(doc.createElement(name)).appendTo(doc.body),display=jQuery.css(elem[0],"display");// We don't have any data stored on the element,
+	// so use "detach" method as fast way to get rid of the element
+	elem.detach();return display;}/**
+	 * Try to determine the default display value of an element
+	 * @param {String} nodeName
+	 */function defaultDisplay(nodeName){var doc=document,display=elemdisplay[nodeName];if(!display){display=actualDisplay(nodeName,doc);// If the simple way fails, read from inside an iframe
+	if(display==="none"||!display){// Use the already-created iframe if possible
+	iframe=(iframe||jQuery("<iframe frameborder='0' width='0' height='0'/>")).appendTo(doc.documentElement);// Always write a new HTML skeleton so Webkit and Firefox don't choke on reuse
+	doc=iframe[0].contentDocument;// Support: IE
+	doc.write();doc.close();display=actualDisplay(nodeName,doc);iframe.detach();}// Store the correct default display
+	elemdisplay[nodeName]=display;}return display;}var rmargin=/^margin/;var rnumnonpx=new RegExp("^("+pnum+")(?!px)[a-z%]+$","i");var getStyles=function(elem){// Support: IE<=11+, Firefox<=30+ (#15098, #14150)
+	// IE throws on elements created in popups
+	// FF meanwhile throws on frame elements through "defaultView.getComputedStyle"
+	var view=elem.ownerDocument.defaultView;if(!view||!view.opener){view=window;}return view.getComputedStyle(elem);};var swap=function(elem,options,callback,args){var ret,name,old={};// Remember the old values, and insert the new ones
+	for(name in options){old[name]=elem.style[name];elem.style[name]=options[name];}ret=callback.apply(elem,args||[]);// Revert the old values
+	for(name in options){elem.style[name]=old[name];}return ret;};var documentElement=document.documentElement;(function(){var pixelPositionVal,boxSizingReliableVal,pixelMarginRightVal,reliableMarginLeftVal,container=document.createElement("div"),div=document.createElement("div");// Finish early in limited (non-browser) environments
+	if(!div.style){return;}// Support: IE9-11+
+	// Style of cloned element affects source element cloned (#8908)
+	div.style.backgroundClip="content-box";div.cloneNode(true).style.backgroundClip="";support.clearCloneStyle=div.style.backgroundClip==="content-box";container.style.cssText="border:0;width:8px;height:0;top:0;left:-9999px;"+"padding:0;margin-top:1px;position:absolute";container.appendChild(div);// Executing both pixelPosition & boxSizingReliable tests require only one layout
+	// so they're executed at the same time to save the second computation.
+	function computeStyleTests(){div.style.cssText=// Support: Firefox<29, Android 2.3
+	// Vendor-prefix box-sizing
+	"-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;"+"position:relative;display:block;"+"margin:auto;border:1px;padding:1px;"+"top:1%;width:50%";div.innerHTML="";documentElement.appendChild(container);var divStyle=window.getComputedStyle(div);pixelPositionVal=divStyle.top!=="1%";reliableMarginLeftVal=divStyle.marginLeft==="2px";boxSizingReliableVal=divStyle.width==="4px";// Support: Android 4.0 - 4.3 only
+	// Some styles come back with percentage values, even though they shouldn't
+	div.style.marginRight="50%";pixelMarginRightVal=divStyle.marginRight==="4px";documentElement.removeChild(container);}jQuery.extend(support,{pixelPosition:function(){// This test is executed only once but we still do memoizing
+	// since we can use the boxSizingReliable pre-computing.
+	// No need to check if the test was already performed, though.
+	computeStyleTests();return pixelPositionVal;},boxSizingReliable:function(){if(boxSizingReliableVal==null){computeStyleTests();}return boxSizingReliableVal;},pixelMarginRight:function(){// Support: Android 4.0-4.3
+	// We're checking for boxSizingReliableVal here instead of pixelMarginRightVal
+	// since that compresses better and they're computed together anyway.
+	if(boxSizingReliableVal==null){computeStyleTests();}return pixelMarginRightVal;},reliableMarginLeft:function(){// Support: IE <=8 only, Android 4.0 - 4.3 only, Firefox <=3 - 37
+	if(boxSizingReliableVal==null){computeStyleTests();}return reliableMarginLeftVal;},reliableMarginRight:function(){// Support: Android 2.3
+	// Check if div with explicit width and no margin-right incorrectly
+	// gets computed margin-right based on width of container. (#3333)
+	// WebKit Bug 13343 - getComputedStyle returns wrong value for margin-right
+	// This support function is only executed once so no memoizing is needed.
+	var ret,marginDiv=div.appendChild(document.createElement("div"));// Reset CSS: box-sizing; display; margin; border; padding
+	marginDiv.style.cssText=div.style.cssText=// Support: Android 2.3
+	// Vendor-prefix box-sizing
+	"-webkit-box-sizing:content-box;box-sizing:content-box;"+"display:block;margin:0;border:0;padding:0";marginDiv.style.marginRight=marginDiv.style.width="0";div.style.width="1px";documentElement.appendChild(container);ret=!parseFloat(window.getComputedStyle(marginDiv).marginRight);documentElement.removeChild(container);div.removeChild(marginDiv);return ret;}});})();function curCSS(elem,name,computed){var width,minWidth,maxWidth,ret,style=elem.style;computed=computed||getStyles(elem);ret=computed?computed.getPropertyValue(name)||computed[name]:undefined;// Support: Opera 12.1x only
+	// Fall back to style even without computed
+	// computed is undefined for elems on document fragments
+	if((ret===""||ret===undefined)&&!jQuery.contains(elem.ownerDocument,elem)){ret=jQuery.style(elem,name);}// Support: IE9
+	// getPropertyValue is only needed for .css('filter') (#12537)
+	if(computed){// A tribute to the "awesome hack by Dean Edwards"
+	// Android Browser returns percentage for some values,
+	// but width seems to be reliably pixels.
+	// This is against the CSSOM draft spec:
+	// http://dev.w3.org/csswg/cssom/#resolved-values
+	if(!support.pixelMarginRight()&&rnumnonpx.test(ret)&&rmargin.test(name)){// Remember the original values
+	width=style.width;minWidth=style.minWidth;maxWidth=style.maxWidth;// Put in the new values to get a computed value out
+	style.minWidth=style.maxWidth=style.width=ret;ret=computed.width;// Revert the changed values
+	style.width=width;style.minWidth=minWidth;style.maxWidth=maxWidth;}}return ret!==undefined?// Support: IE9-11+
+	// IE returns zIndex value as an integer.
+	ret+"":ret;}function addGetHookIf(conditionFn,hookFn){// Define the hook, we'll check on the first run if it's really needed.
+	return{get:function(){if(conditionFn()){// Hook not needed (or it's not possible to use it due
+	// to missing dependency), remove it.
+	delete this.get;return;}// Hook needed; redefine it so that the support test is not executed again.
+	return(this.get=hookFn).apply(this,arguments);}};}var// Swappable if display is none or starts with table
+	// except "table", "table-cell", or "table-caption"
+	// See here for display values: https://developer.mozilla.org/en-US/docs/CSS/display
+	rdisplayswap=/^(none|table(?!-c[ea]).+)/,cssShow={position:"absolute",visibility:"hidden",display:"block"},cssNormalTransform={letterSpacing:"0",fontWeight:"400"},cssPrefixes=["Webkit","O","Moz","ms"],emptyStyle=document.createElement("div").style;// Return a css property mapped to a potentially vendor prefixed property
+	function vendorPropName(name){// Shortcut for names that are not vendor prefixed
+	if(name in emptyStyle){return name;}// Check for vendor prefixed names
+	var capName=name[0].toUpperCase()+name.slice(1),i=cssPrefixes.length;while(i--){name=cssPrefixes[i]+capName;if(name in emptyStyle){return name;}}}function setPositiveNumber(elem,value,subtract){// Any relative (+/-) values have already been
+	// normalized at this point
+	var matches=rcssNum.exec(value);return matches?// Guard against undefined "subtract", e.g., when used as in cssHooks
+	Math.max(0,matches[2]-(subtract||0))+(matches[3]||"px"):value;}function augmentWidthOrHeight(elem,name,extra,isBorderBox,styles){var i=extra===(isBorderBox?"border":"content")?// If we already have the right measurement, avoid augmentation
+	4:// Otherwise initialize for horizontal or vertical properties
+	name==="width"?1:0,val=0;for(;i<4;i+=2){// Both box models exclude margin, so add it if we want it
+	if(extra==="margin"){val+=jQuery.css(elem,extra+cssExpand[i],true,styles);}if(isBorderBox){// border-box includes padding, so remove it if we want content
+	if(extra==="content"){val-=jQuery.css(elem,"padding"+cssExpand[i],true,styles);}// At this point, extra isn't border nor margin, so remove border
+	if(extra!=="margin"){val-=jQuery.css(elem,"border"+cssExpand[i]+"Width",true,styles);}}else{// At this point, extra isn't content, so add padding
+	val+=jQuery.css(elem,"padding"+cssExpand[i],true,styles);// At this point, extra isn't content nor padding, so add border
+	if(extra!=="padding"){val+=jQuery.css(elem,"border"+cssExpand[i]+"Width",true,styles);}}}return val;}function getWidthOrHeight(elem,name,extra){// Start with offset property, which is equivalent to the border-box value
+	var valueIsBorderBox=true,val=name==="width"?elem.offsetWidth:elem.offsetHeight,styles=getStyles(elem),isBorderBox=jQuery.css(elem,"boxSizing",false,styles)==="border-box";// Some non-html elements return undefined for offsetWidth, so check for null/undefined
+	// svg - https://bugzilla.mozilla.org/show_bug.cgi?id=649285
+	// MathML - https://bugzilla.mozilla.org/show_bug.cgi?id=491668
+	if(val<=0||val==null){// Fall back to computed then uncomputed css if necessary
+	val=curCSS(elem,name,styles);if(val<0||val==null){val=elem.style[name];}// Computed unit is not pixels. Stop here and return.
+	if(rnumnonpx.test(val)){return val;}// Check for style in case a browser which returns unreliable values
+	// for getComputedStyle silently falls back to the reliable elem.style
+	valueIsBorderBox=isBorderBox&&(support.boxSizingReliable()||val===elem.style[name]);// Normalize "", auto, and prepare for extra
+	val=parseFloat(val)||0;}// Use the active box-sizing model to add/subtract irrelevant styles
+	return val+augmentWidthOrHeight(elem,name,extra||(isBorderBox?"border":"content"),valueIsBorderBox,styles)+"px";}function showHide(elements,show){var display,elem,hidden,values=[],index=0,length=elements.length;for(;index<length;index++){elem=elements[index];if(!elem.style){continue;}values[index]=dataPriv.get(elem,"olddisplay");display=elem.style.display;if(show){// Reset the inline display of this element to learn if it is
+	// being hidden by cascaded rules or not
+	if(!values[index]&&display==="none"){elem.style.display="";}// Set elements which have been overridden with display: none
+	// in a stylesheet to whatever the default browser style is
+	// for such an element
+	if(elem.style.display===""&&isHidden(elem)){values[index]=dataPriv.access(elem,"olddisplay",defaultDisplay(elem.nodeName));}}else{hidden=isHidden(elem);if(display!=="none"||!hidden){dataPriv.set(elem,"olddisplay",hidden?display:jQuery.css(elem,"display"));}}}// Set the display of most of the elements in a second loop
+	// to avoid the constant reflow
+	for(index=0;index<length;index++){elem=elements[index];if(!elem.style){continue;}if(!show||elem.style.display==="none"||elem.style.display===""){elem.style.display=show?values[index]||"":"none";}}return elements;}jQuery.extend({// Add in style property hooks for overriding the default
+	// behavior of getting and setting a style property
+	cssHooks:{opacity:{get:function(elem,computed){if(computed){// We should always get a number back from opacity
+	var ret=curCSS(elem,"opacity");return ret===""?"1":ret;}}}},// Don't automatically add "px" to these possibly-unitless properties
+	cssNumber:{"animationIterationCount":true,"columnCount":true,"fillOpacity":true,"flexGrow":true,"flexShrink":true,"fontWeight":true,"lineHeight":true,"opacity":true,"order":true,"orphans":true,"widows":true,"zIndex":true,"zoom":true},// Add in properties whose names you wish to fix before
+	// setting or getting the value
+	cssProps:{"float":"cssFloat"},// Get and set the style property on a DOM Node
+	style:function(elem,name,value,extra){// Don't set styles on text and comment nodes
+	if(!elem||elem.nodeType===3||elem.nodeType===8||!elem.style){return;}// Make sure that we're working with the right name
+	var ret,type,hooks,origName=jQuery.camelCase(name),style=elem.style;name=jQuery.cssProps[origName]||(jQuery.cssProps[origName]=vendorPropName(origName)||origName);// Gets hook for the prefixed version, then unprefixed version
+	hooks=jQuery.cssHooks[name]||jQuery.cssHooks[origName];// Check if we're setting a value
+	if(value!==undefined){type=typeof value;// Convert "+=" or "-=" to relative numbers (#7345)
+	if(type==="string"&&(ret=rcssNum.exec(value))&&ret[1]){value=adjustCSS(elem,name,ret);// Fixes bug #9237
+	type="number";}// Make sure that null and NaN values aren't set (#7116)
+	if(value==null||value!==value){return;}// If a number was passed in, add the unit (except for certain CSS properties)
+	if(type==="number"){value+=ret&&ret[3]||(jQuery.cssNumber[origName]?"":"px");}// Support: IE9-11+
+	// background-* props affect original clone's values
+	if(!support.clearCloneStyle&&value===""&&name.indexOf("background")===0){style[name]="inherit";}// If a hook was provided, use that value, otherwise just set the specified value
+	if(!hooks||!("set"in hooks)||(value=hooks.set(elem,value,extra))!==undefined){style[name]=value;}}else{// If a hook was provided get the non-computed value from there
+	if(hooks&&"get"in hooks&&(ret=hooks.get(elem,false,extra))!==undefined){return ret;}// Otherwise just get the value from the style object
+	return style[name];}},css:function(elem,name,extra,styles){var val,num,hooks,origName=jQuery.camelCase(name);// Make sure that we're working with the right name
+	name=jQuery.cssProps[origName]||(jQuery.cssProps[origName]=vendorPropName(origName)||origName);// Try prefixed name followed by the unprefixed name
+	hooks=jQuery.cssHooks[name]||jQuery.cssHooks[origName];// If a hook was provided get the computed value from there
+	if(hooks&&"get"in hooks){val=hooks.get(elem,true,extra);}// Otherwise, if a way to get the computed value exists, use that
+	if(val===undefined){val=curCSS(elem,name,styles);}// Convert "normal" to computed value
+	if(val==="normal"&&name in cssNormalTransform){val=cssNormalTransform[name];}// Make numeric if forced or a qualifier was provided and val looks numeric
+	if(extra===""||extra){num=parseFloat(val);return extra===true||isFinite(num)?num||0:val;}return val;}});jQuery.each(["height","width"],function(i,name){jQuery.cssHooks[name]={get:function(elem,computed,extra){if(computed){// Certain elements can have dimension info if we invisibly show them
+	// but it must have a current display style that would benefit
+	return rdisplayswap.test(jQuery.css(elem,"display"))&&elem.offsetWidth===0?swap(elem,cssShow,function(){return getWidthOrHeight(elem,name,extra);}):getWidthOrHeight(elem,name,extra);}},set:function(elem,value,extra){var matches,styles=extra&&getStyles(elem),subtract=extra&&augmentWidthOrHeight(elem,name,extra,jQuery.css(elem,"boxSizing",false,styles)==="border-box",styles);// Convert to pixels if value adjustment is needed
+	if(subtract&&(matches=rcssNum.exec(value))&&(matches[3]||"px")!=="px"){elem.style[name]=value;value=jQuery.css(elem,name);}return setPositiveNumber(elem,value,subtract);}};});jQuery.cssHooks.marginLeft=addGetHookIf(support.reliableMarginLeft,function(elem,computed){if(computed){return(parseFloat(curCSS(elem,"marginLeft"))||elem.getBoundingClientRect().left-swap(elem,{marginLeft:0},function(){return elem.getBoundingClientRect().left;}))+"px";}});// Support: Android 2.3
+	jQuery.cssHooks.marginRight=addGetHookIf(support.reliableMarginRight,function(elem,computed){if(computed){return swap(elem,{"display":"inline-block"},curCSS,[elem,"marginRight"]);}});// These hooks are used by animate to expand properties
+	jQuery.each({margin:"",padding:"",border:"Width"},function(prefix,suffix){jQuery.cssHooks[prefix+suffix]={expand:function(value){var i=0,expanded={},// Assumes a single number if not a string
+	parts=typeof value==="string"?value.split(" "):[value];for(;i<4;i++){expanded[prefix+cssExpand[i]+suffix]=parts[i]||parts[i-2]||parts[0];}return expanded;}};if(!rmargin.test(prefix)){jQuery.cssHooks[prefix+suffix].set=setPositiveNumber;}});jQuery.fn.extend({css:function(name,value){return access(this,function(elem,name,value){var styles,len,map={},i=0;if(jQuery.isArray(name)){styles=getStyles(elem);len=name.length;for(;i<len;i++){map[name[i]]=jQuery.css(elem,name[i],false,styles);}return map;}return value!==undefined?jQuery.style(elem,name,value):jQuery.css(elem,name);},name,value,arguments.length>1);},show:function(){return showHide(this,true);},hide:function(){return showHide(this);},toggle:function(state){if(typeof state==="boolean"){return state?this.show():this.hide();}return this.each(function(){if(isHidden(this)){jQuery(this).show();}else{jQuery(this).hide();}});}});function Tween(elem,options,prop,end,easing){return new Tween.prototype.init(elem,options,prop,end,easing);}jQuery.Tween=Tween;Tween.prototype={constructor:Tween,init:function(elem,options,prop,end,easing,unit){this.elem=elem;this.prop=prop;this.easing=easing||jQuery.easing._default;this.options=options;this.start=this.now=this.cur();this.end=end;this.unit=unit||(jQuery.cssNumber[prop]?"":"px");},cur:function(){var hooks=Tween.propHooks[this.prop];return hooks&&hooks.get?hooks.get(this):Tween.propHooks._default.get(this);},run:function(percent){var eased,hooks=Tween.propHooks[this.prop];if(this.options.duration){this.pos=eased=jQuery.easing[this.easing](percent,this.options.duration*percent,0,1,this.options.duration);}else{this.pos=eased=percent;}this.now=(this.end-this.start)*eased+this.start;if(this.options.step){this.options.step.call(this.elem,this.now,this);}if(hooks&&hooks.set){hooks.set(this);}else{Tween.propHooks._default.set(this);}return this;}};Tween.prototype.init.prototype=Tween.prototype;Tween.propHooks={_default:{get:function(tween){var result;// Use a property on the element directly when it is not a DOM element,
+	// or when there is no matching style property that exists.
+	if(tween.elem.nodeType!==1||tween.elem[tween.prop]!=null&&tween.elem.style[tween.prop]==null){return tween.elem[tween.prop];}// Passing an empty string as a 3rd parameter to .css will automatically
+	// attempt a parseFloat and fallback to a string if the parse fails.
+	// Simple values such as "10px" are parsed to Float;
+	// complex values such as "rotate(1rad)" are returned as-is.
+	result=jQuery.css(tween.elem,tween.prop,"");// Empty strings, null, undefined and "auto" are converted to 0.
+	return!result||result==="auto"?0:result;},set:function(tween){// Use step hook for back compat.
+	// Use cssHook if its there.
+	// Use .style if available and use plain properties where available.
+	if(jQuery.fx.step[tween.prop]){jQuery.fx.step[tween.prop](tween);}else if(tween.elem.nodeType===1&&(tween.elem.style[jQuery.cssProps[tween.prop]]!=null||jQuery.cssHooks[tween.prop])){jQuery.style(tween.elem,tween.prop,tween.now+tween.unit);}else{tween.elem[tween.prop]=tween.now;}}}};// Support: IE9
+	// Panic based approach to setting things on disconnected nodes
+	Tween.propHooks.scrollTop=Tween.propHooks.scrollLeft={set:function(tween){if(tween.elem.nodeType&&tween.elem.parentNode){tween.elem[tween.prop]=tween.now;}}};jQuery.easing={linear:function(p){return p;},swing:function(p){return 0.5-Math.cos(p*Math.PI)/2;},_default:"swing"};jQuery.fx=Tween.prototype.init;// Back Compat <1.8 extension point
+	jQuery.fx.step={};var fxNow,timerId,rfxtypes=/^(?:toggle|show|hide)$/,rrun=/queueHooks$/;// Animations created synchronously will run synchronously
+	function createFxNow(){window.setTimeout(function(){fxNow=undefined;});return fxNow=jQuery.now();}// Generate parameters to create a standard animation
+	function genFx(type,includeWidth){var which,i=0,attrs={height:type};// If we include width, step value is 1 to do all cssExpand values,
+	// otherwise step value is 2 to skip over Left and Right
+	includeWidth=includeWidth?1:0;for(;i<4;i+=2-includeWidth){which=cssExpand[i];attrs["margin"+which]=attrs["padding"+which]=type;}if(includeWidth){attrs.opacity=attrs.width=type;}return attrs;}function createTween(value,prop,animation){var tween,collection=(Animation.tweeners[prop]||[]).concat(Animation.tweeners["*"]),index=0,length=collection.length;for(;index<length;index++){if(tween=collection[index].call(animation,prop,value)){// We're done with this property
+	return tween;}}}function defaultPrefilter(elem,props,opts){/* jshint validthis: true */var prop,value,toggle,tween,hooks,oldfire,display,checkDisplay,anim=this,orig={},style=elem.style,hidden=elem.nodeType&&isHidden(elem),dataShow=dataPriv.get(elem,"fxshow");// Handle queue: false promises
+	if(!opts.queue){hooks=jQuery._queueHooks(elem,"fx");if(hooks.unqueued==null){hooks.unqueued=0;oldfire=hooks.empty.fire;hooks.empty.fire=function(){if(!hooks.unqueued){oldfire();}};}hooks.unqueued++;anim.always(function(){// Ensure the complete handler is called before this completes
+	anim.always(function(){hooks.unqueued--;if(!jQuery.queue(elem,"fx").length){hooks.empty.fire();}});});}// Height/width overflow pass
+	if(elem.nodeType===1&&("height"in props||"width"in props)){// Make sure that nothing sneaks out
+	// Record all 3 overflow attributes because IE9-10 do not
+	// change the overflow attribute when overflowX and
+	// overflowY are set to the same value
+	opts.overflow=[style.overflow,style.overflowX,style.overflowY];// Set display property to inline-block for height/width
+	// animations on inline elements that are having width/height animated
+	display=jQuery.css(elem,"display");// Test default display if display is currently "none"
+	checkDisplay=display==="none"?dataPriv.get(elem,"olddisplay")||defaultDisplay(elem.nodeName):display;if(checkDisplay==="inline"&&jQuery.css(elem,"float")==="none"){style.display="inline-block";}}if(opts.overflow){style.overflow="hidden";anim.always(function(){style.overflow=opts.overflow[0];style.overflowX=opts.overflow[1];style.overflowY=opts.overflow[2];});}// show/hide pass
+	for(prop in props){value=props[prop];if(rfxtypes.exec(value)){delete props[prop];toggle=toggle||value==="toggle";if(value===(hidden?"hide":"show")){// If there is dataShow left over from a stopped hide or show
+	// and we are going to proceed with show, we should pretend to be hidden
+	if(value==="show"&&dataShow&&dataShow[prop]!==undefined){hidden=true;}else{continue;}}orig[prop]=dataShow&&dataShow[prop]||jQuery.style(elem,prop);// Any non-fx value stops us from restoring the original display value
+	}else{display=undefined;}}if(!jQuery.isEmptyObject(orig)){if(dataShow){if("hidden"in dataShow){hidden=dataShow.hidden;}}else{dataShow=dataPriv.access(elem,"fxshow",{});}// Store state if its toggle - enables .stop().toggle() to "reverse"
+	if(toggle){dataShow.hidden=!hidden;}if(hidden){jQuery(elem).show();}else{anim.done(function(){jQuery(elem).hide();});}anim.done(function(){var prop;dataPriv.remove(elem,"fxshow");for(prop in orig){jQuery.style(elem,prop,orig[prop]);}});for(prop in orig){tween=createTween(hidden?dataShow[prop]:0,prop,anim);if(!(prop in dataShow)){dataShow[prop]=tween.start;if(hidden){tween.end=tween.start;tween.start=prop==="width"||prop==="height"?1:0;}}}// If this is a noop like .hide().hide(), restore an overwritten display value
+	}else if((display==="none"?defaultDisplay(elem.nodeName):display)==="inline"){style.display=display;}}function propFilter(props,specialEasing){var index,name,easing,value,hooks;// camelCase, specialEasing and expand cssHook pass
+	for(index in props){name=jQuery.camelCase(index);easing=specialEasing[name];value=props[index];if(jQuery.isArray(value)){easing=value[1];value=props[index]=value[0];}if(index!==name){props[name]=value;delete props[index];}hooks=jQuery.cssHooks[name];if(hooks&&"expand"in hooks){value=hooks.expand(value);delete props[name];// Not quite $.extend, this won't overwrite existing keys.
+	// Reusing 'index' because we have the correct "name"
+	for(index in value){if(!(index in props)){props[index]=value[index];specialEasing[index]=easing;}}}else{specialEasing[name]=easing;}}}function Animation(elem,properties,options){var result,stopped,index=0,length=Animation.prefilters.length,deferred=jQuery.Deferred().always(function(){// Don't match elem in the :animated selector
+	delete tick.elem;}),tick=function(){if(stopped){return false;}var currentTime=fxNow||createFxNow(),remaining=Math.max(0,animation.startTime+animation.duration-currentTime),// Support: Android 2.3
+	// Archaic crash bug won't allow us to use `1 - ( 0.5 || 0 )` (#12497)
+	temp=remaining/animation.duration||0,percent=1-temp,index=0,length=animation.tweens.length;for(;index<length;index++){animation.tweens[index].run(percent);}deferred.notifyWith(elem,[animation,percent,remaining]);if(percent<1&&length){return remaining;}else{deferred.resolveWith(elem,[animation]);return false;}},animation=deferred.promise({elem:elem,props:jQuery.extend({},properties),opts:jQuery.extend(true,{specialEasing:{},easing:jQuery.easing._default},options),originalProperties:properties,originalOptions:options,startTime:fxNow||createFxNow(),duration:options.duration,tweens:[],createTween:function(prop,end){var tween=jQuery.Tween(elem,animation.opts,prop,end,animation.opts.specialEasing[prop]||animation.opts.easing);animation.tweens.push(tween);return tween;},stop:function(gotoEnd){var index=0,// If we are going to the end, we want to run all the tweens
+	// otherwise we skip this part
+	length=gotoEnd?animation.tweens.length:0;if(stopped){return this;}stopped=true;for(;index<length;index++){animation.tweens[index].run(1);}// Resolve when we played the last frame; otherwise, reject
+	if(gotoEnd){deferred.notifyWith(elem,[animation,1,0]);deferred.resolveWith(elem,[animation,gotoEnd]);}else{deferred.rejectWith(elem,[animation,gotoEnd]);}return this;}}),props=animation.props;propFilter(props,animation.opts.specialEasing);for(;index<length;index++){result=Animation.prefilters[index].call(animation,elem,props,animation.opts);if(result){if(jQuery.isFunction(result.stop)){jQuery._queueHooks(animation.elem,animation.opts.queue).stop=jQuery.proxy(result.stop,result);}return result;}}jQuery.map(props,createTween,animation);if(jQuery.isFunction(animation.opts.start)){animation.opts.start.call(elem,animation);}jQuery.fx.timer(jQuery.extend(tick,{elem:elem,anim:animation,queue:animation.opts.queue}));// attach callbacks from options
+	return animation.progress(animation.opts.progress).done(animation.opts.done,animation.opts.complete).fail(animation.opts.fail).always(animation.opts.always);}jQuery.Animation=jQuery.extend(Animation,{tweeners:{"*":[function(prop,value){var tween=this.createTween(prop,value);adjustCSS(tween.elem,prop,rcssNum.exec(value),tween);return tween;}]},tweener:function(props,callback){if(jQuery.isFunction(props)){callback=props;props=["*"];}else{props=props.match(rnotwhite);}var prop,index=0,length=props.length;for(;index<length;index++){prop=props[index];Animation.tweeners[prop]=Animation.tweeners[prop]||[];Animation.tweeners[prop].unshift(callback);}},prefilters:[defaultPrefilter],prefilter:function(callback,prepend){if(prepend){Animation.prefilters.unshift(callback);}else{Animation.prefilters.push(callback);}}});jQuery.speed=function(speed,easing,fn){var opt=speed&&typeof speed==="object"?jQuery.extend({},speed):{complete:fn||!fn&&easing||jQuery.isFunction(speed)&&speed,duration:speed,easing:fn&&easing||easing&&!jQuery.isFunction(easing)&&easing};opt.duration=jQuery.fx.off?0:typeof opt.duration==="number"?opt.duration:opt.duration in jQuery.fx.speeds?jQuery.fx.speeds[opt.duration]:jQuery.fx.speeds._default;// Normalize opt.queue - true/undefined/null -> "fx"
+	if(opt.queue==null||opt.queue===true){opt.queue="fx";}// Queueing
+	opt.old=opt.complete;opt.complete=function(){if(jQuery.isFunction(opt.old)){opt.old.call(this);}if(opt.queue){jQuery.dequeue(this,opt.queue);}};return opt;};jQuery.fn.extend({fadeTo:function(speed,to,easing,callback){// Show any hidden elements after setting opacity to 0
+	return this.filter(isHidden).css("opacity",0).show()// Animate to the value specified
+	.end().animate({opacity:to},speed,easing,callback);},animate:function(prop,speed,easing,callback){var empty=jQuery.isEmptyObject(prop),optall=jQuery.speed(speed,easing,callback),doAnimation=function(){// Operate on a copy of prop so per-property easing won't be lost
+	var anim=Animation(this,jQuery.extend({},prop),optall);// Empty animations, or finishing resolves immediately
+	if(empty||dataPriv.get(this,"finish")){anim.stop(true);}};doAnimation.finish=doAnimation;return empty||optall.queue===false?this.each(doAnimation):this.queue(optall.queue,doAnimation);},stop:function(type,clearQueue,gotoEnd){var stopQueue=function(hooks){var stop=hooks.stop;delete hooks.stop;stop(gotoEnd);};if(typeof type!=="string"){gotoEnd=clearQueue;clearQueue=type;type=undefined;}if(clearQueue&&type!==false){this.queue(type||"fx",[]);}return this.each(function(){var dequeue=true,index=type!=null&&type+"queueHooks",timers=jQuery.timers,data=dataPriv.get(this);if(index){if(data[index]&&data[index].stop){stopQueue(data[index]);}}else{for(index in data){if(data[index]&&data[index].stop&&rrun.test(index)){stopQueue(data[index]);}}}for(index=timers.length;index--;){if(timers[index].elem===this&&(type==null||timers[index].queue===type)){timers[index].anim.stop(gotoEnd);dequeue=false;timers.splice(index,1);}}// Start the next in the queue if the last step wasn't forced.
+	// Timers currently will call their complete callbacks, which
+	// will dequeue but only if they were gotoEnd.
+	if(dequeue||!gotoEnd){jQuery.dequeue(this,type);}});},finish:function(type){if(type!==false){type=type||"fx";}return this.each(function(){var index,data=dataPriv.get(this),queue=data[type+"queue"],hooks=data[type+"queueHooks"],timers=jQuery.timers,length=queue?queue.length:0;// Enable finishing flag on private data
+	data.finish=true;// Empty the queue first
+	jQuery.queue(this,type,[]);if(hooks&&hooks.stop){hooks.stop.call(this,true);}// Look for any active animations, and finish them
+	for(index=timers.length;index--;){if(timers[index].elem===this&&timers[index].queue===type){timers[index].anim.stop(true);timers.splice(index,1);}}// Look for any animations in the old queue and finish them
+	for(index=0;index<length;index++){if(queue[index]&&queue[index].finish){queue[index].finish.call(this);}}// Turn off finishing flag
+	delete data.finish;});}});jQuery.each(["toggle","show","hide"],function(i,name){var cssFn=jQuery.fn[name];jQuery.fn[name]=function(speed,easing,callback){return speed==null||typeof speed==="boolean"?cssFn.apply(this,arguments):this.animate(genFx(name,true),speed,easing,callback);};});// Generate shortcuts for custom animations
+	jQuery.each({slideDown:genFx("show"),slideUp:genFx("hide"),slideToggle:genFx("toggle"),fadeIn:{opacity:"show"},fadeOut:{opacity:"hide"},fadeToggle:{opacity:"toggle"}},function(name,props){jQuery.fn[name]=function(speed,easing,callback){return this.animate(props,speed,easing,callback);};});jQuery.timers=[];jQuery.fx.tick=function(){var timer,i=0,timers=jQuery.timers;fxNow=jQuery.now();for(;i<timers.length;i++){timer=timers[i];// Checks the timer has not already been removed
+	if(!timer()&&timers[i]===timer){timers.splice(i--,1);}}if(!timers.length){jQuery.fx.stop();}fxNow=undefined;};jQuery.fx.timer=function(timer){jQuery.timers.push(timer);if(timer()){jQuery.fx.start();}else{jQuery.timers.pop();}};jQuery.fx.interval=13;jQuery.fx.start=function(){if(!timerId){timerId=window.setInterval(jQuery.fx.tick,jQuery.fx.interval);}};jQuery.fx.stop=function(){window.clearInterval(timerId);timerId=null;};jQuery.fx.speeds={slow:600,fast:200,// Default speed
+	_default:400};// Based off of the plugin by Clint Helfers, with permission.
+	// http://web.archive.org/web/20100324014747/http://blindsignals.com/index.php/2009/07/jquery-delay/
+	jQuery.fn.delay=function(time,type){time=jQuery.fx?jQuery.fx.speeds[time]||time:time;type=type||"fx";return this.queue(type,function(next,hooks){var timeout=window.setTimeout(next,time);hooks.stop=function(){window.clearTimeout(timeout);};});};(function(){var input=document.createElement("input"),select=document.createElement("select"),opt=select.appendChild(document.createElement("option"));input.type="checkbox";// Support: iOS<=5.1, Android<=4.2+
+	// Default value for a checkbox should be "on"
+	support.checkOn=input.value!=="";// Support: IE<=11+
+	// Must access selectedIndex to make default options select
+	support.optSelected=opt.selected;// Support: Android<=2.3
+	// Options inside disabled selects are incorrectly marked as disabled
+	select.disabled=true;support.optDisabled=!opt.disabled;// Support: IE<=11+
+	// An input loses its value after becoming a radio
+	input=document.createElement("input");input.value="t";input.type="radio";support.radioValue=input.value==="t";})();var boolHook,attrHandle=jQuery.expr.attrHandle;jQuery.fn.extend({attr:function(name,value){return access(this,jQuery.attr,name,value,arguments.length>1);},removeAttr:function(name){return this.each(function(){jQuery.removeAttr(this,name);});}});jQuery.extend({attr:function(elem,name,value){var ret,hooks,nType=elem.nodeType;// Don't get/set attributes on text, comment and attribute nodes
+	if(nType===3||nType===8||nType===2){return;}// Fallback to prop when attributes are not supported
+	if(typeof elem.getAttribute==="undefined"){return jQuery.prop(elem,name,value);}// All attributes are lowercase
+	// Grab necessary hook if one is defined
+	if(nType!==1||!jQuery.isXMLDoc(elem)){name=name.toLowerCase();hooks=jQuery.attrHooks[name]||(jQuery.expr.match.bool.test(name)?boolHook:undefined);}if(value!==undefined){if(value===null){jQuery.removeAttr(elem,name);return;}if(hooks&&"set"in hooks&&(ret=hooks.set(elem,value,name))!==undefined){return ret;}elem.setAttribute(name,value+"");return value;}if(hooks&&"get"in hooks&&(ret=hooks.get(elem,name))!==null){return ret;}ret=jQuery.find.attr(elem,name);// Non-existent attributes return null, we normalize to undefined
+	return ret==null?undefined:ret;},attrHooks:{type:{set:function(elem,value){if(!support.radioValue&&value==="radio"&&jQuery.nodeName(elem,"input")){var val=elem.value;elem.setAttribute("type",value);if(val){elem.value=val;}return value;}}}},removeAttr:function(elem,value){var name,propName,i=0,attrNames=value&&value.match(rnotwhite);if(attrNames&&elem.nodeType===1){while(name=attrNames[i++]){propName=jQuery.propFix[name]||name;// Boolean attributes get special treatment (#10870)
+	if(jQuery.expr.match.bool.test(name)){// Set corresponding property to false
+	elem[propName]=false;}elem.removeAttribute(name);}}}});// Hooks for boolean attributes
+	boolHook={set:function(elem,value,name){if(value===false){// Remove boolean attributes when set to false
+	jQuery.removeAttr(elem,name);}else{elem.setAttribute(name,name);}return name;}};jQuery.each(jQuery.expr.match.bool.source.match(/\w+/g),function(i,name){var getter=attrHandle[name]||jQuery.find.attr;attrHandle[name]=function(elem,name,isXML){var ret,handle;if(!isXML){// Avoid an infinite loop by temporarily removing this function from the getter
+	handle=attrHandle[name];attrHandle[name]=ret;ret=getter(elem,name,isXML)!=null?name.toLowerCase():null;attrHandle[name]=handle;}return ret;};});var rfocusable=/^(?:input|select|textarea|button)$/i,rclickable=/^(?:a|area)$/i;jQuery.fn.extend({prop:function(name,value){return access(this,jQuery.prop,name,value,arguments.length>1);},removeProp:function(name){return this.each(function(){delete this[jQuery.propFix[name]||name];});}});jQuery.extend({prop:function(elem,name,value){var ret,hooks,nType=elem.nodeType;// Don't get/set properties on text, comment and attribute nodes
+	if(nType===3||nType===8||nType===2){return;}if(nType!==1||!jQuery.isXMLDoc(elem)){// Fix name and attach hooks
+	name=jQuery.propFix[name]||name;hooks=jQuery.propHooks[name];}if(value!==undefined){if(hooks&&"set"in hooks&&(ret=hooks.set(elem,value,name))!==undefined){return ret;}return elem[name]=value;}if(hooks&&"get"in hooks&&(ret=hooks.get(elem,name))!==null){return ret;}return elem[name];},propHooks:{tabIndex:{get:function(elem){// elem.tabIndex doesn't always return the
+	// correct value when it hasn't been explicitly set
+	// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
+	// Use proper attribute retrieval(#12072)
+	var tabindex=jQuery.find.attr(elem,"tabindex");return tabindex?parseInt(tabindex,10):rfocusable.test(elem.nodeName)||rclickable.test(elem.nodeName)&&elem.href?0:-1;}}},propFix:{"for":"htmlFor","class":"className"}});// Support: IE <=11 only
+	// Accessing the selectedIndex property
+	// forces the browser to respect setting selected
+	// on the option
+	// The getter ensures a default option is selected
+	// when in an optgroup
+	if(!support.optSelected){jQuery.propHooks.selected={get:function(elem){var parent=elem.parentNode;if(parent&&parent.parentNode){parent.parentNode.selectedIndex;}return null;},set:function(elem){var parent=elem.parentNode;if(parent){parent.selectedIndex;if(parent.parentNode){parent.parentNode.selectedIndex;}}}};}jQuery.each(["tabIndex","readOnly","maxLength","cellSpacing","cellPadding","rowSpan","colSpan","useMap","frameBorder","contentEditable"],function(){jQuery.propFix[this.toLowerCase()]=this;});var rclass=/[\t\r\n\f]/g;function getClass(elem){return elem.getAttribute&&elem.getAttribute("class")||"";}jQuery.fn.extend({addClass:function(value){var classes,elem,cur,curValue,clazz,j,finalValue,i=0;if(jQuery.isFunction(value)){return this.each(function(j){jQuery(this).addClass(value.call(this,j,getClass(this)));});}if(typeof value==="string"&&value){classes=value.match(rnotwhite)||[];while(elem=this[i++]){curValue=getClass(elem);cur=elem.nodeType===1&&(" "+curValue+" ").replace(rclass," ");if(cur){j=0;while(clazz=classes[j++]){if(cur.indexOf(" "+clazz+" ")<0){cur+=clazz+" ";}}// Only assign if different to avoid unneeded rendering.
+	finalValue=jQuery.trim(cur);if(curValue!==finalValue){elem.setAttribute("class",finalValue);}}}}return this;},removeClass:function(value){var classes,elem,cur,curValue,clazz,j,finalValue,i=0;if(jQuery.isFunction(value)){return this.each(function(j){jQuery(this).removeClass(value.call(this,j,getClass(this)));});}if(!arguments.length){return this.attr("class","");}if(typeof value==="string"&&value){classes=value.match(rnotwhite)||[];while(elem=this[i++]){curValue=getClass(elem);// This expression is here for better compressibility (see addClass)
+	cur=elem.nodeType===1&&(" "+curValue+" ").replace(rclass," ");if(cur){j=0;while(clazz=classes[j++]){// Remove *all* instances
+	while(cur.indexOf(" "+clazz+" ")>-1){cur=cur.replace(" "+clazz+" "," ");}}// Only assign if different to avoid unneeded rendering.
+	finalValue=jQuery.trim(cur);if(curValue!==finalValue){elem.setAttribute("class",finalValue);}}}}return this;},toggleClass:function(value,stateVal){var type=typeof value;if(typeof stateVal==="boolean"&&type==="string"){return stateVal?this.addClass(value):this.removeClass(value);}if(jQuery.isFunction(value)){return this.each(function(i){jQuery(this).toggleClass(value.call(this,i,getClass(this),stateVal),stateVal);});}return this.each(function(){var className,i,self,classNames;if(type==="string"){// Toggle individual class names
+	i=0;self=jQuery(this);classNames=value.match(rnotwhite)||[];while(className=classNames[i++]){// Check each className given, space separated list
+	if(self.hasClass(className)){self.removeClass(className);}else{self.addClass(className);}}// Toggle whole class name
+	}else if(value===undefined||type==="boolean"){className=getClass(this);if(className){// Store className if set
+	dataPriv.set(this,"__className__",className);}// If the element has a class name or if we're passed `false`,
+	// then remove the whole classname (if there was one, the above saved it).
+	// Otherwise bring back whatever was previously saved (if anything),
+	// falling back to the empty string if nothing was stored.
+	if(this.setAttribute){this.setAttribute("class",className||value===false?"":dataPriv.get(this,"__className__")||"");}}});},hasClass:function(selector){var className,elem,i=0;className=" "+selector+" ";while(elem=this[i++]){if(elem.nodeType===1&&(" "+getClass(elem)+" ").replace(rclass," ").indexOf(className)>-1){return true;}}return false;}});var rreturn=/\r/g,rspaces=/[\x20\t\r\n\f]+/g;jQuery.fn.extend({val:function(value){var hooks,ret,isFunction,elem=this[0];if(!arguments.length){if(elem){hooks=jQuery.valHooks[elem.type]||jQuery.valHooks[elem.nodeName.toLowerCase()];if(hooks&&"get"in hooks&&(ret=hooks.get(elem,"value"))!==undefined){return ret;}ret=elem.value;return typeof ret==="string"?// Handle most common string cases
+	ret.replace(rreturn,""):// Handle cases where value is null/undef or number
+	ret==null?"":ret;}return;}isFunction=jQuery.isFunction(value);return this.each(function(i){var val;if(this.nodeType!==1){return;}if(isFunction){val=value.call(this,i,jQuery(this).val());}else{val=value;}// Treat null/undefined as ""; convert numbers to string
+	if(val==null){val="";}else if(typeof val==="number"){val+="";}else if(jQuery.isArray(val)){val=jQuery.map(val,function(value){return value==null?"":value+"";});}hooks=jQuery.valHooks[this.type]||jQuery.valHooks[this.nodeName.toLowerCase()];// If set returns undefined, fall back to normal setting
+	if(!hooks||!("set"in hooks)||hooks.set(this,val,"value")===undefined){this.value=val;}});}});jQuery.extend({valHooks:{option:{get:function(elem){var val=jQuery.find.attr(elem,"value");return val!=null?val:// Support: IE10-11+
+	// option.text throws exceptions (#14686, #14858)
+	// Strip and collapse whitespace
+	// https://html.spec.whatwg.org/#strip-and-collapse-whitespace
+	jQuery.trim(jQuery.text(elem)).replace(rspaces," ");}},select:{get:function(elem){var value,option,options=elem.options,index=elem.selectedIndex,one=elem.type==="select-one"||index<0,values=one?null:[],max=one?index+1:options.length,i=index<0?max:one?index:0;// Loop through all the selected options
+	for(;i<max;i++){option=options[i];// IE8-9 doesn't update selected after form reset (#2551)
+	if((option.selected||i===index)&&(// Don't return options that are disabled or in a disabled optgroup
+	support.optDisabled?!option.disabled:option.getAttribute("disabled")===null)&&(!option.parentNode.disabled||!jQuery.nodeName(option.parentNode,"optgroup"))){// Get the specific value for the option
+	value=jQuery(option).val();// We don't need an array for one selects
+	if(one){return value;}// Multi-Selects return an array
+	values.push(value);}}return values;},set:function(elem,value){var optionSet,option,options=elem.options,values=jQuery.makeArray(value),i=options.length;while(i--){option=options[i];if(option.selected=jQuery.inArray(jQuery.valHooks.option.get(option),values)>-1){optionSet=true;}}// Force browsers to behave consistently when non-matching value is set
+	if(!optionSet){elem.selectedIndex=-1;}return values;}}}});// Radios and checkboxes getter/setter
+	jQuery.each(["radio","checkbox"],function(){jQuery.valHooks[this]={set:function(elem,value){if(jQuery.isArray(value)){return elem.checked=jQuery.inArray(jQuery(elem).val(),value)>-1;}}};if(!support.checkOn){jQuery.valHooks[this].get=function(elem){return elem.getAttribute("value")===null?"on":elem.value;};}});// Return jQuery for attributes-only inclusion
+	var rfocusMorph=/^(?:focusinfocus|focusoutblur)$/;jQuery.extend(jQuery.event,{trigger:function(event,data,elem,onlyHandlers){var i,cur,tmp,bubbleType,ontype,handle,special,eventPath=[elem||document],type=hasOwn.call(event,"type")?event.type:event,namespaces=hasOwn.call(event,"namespace")?event.namespace.split("."):[];cur=tmp=elem=elem||document;// Don't do events on text and comment nodes
+	if(elem.nodeType===3||elem.nodeType===8){return;}// focus/blur morphs to focusin/out; ensure we're not firing them right now
+	if(rfocusMorph.test(type+jQuery.event.triggered)){return;}if(type.indexOf(".")>-1){// Namespaced trigger; create a regexp to match event type in handle()
+	namespaces=type.split(".");type=namespaces.shift();namespaces.sort();}ontype=type.indexOf(":")<0&&"on"+type;// Caller can pass in a jQuery.Event object, Object, or just an event type string
+	event=event[jQuery.expando]?event:new jQuery.Event(type,typeof event==="object"&&event);// Trigger bitmask: & 1 for native handlers; & 2 for jQuery (always true)
+	event.isTrigger=onlyHandlers?2:3;event.namespace=namespaces.join(".");event.rnamespace=event.namespace?new RegExp("(^|\\.)"+namespaces.join("\\.(?:.*\\.|)")+"(\\.|$)"):null;// Clean up the event in case it is being reused
+	event.result=undefined;if(!event.target){event.target=elem;}// Clone any incoming data and prepend the event, creating the handler arg list
+	data=data==null?[event]:jQuery.makeArray(data,[event]);// Allow special events to draw outside the lines
+	special=jQuery.event.special[type]||{};if(!onlyHandlers&&special.trigger&&special.trigger.apply(elem,data)===false){return;}// Determine event propagation path in advance, per W3C events spec (#9951)
+	// Bubble up to document, then to window; watch for a global ownerDocument var (#9724)
+	if(!onlyHandlers&&!special.noBubble&&!jQuery.isWindow(elem)){bubbleType=special.delegateType||type;if(!rfocusMorph.test(bubbleType+type)){cur=cur.parentNode;}for(;cur;cur=cur.parentNode){eventPath.push(cur);tmp=cur;}// Only add window if we got to document (e.g., not plain obj or detached DOM)
+	if(tmp===(elem.ownerDocument||document)){eventPath.push(tmp.defaultView||tmp.parentWindow||window);}}// Fire handlers on the event path
+	i=0;while((cur=eventPath[i++])&&!event.isPropagationStopped()){event.type=i>1?bubbleType:special.bindType||type;// jQuery handler
+	handle=(dataPriv.get(cur,"events")||{})[event.type]&&dataPriv.get(cur,"handle");if(handle){handle.apply(cur,data);}// Native handler
+	handle=ontype&&cur[ontype];if(handle&&handle.apply&&acceptData(cur)){event.result=handle.apply(cur,data);if(event.result===false){event.preventDefault();}}}event.type=type;// If nobody prevented the default action, do it now
+	if(!onlyHandlers&&!event.isDefaultPrevented()){if((!special._default||special._default.apply(eventPath.pop(),data)===false)&&acceptData(elem)){// Call a native DOM method on the target with the same name name as the event.
+	// Don't do default actions on window, that's where global variables be (#6170)
+	if(ontype&&jQuery.isFunction(elem[type])&&!jQuery.isWindow(elem)){// Don't re-trigger an onFOO event when we call its FOO() method
+	tmp=elem[ontype];if(tmp){elem[ontype]=null;}// Prevent re-triggering of the same event, since we already bubbled it above
+	jQuery.event.triggered=type;elem[type]();jQuery.event.triggered=undefined;if(tmp){elem[ontype]=tmp;}}}}return event.result;},// Piggyback on a donor event to simulate a different one
+	// Used only for `focus(in | out)` events
+	simulate:function(type,elem,event){var e=jQuery.extend(new jQuery.Event(),event,{type:type,isSimulated:true});jQuery.event.trigger(e,null,elem);}});jQuery.fn.extend({trigger:function(type,data){return this.each(function(){jQuery.event.trigger(type,data,this);});},triggerHandler:function(type,data){var elem=this[0];if(elem){return jQuery.event.trigger(type,data,elem,true);}}});jQuery.each(("blur focus focusin focusout load resize scroll unload click dblclick "+"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave "+"change select submit keydown keypress keyup error contextmenu").split(" "),function(i,name){// Handle event binding
+	jQuery.fn[name]=function(data,fn){return arguments.length>0?this.on(name,null,data,fn):this.trigger(name);};});jQuery.fn.extend({hover:function(fnOver,fnOut){return this.mouseenter(fnOver).mouseleave(fnOut||fnOver);}});support.focusin="onfocusin"in window;// Support: Firefox
+	// Firefox doesn't have focus(in | out) events
+	// Related ticket - https://bugzilla.mozilla.org/show_bug.cgi?id=687787
+	//
+	// Support: Chrome, Safari
+	// focus(in | out) events fire after focus & blur events,
+	// which is spec violation - http://www.w3.org/TR/DOM-Level-3-Events/#events-focusevent-event-order
+	// Related ticket - https://code.google.com/p/chromium/issues/detail?id=449857
+	if(!support.focusin){jQuery.each({focus:"focusin",blur:"focusout"},function(orig,fix){// Attach a single capturing handler on the document while someone wants focusin/focusout
+	var handler=function(event){jQuery.event.simulate(fix,event.target,jQuery.event.fix(event));};jQuery.event.special[fix]={setup:function(){var doc=this.ownerDocument||this,attaches=dataPriv.access(doc,fix);if(!attaches){doc.addEventListener(orig,handler,true);}dataPriv.access(doc,fix,(attaches||0)+1);},teardown:function(){var doc=this.ownerDocument||this,attaches=dataPriv.access(doc,fix)-1;if(!attaches){doc.removeEventListener(orig,handler,true);dataPriv.remove(doc,fix);}else{dataPriv.access(doc,fix,attaches);}}};});}var location=window.location;var nonce=jQuery.now();var rquery=/\?/;// Support: Android 2.3
+	// Workaround failure to string-cast null input
+	jQuery.parseJSON=function(data){return JSON.parse(data+"");};// Cross-browser xml parsing
+	jQuery.parseXML=function(data){var xml;if(!data||typeof data!=="string"){return null;}// Support: IE9
+	try{xml=new window.DOMParser().parseFromString(data,"text/xml");}catch(e){xml=undefined;}if(!xml||xml.getElementsByTagName("parsererror").length){jQuery.error("Invalid XML: "+data);}return xml;};var rhash=/#.*$/,rts=/([?&])_=[^&]*/,rheaders=/^(.*?):[ \t]*([^\r\n]*)$/mg,// #7653, #8125, #8152: local protocol detection
+	rlocalProtocol=/^(?:about|app|app-storage|.+-extension|file|res|widget):$/,rnoContent=/^(?:GET|HEAD)$/,rprotocol=/^\/\//,/* Prefilters
+		 * 1) They are useful to introduce custom dataTypes (see ajax/jsonp.js for an example)
+		 * 2) These are called:
+		 *    - BEFORE asking for a transport
+		 *    - AFTER param serialization (s.data is a string if s.processData is true)
+		 * 3) key is the dataType
+		 * 4) the catchall symbol "*" can be used
+		 * 5) execution will start with transport dataType and THEN continue down to "*" if needed
+		 */prefilters={},/* Transports bindings
+		 * 1) key is the dataType
+		 * 2) the catchall symbol "*" can be used
+		 * 3) selection will start with transport dataType and THEN go to "*" if needed
+		 */transports={},// Avoid comment-prolog char sequence (#10098); must appease lint and evade compression
+	allTypes="*/".concat("*"),// Anchor tag for parsing the document origin
+	originAnchor=document.createElement("a");originAnchor.href=location.href;// Base "constructor" for jQuery.ajaxPrefilter and jQuery.ajaxTransport
+	function addToPrefiltersOrTransports(structure){// dataTypeExpression is optional and defaults to "*"
+	return function(dataTypeExpression,func){if(typeof dataTypeExpression!=="string"){func=dataTypeExpression;dataTypeExpression="*";}var dataType,i=0,dataTypes=dataTypeExpression.toLowerCase().match(rnotwhite)||[];if(jQuery.isFunction(func)){// For each dataType in the dataTypeExpression
+	while(dataType=dataTypes[i++]){// Prepend if requested
+	if(dataType[0]==="+"){dataType=dataType.slice(1)||"*";(structure[dataType]=structure[dataType]||[]).unshift(func);// Otherwise append
+	}else{(structure[dataType]=structure[dataType]||[]).push(func);}}}};}// Base inspection function for prefilters and transports
+	function inspectPrefiltersOrTransports(structure,options,originalOptions,jqXHR){var inspected={},seekingTransport=structure===transports;function inspect(dataType){var selected;inspected[dataType]=true;jQuery.each(structure[dataType]||[],function(_,prefilterOrFactory){var dataTypeOrTransport=prefilterOrFactory(options,originalOptions,jqXHR);if(typeof dataTypeOrTransport==="string"&&!seekingTransport&&!inspected[dataTypeOrTransport]){options.dataTypes.unshift(dataTypeOrTransport);inspect(dataTypeOrTransport);return false;}else if(seekingTransport){return!(selected=dataTypeOrTransport);}});return selected;}return inspect(options.dataTypes[0])||!inspected["*"]&&inspect("*");}// A special extend for ajax options
+	// that takes "flat" options (not to be deep extended)
+	// Fixes #9887
+	function ajaxExtend(target,src){var key,deep,flatOptions=jQuery.ajaxSettings.flatOptions||{};for(key in src){if(src[key]!==undefined){(flatOptions[key]?target:deep||(deep={}))[key]=src[key];}}if(deep){jQuery.extend(true,target,deep);}return target;}/* Handles responses to an ajax request:
+	 * - finds the right dataType (mediates between content-type and expected dataType)
+	 * - returns the corresponding response
+	 */function ajaxHandleResponses(s,jqXHR,responses){var ct,type,finalDataType,firstDataType,contents=s.contents,dataTypes=s.dataTypes;// Remove auto dataType and get content-type in the process
+	while(dataTypes[0]==="*"){dataTypes.shift();if(ct===undefined){ct=s.mimeType||jqXHR.getResponseHeader("Content-Type");}}// Check if we're dealing with a known content-type
+	if(ct){for(type in contents){if(contents[type]&&contents[type].test(ct)){dataTypes.unshift(type);break;}}}// Check to see if we have a response for the expected dataType
+	if(dataTypes[0]in responses){finalDataType=dataTypes[0];}else{// Try convertible dataTypes
+	for(type in responses){if(!dataTypes[0]||s.converters[type+" "+dataTypes[0]]){finalDataType=type;break;}if(!firstDataType){firstDataType=type;}}// Or just use first one
+	finalDataType=finalDataType||firstDataType;}// If we found a dataType
+	// We add the dataType to the list if needed
+	// and return the corresponding response
+	if(finalDataType){if(finalDataType!==dataTypes[0]){dataTypes.unshift(finalDataType);}return responses[finalDataType];}}/* Chain conversions given the request and the original response
+	 * Also sets the responseXXX fields on the jqXHR instance
+	 */function ajaxConvert(s,response,jqXHR,isSuccess){var conv2,current,conv,tmp,prev,converters={},// Work with a copy of dataTypes in case we need to modify it for conversion
+	dataTypes=s.dataTypes.slice();// Create converters map with lowercased keys
+	if(dataTypes[1]){for(conv in s.converters){converters[conv.toLowerCase()]=s.converters[conv];}}current=dataTypes.shift();// Convert to each sequential dataType
+	while(current){if(s.responseFields[current]){jqXHR[s.responseFields[current]]=response;}// Apply the dataFilter if provided
+	if(!prev&&isSuccess&&s.dataFilter){response=s.dataFilter(response,s.dataType);}prev=current;current=dataTypes.shift();if(current){// There's only work to do if current dataType is non-auto
+	if(current==="*"){current=prev;// Convert response if prev dataType is non-auto and differs from current
+	}else if(prev!=="*"&&prev!==current){// Seek a direct converter
+	conv=converters[prev+" "+current]||converters["* "+current];// If none found, seek a pair
+	if(!conv){for(conv2 in converters){// If conv2 outputs current
+	tmp=conv2.split(" ");if(tmp[1]===current){// If prev can be converted to accepted input
+	conv=converters[prev+" "+tmp[0]]||converters["* "+tmp[0]];if(conv){// Condense equivalence converters
+	if(conv===true){conv=converters[conv2];// Otherwise, insert the intermediate dataType
+	}else if(converters[conv2]!==true){current=tmp[0];dataTypes.unshift(tmp[1]);}break;}}}}// Apply converter (if not an equivalence)
+	if(conv!==true){// Unless errors are allowed to bubble, catch and return them
+	if(conv&&s.throws){response=conv(response);}else{try{response=conv(response);}catch(e){return{state:"parsererror",error:conv?e:"No conversion from "+prev+" to "+current};}}}}}}return{state:"success",data:response};}jQuery.extend({// Counter for holding the number of active queries
+	active:0,// Last-Modified header cache for next request
+	lastModified:{},etag:{},ajaxSettings:{url:location.href,type:"GET",isLocal:rlocalProtocol.test(location.protocol),global:true,processData:true,async:true,contentType:"application/x-www-form-urlencoded; charset=UTF-8",/*
+			timeout: 0,
+			data: null,
+			dataType: null,
+			username: null,
+			password: null,
+			cache: null,
+			throws: false,
+			traditional: false,
+			headers: {},
+			*/accepts:{"*":allTypes,text:"text/plain",html:"text/html",xml:"application/xml, text/xml",json:"application/json, text/javascript"},contents:{xml:/\bxml\b/,html:/\bhtml/,json:/\bjson\b/},responseFields:{xml:"responseXML",text:"responseText",json:"responseJSON"},// Data converters
+	// Keys separate source (or catchall "*") and destination types with a single space
+	converters:{// Convert anything to text
+	"* text":String,// Text to html (true = no transformation)
+	"text html":true,// Evaluate text as a json expression
+	"text json":jQuery.parseJSON,// Parse text as xml
+	"text xml":jQuery.parseXML},// For options that shouldn't be deep extended:
+	// you can add your own custom options here if
+	// and when you create one that shouldn't be
+	// deep extended (see ajaxExtend)
+	flatOptions:{url:true,context:true}},// Creates a full fledged settings object into target
+	// with both ajaxSettings and settings fields.
+	// If target is omitted, writes into ajaxSettings.
+	ajaxSetup:function(target,settings){return settings?// Building a settings object
+	ajaxExtend(ajaxExtend(target,jQuery.ajaxSettings),settings):// Extending ajaxSettings
+	ajaxExtend(jQuery.ajaxSettings,target);},ajaxPrefilter:addToPrefiltersOrTransports(prefilters),ajaxTransport:addToPrefiltersOrTransports(transports),// Main method
+	ajax:function(url,options){// If url is an object, simulate pre-1.5 signature
+	if(typeof url==="object"){options=url;url=undefined;}// Force options to be an object
+	options=options||{};var transport,// URL without anti-cache param
+	cacheURL,// Response headers
+	responseHeadersString,responseHeaders,// timeout handle
+	timeoutTimer,// Url cleanup var
+	urlAnchor,// To know if global events are to be dispatched
+	fireGlobals,// Loop variable
+	i,// Create the final options object
+	s=jQuery.ajaxSetup({},options),// Callbacks context
+	callbackContext=s.context||s,// Context for global events is callbackContext if it is a DOM node or jQuery collection
+	globalEventContext=s.context&&(callbackContext.nodeType||callbackContext.jquery)?jQuery(callbackContext):jQuery.event,// Deferreds
+	deferred=jQuery.Deferred(),completeDeferred=jQuery.Callbacks("once memory"),// Status-dependent callbacks
+	statusCode=s.statusCode||{},// Headers (they are sent all at once)
+	requestHeaders={},requestHeadersNames={},// The jqXHR state
+	state=0,// Default abort message
+	strAbort="canceled",// Fake xhr
+	jqXHR={readyState:0,// Builds headers hashtable if needed
+	getResponseHeader:function(key){var match;if(state===2){if(!responseHeaders){responseHeaders={};while(match=rheaders.exec(responseHeadersString)){responseHeaders[match[1].toLowerCase()]=match[2];}}match=responseHeaders[key.toLowerCase()];}return match==null?null:match;},// Raw string
+	getAllResponseHeaders:function(){return state===2?responseHeadersString:null;},// Caches the header
+	setRequestHeader:function(name,value){var lname=name.toLowerCase();if(!state){name=requestHeadersNames[lname]=requestHeadersNames[lname]||name;requestHeaders[name]=value;}return this;},// Overrides response content-type header
+	overrideMimeType:function(type){if(!state){s.mimeType=type;}return this;},// Status-dependent callbacks
+	statusCode:function(map){var code;if(map){if(state<2){for(code in map){// Lazy-add the new callback in a way that preserves old ones
+	statusCode[code]=[statusCode[code],map[code]];}}else{// Execute the appropriate callbacks
+	jqXHR.always(map[jqXHR.status]);}}return this;},// Cancel the request
+	abort:function(statusText){var finalText=statusText||strAbort;if(transport){transport.abort(finalText);}done(0,finalText);return this;}};// Attach deferreds
+	deferred.promise(jqXHR).complete=completeDeferred.add;jqXHR.success=jqXHR.done;jqXHR.error=jqXHR.fail;// Remove hash character (#7531: and string promotion)
+	// Add protocol if not provided (prefilters might expect it)
+	// Handle falsy url in the settings object (#10093: consistency with old signature)
+	// We also use the url parameter if available
+	s.url=((url||s.url||location.href)+"").replace(rhash,"").replace(rprotocol,location.protocol+"//");// Alias method option to type as per ticket #12004
+	s.type=options.method||options.type||s.method||s.type;// Extract dataTypes list
+	s.dataTypes=jQuery.trim(s.dataType||"*").toLowerCase().match(rnotwhite)||[""];// A cross-domain request is in order when the origin doesn't match the current origin.
+	if(s.crossDomain==null){urlAnchor=document.createElement("a");// Support: IE8-11+
+	// IE throws exception if url is malformed, e.g. http://example.com:80x/
+	try{urlAnchor.href=s.url;// Support: IE8-11+
+	// Anchor's host property isn't correctly set when s.url is relative
+	urlAnchor.href=urlAnchor.href;s.crossDomain=originAnchor.protocol+"//"+originAnchor.host!==urlAnchor.protocol+"//"+urlAnchor.host;}catch(e){// If there is an error parsing the URL, assume it is crossDomain,
+	// it can be rejected by the transport if it is invalid
+	s.crossDomain=true;}}// Convert data if not already a string
+	if(s.data&&s.processData&&typeof s.data!=="string"){s.data=jQuery.param(s.data,s.traditional);}// Apply prefilters
+	inspectPrefiltersOrTransports(prefilters,s,options,jqXHR);// If request was aborted inside a prefilter, stop there
+	if(state===2){return jqXHR;}// We can fire global events as of now if asked to
+	// Don't fire events if jQuery.event is undefined in an AMD-usage scenario (#15118)
+	fireGlobals=jQuery.event&&s.global;// Watch for a new set of requests
+	if(fireGlobals&&jQuery.active++===0){jQuery.event.trigger("ajaxStart");}// Uppercase the type
+	s.type=s.type.toUpperCase();// Determine if request has content
+	s.hasContent=!rnoContent.test(s.type);// Save the URL in case we're toying with the If-Modified-Since
+	// and/or If-None-Match header later on
+	cacheURL=s.url;// More options handling for requests with no content
+	if(!s.hasContent){// If data is available, append data to url
+	if(s.data){cacheURL=s.url+=(rquery.test(cacheURL)?"&":"?")+s.data;// #9682: remove data so that it's not used in an eventual retry
+	delete s.data;}// Add anti-cache in url if needed
+	if(s.cache===false){s.url=rts.test(cacheURL)?// If there is already a '_' parameter, set its value
+	cacheURL.replace(rts,"$1_="+nonce++):// Otherwise add one to the end
+	cacheURL+(rquery.test(cacheURL)?"&":"?")+"_="+nonce++;}}// Set the If-Modified-Since and/or If-None-Match header, if in ifModified mode.
+	if(s.ifModified){if(jQuery.lastModified[cacheURL]){jqXHR.setRequestHeader("If-Modified-Since",jQuery.lastModified[cacheURL]);}if(jQuery.etag[cacheURL]){jqXHR.setRequestHeader("If-None-Match",jQuery.etag[cacheURL]);}}// Set the correct header, if data is being sent
+	if(s.data&&s.hasContent&&s.contentType!==false||options.contentType){jqXHR.setRequestHeader("Content-Type",s.contentType);}// Set the Accepts header for the server, depending on the dataType
+	jqXHR.setRequestHeader("Accept",s.dataTypes[0]&&s.accepts[s.dataTypes[0]]?s.accepts[s.dataTypes[0]]+(s.dataTypes[0]!=="*"?", "+allTypes+"; q=0.01":""):s.accepts["*"]);// Check for headers option
+	for(i in s.headers){jqXHR.setRequestHeader(i,s.headers[i]);}// Allow custom headers/mimetypes and early abort
+	if(s.beforeSend&&(s.beforeSend.call(callbackContext,jqXHR,s)===false||state===2)){// Abort if not done already and return
+	return jqXHR.abort();}// Aborting is no longer a cancellation
+	strAbort="abort";// Install callbacks on deferreds
+	for(i in{success:1,error:1,complete:1}){jqXHR[i](s[i]);}// Get transport
+	transport=inspectPrefiltersOrTransports(transports,s,options,jqXHR);// If no transport, we auto-abort
+	if(!transport){done(-1,"No Transport");}else{jqXHR.readyState=1;// Send global event
+	if(fireGlobals){globalEventContext.trigger("ajaxSend",[jqXHR,s]);}// If request was aborted inside ajaxSend, stop there
+	if(state===2){return jqXHR;}// Timeout
+	if(s.async&&s.timeout>0){timeoutTimer=window.setTimeout(function(){jqXHR.abort("timeout");},s.timeout);}try{state=1;transport.send(requestHeaders,done);}catch(e){// Propagate exception as error if not done
+	if(state<2){done(-1,e);// Simply rethrow otherwise
+	}else{throw e;}}}// Callback for when everything is done
+	function done(status,nativeStatusText,responses,headers){var isSuccess,success,error,response,modified,statusText=nativeStatusText;// Called once
+	if(state===2){return;}// State is "done" now
+	state=2;// Clear timeout if it exists
+	if(timeoutTimer){window.clearTimeout(timeoutTimer);}// Dereference transport for early garbage collection
+	// (no matter how long the jqXHR object will be used)
+	transport=undefined;// Cache response headers
+	responseHeadersString=headers||"";// Set readyState
+	jqXHR.readyState=status>0?4:0;// Determine if successful
+	isSuccess=status>=200&&status<300||status===304;// Get response data
+	if(responses){response=ajaxHandleResponses(s,jqXHR,responses);}// Convert no matter what (that way responseXXX fields are always set)
+	response=ajaxConvert(s,response,jqXHR,isSuccess);// If successful, handle type chaining
+	if(isSuccess){// Set the If-Modified-Since and/or If-None-Match header, if in ifModified mode.
+	if(s.ifModified){modified=jqXHR.getResponseHeader("Last-Modified");if(modified){jQuery.lastModified[cacheURL]=modified;}modified=jqXHR.getResponseHeader("etag");if(modified){jQuery.etag[cacheURL]=modified;}}// if no content
+	if(status===204||s.type==="HEAD"){statusText="nocontent";// if not modified
+	}else if(status===304){statusText="notmodified";// If we have data, let's convert it
+	}else{statusText=response.state;success=response.data;error=response.error;isSuccess=!error;}}else{// Extract error from statusText and normalize for non-aborts
+	error=statusText;if(status||!statusText){statusText="error";if(status<0){status=0;}}}// Set data for the fake xhr object
+	jqXHR.status=status;jqXHR.statusText=(nativeStatusText||statusText)+"";// Success/Error
+	if(isSuccess){deferred.resolveWith(callbackContext,[success,statusText,jqXHR]);}else{deferred.rejectWith(callbackContext,[jqXHR,statusText,error]);}// Status-dependent callbacks
+	jqXHR.statusCode(statusCode);statusCode=undefined;if(fireGlobals){globalEventContext.trigger(isSuccess?"ajaxSuccess":"ajaxError",[jqXHR,s,isSuccess?success:error]);}// Complete
+	completeDeferred.fireWith(callbackContext,[jqXHR,statusText]);if(fireGlobals){globalEventContext.trigger("ajaxComplete",[jqXHR,s]);// Handle the global AJAX counter
+	if(! --jQuery.active){jQuery.event.trigger("ajaxStop");}}}return jqXHR;},getJSON:function(url,data,callback){return jQuery.get(url,data,callback,"json");},getScript:function(url,callback){return jQuery.get(url,undefined,callback,"script");}});jQuery.each(["get","post"],function(i,method){jQuery[method]=function(url,data,callback,type){// Shift arguments if data argument was omitted
+	if(jQuery.isFunction(data)){type=type||callback;callback=data;data=undefined;}// The url can be an options object (which then must have .url)
+	return jQuery.ajax(jQuery.extend({url:url,type:method,dataType:type,data:data,success:callback},jQuery.isPlainObject(url)&&url));};});jQuery._evalUrl=function(url){return jQuery.ajax({url:url,// Make this explicit, since user can override this through ajaxSetup (#11264)
+	type:"GET",dataType:"script",async:false,global:false,"throws":true});};jQuery.fn.extend({wrapAll:function(html){var wrap;if(jQuery.isFunction(html)){return this.each(function(i){jQuery(this).wrapAll(html.call(this,i));});}if(this[0]){// The elements to wrap the target around
+	wrap=jQuery(html,this[0].ownerDocument).eq(0).clone(true);if(this[0].parentNode){wrap.insertBefore(this[0]);}wrap.map(function(){var elem=this;while(elem.firstElementChild){elem=elem.firstElementChild;}return elem;}).append(this);}return this;},wrapInner:function(html){if(jQuery.isFunction(html)){return this.each(function(i){jQuery(this).wrapInner(html.call(this,i));});}return this.each(function(){var self=jQuery(this),contents=self.contents();if(contents.length){contents.wrapAll(html);}else{self.append(html);}});},wrap:function(html){var isFunction=jQuery.isFunction(html);return this.each(function(i){jQuery(this).wrapAll(isFunction?html.call(this,i):html);});},unwrap:function(){return this.parent().each(function(){if(!jQuery.nodeName(this,"body")){jQuery(this).replaceWith(this.childNodes);}}).end();}});jQuery.expr.filters.hidden=function(elem){return!jQuery.expr.filters.visible(elem);};jQuery.expr.filters.visible=function(elem){// Support: Opera <= 12.12
+	// Opera reports offsetWidths and offsetHeights less than zero on some elements
+	// Use OR instead of AND as the element is not visible if either is true
+	// See tickets #10406 and #13132
+	return elem.offsetWidth>0||elem.offsetHeight>0||elem.getClientRects().length>0;};var r20=/%20/g,rbracket=/\[\]$/,rCRLF=/\r?\n/g,rsubmitterTypes=/^(?:submit|button|image|reset|file)$/i,rsubmittable=/^(?:input|select|textarea|keygen)/i;function buildParams(prefix,obj,traditional,add){var name;if(jQuery.isArray(obj)){// Serialize array item.
+	jQuery.each(obj,function(i,v){if(traditional||rbracket.test(prefix)){// Treat each array item as a scalar.
+	add(prefix,v);}else{// Item is non-scalar (array or object), encode its numeric index.
+	buildParams(prefix+"["+(typeof v==="object"&&v!=null?i:"")+"]",v,traditional,add);}});}else if(!traditional&&jQuery.type(obj)==="object"){// Serialize object item.
+	for(name in obj){buildParams(prefix+"["+name+"]",obj[name],traditional,add);}}else{// Serialize scalar item.
+	add(prefix,obj);}}// Serialize an array of form elements or a set of
+	// key/values into a query string
+	jQuery.param=function(a,traditional){var prefix,s=[],add=function(key,value){// If value is a function, invoke it and return its value
+	value=jQuery.isFunction(value)?value():value==null?"":value;s[s.length]=encodeURIComponent(key)+"="+encodeURIComponent(value);};// Set traditional to true for jQuery <= 1.3.2 behavior.
+	if(traditional===undefined){traditional=jQuery.ajaxSettings&&jQuery.ajaxSettings.traditional;}// If an array was passed in, assume that it is an array of form elements.
+	if(jQuery.isArray(a)||a.jquery&&!jQuery.isPlainObject(a)){// Serialize the form elements
+	jQuery.each(a,function(){add(this.name,this.value);});}else{// If traditional, encode the "old" way (the way 1.3.2 or older
+	// did it), otherwise encode params recursively.
+	for(prefix in a){buildParams(prefix,a[prefix],traditional,add);}}// Return the resulting serialization
+	return s.join("&").replace(r20,"+");};jQuery.fn.extend({serialize:function(){return jQuery.param(this.serializeArray());},serializeArray:function(){return this.map(function(){// Can add propHook for "elements" to filter or add form elements
+	var elements=jQuery.prop(this,"elements");return elements?jQuery.makeArray(elements):this;}).filter(function(){var type=this.type;// Use .is( ":disabled" ) so that fieldset[disabled] works
+	return this.name&&!jQuery(this).is(":disabled")&&rsubmittable.test(this.nodeName)&&!rsubmitterTypes.test(type)&&(this.checked||!rcheckableType.test(type));}).map(function(i,elem){var val=jQuery(this).val();return val==null?null:jQuery.isArray(val)?jQuery.map(val,function(val){return{name:elem.name,value:val.replace(rCRLF,"\r\n")};}):{name:elem.name,value:val.replace(rCRLF,"\r\n")};}).get();}});jQuery.ajaxSettings.xhr=function(){try{return new window.XMLHttpRequest();}catch(e){}};var xhrSuccessStatus={// File protocol always yields status code 0, assume 200
+	0:200,// Support: IE9
+	// #1450: sometimes IE returns 1223 when it should be 204
+	1223:204},xhrSupported=jQuery.ajaxSettings.xhr();support.cors=!!xhrSupported&&"withCredentials"in xhrSupported;support.ajax=xhrSupported=!!xhrSupported;jQuery.ajaxTransport(function(options){var callback,errorCallback;// Cross domain only allowed if supported through XMLHttpRequest
+	if(support.cors||xhrSupported&&!options.crossDomain){return{send:function(headers,complete){var i,xhr=options.xhr();xhr.open(options.type,options.url,options.async,options.username,options.password);// Apply custom fields if provided
+	if(options.xhrFields){for(i in options.xhrFields){xhr[i]=options.xhrFields[i];}}// Override mime type if needed
+	if(options.mimeType&&xhr.overrideMimeType){xhr.overrideMimeType(options.mimeType);}// X-Requested-With header
+	// For cross-domain requests, seeing as conditions for a preflight are
+	// akin to a jigsaw puzzle, we simply never set it to be sure.
+	// (it can always be set on a per-request basis or even using ajaxSetup)
+	// For same-domain requests, won't change header if already provided.
+	if(!options.crossDomain&&!headers["X-Requested-With"]){headers["X-Requested-With"]="XMLHttpRequest";}// Set headers
+	for(i in headers){xhr.setRequestHeader(i,headers[i]);}// Callback
+	callback=function(type){return function(){if(callback){callback=errorCallback=xhr.onload=xhr.onerror=xhr.onabort=xhr.onreadystatechange=null;if(type==="abort"){xhr.abort();}else if(type==="error"){// Support: IE9
+	// On a manual native abort, IE9 throws
+	// errors on any property access that is not readyState
+	if(typeof xhr.status!=="number"){complete(0,"error");}else{complete(// File: protocol always yields status 0; see #8605, #14207
+	xhr.status,xhr.statusText);}}else{complete(xhrSuccessStatus[xhr.status]||xhr.status,xhr.statusText,// Support: IE9 only
+	// IE9 has no XHR2 but throws on binary (trac-11426)
+	// For XHR2 non-text, let the caller handle it (gh-2498)
+	(xhr.responseType||"text")!=="text"||typeof xhr.responseText!=="string"?{binary:xhr.response}:{text:xhr.responseText},xhr.getAllResponseHeaders());}}};};// Listen to events
+	xhr.onload=callback();errorCallback=xhr.onerror=callback("error");// Support: IE9
+	// Use onreadystatechange to replace onabort
+	// to handle uncaught aborts
+	if(xhr.onabort!==undefined){xhr.onabort=errorCallback;}else{xhr.onreadystatechange=function(){// Check readyState before timeout as it changes
+	if(xhr.readyState===4){// Allow onerror to be called first,
+	// but that will not handle a native abort
+	// Also, save errorCallback to a variable
+	// as xhr.onerror cannot be accessed
+	window.setTimeout(function(){if(callback){errorCallback();}});}};}// Create the abort callback
+	callback=callback("abort");try{// Do send the request (this may raise an exception)
+	xhr.send(options.hasContent&&options.data||null);}catch(e){// #14683: Only rethrow if this hasn't been notified as an error yet
+	if(callback){throw e;}}},abort:function(){if(callback){callback();}}};}});// Install script dataType
+	jQuery.ajaxSetup({accepts:{script:"text/javascript, application/javascript, "+"application/ecmascript, application/x-ecmascript"},contents:{script:/\b(?:java|ecma)script\b/},converters:{"text script":function(text){jQuery.globalEval(text);return text;}}});// Handle cache's special case and crossDomain
+	jQuery.ajaxPrefilter("script",function(s){if(s.cache===undefined){s.cache=false;}if(s.crossDomain){s.type="GET";}});// Bind script tag hack transport
+	jQuery.ajaxTransport("script",function(s){// This transport only deals with cross domain requests
+	if(s.crossDomain){var script,callback;return{send:function(_,complete){script=jQuery("<script>").prop({charset:s.scriptCharset,src:s.url}).on("load error",callback=function(evt){script.remove();callback=null;if(evt){complete(evt.type==="error"?404:200,evt.type);}});// Use native DOM manipulation to avoid our domManip AJAX trickery
+	document.head.appendChild(script[0]);},abort:function(){if(callback){callback();}}};}});var oldCallbacks=[],rjsonp=/(=)\?(?=&|$)|\?\?/;// Default jsonp settings
+	jQuery.ajaxSetup({jsonp:"callback",jsonpCallback:function(){var callback=oldCallbacks.pop()||jQuery.expando+"_"+nonce++;this[callback]=true;return callback;}});// Detect, normalize options and install callbacks for jsonp requests
+	jQuery.ajaxPrefilter("json jsonp",function(s,originalSettings,jqXHR){var callbackName,overwritten,responseContainer,jsonProp=s.jsonp!==false&&(rjsonp.test(s.url)?"url":typeof s.data==="string"&&(s.contentType||"").indexOf("application/x-www-form-urlencoded")===0&&rjsonp.test(s.data)&&"data");// Handle iff the expected data type is "jsonp" or we have a parameter to set
+	if(jsonProp||s.dataTypes[0]==="jsonp"){// Get callback name, remembering preexisting value associated with it
+	callbackName=s.jsonpCallback=jQuery.isFunction(s.jsonpCallback)?s.jsonpCallback():s.jsonpCallback;// Insert callback into url or form data
+	if(jsonProp){s[jsonProp]=s[jsonProp].replace(rjsonp,"$1"+callbackName);}else if(s.jsonp!==false){s.url+=(rquery.test(s.url)?"&":"?")+s.jsonp+"="+callbackName;}// Use data converter to retrieve json after script execution
+	s.converters["script json"]=function(){if(!responseContainer){jQuery.error(callbackName+" was not called");}return responseContainer[0];};// Force json dataType
+	s.dataTypes[0]="json";// Install callback
+	overwritten=window[callbackName];window[callbackName]=function(){responseContainer=arguments;};// Clean-up function (fires after converters)
+	jqXHR.always(function(){// If previous value didn't exist - remove it
+	if(overwritten===undefined){jQuery(window).removeProp(callbackName);// Otherwise restore preexisting value
+	}else{window[callbackName]=overwritten;}// Save back as free
+	if(s[callbackName]){// Make sure that re-using the options doesn't screw things around
+	s.jsonpCallback=originalSettings.jsonpCallback;// Save the callback name for future use
+	oldCallbacks.push(callbackName);}// Call if it was a function and we have a response
+	if(responseContainer&&jQuery.isFunction(overwritten)){overwritten(responseContainer[0]);}responseContainer=overwritten=undefined;});// Delegate to script
+	return"script";}});// Argument "data" should be string of html
+	// context (optional): If specified, the fragment will be created in this context,
+	// defaults to document
+	// keepScripts (optional): If true, will include scripts passed in the html string
+	jQuery.parseHTML=function(data,context,keepScripts){if(!data||typeof data!=="string"){return null;}if(typeof context==="boolean"){keepScripts=context;context=false;}context=context||document;var parsed=rsingleTag.exec(data),scripts=!keepScripts&&[];// Single tag
+	if(parsed){return[context.createElement(parsed[1])];}parsed=buildFragment([data],context,scripts);if(scripts&&scripts.length){jQuery(scripts).remove();}return jQuery.merge([],parsed.childNodes);};// Keep a copy of the old load method
+	var _load=jQuery.fn.load;/**
+	 * Load a url into a page
+	 */jQuery.fn.load=function(url,params,callback){if(typeof url!=="string"&&_load){return _load.apply(this,arguments);}var selector,type,response,self=this,off=url.indexOf(" ");if(off>-1){selector=jQuery.trim(url.slice(off));url=url.slice(0,off);}// If it's a function
+	if(jQuery.isFunction(params)){// We assume that it's the callback
+	callback=params;params=undefined;// Otherwise, build a param string
+	}else if(params&&typeof params==="object"){type="POST";}// If we have elements to modify, make the request
+	if(self.length>0){jQuery.ajax({url:url,// If "type" variable is undefined, then "GET" method will be used.
+	// Make value of this field explicit since
+	// user can override it through ajaxSetup method
+	type:type||"GET",dataType:"html",data:params}).done(function(responseText){// Save response for use in complete callback
+	response=arguments;self.html(selector?// If a selector was specified, locate the right elements in a dummy div
+	// Exclude scripts to avoid IE 'Permission Denied' errors
+	jQuery("<div>").append(jQuery.parseHTML(responseText)).find(selector):// Otherwise use the full result
+	responseText);// If the request succeeds, this function gets "data", "status", "jqXHR"
+	// but they are ignored because response was set above.
+	// If it fails, this function gets "jqXHR", "status", "error"
+	}).always(callback&&function(jqXHR,status){self.each(function(){callback.apply(this,response||[jqXHR.responseText,status,jqXHR]);});});}return this;};// Attach a bunch of functions for handling common AJAX events
+	jQuery.each(["ajaxStart","ajaxStop","ajaxComplete","ajaxError","ajaxSuccess","ajaxSend"],function(i,type){jQuery.fn[type]=function(fn){return this.on(type,fn);};});jQuery.expr.filters.animated=function(elem){return jQuery.grep(jQuery.timers,function(fn){return elem===fn.elem;}).length;};/**
+	 * Gets a window from an element
+	 */function getWindow(elem){return jQuery.isWindow(elem)?elem:elem.nodeType===9&&elem.defaultView;}jQuery.offset={setOffset:function(elem,options,i){var curPosition,curLeft,curCSSTop,curTop,curOffset,curCSSLeft,calculatePosition,position=jQuery.css(elem,"position"),curElem=jQuery(elem),props={};// Set position first, in-case top/left are set even on static elem
+	if(position==="static"){elem.style.position="relative";}curOffset=curElem.offset();curCSSTop=jQuery.css(elem,"top");curCSSLeft=jQuery.css(elem,"left");calculatePosition=(position==="absolute"||position==="fixed")&&(curCSSTop+curCSSLeft).indexOf("auto")>-1;// Need to be able to calculate position if either
+	// top or left is auto and position is either absolute or fixed
+	if(calculatePosition){curPosition=curElem.position();curTop=curPosition.top;curLeft=curPosition.left;}else{curTop=parseFloat(curCSSTop)||0;curLeft=parseFloat(curCSSLeft)||0;}if(jQuery.isFunction(options)){// Use jQuery.extend here to allow modification of coordinates argument (gh-1848)
+	options=options.call(elem,i,jQuery.extend({},curOffset));}if(options.top!=null){props.top=options.top-curOffset.top+curTop;}if(options.left!=null){props.left=options.left-curOffset.left+curLeft;}if("using"in options){options.using.call(elem,props);}else{curElem.css(props);}}};jQuery.fn.extend({offset:function(options){if(arguments.length){return options===undefined?this:this.each(function(i){jQuery.offset.setOffset(this,options,i);});}var docElem,win,elem=this[0],box={top:0,left:0},doc=elem&&elem.ownerDocument;if(!doc){return;}docElem=doc.documentElement;// Make sure it's not a disconnected DOM node
+	if(!jQuery.contains(docElem,elem)){return box;}box=elem.getBoundingClientRect();win=getWindow(doc);return{top:box.top+win.pageYOffset-docElem.clientTop,left:box.left+win.pageXOffset-docElem.clientLeft};},position:function(){if(!this[0]){return;}var offsetParent,offset,elem=this[0],parentOffset={top:0,left:0};// Fixed elements are offset from window (parentOffset = {top:0, left: 0},
+	// because it is its only offset parent
+	if(jQuery.css(elem,"position")==="fixed"){// Assume getBoundingClientRect is there when computed position is fixed
+	offset=elem.getBoundingClientRect();}else{// Get *real* offsetParent
+	offsetParent=this.offsetParent();// Get correct offsets
+	offset=this.offset();if(!jQuery.nodeName(offsetParent[0],"html")){parentOffset=offsetParent.offset();}// Add offsetParent borders
+	parentOffset.top+=jQuery.css(offsetParent[0],"borderTopWidth",true);parentOffset.left+=jQuery.css(offsetParent[0],"borderLeftWidth",true);}// Subtract parent offsets and element margins
+	return{top:offset.top-parentOffset.top-jQuery.css(elem,"marginTop",true),left:offset.left-parentOffset.left-jQuery.css(elem,"marginLeft",true)};},// This method will return documentElement in the following cases:
+	// 1) For the element inside the iframe without offsetParent, this method will return
+	//    documentElement of the parent window
+	// 2) For the hidden or detached element
+	// 3) For body or html element, i.e. in case of the html node - it will return itself
+	//
+	// but those exceptions were never presented as a real life use-cases
+	// and might be considered as more preferable results.
+	//
+	// This logic, however, is not guaranteed and can change at any point in the future
+	offsetParent:function(){return this.map(function(){var offsetParent=this.offsetParent;while(offsetParent&&jQuery.css(offsetParent,"position")==="static"){offsetParent=offsetParent.offsetParent;}return offsetParent||documentElement;});}});// Create scrollLeft and scrollTop methods
+	jQuery.each({scrollLeft:"pageXOffset",scrollTop:"pageYOffset"},function(method,prop){var top="pageYOffset"===prop;jQuery.fn[method]=function(val){return access(this,function(elem,method,val){var win=getWindow(elem);if(val===undefined){return win?win[prop]:elem[method];}if(win){win.scrollTo(!top?val:win.pageXOffset,top?val:win.pageYOffset);}else{elem[method]=val;}},method,val,arguments.length);};});// Support: Safari<7-8+, Chrome<37-44+
+	// Add the top/left cssHooks using jQuery.fn.position
+	// Webkit bug: https://bugs.webkit.org/show_bug.cgi?id=29084
+	// Blink bug: https://code.google.com/p/chromium/issues/detail?id=229280
+	// getComputedStyle returns percent when specified for top/left/bottom/right;
+	// rather than make the css module depend on the offset module, just check for it here
+	jQuery.each(["top","left"],function(i,prop){jQuery.cssHooks[prop]=addGetHookIf(support.pixelPosition,function(elem,computed){if(computed){computed=curCSS(elem,prop);// If curCSS returns percentage, fallback to offset
+	return rnumnonpx.test(computed)?jQuery(elem).position()[prop]+"px":computed;}});});// Create innerHeight, innerWidth, height, width, outerHeight and outerWidth methods
+	jQuery.each({Height:"height",Width:"width"},function(name,type){jQuery.each({padding:"inner"+name,content:type,"":"outer"+name},function(defaultExtra,funcName){// Margin is only for outerHeight, outerWidth
+	jQuery.fn[funcName]=function(margin,value){var chainable=arguments.length&&(defaultExtra||typeof margin!=="boolean"),extra=defaultExtra||(margin===true||value===true?"margin":"border");return access(this,function(elem,type,value){var doc;if(jQuery.isWindow(elem)){// As of 5/8/2012 this will yield incorrect results for Mobile Safari, but there
+	// isn't a whole lot we can do. See pull request at this URL for discussion:
+	// https://github.com/jquery/jquery/pull/764
+	return elem.document.documentElement["client"+name];}// Get document width or height
+	if(elem.nodeType===9){doc=elem.documentElement;// Either scroll[Width/Height] or offset[Width/Height] or client[Width/Height],
+	// whichever is greatest
+	return Math.max(elem.body["scroll"+name],doc["scroll"+name],elem.body["offset"+name],doc["offset"+name],doc["client"+name]);}return value===undefined?// Get width or height on the element, requesting but not forcing parseFloat
+	jQuery.css(elem,type,extra):// Set width or height on the element
+	jQuery.style(elem,type,value,extra);},type,chainable?margin:undefined,chainable,null);};});});jQuery.fn.extend({bind:function(types,data,fn){return this.on(types,null,data,fn);},unbind:function(types,fn){return this.off(types,null,fn);},delegate:function(selector,types,data,fn){return this.on(types,selector,data,fn);},undelegate:function(selector,types,fn){// ( namespace ) or ( selector, types [, fn] )
+	return arguments.length===1?this.off(selector,"**"):this.off(types,selector||"**",fn);},size:function(){return this.length;}});jQuery.fn.andSelf=jQuery.fn.addBack;// Register as a named AMD module, since jQuery can be concatenated with other
+	// files that may use define, but not via a proper concatenation script that
+	// understands anonymous AMD modules. A named AMD is safest and most robust
+	// way to register. Lowercase jquery is used because AMD module names are
+	// derived from file names, and jQuery is normally delivered in a lowercase
+	// file name. Do this after creating the global so that if an AMD module wants
+	// to call noConflict to hide this version of jQuery, it will work.
+	// Note that for maximum portability, libraries that are not jQuery should
+	// declare themselves as anonymous modules, and avoid setting a global if an
+	// AMD loader is present. jQuery is a special case. For more information, see
+	// https://github.com/jrburke/requirejs/wiki/Updating-existing-libraries#wiki-anon
+	if(true){!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function(){return jQuery;}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));}var// Map over jQuery in case of overwrite
+	_jQuery=window.jQuery,// Map over the $ in case of overwrite
+	_$=window.$;jQuery.noConflict=function(deep){if(window.$===jQuery){window.$=_$;}if(deep&&window.jQuery===jQuery){window.jQuery=_jQuery;}return jQuery;};// Expose jQuery and $ identifiers, even in AMD
+	// (#7102#comment:10, https://github.com/jquery/jquery/pull/557)
+	// and CommonJS for browser emulators (#13566)
+	if(!noGlobal){window.jQuery=window.$=jQuery;}return jQuery;});
+
+/***/ },
 /* 442 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -43757,7 +45286,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'label',
 	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'email' },
-	                                            'Användare'
+	                                            'Anv\xE4ndare'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            _reactBootstrap.Col,
@@ -43772,8 +45301,8 @@ webpackJsonp([0],[
 	                                                dataVal: true,
 	                                                dataValLengthMin: 5,
 	                                                dataLalLengthMax: 100,
-	                                                dataValLength: 'Användare måste vara mellan 5 och 100 tecken',
-	                                                dataValRequired: 'Användare får inte vara tom',
+	                                                dataValLength: 'Anv\xE4ndare m\xE5ste vara mellan 5 och 100 tecken',
+	                                                dataValRequired: 'Anv\xE4ndare f\xE5r inte vara tom',
 	                                                id: 'email',
 	                                                name: 'email',
 	                                                type: 'text',
@@ -43786,7 +45315,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'label',
 	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'password' },
-	                                            'Lösenord'
+	                                            'L\xF6senord'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            _reactBootstrap.Col,
@@ -43801,8 +45330,8 @@ webpackJsonp([0],[
 	                                                dataVal: true,
 	                                                dataValLengthMin: 6,
 	                                                dataValLengthMax: 45,
-	                                                dataValLength: 'Lösenord måste vara mellan 6 och 45 tecken',
-	                                                dataValRequired: 'Lösenord får inte vara tom',
+	                                                dataValLength: 'L\xF6senord m\xE5ste vara mellan 6 och 45 tecken',
+	                                                dataValRequired: 'L\xF6senord f\xE5r inte vara tom',
 	                                                id: 'password',
 	                                                name: 'password',
 	                                                type: 'password',
@@ -43842,7 +45371,7 @@ webpackJsonp([0],[
 	                                    _react2.default.createElement(
 	                                        'div',
 	                                        { id: 'forgot-password-link', onClick: this.onForgot, className: 'text-info text-right site-row-spacing', style: { cursor: "pointer" } },
-	                                        'Glömt lösenord?'
+	                                        'Gl\xF6mt l\xF6senord?'
 	                                    )
 	                                )
 	                            ),
@@ -44474,17 +46003,16 @@ webpackJsonp([0],[
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2013-2015, Facebook, Inc.
+	 * Copyright (c) 2013-present, Facebook, Inc.
 	 * All rights reserved.
 	 *
 	 * This source code is licensed under the BSD-style license found in the
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
-	 * @providesModule invariant
 	 */
 
-	"use strict";
+	'use strict';
 
 	/**
 	 * Use invariant() to assert state which your program assumes to be true.
@@ -44497,7 +46025,7 @@ webpackJsonp([0],[
 	 * will remain to ensure logic does not differ in production.
 	 */
 
-	var invariant = function (condition, format, a, b, c, d, e, f) {
+	function invariant(condition, format, a, b, c, d, e, f) {
 	  if (process.env.NODE_ENV !== 'production') {
 	    if (format === undefined) {
 	      throw new Error('invariant requires an error message argument');
@@ -44511,15 +46039,16 @@ webpackJsonp([0],[
 	    } else {
 	      var args = [a, b, c, d, e, f];
 	      var argIndex = 0;
-	      error = new Error('Invariant Violation: ' + format.replace(/%s/g, function () {
+	      error = new Error(format.replace(/%s/g, function () {
 	        return args[argIndex++];
 	      }));
+	      error.name = 'Invariant Violation';
 	    }
 
 	    error.framesToPop = 1; // we don't care about invariant's own frame
 	    throw error;
 	  }
-	};
+	}
 
 	module.exports = invariant;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
@@ -44700,7 +46229,7 @@ webpackJsonp([0],[
 	                                _react2.default.createElement(
 	                                    'small',
 	                                    null,
-	                                    'PIN-kod för verifiering skickas till e-postadressen'
+	                                    'PIN-kod f\xF6r verifiering skickas till e-postadressen'
 	                                )
 	                            )
 	                        ),
@@ -44735,8 +46264,8 @@ webpackJsonp([0],[
 	                                                dataVal: true,
 	                                                dataValLengthMin: 5,
 	                                                dataLalLengthMax: 100,
-	                                                dataValLength: 'E-post måste vara mellan 5 och 100 tecken',
-	                                                dataValRequired: 'E-psot får inte vara tom',
+	                                                dataValLength: 'E-post m\xE5ste vara mellan 5 och 100 tecken',
+	                                                dataValRequired: 'E-psot f\xE5r inte vara tom',
 	                                                id: 'email',
 	                                                name: 'email',
 	                                                type: 'text',
@@ -44749,7 +46278,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'label',
 	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'firstname' },
-	                                            'Förnamn'
+	                                            'F\xF6rnamn'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            _reactBootstrap.Col,
@@ -44764,8 +46293,8 @@ webpackJsonp([0],[
 	                                                dataVal: true,
 	                                                dataValLengthMin: '2',
 	                                                dataValLengthMax: 45,
-	                                                dataValLength: 'Förnamn måste vara mellan 2 och 45 tecken',
-	                                                dataValRequired: 'Förnamn får inte vara tom',
+	                                                dataValLength: 'F\xF6rnamn m\xE5ste vara mellan 2 och 45 tecken',
+	                                                dataValRequired: 'F\xF6rnamn f\xE5r inte vara tom',
 	                                                id: 'firstname',
 	                                                name: 'firstname',
 	                                                type: 'text',
@@ -44793,8 +46322,8 @@ webpackJsonp([0],[
 	                                                dataVal: true,
 	                                                dataValLengthMin: '2',
 	                                                dataValLengthMax: 45,
-	                                                dataValLength: 'Efternamn måste vara mellan 2 och 45 tecken',
-	                                                dataValRequired: 'Efternamn får inte vara tom',
+	                                                dataValLength: 'Efternamn m\xE5ste vara mellan 2 och 45 tecken',
+	                                                dataValRequired: 'Efternamn f\xE5r inte vara tom',
 	                                                id: 'lastname',
 	                                                name: 'lastname',
 	                                                type: 'lastname',
@@ -44822,7 +46351,7 @@ webpackJsonp([0],[
 	                                                dataVal: true,
 	                                                dataValLengthMin: '2',
 	                                                dataValLengthMax: 45,
-	                                                dataValLength: 'Telefonnr. får inte överstiga 45 tecken',
+	                                                dataValLength: 'Telefonnr. f\xE5r inte \xF6verstiga 45 tecken',
 	                                                id: 'phone',
 	                                                name: 'phone'
 	                                                //onkeypress = "return Site.Validation.isPhoneNumber(event)"
@@ -44850,7 +46379,7 @@ webpackJsonp([0],[
 	                                                dataAutoajax: true,
 	                                                dataVal: true,
 	                                                dataValLengthMax: 45,
-	                                                dataValLength: 'Adress får inte överstiga 45 tecken',
+	                                                dataValLength: 'Adress f\xE5r inte \xF6verstiga 45 tecken',
 	                                                id: 'phone',
 	                                                name: 'phone',
 	                                                type: 'text',
@@ -44863,7 +46392,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'label',
 	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'floor' },
-	                                            'Våning'
+	                                            'V\xE5ning'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            _reactBootstrap.Col,
@@ -44877,7 +46406,7 @@ webpackJsonp([0],[
 	                                                dataAutoajax: true,
 	                                                dataVal: true,
 	                                                dataValLengthMax: 45,
-	                                                dataValLength: 'Våning får inte överstiga 45 tecken',
+	                                                dataValLength: 'V\xE5ning f\xE5r inte \xF6verstiga 45 tecken',
 	                                                id: 'floor',
 	                                                name: 'floor',
 	                                                type: 'text',
@@ -44890,7 +46419,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'label',
 	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'apartment' },
-	                                            'Lägenhet'
+	                                            'L\xE4genhet'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            _reactBootstrap.Col,
@@ -44904,7 +46433,7 @@ webpackJsonp([0],[
 	                                                dataAutoajax: true,
 	                                                dataVal: true,
 	                                                dataValLengthMax: 45,
-	                                                dataValLength: 'Lägenhet får inte överstiga 45 tecken',
+	                                                dataValLength: 'L\xE4genhet f\xE5r inte \xF6verstiga 45 tecken',
 	                                                id: 'apartment',
 	                                                name: 'apartment',
 	                                                type: 'text',
@@ -44917,7 +46446,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'label',
 	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'customerid' },
-	                                            'Förening'
+	                                            'F\xF6rening'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            _reactBootstrap.Col,
@@ -45046,7 +46575,7 @@ webpackJsonp([0],[
 	                            _react2.default.createElement(
 	                                'h3',
 	                                null,
-	                                'Sätt lösenord'
+	                                'S\xE4tt l\xF6senord'
 	                            ),
 	                            _react2.default.createElement(
 	                                'i',
@@ -45113,8 +46642,8 @@ webpackJsonp([0],[
 	                                                dataVal: true,
 	                                                dataValLengthMin: 6,
 	                                                dataValLengthMax: '6',
-	                                                dataValLength: 'PIN-kod måste vara mellan 6 och 6 tecken',
-	                                                dataValRequired: 'PIN-kod får inte vara tom',
+	                                                dataValLength: 'PIN-kod m\xE5ste vara mellan 6 och 6 tecken',
+	                                                dataValRequired: 'PIN-kod f\xE5r inte vara tom',
 	                                                id: 'PIN',
 	                                                name: 'PIN'
 	                                                // onKeyPress="return Site.Validation.isNumber(event)"
@@ -45128,7 +46657,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'label',
 	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'password1' },
-	                                            'Lösenord'
+	                                            'L\xF6senord'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            _reactBootstrap.Col,
@@ -45143,8 +46672,8 @@ webpackJsonp([0],[
 	                                                dataVal: true,
 	                                                dataValLengthMin: 6,
 	                                                dataValLengthMax: 45,
-	                                                dataValLength: 'Lösenord måste vara mellan 6 och 45 tecken',
-	                                                dataValRequired: 'Lösenord får inte vara tom',
+	                                                dataValLength: 'L\xF6senord m\xE5ste vara mellan 6 och 45 tecken',
+	                                                dataValRequired: 'L\xF6senord f\xE5r inte vara tom',
 	                                                id: 'password1',
 	                                                name: 'password1'
 	                                                // onKeyUp="return Site.Validation.isSecurePassword(event)"
@@ -45158,7 +46687,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'label',
 	                                            { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'password2' },
-	                                            'Bekräfta'
+	                                            'Bekr\xE4fta'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            _reactBootstrap.Col,
@@ -45173,8 +46702,8 @@ webpackJsonp([0],[
 	                                                dataVal: true,
 	                                                dataValLengthMin: 6,
 	                                                dataValLengthMax: 45,
-	                                                dataValLength: 'Bekräfta måste vara mellan 6 och 45 tecken',
-	                                                dataValRequired: 'Bekräfta får inte vara tom',
+	                                                dataValLength: 'Bekr\xE4fta m\xE5ste vara mellan 6 och 45 tecken',
+	                                                dataValRequired: 'Bekr\xE4fta f\xE5r inte vara tom',
 	                                                id: 'password2',
 	                                                name: 'password2'
 	                                                // onKeyUp="return Site.Validation.isSecurePassword(event)"
@@ -45202,7 +46731,7 @@ webpackJsonp([0],[
 	                                    _react2.default.createElement(
 	                                        _reactBootstrap.Button,
 	                                        { id: 'set-password-button', className: 'btn btn-info pull-right ' },
-	                                        'Sätt lösenord'
+	                                        'S\xE4tt l\xF6senord'
 	                                    )
 	                                )
 	                            ),
@@ -45306,7 +46835,7 @@ webpackJsonp([0],[
 	                            _react2.default.createElement(
 	                                'h3',
 	                                null,
-	                                'Glömt lösenord'
+	                                'Gl\xF6mt l\xF6senord'
 	                            ),
 	                            _react2.default.createElement(
 	                                'i',
@@ -45314,7 +46843,7 @@ webpackJsonp([0],[
 	                                _react2.default.createElement(
 	                                    'small',
 	                                    null,
-	                                    'PIN-kod för verifiering skickas till e-postadressen'
+	                                    'PIN-kod f\xF6r verifiering skickas till e-postadressen'
 	                                )
 	                            )
 	                        ),
@@ -45349,8 +46878,8 @@ webpackJsonp([0],[
 	                                                daataVal: true,
 	                                                dataValLengthMin: 5,
 	                                                dataValLengthMax: '100',
-	                                                dataValLength: 'E-post måste vara mellan 5 och 100 tecken',
-	                                                dataValRequired: 'E-post får inte vara tom',
+	                                                dataValLength: 'E-post m\xE5ste vara mellan 5 och 100 tecken',
+	                                                dataValRequired: 'E-post f\xE5r inte vara tom',
 	                                                id: 'email',
 	                                                name: 'email',
 	                                                type: 'text',
@@ -45862,7 +47391,7 @@ webpackJsonp([0],[
 	                            _react2.default.createElement(
 	                                'h4',
 	                                null,
-	                                'Behörighet'
+	                                'Beh\xF6righet'
 	                            )
 	                        )
 	                    ),
@@ -46007,7 +47536,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement(
 	                                                        'label',
 	                                                        { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'authz' },
-	                                                        'Behörighet'
+	                                                        'Beh\xF6righet'
 	                                                    ),
 	                                                    _react2.default.createElement(
 	                                                        'div',
@@ -46063,8 +47592,8 @@ webpackJsonp([0],[
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-min': '5',
 	                                                            'data-val-length-max': '100',
-	                                                            'data-val-length': 'E-post måste vara mellan 5 och 100 tecken',
-	                                                            'data-val-required': 'E-post får inte vara tom',
+	                                                            'data-val-length': 'E-post m\xE5ste vara mellan 5 och 100 tecken',
+	                                                            'data-val-required': 'E-post f\xE5r inte vara tom',
 	                                                            id: 'email',
 	                                                            name: 'email',
 	                                                            type: 'text',
@@ -46077,7 +47606,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement(
 	                                                        'label',
 	                                                        { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'password' },
-	                                                        'Lösenord'
+	                                                        'L\xF6senord'
 	                                                    ),
 	                                                    _react2.default.createElement(
 	                                                        'div',
@@ -46092,8 +47621,8 @@ webpackJsonp([0],[
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-min': '6',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Lösenord måste vara mellan 6 och 45 tecken',
-	                                                            'data-val-required': 'Lösenord får inte vara tom',
+	                                                            'data-val-length': 'L\xF6senord m\xE5ste vara mellan 6 och 45 tecken',
+	                                                            'data-val-required': 'L\xF6senord f\xE5r inte vara tom',
 	                                                            id: 'password',
 	                                                            name: 'password'
 	                                                            //onKeyUp    = "return Site.Validation.isSecurePassword(event)"
@@ -46121,7 +47650,7 @@ webpackJsonp([0],[
 	                                                            'data-autoajax': 'true',
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Telefon får inte överstiga 45 tecken',
+	                                                            'data-val-length': 'Telefon f\xE5r inte \xF6verstiga 45 tecken',
 	                                                            id: 'phone',
 	                                                            name: 'phone'
 	                                                            //onKeypPress = "return Site.Validation.isPhoneNumber(event)"
@@ -46139,7 +47668,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement(
 	                                                        'label',
 	                                                        { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'firstname' },
-	                                                        'Förnamn'
+	                                                        'F\xF6rnamn'
 	                                                    ),
 	                                                    _react2.default.createElement(
 	                                                        'div',
@@ -46154,8 +47683,8 @@ webpackJsonp([0],[
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-min': '2',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Förnamn måste vara mellan 2 och 45 tecken',
-	                                                            'data-val-required': 'Förnamn får inte vara tom',
+	                                                            'data-val-length': 'F\xF6rnamn m\xE5ste vara mellan 2 och 45 tecken',
+	                                                            'data-val-required': 'F\xF6rnamn f\xE5r inte vara tom',
 	                                                            id: 'firstname',
 	                                                            name: 'firstname',
 	                                                            type: 'text',
@@ -46183,8 +47712,8 @@ webpackJsonp([0],[
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-min': '2',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Efternamn måste vara mellan 2 och 45 tecken',
-	                                                            'data-val-required': 'Efternamn får inte vara tom',
+	                                                            'data-val-length': 'Efternamn m\xE5ste vara mellan 2 och 45 tecken',
+	                                                            'data-val-required': 'Efternamn f\xE5r inte vara tom',
 	                                                            id: 'lastname',
 	                                                            name: 'lastname',
 	                                                            type: 'text',
@@ -46244,7 +47773,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'button',
 	                                                    { className: 'site-buttonmargin-left pull-right btn-default btn create-employee-form-buttons', 'data-action': '2', type: 'button' },
-	                                                    'Stäng'
+	                                                    'St\xE4ng'
 	                                                )
 	                                            )
 	                                        )
@@ -46302,7 +47831,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement(
 	                                                        'label',
 	                                                        { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'authz' },
-	                                                        'Behörighet'
+	                                                        'Beh\xF6righet'
 	                                                    ),
 	                                                    _react2.default.createElement(
 	                                                        'div',
@@ -46358,8 +47887,8 @@ webpackJsonp([0],[
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-min': '5',
 	                                                            'data-val-length-max': '100',
-	                                                            'data-val-length': 'E-post måste vara mellan 5 och 100 tecken',
-	                                                            'data-val-required': 'E-post får inte vara tom',
+	                                                            'data-val-length': 'E-post m\xE5ste vara mellan 5 och 100 tecken',
+	                                                            'data-val-required': 'E-post f\xE5r inte vara tom',
 	                                                            id: 'email',
 	                                                            name: 'email',
 	                                                            type: 'text',
@@ -46386,7 +47915,7 @@ webpackJsonp([0],[
 	                                                            'data-autoajax': 'true',
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Telefon får inte överstiga 45 tecken',
+	                                                            'data-val-length': 'Telefon f\xE5r inte \xF6verstiga 45 tecken',
 	                                                            id: 'phone',
 	                                                            name: 'phone'
 	                                                            //onKeyPress = "return Site.Validation.isPhoneNumber(event)"
@@ -46404,7 +47933,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement(
 	                                                        'label',
 	                                                        { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'firstname' },
-	                                                        'Förnamn'
+	                                                        'F\xF6rnamn'
 	                                                    ),
 	                                                    _react2.default.createElement(
 	                                                        'div',
@@ -46419,8 +47948,8 @@ webpackJsonp([0],[
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-min': '2',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Förnamn måste vara mellan 2 och 45 tecken',
-	                                                            'data-val-required': 'Förnamn får inte vara tom',
+	                                                            'data-val-length': 'F\xF6rnamn m\xE5ste vara mellan 2 och 45 tecken',
+	                                                            'data-val-required': 'F\xF6rnamn f\xE5r inte vara tom',
 	                                                            id: 'firstname',
 	                                                            name: 'firstname',
 	                                                            type: 'text',
@@ -46448,8 +47977,8 @@ webpackJsonp([0],[
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-min': '2',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Efternamn måste vara mellan 2 och 45 tecken',
-	                                                            'data-val-required': 'Efternamn får inte vara tom',
+	                                                            'data-val-length': 'Efternamn m\xE5ste vara mellan 2 och 45 tecken',
+	                                                            'data-val-required': 'Efternamn f\xE5r inte vara tom',
 	                                                            id: 'lastname',
 	                                                            name: 'lastname',
 	                                                            type: 'text',
@@ -46509,7 +48038,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'button',
 	                                                    { className: 'site-buttonmargin-left pull-right btn-default btn update-employee-form-buttons', 'data-action': '2', type: 'button' },
-	                                                    'Stäng'
+	                                                    'St\xE4ng'
 	                                                )
 	                                            )
 	                                        )
@@ -46533,7 +48062,7 @@ webpackJsonp([0],[
 	                                    _react2.default.createElement(
 	                                        'h3',
 	                                        { className: 'panel-title', id: 'title' },
-	                                        'Byt lösenord'
+	                                        'Byt l\xF6senord'
 	                                    )
 	                                ),
 	                                _react2.default.createElement(
@@ -46595,7 +48124,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement(
 	                                                        'label',
 	                                                        { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'password' },
-	                                                        'Lösenord'
+	                                                        'L\xF6senord'
 	                                                    ),
 	                                                    _react2.default.createElement(
 	                                                        'div',
@@ -46610,8 +48139,8 @@ webpackJsonp([0],[
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-min': '6',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Lösenord måste vara mellan 6 och 45 tecken',
-	                                                            'data-val-required': 'Lösenord får inte vara tom',
+	                                                            'data-val-length': 'L\xF6senord m\xE5ste vara mellan 6 och 45 tecken',
+	                                                            'data-val-required': 'L\xF6senord f\xE5r inte vara tom',
 	                                                            id: 'password',
 	                                                            name: 'password'
 	                                                            //onKeyUp    = "return Site.Validation.isSecurePassword(event)"
@@ -46636,7 +48165,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'button',
 	                                                    { className: 'site-buttonmargin-left pull-right btn-default btn secure-employee-form-buttons', 'data-action': '2', type: 'button' },
-	                                                    'Stäng'
+	                                                    'St\xE4ng'
 	                                                )
 	                                            )
 	                                        )
@@ -46664,7 +48193,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'th',
 	                                            null,
-	                                            'Förnamn'
+	                                            'F\xF6rnamn'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'th',
@@ -46680,7 +48209,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'th',
 	                                            null,
-	                                            'Behörighet'
+	                                            'Beh\xF6righet'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'th',
@@ -46706,7 +48235,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'th',
 	                                            null,
-	                                            'Förnamn'
+	                                            'F\xF6rnamn'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'th',
@@ -46722,7 +48251,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'th',
 	                                            null,
-	                                            'Behörighet'
+	                                            'Beh\xF6righet'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'th',
@@ -46842,7 +48371,7 @@ webpackJsonp([0],[
 	            return _react2.default.createElement(
 	                'h1',
 	                null,
-	                'This is Felanmälan page'
+	                'This is Felanm\xE4lan page'
 	            );
 	        }
 	    }]);
@@ -47021,7 +48550,7 @@ webpackJsonp([0],[
 	                        _react2.default.createElement(
 	                            'h3',
 	                            { className: 'site-page-header' },
-	                            'Ärenden ',
+	                            '\xC4renden ',
 	                            _react2.default.createElement('img', { src: '../../../App/img/help.png', id: 'page-description-tooltip', className: 'site-clickable' })
 	                        ),
 	                        _react2.default.createElement(
@@ -47133,27 +48662,27 @@ webpackJsonp([0],[
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '10' },
-	                                                'Preliminär'
+	                                                'Prelimin\xE4r'
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '20' },
-	                                                'Öppen'
+	                                                '\xD6ppen'
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '30' },
-	                                                'Påbörjad'
+	                                                'P\xE5b\xF6rjad'
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '40' },
-	                                                'Stängd'
+	                                                'St\xE4ngd'
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '50' },
-	                                                'Godkänd'
+	                                                'Godk\xE4nd'
 	                                            )
 	                                        )
 	                                    )
@@ -47192,7 +48721,7 @@ webpackJsonp([0],[
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '1' },
-	                                                'Låg'
+	                                                'L\xE5g'
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'option',
@@ -47202,7 +48731,7 @@ webpackJsonp([0],[
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '3' },
-	                                                'Hög'
+	                                                'H\xF6g'
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'option',
@@ -47251,7 +48780,7 @@ webpackJsonp([0],[
 	                                            _react2.default.createElement(
 	                                                'option',
 	                                                { value: '20' },
-	                                                'Lägenhet'
+	                                                'L\xE4genhet'
 	                                            )
 	                                        )
 	                                    )
@@ -47265,7 +48794,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'h4',
 	                                            null,
-	                                            'Nytt ärende'
+	                                            'Nytt \xE4rende'
 	                                        )
 	                                    )
 	                                ),
@@ -47303,7 +48832,7 @@ webpackJsonp([0],[
 	                        _react2.default.createElement(
 	                            'h3',
 	                            { className: 'site-page-header' },
-	                            'Ärende ',
+	                            '\xC4rende ',
 	                            _react2.default.createElement('span', { id: 'issue-page-one-number' }),
 	                            ' ',
 	                            _react2.default.createElement('img', { src: '../../../App/img/help.png', id: 'page-description-tooltip', className: 'site-clickable' })
@@ -47329,37 +48858,37 @@ webpackJsonp([0],[
 	                                            'span',
 	                                            { id: 'command-issue-panel-curr-status-10', hidden: true },
 	                                            _react2.default.createElement('img', { src: '../../../App/img/status10.png' }),
-	                                            ' Preliminär'
+	                                            ' Prelimin\xE4r'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'span',
 	                                            { id: 'command-issue-panel-curr-status-20', hidden: true },
 	                                            _react2.default.createElement('img', { src: '../../../App/img/status20.png' }),
-	                                            ' Öppen'
+	                                            ' \xD6ppen'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'span',
 	                                            { id: 'command-issue-panel-curr-status-30', hidden: true },
 	                                            _react2.default.createElement('img', { src: '../../../App/img/status30.png' }),
-	                                            ' Påbörjad'
+	                                            ' P\xE5b\xF6rjad'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'span',
 	                                            { id: 'command-issue-panel-curr-status-40', hidden: true },
 	                                            _react2.default.createElement('img', { src: '../../../App/img/status40.png' }),
-	                                            ' Stängd'
+	                                            ' St\xE4ngd'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'span',
 	                                            { id: 'command-issue-panel-curr-status-50', hidden: true },
 	                                            _react2.default.createElement('img', { src: '../../../App/img/status50.png' }),
-	                                            ' Godkänd'
+	                                            ' Godk\xE4nd'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'span',
 	                                            { id: 'command-issue-panel-curr-status-60', hidden: true },
 	                                            _react2.default.createElement('img', { src: '../../../App/img/status60.png' }),
-	                                            ' Slutförd'
+	                                            ' Slutf\xF6rd'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'span',
@@ -47384,7 +48913,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'h4',
 	                                            null,
-	                                            'Åtgärder'
+	                                            '\xC5tg\xE4rder'
 	                                        )
 	                                    )
 	                                ),
@@ -47397,8 +48926,8 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'p',
 	                                            null,
-	                                            _react2.default.createElement('img', { className: 'command-issue-panel-nextstatus site-clickable', 'data-tostatus': '20', 'data-tostatusname': 'Öppen', src: '../../../App/img/status20asnext.png' }),
-	                                            ' Till Öppen'
+	                                            _react2.default.createElement('img', { className: 'command-issue-panel-nextstatus site-clickable', 'data-tostatus': '20', 'data-tostatusname': '\xD6ppen', src: '../../../App/img/status20asnext.png' }),
+	                                            ' Till \xD6ppen'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'p',
@@ -47417,8 +48946,8 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'p',
 	                                            null,
-	                                            _react2.default.createElement('img', { className: 'command-issue-panel-nextstatus site-clickable', 'data-tostatus': '30', 'data-tostatusname': 'Påbörjad', src: '../../../App/img/status30asnext.png' }),
-	                                            ' Till Påbörjad'
+	                                            _react2.default.createElement('img', { className: 'command-issue-panel-nextstatus site-clickable', 'data-tostatus': '30', 'data-tostatusname': 'P\xE5b\xF6rjad', src: '../../../App/img/status30asnext.png' }),
+	                                            ' Till P\xE5b\xF6rjad'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'p',
@@ -47437,8 +48966,8 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'p',
 	                                            null,
-	                                            _react2.default.createElement('img', { className: 'command-issue-panel-nextstatus site-clickable', 'data-tostatus': '40', 'data-tostatusname': 'Stängd', src: '../../../App/img/status40asnext.png' }),
-	                                            ' Till Stängd'
+	                                            _react2.default.createElement('img', { className: 'command-issue-panel-nextstatus site-clickable', 'data-tostatus': '40', 'data-tostatusname': 'St\xE4ngd', src: '../../../App/img/status40asnext.png' }),
+	                                            ' Till St\xE4ngd'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'p',
@@ -47457,14 +48986,14 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'p',
 	                                            null,
-	                                            _react2.default.createElement('img', { className: 'command-issue-panel-nextstatus site-clickable', 'data-tostatus': '30', 'data-tostatusname': 'Påbörjad', src: '../../../App/img/status30asnext.png' }),
-	                                            ' Till Påbörjad'
+	                                            _react2.default.createElement('img', { className: 'command-issue-panel-nextstatus site-clickable', 'data-tostatus': '30', 'data-tostatusname': 'P\xE5b\xF6rjad', src: '../../../App/img/status30asnext.png' }),
+	                                            ' Till P\xE5b\xF6rjad'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'p',
 	                                            null,
-	                                            _react2.default.createElement('img', { className: 'command-issue-panel-nextstatus site-clickable', 'data-tostatus': '50', 'data-tostatusname': 'Godkänd', src: '../../../App/img/status50asnext.png' }),
-	                                            ' Till Godkänd'
+	                                            _react2.default.createElement('img', { className: 'command-issue-panel-nextstatus site-clickable', 'data-tostatus': '50', 'data-tostatusname': 'Godk\xE4nd', src: '../../../App/img/status50asnext.png' }),
+	                                            ' Till Godk\xE4nd'
 	                                        )
 	                                    )
 	                                ),
@@ -47477,8 +49006,8 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'p',
 	                                            null,
-	                                            _react2.default.createElement('img', { className: 'command-issue-panel-nextstatus site-clickable', 'data-tostatus': '60', 'data-tostatusname': 'Slutförd', src: '../../../App/img/status60asnext.png' }),
-	                                            ' Till Slutförd'
+	                                            _react2.default.createElement('img', { className: 'command-issue-panel-nextstatus site-clickable', 'data-tostatus': '60', 'data-tostatusname': 'Slutf\xF6rd', src: '../../../App/img/status60asnext.png' }),
+	                                            ' Till Slutf\xF6rd'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'p',
@@ -47608,8 +49137,8 @@ webpackJsonp([0],[
 	                                                        'data-val': 'true',
 	                                                        'data-val-length-min': '2',
 	                                                        'data-val-length-max': '45',
-	                                                        'data-val-length': 'Titel måste vara mellan 2 och 45 tecken',
-	                                                        'data-val-required': 'Titel får inte vara tom',
+	                                                        'data-val-length': 'Titel m\xE5ste vara mellan 2 och 45 tecken',
+	                                                        'data-val-required': 'Titel f\xE5r inte vara tom',
 	                                                        id: 'name',
 	                                                        name: 'name',
 	                                                        type: 'text',
@@ -47687,7 +49216,7 @@ webpackJsonp([0],[
 	                                                        'data-date-week-start': '1',
 	                                                        'data-provide': 'datepicker',
 	                                                        'data-val': 'true',
-	                                                        'data-val-required': 'Datum får inte vara tomt',
+	                                                        'data-val-required': 'Datum f\xE5r inte vara tomt',
 	                                                        id: 'startdatestring',
 	                                                        name: 'startdatestring',
 	                                                        type: 'text',
@@ -47696,7 +49225,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement('input', { className: 'form-control',
 	                                                        'data-autoajax': 'true',
 	                                                        'data-val': 'true',
-	                                                        'data-val-required': 'Klockslag får inte vara tomt',
+	                                                        'data-val-required': 'Klockslag f\xE5r inte vara tomt',
 	                                                        id: 'starttimestring',
 	                                                        name: 'starttimestring',
 	                                                        type: 'text',
@@ -47734,7 +49263,7 @@ webpackJsonp([0],[
 	                                                        'data-date-week-start': '1',
 	                                                        'data-provide': 'datepicker',
 	                                                        'data-val': 'true',
-	                                                        'data-val-required': 'Datum får inte vara tomt',
+	                                                        'data-val-required': 'Datum f\xE5r inte vara tomt',
 	                                                        id: 'enddatestring',
 	                                                        name: 'enddatestring',
 	                                                        type: 'text',
@@ -47743,7 +49272,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement('input', { className: 'form-control',
 	                                                        'data-autoajax': 'true',
 	                                                        'data-val': 'true',
-	                                                        'data-val-required': 'Klockslag får inte vara tomt',
+	                                                        'data-val-required': 'Klockslag f\xE5r inte vara tomt',
 	                                                        id: 'endtimestring',
 	                                                        name: 'endtimestring',
 	                                                        type: 'text',
@@ -47757,7 +49286,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'label',
 	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'issueclassid' },
-	                                                    'Ärendeklass'
+	                                                    '\xC4rendeklass'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    _reactBootstrap.Col,
@@ -47813,7 +49342,7 @@ webpackJsonp([0],[
 	                                                        _react2.default.createElement(
 	                                                            'option',
 	                                                            { value: '1' },
-	                                                            'Låg'
+	                                                            'L\xE5g'
 	                                                        ),
 	                                                        _react2.default.createElement(
 	                                                            'option',
@@ -47823,7 +49352,7 @@ webpackJsonp([0],[
 	                                                        _react2.default.createElement(
 	                                                            'option',
 	                                                            { value: '3' },
-	                                                            'Hög'
+	                                                            'H\xF6g'
 	                                                        ),
 	                                                        _react2.default.createElement(
 	                                                            'option',
@@ -47839,7 +49368,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'label',
 	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'responsible' },
-	                                                    'Utförare'
+	                                                    'Utf\xF6rare'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    _reactBootstrap.Col,
@@ -47938,7 +49467,7 @@ webpackJsonp([0],[
 	                                                        _react2.default.createElement(
 	                                                            'option',
 	                                                            { value: '20' },
-	                                                            'Lägenhet'
+	                                                            'L\xE4genhet'
 	                                                        )
 	                                                    )
 	                                                )
@@ -47963,7 +49492,7 @@ webpackJsonp([0],[
 	                                                        'data-autoajax': 'true',
 	                                                        'data-val': 'true',
 	                                                        'data-val-length-max': '400',
-	                                                        'data-val-length': 'Beskrivning får inte överstiga 400 tecken',
+	                                                        'data-val-length': 'Beskrivning f\xE5r inte \xF6verstiga 400 tecken',
 	                                                        id: 'description',
 	                                                        name: 'description' })
 	                                                )
@@ -48106,8 +49635,8 @@ webpackJsonp([0],[
 	                                                                        'data-val': 'true',
 	                                                                        'data-val-length-min': '2',
 	                                                                        'data-val-length-max': '200',
-	                                                                        'data-val-length': 'Kommentar måste vara mellan 2 och 200 tecken',
-	                                                                        'data-val-required': 'Kommentar får inte vara tom',
+	                                                                        'data-val-length': 'Kommentar m\xE5ste vara mellan 2 och 200 tecken',
+	                                                                        'data-val-required': 'Kommentar f\xE5r inte vara tom',
 	                                                                        id: 'description',
 	                                                                        name: 'description' })
 	                                                                )
@@ -48129,7 +49658,7 @@ webpackJsonp([0],[
 	                                                            _react2.default.createElement(
 	                                                                _reactBootstrap.Button,
 	                                                                { className: 'site-buttonmargin-left pull-right btn-default btn create-issuefeedback-form-buttons', 'data-action': '2' },
-	                                                                'Stäng'
+	                                                                'St\xE4ng'
 	                                                            )
 	                                                        )
 	                                                    )
@@ -48159,7 +49688,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'th',
 	                                                    null,
-	                                                    'Från'
+	                                                    'Fr\xE5n'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    'th',
@@ -48189,7 +49718,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'th',
 	                                                    null,
-	                                                    'Från'
+	                                                    'Fr\xE5n'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    'th',
@@ -48251,7 +49780,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'th',
 	                                                    null,
-	                                                    'Från status'
+	                                                    'Fr\xE5n status'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    'th',
@@ -48262,7 +49791,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'th',
 	                                                    null,
-	                                                    'Ändrad av'
+	                                                    '\xC4ndrad av'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    'th',
@@ -48286,7 +49815,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'th',
 	                                                    null,
-	                                                    'Från status'
+	                                                    'Fr\xE5n status'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    'th',
@@ -48297,7 +49826,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'th',
 	                                                    null,
-	                                                    'Ändrad av'
+	                                                    '\xC4ndrad av'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    'th',
@@ -48411,7 +49940,7 @@ webpackJsonp([0],[
 	                                _react2.default.createElement(
 	                                    'h3',
 	                                    { className: 'panel-title', id: 'title' },
-	                                    'Skapa ärende'
+	                                    'Skapa \xE4rende'
 	                                )
 	                            ),
 	                            _react2.default.createElement(
@@ -48460,8 +49989,8 @@ webpackJsonp([0],[
 	                                                        'data-val': 'true',
 	                                                        'data-val-length-min': '2',
 	                                                        'data-val-length-max': '45',
-	                                                        'data-val-length': 'Titel måste vara mellan 2 och 45 tecken',
-	                                                        'data-val-required': 'Titel får inte vara tom',
+	                                                        'data-val-length': 'Titel m\xE5ste vara mellan 2 och 45 tecken',
+	                                                        'data-val-required': 'Titel f\xE5r inte vara tom',
 	                                                        id: 'name',
 	                                                        name: 'name',
 	                                                        type: 'text',
@@ -48539,7 +50068,7 @@ webpackJsonp([0],[
 	                                                        'data-date-week-start': '1',
 	                                                        'data-provide': 'datepicker',
 	                                                        'data-val': 'true',
-	                                                        'data-val-required': 'Datum får inte vara tomt',
+	                                                        'data-val-required': 'Datum f\xE5r inte vara tomt',
 	                                                        id: 'startdatestring',
 	                                                        name: 'startdatestring',
 	                                                        type: 'text',
@@ -48548,7 +50077,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement('input', { className: 'form-control',
 	                                                        'data-autoajax': 'true',
 	                                                        'data-val': 'true',
-	                                                        'data-val-required': 'Klockslag får inte vara tomt',
+	                                                        'data-val-required': 'Klockslag f\xE5r inte vara tomt',
 	                                                        id: 'starttimestring',
 	                                                        name: 'starttimestring',
 	                                                        type: 'text',
@@ -48586,7 +50115,7 @@ webpackJsonp([0],[
 	                                                        'data-date-week-start': '1',
 	                                                        'data-provide': 'datepicker',
 	                                                        'data-val': 'true',
-	                                                        'data-val-required': 'Datum får inte vara tomt',
+	                                                        'data-val-required': 'Datum f\xE5r inte vara tomt',
 	                                                        id: 'enddatestring',
 	                                                        name: 'enddatestring',
 	                                                        type: 'text',
@@ -48595,7 +50124,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement('input', { className: 'form-control',
 	                                                        'data-autoajax': 'true',
 	                                                        'data-val': 'true',
-	                                                        'data-val-required': 'Klockslag får inte vara tomt',
+	                                                        'data-val-required': 'Klockslag f\xE5r inte vara tomt',
 	                                                        id: 'endtimestring',
 	                                                        name: 'endtimestring',
 	                                                        type: 'text',
@@ -48609,7 +50138,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'label',
 	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'issueclassid' },
-	                                                    'Ärendeklass'
+	                                                    '\xC4rendeklass'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    _reactBootstrap.Col,
@@ -48665,7 +50194,7 @@ webpackJsonp([0],[
 	                                                        _react2.default.createElement(
 	                                                            'option',
 	                                                            { value: '1' },
-	                                                            'Låg'
+	                                                            'L\xE5g'
 	                                                        ),
 	                                                        _react2.default.createElement(
 	                                                            'option',
@@ -48675,7 +50204,7 @@ webpackJsonp([0],[
 	                                                        _react2.default.createElement(
 	                                                            'option',
 	                                                            { value: '3' },
-	                                                            'Hög'
+	                                                            'H\xF6g'
 	                                                        ),
 	                                                        _react2.default.createElement(
 	                                                            'option',
@@ -48691,7 +50220,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'label',
 	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'responsible' },
-	                                                    'Utförare'
+	                                                    'Utf\xF6rare'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    _reactBootstrap.Col,
@@ -48746,7 +50275,7 @@ webpackJsonp([0],[
 	                                                        'data-autoajax': 'true',
 	                                                        'data-val': 'true',
 	                                                        'data-val-length-max': '400',
-	                                                        'data-val-length': 'Beskrivning får inte överstiga 400 tecken',
+	                                                        'data-val-length': 'Beskrivning f\xE5r inte \xF6verstiga 400 tecken',
 	                                                        id: 'description',
 	                                                        name: 'description' })
 	                                                )
@@ -48791,7 +50320,7 @@ webpackJsonp([0],[
 	                                                        _react2.default.createElement(
 	                                                            'option',
 	                                                            { value: '20' },
-	                                                            'Lägenhet'
+	                                                            'L\xE4genhet'
 	                                                        )
 	                                                    )
 	                                                )
@@ -48821,7 +50350,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'label',
 	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'firstname' },
-	                                                    'Förnamn'
+	                                                    'F\xF6rnamn'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    _reactBootstrap.Col,
@@ -48835,7 +50364,7 @@ webpackJsonp([0],[
 	                                                        'data-autoajax': 'true',
 	                                                        'data-val': 'true',
 	                                                        'data-val-length-max': '45',
-	                                                        'data-val-length': 'Förnamn får inte överstiga 45 tecken',
+	                                                        'data-val-length': 'F\xF6rnamn f\xE5r inte \xF6verstiga 45 tecken',
 	                                                        id: 'firstname',
 	                                                        name: 'firstname',
 	                                                        type: 'text',
@@ -48862,7 +50391,7 @@ webpackJsonp([0],[
 	                                                        'data-autoajax': 'true',
 	                                                        'data-val': 'true',
 	                                                        'data-val-length-max': '45',
-	                                                        'data-val-length': 'Efternamn får inte överstiga 45 tecken',
+	                                                        'data-val-length': 'Efternamn f\xE5r inte \xF6verstiga 45 tecken',
 	                                                        id: 'lastname',
 	                                                        name: 'lastname',
 	                                                        type: 'text',
@@ -48889,7 +50418,7 @@ webpackJsonp([0],[
 	                                                        'data-autoajax': 'true',
 	                                                        'data-val': 'true',
 	                                                        'data-val-length-max': '20',
-	                                                        'data-val-length': 'Telefon får inte överstiga 20 tecken',
+	                                                        'data-val-length': 'Telefon f\xE5r inte \xF6verstiga 20 tecken',
 	                                                        id: 'phone',
 	                                                        name: 'phone'
 	                                                        //onKeyPress="return Site.Validation.isPhoneNumber(event)"
@@ -48917,7 +50446,7 @@ webpackJsonp([0],[
 	                                                        'data-autoajax': 'true',
 	                                                        'data-val': 'true',
 	                                                        'data-val-length-max': '60',
-	                                                        'data-val-length': 'E-post får inte överstiga 60 tecken',
+	                                                        'data-val-length': 'E-post f\xE5r inte \xF6verstiga 60 tecken',
 	                                                        id: 'email',
 	                                                        name: 'email',
 	                                                        type: 'text',
@@ -48944,7 +50473,7 @@ webpackJsonp([0],[
 	                                                        'data-autoajax': 'true',
 	                                                        'data-val': 'true',
 	                                                        'data-val-length-max': '45',
-	                                                        'data-val-length': 'Adress får inte överstiga 45 tecken',
+	                                                        'data-val-length': 'Adress f\xE5r inte \xF6verstiga 45 tecken',
 	                                                        id: 'address',
 	                                                        name: 'address',
 	                                                        type: 'text',
@@ -48957,7 +50486,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'label',
 	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'floor' },
-	                                                    'Våningsplan'
+	                                                    'V\xE5ningsplan'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    _reactBootstrap.Col,
@@ -48971,7 +50500,7 @@ webpackJsonp([0],[
 	                                                        'data-autoajax': 'true',
 	                                                        'data-val': 'true',
 	                                                        'data-val-length-max': '10',
-	                                                        'data-val-length': 'Våningsplan får inte överstiga 10 tecken',
+	                                                        'data-val-length': 'V\xE5ningsplan f\xE5r inte \xF6verstiga 10 tecken',
 	                                                        id: 'floor',
 	                                                        name: 'floor',
 	                                                        type: 'text',
@@ -48984,7 +50513,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'label',
 	                                                    { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'apartment' },
-	                                                    'Lägenhet'
+	                                                    'L\xE4genhet'
 	                                                ),
 	                                                _react2.default.createElement(
 	                                                    _reactBootstrap.Col,
@@ -48998,7 +50527,7 @@ webpackJsonp([0],[
 	                                                        'data-autoajax': 'true',
 	                                                        'data-val': 'true',
 	                                                        'data-val-length-max': '10',
-	                                                        'data-val-length': 'Lägenhet får inte överstiga 10 tecken',
+	                                                        'data-val-length': 'L\xE4genhet f\xE5r inte \xF6verstiga 10 tecken',
 	                                                        id: 'apartment',
 	                                                        name: 'apartment',
 	                                                        type: 'text',
@@ -49022,7 +50551,7 @@ webpackJsonp([0],[
 	                                            _react2.default.createElement(
 	                                                _reactBootstrap.Button,
 	                                                { className: 'site-buttonmargin-left pull-right btn-default btn create-issue-form-buttons', 'data-action': '2' },
-	                                                'Stäng'
+	                                                'St\xE4ng'
 	                                            )
 	                                        )
 	                                    )
@@ -49207,7 +50736,7 @@ webpackJsonp([0],[
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _jqueryUi = __webpack_require__(439);
+	var _jqueryUi = __webpack_require__(438);
 
 	var _jqueryUi2 = _interopRequireDefault(_jqueryUi);
 
@@ -62107,7 +63636,14 @@ webpackJsonp([0],[
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(466)();
+	// imports
+
+
+	// module
 	exports.push([module.id, "\tbody {\r\n\t\tmargin-top: 40px;\r\n\t\ttext-align: center;\r\n\t\tfont-size: 14px;\r\n\t\tfont-family: \"Lucida Grande\",Helvetica,Arial,Verdana,sans-serif;\r\n\t}\r\n\r\n  h1 {\r\n    font-size: 35px;\r\n    margin-bottom: 30px;\r\n  }\r\n\t\t\r\n\t#app {\r\n\t\twidth: 1100px;\r\n\t\tmargin: 0 auto;\r\n\t}\r\n\t\t\r\n\t#external-events {\r\n\t\tfloat: left;\r\n\t\twidth: 150px;\r\n\t\tpadding: 0 10px;\r\n\t\tborder: 1px solid #ccc;\r\n\t\tbackground: #eee;\r\n\t\ttext-align: left;\r\n\t}\r\n\t\t\r\n\t#external-events h4 {\r\n\t\tfont-size: 16px;\r\n\t\tmargin-top: 0;\r\n\t\tpadding-top: 1em;\r\n\t}\r\n\t\t\r\n\t#external-events .fc-event {\r\n\t\tmargin: 10px 0;\r\n\t\tcursor: pointer;\r\n\t}\r\n\t\t\r\n\t#external-events p {\r\n\t\tmargin: 1.5em 0;\r\n\t\tfont-size: 11px;\r\n\t\tcolor: #666;\r\n\t}\r\n\t\t\r\n\t#external-events p input {\r\n\t\tmargin: 0;\r\n\t\tvertical-align: middle;\r\n\t}\r\n\r\n\t#calendar {\r\n\t\tfloat: right;\r\n\t\twidth: 900px;\r\n\t}", ""]);
+
+	// exports
+
 
 /***/ },
 /* 590 */
@@ -62140,7 +63676,14 @@ webpackJsonp([0],[
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(466)();
-	exports.push([module.id, "/*!\r\n * FullCalendar v2.6.1 Stylesheet\r\n * Docs & License: http://fullcalendar.io/\r\n * (c) 2015 Adam Shaw\r\n */\r\n\r\n\r\n.fc {\r\n\tdirection: ltr;\r\n\ttext-align: left;\r\n}\r\n\r\n.fc-rtl {\r\n\ttext-align: right;\r\n}\r\n\r\nbody .fc { /* extra precedence to overcome jqui */\r\n\tfont-size: 1em;\r\n}\r\n\r\n\r\n/* Colors\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-unthemed th,\r\n.fc-unthemed td,\r\n.fc-unthemed thead,\r\n.fc-unthemed tbody,\r\n.fc-unthemed .fc-divider,\r\n.fc-unthemed .fc-row,\r\n.fc-unthemed .fc-popover {\r\n\tborder-color: #ddd;\r\n}\r\n\r\n.fc-unthemed .fc-popover {\r\n\tbackground-color: #fff;\r\n}\r\n\r\n.fc-unthemed .fc-divider,\r\n.fc-unthemed .fc-popover .fc-header {\r\n\tbackground: #eee;\r\n}\r\n\r\n.fc-unthemed .fc-popover .fc-header .fc-close {\r\n\tcolor: #666;\r\n}\r\n\r\n.fc-unthemed .fc-today {\r\n\tbackground: #fcf8e3;\r\n}\r\n\r\n.fc-highlight { /* when user is selecting cells */\r\n\tbackground: #bce8f1;\r\n\topacity: .3;\r\n\tfilter: alpha(opacity=30); /* for IE */\r\n}\r\n\r\n.fc-bgevent { /* default look for background events */\r\n\tbackground: rgb(143, 223, 130);\r\n\topacity: .3;\r\n\tfilter: alpha(opacity=30); /* for IE */\r\n}\r\n\r\n.fc-nonbusiness { /* default look for non-business-hours areas */\r\n\t/* will inherit .fc-bgevent's styles */\r\n\tbackground: #d7d7d7;\r\n}\r\n\r\n\r\n/* Icons (inline elements with styled text that mock arrow icons)\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-icon {\r\n\tdisplay: inline-block;\r\n\twidth: 1em;\r\n\theight: 1em;\r\n\tline-height: 1em;\r\n\tfont-size: 1em;\r\n\ttext-align: center;\r\n\toverflow: hidden;\r\n\tfont-family: \"Courier New\", Courier, monospace;\r\n\r\n\t/* don't allow browser text-selection */\r\n\t-webkit-touch-callout: none;\r\n\t-webkit-user-select: none;\r\n\t-khtml-user-select: none;\r\n\t-moz-user-select: none;\r\n\t-ms-user-select: none;\r\n\tuser-select: none;\r\n\t}\r\n\r\n/*\r\nAcceptable font-family overrides for individual icons:\r\n\t\"Arial\", sans-serif\r\n\t\"Times New Roman\", serif\r\n\r\nNOTE: use percentage font sizes or else old IE chokes\r\n*/\r\n\r\n.fc-icon:after {\r\n\tposition: relative;\r\n\tmargin: 0 -1em; /* ensures character will be centered, regardless of width */\r\n}\r\n\r\n.fc-icon-left-single-arrow:after {\r\n\tcontent: \"\\02039\";\r\n\tfont-weight: bold;\r\n\tfont-size: 200%;\r\n\ttop: -7%;\r\n\tleft: 3%;\r\n}\r\n\r\n.fc-icon-right-single-arrow:after {\r\n\tcontent: \"\\0203A\";\r\n\tfont-weight: bold;\r\n\tfont-size: 200%;\r\n\ttop: -7%;\r\n\tleft: -3%;\r\n}\r\n\r\n.fc-icon-left-double-arrow:after {\r\n\tcontent: \"\\000AB\";\r\n\tfont-size: 160%;\r\n\ttop: -7%;\r\n}\r\n\r\n.fc-icon-right-double-arrow:after {\r\n\tcontent: \"\\000BB\";\r\n\tfont-size: 160%;\r\n\ttop: -7%;\r\n}\r\n\r\n.fc-icon-left-triangle:after {\r\n\tcontent: \"\\25C4\";\r\n\tfont-size: 125%;\r\n\ttop: 3%;\r\n\tleft: -2%;\r\n}\r\n\r\n.fc-icon-right-triangle:after {\r\n\tcontent: \"\\25BA\";\r\n\tfont-size: 125%;\r\n\ttop: 3%;\r\n\tleft: 2%;\r\n}\r\n\r\n.fc-icon-down-triangle:after {\r\n\tcontent: \"\\25BC\";\r\n\tfont-size: 125%;\r\n\ttop: 2%;\r\n}\r\n\r\n.fc-icon-x:after {\r\n\tcontent: \"\\000D7\";\r\n\tfont-size: 200%;\r\n\ttop: 6%;\r\n}\r\n\r\n\r\n/* Buttons (styled <button> tags, normalized to work cross-browser)\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc button {\r\n\t/* force height to include the border and padding */\r\n\t-moz-box-sizing: border-box;\r\n\t-webkit-box-sizing: border-box;\r\n\tbox-sizing: border-box;\r\n\r\n\t/* dimensions */\r\n\tmargin: 0;\r\n\theight: 2.1em;\r\n\tpadding: 0 .6em;\r\n\r\n\t/* text & cursor */\r\n\tfont-size: 1em; /* normalize */\r\n\twhite-space: nowrap;\r\n\tcursor: pointer;\r\n}\r\n\r\n/* Firefox has an annoying inner border */\r\n.fc button::-moz-focus-inner { margin: 0; padding: 0; }\r\n\t\r\n.fc-state-default { /* non-theme */\r\n\tborder: 1px solid;\r\n}\r\n\r\n.fc-state-default.fc-corner-left { /* non-theme */\r\n\tborder-top-left-radius: 4px;\r\n\tborder-bottom-left-radius: 4px;\r\n}\r\n\r\n.fc-state-default.fc-corner-right { /* non-theme */\r\n\tborder-top-right-radius: 4px;\r\n\tborder-bottom-right-radius: 4px;\r\n}\r\n\r\n/* icons in buttons */\r\n\r\n.fc button .fc-icon { /* non-theme */\r\n\tposition: relative;\r\n\ttop: -0.05em; /* seems to be a good adjustment across browsers */\r\n\tmargin: 0 .2em;\r\n\tvertical-align: middle;\r\n}\r\n\t\r\n/*\r\n  button states\r\n  borrowed from twitter bootstrap (http://twitter.github.com/bootstrap/)\r\n*/\r\n\r\n.fc-state-default {\r\n\tbackground-color: #f5f5f5;\r\n\tbackground-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);\r\n\tbackground-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));\r\n\tbackground-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);\r\n\tbackground-image: -o-linear-gradient(top, #ffffff, #e6e6e6);\r\n\tbackground-image: linear-gradient(to bottom, #ffffff, #e6e6e6);\r\n\tbackground-repeat: repeat-x;\r\n\tborder-color: #e6e6e6 #e6e6e6 #bfbfbf;\r\n\tborder-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\r\n\tcolor: #333;\r\n\ttext-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);\r\n\tbox-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\r\n}\r\n\r\n.fc-state-hover,\r\n.fc-state-down,\r\n.fc-state-active,\r\n.fc-state-disabled {\r\n\tcolor: #333333;\r\n\tbackground-color: #e6e6e6;\r\n}\r\n\r\n.fc-state-hover {\r\n\tcolor: #333333;\r\n\ttext-decoration: none;\r\n\tbackground-position: 0 -15px;\r\n\t-webkit-transition: background-position 0.1s linear;\r\n\t   -moz-transition: background-position 0.1s linear;\r\n\t     -o-transition: background-position 0.1s linear;\r\n\t        transition: background-position 0.1s linear;\r\n}\r\n\r\n.fc-state-down,\r\n.fc-state-active {\r\n\tbackground-color: #cccccc;\r\n\tbackground-image: none;\r\n\tbox-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);\r\n}\r\n\r\n.fc-state-disabled {\r\n\tcursor: default;\r\n\tbackground-image: none;\r\n\topacity: 0.65;\r\n\tfilter: alpha(opacity=65);\r\n\tbox-shadow: none;\r\n}\r\n\r\n\r\n/* Buttons Groups\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-button-group {\r\n\tdisplay: inline-block;\r\n}\r\n\r\n/*\r\nevery button that is not first in a button group should scootch over one pixel and cover the\r\nprevious button's border...\r\n*/\r\n\r\n.fc .fc-button-group > * { /* extra precedence b/c buttons have margin set to zero */\r\n\tfloat: left;\r\n\tmargin: 0 0 0 -1px;\r\n}\r\n\r\n.fc .fc-button-group > :first-child { /* same */\r\n\tmargin-left: 0;\r\n}\r\n\r\n\r\n/* Popover\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-popover {\r\n\tposition: absolute;\r\n\tbox-shadow: 0 2px 6px rgba(0,0,0,.15);\r\n}\r\n\r\n.fc-popover .fc-header { /* TODO: be more consistent with fc-head/fc-body */\r\n\tpadding: 2px 4px;\r\n}\r\n\r\n.fc-popover .fc-header .fc-title {\r\n\tmargin: 0 2px;\r\n}\r\n\r\n.fc-popover .fc-header .fc-close {\r\n\tcursor: pointer;\r\n}\r\n\r\n.fc-ltr .fc-popover .fc-header .fc-title,\r\n.fc-rtl .fc-popover .fc-header .fc-close {\r\n\tfloat: left;\r\n}\r\n\r\n.fc-rtl .fc-popover .fc-header .fc-title,\r\n.fc-ltr .fc-popover .fc-header .fc-close {\r\n\tfloat: right;\r\n}\r\n\r\n/* unthemed */\r\n\r\n.fc-unthemed .fc-popover {\r\n\tborder-width: 1px;\r\n\tborder-style: solid;\r\n}\r\n\r\n.fc-unthemed .fc-popover .fc-header .fc-close {\r\n\tfont-size: .9em;\r\n\tmargin-top: 2px;\r\n}\r\n\r\n/* jqui themed */\r\n\r\n.fc-popover > .ui-widget-header + .ui-widget-content {\r\n\tborder-top: 0; /* where they meet, let the header have the border */\r\n}\r\n\r\n\r\n/* Misc Reusable Components\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-divider {\r\n\tborder-style: solid;\r\n\tborder-width: 1px;\r\n}\r\n\r\nhr.fc-divider {\r\n\theight: 0;\r\n\tmargin: 0;\r\n\tpadding: 0 0 2px; /* height is unreliable across browsers, so use padding */\r\n\tborder-width: 1px 0;\r\n}\r\n\r\n.fc-clear {\r\n\tclear: both;\r\n}\r\n\r\n.fc-bg,\r\n.fc-bgevent-skeleton,\r\n.fc-highlight-skeleton,\r\n.fc-helper-skeleton {\r\n\t/* these element should always cling to top-left/right corners */\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tright: 0;\r\n}\r\n\r\n.fc-bg {\r\n\tbottom: 0; /* strech bg to bottom edge */\r\n}\r\n\r\n.fc-bg table {\r\n\theight: 100%; /* strech bg to bottom edge */\r\n}\r\n\r\n\r\n/* Tables\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc table {\r\n\twidth: 100%;\r\n\ttable-layout: fixed;\r\n\tborder-collapse: collapse;\r\n\tborder-spacing: 0;\r\n\tfont-size: 1em; /* normalize cross-browser */\r\n}\r\n\r\n.fc th {\r\n\ttext-align: center;\r\n}\r\n\r\n.fc th,\r\n.fc td {\r\n\tborder-style: solid;\r\n\tborder-width: 1px;\r\n\tpadding: 0;\r\n\tvertical-align: top;\r\n}\r\n\r\n.fc td.fc-today {\r\n\tborder-style: double; /* overcome neighboring borders */\r\n}\r\n\r\n\r\n/* Fake Table Rows\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc .fc-row { /* extra precedence to overcome themes w/ .ui-widget-content forcing a 1px border */\r\n\t/* no visible border by default. but make available if need be (scrollbar width compensation) */\r\n\tborder-style: solid;\r\n\tborder-width: 0;\r\n}\r\n\r\n.fc-row table {\r\n\t/* don't put left/right border on anything within a fake row.\r\n\t   the outer tbody will worry about this */\r\n\tborder-left: 0 hidden transparent;\r\n\tborder-right: 0 hidden transparent;\r\n\r\n\t/* no bottom borders on rows */\r\n\tborder-bottom: 0 hidden transparent; \r\n}\r\n\r\n.fc-row:first-child table {\r\n\tborder-top: 0 hidden transparent; /* no top border on first row */\r\n}\r\n\r\n\r\n/* Day Row (used within the header and the DayGrid)\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-row {\r\n\tposition: relative;\r\n}\r\n\r\n.fc-row .fc-bg {\r\n\tz-index: 1;\r\n}\r\n\r\n/* highlighting cells & background event skeleton */\r\n\r\n.fc-row .fc-bgevent-skeleton,\r\n.fc-row .fc-highlight-skeleton {\r\n\tbottom: 0; /* stretch skeleton to bottom of row */\r\n}\r\n\r\n.fc-row .fc-bgevent-skeleton table,\r\n.fc-row .fc-highlight-skeleton table {\r\n\theight: 100%; /* stretch skeleton to bottom of row */\r\n}\r\n\r\n.fc-row .fc-highlight-skeleton td,\r\n.fc-row .fc-bgevent-skeleton td {\r\n\tborder-color: transparent;\r\n}\r\n\r\n.fc-row .fc-bgevent-skeleton {\r\n\tz-index: 2;\r\n\r\n}\r\n\r\n.fc-row .fc-highlight-skeleton {\r\n\tz-index: 3;\r\n}\r\n\r\n/*\r\nrow content (which contains day/week numbers and events) as well as \"helper\" (which contains\r\ntemporary rendered events).\r\n*/\r\n\r\n.fc-row .fc-content-skeleton {\r\n\tposition: relative;\r\n\tz-index: 4;\r\n\tpadding-bottom: 2px; /* matches the space above the events */\r\n}\r\n\r\n.fc-row .fc-helper-skeleton {\r\n\tz-index: 5;\r\n}\r\n\r\n.fc-row .fc-content-skeleton td,\r\n.fc-row .fc-helper-skeleton td {\r\n\t/* see-through to the background below */\r\n\tbackground: none; /* in case <td>s are globally styled */\r\n\tborder-color: transparent;\r\n\r\n\t/* don't put a border between events and/or the day number */\r\n\tborder-bottom: 0;\r\n}\r\n\r\n.fc-row .fc-content-skeleton tbody td, /* cells with events inside (so NOT the day number cell) */\r\n.fc-row .fc-helper-skeleton tbody td {\r\n\t/* don't put a border between event cells */\r\n\tborder-top: 0;\r\n}\r\n\r\n\r\n/* Scrolling Container\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-scroller { /* this class goes on elements for guaranteed vertical scrollbars */\r\n\toverflow-y: scroll;\r\n\toverflow-x: hidden;\r\n}\r\n\r\n.fc-scroller > * { /* we expect an immediate inner element */\r\n\tposition: relative; /* re-scope all positions */\r\n\twidth: 100%; /* hack to force re-sizing this inner element when scrollbars appear/disappear */\r\n\toverflow: hidden; /* don't let negative margins or absolute positioning create further scroll */\r\n}\r\n\r\n\r\n/* Global Event Styles\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-event {\r\n\tposition: relative; /* for resize handle and other inner positioning */\r\n\tdisplay: block; /* make the <a> tag block */\r\n\tfont-size: .85em;\r\n\tline-height: 1.3;\r\n\tborder-radius: 3px;\r\n\tborder: 1px solid #3a87ad; /* default BORDER color */\r\n\tbackground-color: #3a87ad; /* default BACKGROUND color */\r\n\tfont-weight: normal; /* undo jqui's ui-widget-header bold */\r\n}\r\n\r\n/* overpower some of bootstrap's and jqui's styles on <a> tags */\r\n.fc-event,\r\n.fc-event:hover,\r\n.ui-widget .fc-event {\r\n\tcolor: #fff; /* default TEXT color */\r\n\ttext-decoration: none; /* if <a> has an href */\r\n}\r\n\r\n.fc-event[href],\r\n.fc-event.fc-draggable {\r\n\tcursor: pointer; /* give events with links and draggable events a hand mouse pointer */\r\n}\r\n\r\n.fc-not-allowed, /* causes a \"warning\" cursor. applied on body */\r\n.fc-not-allowed .fc-event { /* to override an event's custom cursor */\r\n\tcursor: not-allowed;\r\n}\r\n\r\n.fc-event .fc-bg { /* the generic .fc-bg already does position */\r\n\tz-index: 1;\r\n\tbackground: #fff;\r\n\topacity: .25;\r\n\tfilter: alpha(opacity=25); /* for IE */\r\n}\r\n\r\n.fc-event .fc-content {\r\n\tposition: relative;\r\n\tz-index: 2;\r\n}\r\n\r\n.fc-event .fc-resizer {\r\n\tposition: absolute;\r\n\tz-index: 3;\r\n}\r\n\r\n\r\n/* Horizontal Events\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n/* events that are continuing to/from another week. kill rounded corners and butt up against edge */\r\n\r\n.fc-ltr .fc-h-event.fc-not-start,\r\n.fc-rtl .fc-h-event.fc-not-end {\r\n\tmargin-left: 0;\r\n\tborder-left-width: 0;\r\n\tpadding-left: 1px; /* replace the border with padding */\r\n\tborder-top-left-radius: 0;\r\n\tborder-bottom-left-radius: 0;\r\n}\r\n\r\n.fc-ltr .fc-h-event.fc-not-end,\r\n.fc-rtl .fc-h-event.fc-not-start {\r\n\tmargin-right: 0;\r\n\tborder-right-width: 0;\r\n\tpadding-right: 1px; /* replace the border with padding */\r\n\tborder-top-right-radius: 0;\r\n\tborder-bottom-right-radius: 0;\r\n}\r\n\r\n/* resizer */\r\n\r\n.fc-h-event .fc-resizer { /* positioned it to overcome the event's borders */\r\n\ttop: -1px;\r\n\tbottom: -1px;\r\n\tleft: -1px;\r\n\tright: -1px;\r\n\twidth: 5px;\r\n}\r\n\r\n/* left resizer  */\r\n.fc-ltr .fc-h-event .fc-start-resizer,\r\n.fc-ltr .fc-h-event .fc-start-resizer:before,\r\n.fc-ltr .fc-h-event .fc-start-resizer:after,\r\n.fc-rtl .fc-h-event .fc-end-resizer,\r\n.fc-rtl .fc-h-event .fc-end-resizer:before,\r\n.fc-rtl .fc-h-event .fc-end-resizer:after {\r\n\tright: auto; /* ignore the right and only use the left */\r\n\tcursor: w-resize;\r\n}\r\n\r\n/* right resizer */\r\n.fc-ltr .fc-h-event .fc-end-resizer,\r\n.fc-ltr .fc-h-event .fc-end-resizer:before,\r\n.fc-ltr .fc-h-event .fc-end-resizer:after,\r\n.fc-rtl .fc-h-event .fc-start-resizer,\r\n.fc-rtl .fc-h-event .fc-start-resizer:before,\r\n.fc-rtl .fc-h-event .fc-start-resizer:after {\r\n\tleft: auto; /* ignore the left and only use the right */\r\n\tcursor: e-resize;\r\n}\r\n\r\n\r\n/* DayGrid events\r\n----------------------------------------------------------------------------------------------------\r\nWe use the full \"fc-day-grid-event\" class instead of using descendants because the event won't\r\nbe a descendant of the grid when it is being dragged.\r\n*/\r\n\r\n.fc-day-grid-event {\r\n\tmargin: 1px 2px 0; /* spacing between events and edges */\r\n\tpadding: 0 1px;\r\n}\r\n\r\n\r\n.fc-day-grid-event .fc-content { /* force events to be one-line tall */\r\n\twhite-space: nowrap;\r\n\toverflow: hidden;\r\n}\r\n\r\n.fc-day-grid-event .fc-time {\r\n\tfont-weight: bold;\r\n}\r\n\r\n.fc-day-grid-event .fc-resizer { /* enlarge the default hit area */\r\n\tleft: -3px;\r\n\tright: -3px;\r\n\twidth: 7px;\r\n}\r\n\r\n\r\n/* Event Limiting\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n/* \"more\" link that represents hidden events */\r\n\r\na.fc-more {\r\n\tmargin: 1px 3px;\r\n\tfont-size: .85em;\r\n\tcursor: pointer;\r\n\ttext-decoration: none;\r\n}\r\n\r\na.fc-more:hover {\r\n\ttext-decoration: underline;\r\n}\r\n\r\n.fc-limited { /* rows and cells that are hidden because of a \"more\" link */\r\n\tdisplay: none;\r\n}\r\n\r\n/* popover that appears when \"more\" link is clicked */\r\n\r\n.fc-day-grid .fc-row {\r\n\tz-index: 1; /* make the \"more\" popover one higher than this */\r\n}\r\n\r\n.fc-more-popover {\r\n\tz-index: 2;\r\n\twidth: 220px;\r\n}\r\n\r\n.fc-more-popover .fc-event-container {\r\n\tpadding: 10px;\r\n}\r\n\r\n\r\n/* Now Indicator\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-now-indicator {\r\n\tposition: absolute;\r\n\tborder: 0 solid red;\r\n}\r\n\r\n/* Toolbar\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-toolbar {\r\n\ttext-align: center;\r\n\tmargin-bottom: 1em;\r\n}\r\n\r\n.fc-toolbar .fc-left {\r\n\tfloat: left;\r\n}\r\n\r\n.fc-toolbar .fc-right {\r\n\tfloat: right;\r\n}\r\n\r\n.fc-toolbar .fc-center {\r\n\tdisplay: inline-block;\r\n}\r\n\r\n/* the things within each left/right/center section */\r\n.fc .fc-toolbar > * > * { /* extra precedence to override button border margins */\r\n\tfloat: left;\r\n\tmargin-left: .75em;\r\n}\r\n\r\n/* the first thing within each left/center/right section */\r\n.fc .fc-toolbar > * > :first-child { /* extra precedence to override button border margins */\r\n\tmargin-left: 0;\r\n}\r\n\t\r\n/* title text */\r\n\r\n.fc-toolbar h2 {\r\n\tmargin: 0;\r\n}\r\n\r\n/* button layering (for border precedence) */\r\n\r\n.fc-toolbar button {\r\n\tposition: relative;\r\n}\r\n\r\n.fc-toolbar .fc-state-hover,\r\n.fc-toolbar .ui-state-hover {\r\n\tz-index: 2;\r\n}\r\n\t\r\n.fc-toolbar .fc-state-down {\r\n\tz-index: 3;\r\n}\r\n\r\n.fc-toolbar .fc-state-active,\r\n.fc-toolbar .ui-state-active {\r\n\tz-index: 4;\r\n}\r\n\r\n.fc-toolbar button:focus {\r\n\tz-index: 5;\r\n}\r\n\r\n\r\n/* View Structure\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n/* undo twitter bootstrap's box-sizing rules. normalizes positioning techniques */\r\n/* don't do this for the toolbar because we'll want bootstrap to style those buttons as some pt */\r\n.fc-view-container *,\r\n.fc-view-container *:before,\r\n.fc-view-container *:after {\r\n\t-webkit-box-sizing: content-box;\r\n\t   -moz-box-sizing: content-box;\r\n\t        box-sizing: content-box;\r\n}\r\n\r\n.fc-view, /* scope positioning and z-index's for everything within the view */\r\n.fc-view > table { /* so dragged elements can be above the view's main element */\r\n\tposition: relative;\r\n\tz-index: 1;\r\n}\r\n\r\n/* BasicView\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n/* day row structure */\r\n\r\n.fc-basicWeek-view .fc-content-skeleton,\r\n.fc-basicDay-view .fc-content-skeleton {\r\n\t/* we are sure there are no day numbers in these views, so... */\r\n\tpadding-top: 1px; /* add a pixel to make sure there are 2px padding above events */\r\n\tpadding-bottom: 1em; /* ensure a space at bottom of cell for user selecting/clicking */\r\n}\r\n\r\n.fc-basic-view .fc-body .fc-row {\r\n\tmin-height: 4em; /* ensure that all rows are at least this tall */\r\n}\r\n\r\n/* a \"rigid\" row will take up a constant amount of height because content-skeleton is absolute */\r\n\r\n.fc-row.fc-rigid {\r\n\toverflow: hidden;\r\n}\r\n\r\n.fc-row.fc-rigid .fc-content-skeleton {\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tright: 0;\r\n}\r\n\r\n/* week and day number styling */\r\n\r\n.fc-basic-view .fc-week-number,\r\n.fc-basic-view .fc-day-number {\r\n\tpadding: 0 2px;\r\n}\r\n\r\n.fc-basic-view td.fc-week-number span,\r\n.fc-basic-view td.fc-day-number {\r\n\tpadding-top: 2px;\r\n\tpadding-bottom: 2px;\r\n}\r\n\r\n.fc-basic-view .fc-week-number {\r\n\ttext-align: center;\r\n}\r\n\r\n.fc-basic-view .fc-week-number span {\r\n\t/* work around the way we do column resizing and ensure a minimum width */\r\n\tdisplay: inline-block;\r\n\tmin-width: 1.25em;\r\n}\r\n\r\n.fc-ltr .fc-basic-view .fc-day-number {\r\n\ttext-align: right;\r\n}\r\n\r\n.fc-rtl .fc-basic-view .fc-day-number {\r\n\ttext-align: left;\r\n}\r\n\r\n.fc-day-number.fc-other-month {\r\n\topacity: 0.3;\r\n\tfilter: alpha(opacity=30); /* for IE */\r\n\t/* opacity with small font can sometimes look too faded\r\n\t   might want to set the 'color' property instead\r\n\t   making day-numbers bold also fixes the problem */\r\n}\r\n\r\n/* AgendaView all-day area\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-agenda-view .fc-day-grid {\r\n\tposition: relative;\r\n\tz-index: 2; /* so the \"more..\" popover will be over the time grid */\r\n}\r\n\r\n.fc-agenda-view .fc-day-grid .fc-row {\r\n\tmin-height: 3em; /* all-day section will never get shorter than this */\r\n}\r\n\r\n.fc-agenda-view .fc-day-grid .fc-row .fc-content-skeleton {\r\n\tpadding-top: 1px; /* add a pixel to make sure there are 2px padding above events */\r\n\tpadding-bottom: 1em; /* give space underneath events for clicking/selecting days */\r\n}\r\n\r\n\r\n/* TimeGrid axis running down the side (for both the all-day area and the slot area)\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc .fc-axis { /* .fc to overcome default cell styles */\r\n\tvertical-align: middle;\r\n\tpadding: 0 4px;\r\n\twhite-space: nowrap;\r\n}\r\n\r\n.fc-ltr .fc-axis {\r\n\ttext-align: right;\r\n}\r\n\r\n.fc-rtl .fc-axis {\r\n\ttext-align: left;\r\n}\r\n\r\n.ui-widget td.fc-axis {\r\n\tfont-weight: normal; /* overcome jqui theme making it bold */\r\n}\r\n\r\n\r\n/* TimeGrid Structure\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-time-grid-container, /* so scroll container's z-index is below all-day */\r\n.fc-time-grid { /* so slats/bg/content/etc positions get scoped within here */\r\n\tposition: relative;\r\n\tz-index: 1;\r\n}\r\n\r\n.fc-time-grid {\r\n\tmin-height: 100%; /* so if height setting is 'auto', .fc-bg stretches to fill height */\r\n}\r\n\r\n.fc-time-grid table { /* don't put outer borders on slats/bg/content/etc */\r\n\tborder: 0 hidden transparent;\r\n}\r\n\r\n.fc-time-grid > .fc-bg {\r\n\tz-index: 1;\r\n}\r\n\r\n.fc-time-grid .fc-slats,\r\n.fc-time-grid > hr { /* the <hr> AgendaView injects when grid is shorter than scroller */\r\n\tposition: relative;\r\n\tz-index: 2;\r\n}\r\n\r\n.fc-time-grid .fc-content-col {\r\n\tposition: relative; /* because now-indicator lives directly inside */\r\n}\r\n\r\n.fc-time-grid .fc-content-skeleton {\r\n\tposition: absolute;\r\n\tz-index: 3;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tright: 0;\r\n}\r\n\r\n/* divs within a cell within the fc-content-skeleton */\r\n\r\n.fc-time-grid .fc-business-container {\r\n\tposition: relative;\r\n\tz-index: 1;\r\n}\r\n\r\n.fc-time-grid .fc-bgevent-container {\r\n\tposition: relative;\r\n\tz-index: 2;\r\n}\r\n\r\n.fc-time-grid .fc-highlight-container {\r\n\tposition: relative;\r\n\tz-index: 3;\r\n}\r\n\r\n.fc-time-grid .fc-event-container {\r\n\tposition: relative;\r\n\tz-index: 4;\r\n}\r\n\r\n.fc-time-grid .fc-now-indicator-line {\r\n\tz-index: 5;\r\n}\r\n\r\n.fc-time-grid .fc-helper-container { /* also is fc-event-container */\r\n\tposition: relative;\r\n\tz-index: 6;\r\n}\r\n\r\n\r\n/* TimeGrid Slats (lines that run horizontally)\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-time-grid .fc-slats td {\r\n\theight: 1.5em;\r\n\tborder-bottom: 0; /* each cell is responsible for its top border */\r\n}\r\n\r\n.fc-time-grid .fc-slats .fc-minor td {\r\n\tborder-top-style: dotted;\r\n}\r\n\r\n.fc-time-grid .fc-slats .ui-widget-content { /* for jqui theme */\r\n\tbackground: none; /* see through to fc-bg */\r\n}\r\n\r\n\r\n/* TimeGrid Highlighting Slots\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-time-grid .fc-highlight-container { /* a div within a cell within the fc-highlight-skeleton */\r\n\tposition: relative; /* scopes the left/right of the fc-highlight to be in the column */\r\n}\r\n\r\n.fc-time-grid .fc-highlight {\r\n\tposition: absolute;\r\n\tleft: 0;\r\n\tright: 0;\r\n\t/* top and bottom will be in by JS */\r\n}\r\n\r\n\r\n/* TimeGrid Event Containment\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-ltr .fc-time-grid .fc-event-container { /* space on the sides of events for LTR (default) */\r\n\tmargin: 0 2.5% 0 2px;\r\n}\r\n\r\n.fc-rtl .fc-time-grid .fc-event-container { /* space on the sides of events for RTL */\r\n\tmargin: 0 2px 0 2.5%;\r\n}\r\n\r\n.fc-time-grid .fc-event,\r\n.fc-time-grid .fc-bgevent {\r\n\tposition: absolute;\r\n\tz-index: 1; /* scope inner z-index's */\r\n}\r\n\r\n.fc-time-grid .fc-bgevent {\r\n\t/* background events always span full width */\r\n\tleft: 0;\r\n\tright: 0;\r\n}\r\n\r\n\r\n/* Generic Vertical Event\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-v-event.fc-not-start { /* events that are continuing from another day */\r\n\t/* replace space made by the top border with padding */\r\n\tborder-top-width: 0;\r\n\tpadding-top: 1px;\r\n\r\n\t/* remove top rounded corners */\r\n\tborder-top-left-radius: 0;\r\n\tborder-top-right-radius: 0;\r\n}\r\n\r\n.fc-v-event.fc-not-end {\r\n\t/* replace space made by the top border with padding */\r\n\tborder-bottom-width: 0;\r\n\tpadding-bottom: 1px;\r\n\r\n\t/* remove bottom rounded corners */\r\n\tborder-bottom-left-radius: 0;\r\n\tborder-bottom-right-radius: 0;\r\n}\r\n\r\n\r\n/* TimeGrid Event Styling\r\n----------------------------------------------------------------------------------------------------\r\nWe use the full \"fc-time-grid-event\" class instead of using descendants because the event won't\r\nbe a descendant of the grid when it is being dragged.\r\n*/\r\n\r\n.fc-time-grid-event {\r\n\toverflow: hidden; /* don't let the bg flow over rounded corners */\r\n}\r\n\r\n.fc-time-grid-event .fc-time,\r\n.fc-time-grid-event .fc-title {\r\n\tpadding: 0 1px;\r\n}\r\n\r\n.fc-time-grid-event .fc-time {\r\n\tfont-size: .85em;\r\n\twhite-space: nowrap;\r\n}\r\n\r\n/* short mode, where time and title are on the same line */\r\n\r\n.fc-time-grid-event.fc-short .fc-content {\r\n\t/* don't wrap to second line (now that contents will be inline) */\r\n\twhite-space: nowrap;\r\n}\r\n\r\n.fc-time-grid-event.fc-short .fc-time,\r\n.fc-time-grid-event.fc-short .fc-title {\r\n\t/* put the time and title on the same line */\r\n\tdisplay: inline-block;\r\n\tvertical-align: top;\r\n}\r\n\r\n.fc-time-grid-event.fc-short .fc-time span {\r\n\tdisplay: none; /* don't display the full time text... */\r\n}\r\n\r\n.fc-time-grid-event.fc-short .fc-time:before {\r\n\tcontent: attr(data-start); /* ...instead, display only the start time */\r\n}\r\n\r\n.fc-time-grid-event.fc-short .fc-time:after {\r\n\tcontent: \"\\000A0-\\000A0\"; /* seperate with a dash, wrapped in nbsp's */\r\n}\r\n\r\n.fc-time-grid-event.fc-short .fc-title {\r\n\tfont-size: .85em; /* make the title text the same size as the time */\r\n\tpadding: 0; /* undo padding from above */\r\n}\r\n\r\n/* resizer */\r\n\r\n.fc-time-grid-event .fc-resizer {\r\n\tleft: 0;\r\n\tright: 0;\r\n\tbottom: 0;\r\n\theight: 8px;\r\n\toverflow: hidden;\r\n\tline-height: 8px;\r\n\tfont-size: 11px;\r\n\tfont-family: monospace;\r\n\ttext-align: center;\r\n\tcursor: s-resize;\r\n}\r\n\r\n.fc-time-grid-event .fc-resizer:after {\r\n\tcontent: \"=\";\r\n}\r\n\r\n\r\n/* Now Indicator\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-time-grid .fc-now-indicator-line {\r\n\tborder-top-width: 1px;\r\n\tleft: 0;\r\n\tright: 0;\r\n}\r\n\r\n/* arrow on axis */\r\n\r\n.fc-time-grid .fc-now-indicator-arrow {\r\n\tmargin-top: -5px; /* vertically center on top coordinate */\r\n}\r\n\r\n.fc-ltr .fc-time-grid .fc-now-indicator-arrow {\r\n\tleft: 0;\r\n\t/* triangle pointing right... */\r\n\tborder-width: 5px 0 5px 6px;\r\n\tborder-top-color: transparent;\r\n\tborder-bottom-color: transparent;\r\n}\r\n\r\n.fc-rtl .fc-time-grid .fc-now-indicator-arrow {\r\n\tright: 0;\r\n\t/* triangle pointing left... */\r\n\tborder-width: 5px 6px 5px 0;\r\n\tborder-top-color: transparent;\r\n\tborder-bottom-color: transparent;\r\n}\r\n", ""]);
+	// imports
+
+
+	// module
+	exports.push([module.id, "/*!\r\n * FullCalendar v2.6.1 Stylesheet\r\n * Docs & License: http://fullcalendar.io/\r\n * (c) 2015 Adam Shaw\r\n */\r\n\r\n\r\n.fc {\r\n\tdirection: ltr;\r\n\ttext-align: left;\r\n}\r\n\r\n.fc-rtl {\r\n\ttext-align: right;\r\n}\r\n\r\nbody .fc { /* extra precedence to overcome jqui */\r\n\tfont-size: 1em;\r\n}\r\n\r\n\r\n/* Colors\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-unthemed th,\r\n.fc-unthemed td,\r\n.fc-unthemed thead,\r\n.fc-unthemed tbody,\r\n.fc-unthemed .fc-divider,\r\n.fc-unthemed .fc-row,\r\n.fc-unthemed .fc-popover {\r\n\tborder-color: #ddd;\r\n}\r\n\r\n.fc-unthemed .fc-popover {\r\n\tbackground-color: #fff;\r\n}\r\n\r\n.fc-unthemed .fc-divider,\r\n.fc-unthemed .fc-popover .fc-header {\r\n\tbackground: #eee;\r\n}\r\n\r\n.fc-unthemed .fc-popover .fc-header .fc-close {\r\n\tcolor: #666;\r\n}\r\n\r\n.fc-unthemed .fc-today {\r\n\tbackground: #fcf8e3;\r\n}\r\n\r\n.fc-highlight { /* when user is selecting cells */\r\n\tbackground: #bce8f1;\r\n\topacity: .3;\r\n\tfilter: alpha(opacity=30); /* for IE */\r\n}\r\n\r\n.fc-bgevent { /* default look for background events */\r\n\tbackground: rgb(143, 223, 130);\r\n\topacity: .3;\r\n\tfilter: alpha(opacity=30); /* for IE */\r\n}\r\n\r\n.fc-nonbusiness { /* default look for non-business-hours areas */\r\n\t/* will inherit .fc-bgevent's styles */\r\n\tbackground: #d7d7d7;\r\n}\r\n\r\n\r\n/* Icons (inline elements with styled text that mock arrow icons)\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-icon {\r\n\tdisplay: inline-block;\r\n\twidth: 1em;\r\n\theight: 1em;\r\n\tline-height: 1em;\r\n\tfont-size: 1em;\r\n\ttext-align: center;\r\n\toverflow: hidden;\r\n\tfont-family: \"Courier New\", Courier, monospace;\r\n\r\n\t/* don't allow browser text-selection */\r\n\t-webkit-touch-callout: none;\r\n\t-webkit-user-select: none;\r\n\t-khtml-user-select: none;\r\n\t-moz-user-select: none;\r\n\t-ms-user-select: none;\r\n\tuser-select: none;\r\n\t}\r\n\r\n/*\r\nAcceptable font-family overrides for individual icons:\r\n\t\"Arial\", sans-serif\r\n\t\"Times New Roman\", serif\r\n\r\nNOTE: use percentage font sizes or else old IE chokes\r\n*/\r\n\r\n.fc-icon:after {\r\n\tposition: relative;\r\n\tmargin: 0 -1em; /* ensures character will be centered, regardless of width */\r\n}\r\n\r\n.fc-icon-left-single-arrow:after {\r\n\tcontent: \"\\2039\";\r\n\tfont-weight: bold;\r\n\tfont-size: 200%;\r\n\ttop: -7%;\r\n\tleft: 3%;\r\n}\r\n\r\n.fc-icon-right-single-arrow:after {\r\n\tcontent: \"\\203A\";\r\n\tfont-weight: bold;\r\n\tfont-size: 200%;\r\n\ttop: -7%;\r\n\tleft: -3%;\r\n}\r\n\r\n.fc-icon-left-double-arrow:after {\r\n\tcontent: \"\\AB\";\r\n\tfont-size: 160%;\r\n\ttop: -7%;\r\n}\r\n\r\n.fc-icon-right-double-arrow:after {\r\n\tcontent: \"\\BB\";\r\n\tfont-size: 160%;\r\n\ttop: -7%;\r\n}\r\n\r\n.fc-icon-left-triangle:after {\r\n\tcontent: \"\\25C4\";\r\n\tfont-size: 125%;\r\n\ttop: 3%;\r\n\tleft: -2%;\r\n}\r\n\r\n.fc-icon-right-triangle:after {\r\n\tcontent: \"\\25BA\";\r\n\tfont-size: 125%;\r\n\ttop: 3%;\r\n\tleft: 2%;\r\n}\r\n\r\n.fc-icon-down-triangle:after {\r\n\tcontent: \"\\25BC\";\r\n\tfont-size: 125%;\r\n\ttop: 2%;\r\n}\r\n\r\n.fc-icon-x:after {\r\n\tcontent: \"\\D7\";\r\n\tfont-size: 200%;\r\n\ttop: 6%;\r\n}\r\n\r\n\r\n/* Buttons (styled <button> tags, normalized to work cross-browser)\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc button {\r\n\t/* force height to include the border and padding */\r\n\t-moz-box-sizing: border-box;\r\n\t-webkit-box-sizing: border-box;\r\n\tbox-sizing: border-box;\r\n\r\n\t/* dimensions */\r\n\tmargin: 0;\r\n\theight: 2.1em;\r\n\tpadding: 0 .6em;\r\n\r\n\t/* text & cursor */\r\n\tfont-size: 1em; /* normalize */\r\n\twhite-space: nowrap;\r\n\tcursor: pointer;\r\n}\r\n\r\n/* Firefox has an annoying inner border */\r\n.fc button::-moz-focus-inner { margin: 0; padding: 0; }\r\n\t\r\n.fc-state-default { /* non-theme */\r\n\tborder: 1px solid;\r\n}\r\n\r\n.fc-state-default.fc-corner-left { /* non-theme */\r\n\tborder-top-left-radius: 4px;\r\n\tborder-bottom-left-radius: 4px;\r\n}\r\n\r\n.fc-state-default.fc-corner-right { /* non-theme */\r\n\tborder-top-right-radius: 4px;\r\n\tborder-bottom-right-radius: 4px;\r\n}\r\n\r\n/* icons in buttons */\r\n\r\n.fc button .fc-icon { /* non-theme */\r\n\tposition: relative;\r\n\ttop: -0.05em; /* seems to be a good adjustment across browsers */\r\n\tmargin: 0 .2em;\r\n\tvertical-align: middle;\r\n}\r\n\t\r\n/*\r\n  button states\r\n  borrowed from twitter bootstrap (http://twitter.github.com/bootstrap/)\r\n*/\r\n\r\n.fc-state-default {\r\n\tbackground-color: #f5f5f5;\r\n\tbackground-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);\r\n\tbackground-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));\r\n\tbackground-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);\r\n\tbackground-image: -o-linear-gradient(top, #ffffff, #e6e6e6);\r\n\tbackground-image: linear-gradient(to bottom, #ffffff, #e6e6e6);\r\n\tbackground-repeat: repeat-x;\r\n\tborder-color: #e6e6e6 #e6e6e6 #bfbfbf;\r\n\tborder-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);\r\n\tcolor: #333;\r\n\ttext-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);\r\n\tbox-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);\r\n}\r\n\r\n.fc-state-hover,\r\n.fc-state-down,\r\n.fc-state-active,\r\n.fc-state-disabled {\r\n\tcolor: #333333;\r\n\tbackground-color: #e6e6e6;\r\n}\r\n\r\n.fc-state-hover {\r\n\tcolor: #333333;\r\n\ttext-decoration: none;\r\n\tbackground-position: 0 -15px;\r\n\t-webkit-transition: background-position 0.1s linear;\r\n\t   -moz-transition: background-position 0.1s linear;\r\n\t     -o-transition: background-position 0.1s linear;\r\n\t        transition: background-position 0.1s linear;\r\n}\r\n\r\n.fc-state-down,\r\n.fc-state-active {\r\n\tbackground-color: #cccccc;\r\n\tbackground-image: none;\r\n\tbox-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);\r\n}\r\n\r\n.fc-state-disabled {\r\n\tcursor: default;\r\n\tbackground-image: none;\r\n\topacity: 0.65;\r\n\tfilter: alpha(opacity=65);\r\n\tbox-shadow: none;\r\n}\r\n\r\n\r\n/* Buttons Groups\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-button-group {\r\n\tdisplay: inline-block;\r\n}\r\n\r\n/*\r\nevery button that is not first in a button group should scootch over one pixel and cover the\r\nprevious button's border...\r\n*/\r\n\r\n.fc .fc-button-group > * { /* extra precedence b/c buttons have margin set to zero */\r\n\tfloat: left;\r\n\tmargin: 0 0 0 -1px;\r\n}\r\n\r\n.fc .fc-button-group > :first-child { /* same */\r\n\tmargin-left: 0;\r\n}\r\n\r\n\r\n/* Popover\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-popover {\r\n\tposition: absolute;\r\n\tbox-shadow: 0 2px 6px rgba(0,0,0,.15);\r\n}\r\n\r\n.fc-popover .fc-header { /* TODO: be more consistent with fc-head/fc-body */\r\n\tpadding: 2px 4px;\r\n}\r\n\r\n.fc-popover .fc-header .fc-title {\r\n\tmargin: 0 2px;\r\n}\r\n\r\n.fc-popover .fc-header .fc-close {\r\n\tcursor: pointer;\r\n}\r\n\r\n.fc-ltr .fc-popover .fc-header .fc-title,\r\n.fc-rtl .fc-popover .fc-header .fc-close {\r\n\tfloat: left;\r\n}\r\n\r\n.fc-rtl .fc-popover .fc-header .fc-title,\r\n.fc-ltr .fc-popover .fc-header .fc-close {\r\n\tfloat: right;\r\n}\r\n\r\n/* unthemed */\r\n\r\n.fc-unthemed .fc-popover {\r\n\tborder-width: 1px;\r\n\tborder-style: solid;\r\n}\r\n\r\n.fc-unthemed .fc-popover .fc-header .fc-close {\r\n\tfont-size: .9em;\r\n\tmargin-top: 2px;\r\n}\r\n\r\n/* jqui themed */\r\n\r\n.fc-popover > .ui-widget-header + .ui-widget-content {\r\n\tborder-top: 0; /* where they meet, let the header have the border */\r\n}\r\n\r\n\r\n/* Misc Reusable Components\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-divider {\r\n\tborder-style: solid;\r\n\tborder-width: 1px;\r\n}\r\n\r\nhr.fc-divider {\r\n\theight: 0;\r\n\tmargin: 0;\r\n\tpadding: 0 0 2px; /* height is unreliable across browsers, so use padding */\r\n\tborder-width: 1px 0;\r\n}\r\n\r\n.fc-clear {\r\n\tclear: both;\r\n}\r\n\r\n.fc-bg,\r\n.fc-bgevent-skeleton,\r\n.fc-highlight-skeleton,\r\n.fc-helper-skeleton {\r\n\t/* these element should always cling to top-left/right corners */\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tright: 0;\r\n}\r\n\r\n.fc-bg {\r\n\tbottom: 0; /* strech bg to bottom edge */\r\n}\r\n\r\n.fc-bg table {\r\n\theight: 100%; /* strech bg to bottom edge */\r\n}\r\n\r\n\r\n/* Tables\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc table {\r\n\twidth: 100%;\r\n\ttable-layout: fixed;\r\n\tborder-collapse: collapse;\r\n\tborder-spacing: 0;\r\n\tfont-size: 1em; /* normalize cross-browser */\r\n}\r\n\r\n.fc th {\r\n\ttext-align: center;\r\n}\r\n\r\n.fc th,\r\n.fc td {\r\n\tborder-style: solid;\r\n\tborder-width: 1px;\r\n\tpadding: 0;\r\n\tvertical-align: top;\r\n}\r\n\r\n.fc td.fc-today {\r\n\tborder-style: double; /* overcome neighboring borders */\r\n}\r\n\r\n\r\n/* Fake Table Rows\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc .fc-row { /* extra precedence to overcome themes w/ .ui-widget-content forcing a 1px border */\r\n\t/* no visible border by default. but make available if need be (scrollbar width compensation) */\r\n\tborder-style: solid;\r\n\tborder-width: 0;\r\n}\r\n\r\n.fc-row table {\r\n\t/* don't put left/right border on anything within a fake row.\r\n\t   the outer tbody will worry about this */\r\n\tborder-left: 0 hidden transparent;\r\n\tborder-right: 0 hidden transparent;\r\n\r\n\t/* no bottom borders on rows */\r\n\tborder-bottom: 0 hidden transparent; \r\n}\r\n\r\n.fc-row:first-child table {\r\n\tborder-top: 0 hidden transparent; /* no top border on first row */\r\n}\r\n\r\n\r\n/* Day Row (used within the header and the DayGrid)\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-row {\r\n\tposition: relative;\r\n}\r\n\r\n.fc-row .fc-bg {\r\n\tz-index: 1;\r\n}\r\n\r\n/* highlighting cells & background event skeleton */\r\n\r\n.fc-row .fc-bgevent-skeleton,\r\n.fc-row .fc-highlight-skeleton {\r\n\tbottom: 0; /* stretch skeleton to bottom of row */\r\n}\r\n\r\n.fc-row .fc-bgevent-skeleton table,\r\n.fc-row .fc-highlight-skeleton table {\r\n\theight: 100%; /* stretch skeleton to bottom of row */\r\n}\r\n\r\n.fc-row .fc-highlight-skeleton td,\r\n.fc-row .fc-bgevent-skeleton td {\r\n\tborder-color: transparent;\r\n}\r\n\r\n.fc-row .fc-bgevent-skeleton {\r\n\tz-index: 2;\r\n\r\n}\r\n\r\n.fc-row .fc-highlight-skeleton {\r\n\tz-index: 3;\r\n}\r\n\r\n/*\r\nrow content (which contains day/week numbers and events) as well as \"helper\" (which contains\r\ntemporary rendered events).\r\n*/\r\n\r\n.fc-row .fc-content-skeleton {\r\n\tposition: relative;\r\n\tz-index: 4;\r\n\tpadding-bottom: 2px; /* matches the space above the events */\r\n}\r\n\r\n.fc-row .fc-helper-skeleton {\r\n\tz-index: 5;\r\n}\r\n\r\n.fc-row .fc-content-skeleton td,\r\n.fc-row .fc-helper-skeleton td {\r\n\t/* see-through to the background below */\r\n\tbackground: none; /* in case <td>s are globally styled */\r\n\tborder-color: transparent;\r\n\r\n\t/* don't put a border between events and/or the day number */\r\n\tborder-bottom: 0;\r\n}\r\n\r\n.fc-row .fc-content-skeleton tbody td, /* cells with events inside (so NOT the day number cell) */\r\n.fc-row .fc-helper-skeleton tbody td {\r\n\t/* don't put a border between event cells */\r\n\tborder-top: 0;\r\n}\r\n\r\n\r\n/* Scrolling Container\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-scroller { /* this class goes on elements for guaranteed vertical scrollbars */\r\n\toverflow-y: scroll;\r\n\toverflow-x: hidden;\r\n}\r\n\r\n.fc-scroller > * { /* we expect an immediate inner element */\r\n\tposition: relative; /* re-scope all positions */\r\n\twidth: 100%; /* hack to force re-sizing this inner element when scrollbars appear/disappear */\r\n\toverflow: hidden; /* don't let negative margins or absolute positioning create further scroll */\r\n}\r\n\r\n\r\n/* Global Event Styles\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-event {\r\n\tposition: relative; /* for resize handle and other inner positioning */\r\n\tdisplay: block; /* make the <a> tag block */\r\n\tfont-size: .85em;\r\n\tline-height: 1.3;\r\n\tborder-radius: 3px;\r\n\tborder: 1px solid #3a87ad; /* default BORDER color */\r\n\tbackground-color: #3a87ad; /* default BACKGROUND color */\r\n\tfont-weight: normal; /* undo jqui's ui-widget-header bold */\r\n}\r\n\r\n/* overpower some of bootstrap's and jqui's styles on <a> tags */\r\n.fc-event,\r\n.fc-event:hover,\r\n.ui-widget .fc-event {\r\n\tcolor: #fff; /* default TEXT color */\r\n\ttext-decoration: none; /* if <a> has an href */\r\n}\r\n\r\n.fc-event[href],\r\n.fc-event.fc-draggable {\r\n\tcursor: pointer; /* give events with links and draggable events a hand mouse pointer */\r\n}\r\n\r\n.fc-not-allowed, /* causes a \"warning\" cursor. applied on body */\r\n.fc-not-allowed .fc-event { /* to override an event's custom cursor */\r\n\tcursor: not-allowed;\r\n}\r\n\r\n.fc-event .fc-bg { /* the generic .fc-bg already does position */\r\n\tz-index: 1;\r\n\tbackground: #fff;\r\n\topacity: .25;\r\n\tfilter: alpha(opacity=25); /* for IE */\r\n}\r\n\r\n.fc-event .fc-content {\r\n\tposition: relative;\r\n\tz-index: 2;\r\n}\r\n\r\n.fc-event .fc-resizer {\r\n\tposition: absolute;\r\n\tz-index: 3;\r\n}\r\n\r\n\r\n/* Horizontal Events\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n/* events that are continuing to/from another week. kill rounded corners and butt up against edge */\r\n\r\n.fc-ltr .fc-h-event.fc-not-start,\r\n.fc-rtl .fc-h-event.fc-not-end {\r\n\tmargin-left: 0;\r\n\tborder-left-width: 0;\r\n\tpadding-left: 1px; /* replace the border with padding */\r\n\tborder-top-left-radius: 0;\r\n\tborder-bottom-left-radius: 0;\r\n}\r\n\r\n.fc-ltr .fc-h-event.fc-not-end,\r\n.fc-rtl .fc-h-event.fc-not-start {\r\n\tmargin-right: 0;\r\n\tborder-right-width: 0;\r\n\tpadding-right: 1px; /* replace the border with padding */\r\n\tborder-top-right-radius: 0;\r\n\tborder-bottom-right-radius: 0;\r\n}\r\n\r\n/* resizer */\r\n\r\n.fc-h-event .fc-resizer { /* positioned it to overcome the event's borders */\r\n\ttop: -1px;\r\n\tbottom: -1px;\r\n\tleft: -1px;\r\n\tright: -1px;\r\n\twidth: 5px;\r\n}\r\n\r\n/* left resizer  */\r\n.fc-ltr .fc-h-event .fc-start-resizer,\r\n.fc-ltr .fc-h-event .fc-start-resizer:before,\r\n.fc-ltr .fc-h-event .fc-start-resizer:after,\r\n.fc-rtl .fc-h-event .fc-end-resizer,\r\n.fc-rtl .fc-h-event .fc-end-resizer:before,\r\n.fc-rtl .fc-h-event .fc-end-resizer:after {\r\n\tright: auto; /* ignore the right and only use the left */\r\n\tcursor: w-resize;\r\n}\r\n\r\n/* right resizer */\r\n.fc-ltr .fc-h-event .fc-end-resizer,\r\n.fc-ltr .fc-h-event .fc-end-resizer:before,\r\n.fc-ltr .fc-h-event .fc-end-resizer:after,\r\n.fc-rtl .fc-h-event .fc-start-resizer,\r\n.fc-rtl .fc-h-event .fc-start-resizer:before,\r\n.fc-rtl .fc-h-event .fc-start-resizer:after {\r\n\tleft: auto; /* ignore the left and only use the right */\r\n\tcursor: e-resize;\r\n}\r\n\r\n\r\n/* DayGrid events\r\n----------------------------------------------------------------------------------------------------\r\nWe use the full \"fc-day-grid-event\" class instead of using descendants because the event won't\r\nbe a descendant of the grid when it is being dragged.\r\n*/\r\n\r\n.fc-day-grid-event {\r\n\tmargin: 1px 2px 0; /* spacing between events and edges */\r\n\tpadding: 0 1px;\r\n}\r\n\r\n\r\n.fc-day-grid-event .fc-content { /* force events to be one-line tall */\r\n\twhite-space: nowrap;\r\n\toverflow: hidden;\r\n}\r\n\r\n.fc-day-grid-event .fc-time {\r\n\tfont-weight: bold;\r\n}\r\n\r\n.fc-day-grid-event .fc-resizer { /* enlarge the default hit area */\r\n\tleft: -3px;\r\n\tright: -3px;\r\n\twidth: 7px;\r\n}\r\n\r\n\r\n/* Event Limiting\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n/* \"more\" link that represents hidden events */\r\n\r\na.fc-more {\r\n\tmargin: 1px 3px;\r\n\tfont-size: .85em;\r\n\tcursor: pointer;\r\n\ttext-decoration: none;\r\n}\r\n\r\na.fc-more:hover {\r\n\ttext-decoration: underline;\r\n}\r\n\r\n.fc-limited { /* rows and cells that are hidden because of a \"more\" link */\r\n\tdisplay: none;\r\n}\r\n\r\n/* popover that appears when \"more\" link is clicked */\r\n\r\n.fc-day-grid .fc-row {\r\n\tz-index: 1; /* make the \"more\" popover one higher than this */\r\n}\r\n\r\n.fc-more-popover {\r\n\tz-index: 2;\r\n\twidth: 220px;\r\n}\r\n\r\n.fc-more-popover .fc-event-container {\r\n\tpadding: 10px;\r\n}\r\n\r\n\r\n/* Now Indicator\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-now-indicator {\r\n\tposition: absolute;\r\n\tborder: 0 solid red;\r\n}\r\n\r\n/* Toolbar\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-toolbar {\r\n\ttext-align: center;\r\n\tmargin-bottom: 1em;\r\n}\r\n\r\n.fc-toolbar .fc-left {\r\n\tfloat: left;\r\n}\r\n\r\n.fc-toolbar .fc-right {\r\n\tfloat: right;\r\n}\r\n\r\n.fc-toolbar .fc-center {\r\n\tdisplay: inline-block;\r\n}\r\n\r\n/* the things within each left/right/center section */\r\n.fc .fc-toolbar > * > * { /* extra precedence to override button border margins */\r\n\tfloat: left;\r\n\tmargin-left: .75em;\r\n}\r\n\r\n/* the first thing within each left/center/right section */\r\n.fc .fc-toolbar > * > :first-child { /* extra precedence to override button border margins */\r\n\tmargin-left: 0;\r\n}\r\n\t\r\n/* title text */\r\n\r\n.fc-toolbar h2 {\r\n\tmargin: 0;\r\n}\r\n\r\n/* button layering (for border precedence) */\r\n\r\n.fc-toolbar button {\r\n\tposition: relative;\r\n}\r\n\r\n.fc-toolbar .fc-state-hover,\r\n.fc-toolbar .ui-state-hover {\r\n\tz-index: 2;\r\n}\r\n\t\r\n.fc-toolbar .fc-state-down {\r\n\tz-index: 3;\r\n}\r\n\r\n.fc-toolbar .fc-state-active,\r\n.fc-toolbar .ui-state-active {\r\n\tz-index: 4;\r\n}\r\n\r\n.fc-toolbar button:focus {\r\n\tz-index: 5;\r\n}\r\n\r\n\r\n/* View Structure\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n/* undo twitter bootstrap's box-sizing rules. normalizes positioning techniques */\r\n/* don't do this for the toolbar because we'll want bootstrap to style those buttons as some pt */\r\n.fc-view-container *,\r\n.fc-view-container *:before,\r\n.fc-view-container *:after {\r\n\t-webkit-box-sizing: content-box;\r\n\t   -moz-box-sizing: content-box;\r\n\t        box-sizing: content-box;\r\n}\r\n\r\n.fc-view, /* scope positioning and z-index's for everything within the view */\r\n.fc-view > table { /* so dragged elements can be above the view's main element */\r\n\tposition: relative;\r\n\tz-index: 1;\r\n}\r\n\r\n/* BasicView\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n/* day row structure */\r\n\r\n.fc-basicWeek-view .fc-content-skeleton,\r\n.fc-basicDay-view .fc-content-skeleton {\r\n\t/* we are sure there are no day numbers in these views, so... */\r\n\tpadding-top: 1px; /* add a pixel to make sure there are 2px padding above events */\r\n\tpadding-bottom: 1em; /* ensure a space at bottom of cell for user selecting/clicking */\r\n}\r\n\r\n.fc-basic-view .fc-body .fc-row {\r\n\tmin-height: 4em; /* ensure that all rows are at least this tall */\r\n}\r\n\r\n/* a \"rigid\" row will take up a constant amount of height because content-skeleton is absolute */\r\n\r\n.fc-row.fc-rigid {\r\n\toverflow: hidden;\r\n}\r\n\r\n.fc-row.fc-rigid .fc-content-skeleton {\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tright: 0;\r\n}\r\n\r\n/* week and day number styling */\r\n\r\n.fc-basic-view .fc-week-number,\r\n.fc-basic-view .fc-day-number {\r\n\tpadding: 0 2px;\r\n}\r\n\r\n.fc-basic-view td.fc-week-number span,\r\n.fc-basic-view td.fc-day-number {\r\n\tpadding-top: 2px;\r\n\tpadding-bottom: 2px;\r\n}\r\n\r\n.fc-basic-view .fc-week-number {\r\n\ttext-align: center;\r\n}\r\n\r\n.fc-basic-view .fc-week-number span {\r\n\t/* work around the way we do column resizing and ensure a minimum width */\r\n\tdisplay: inline-block;\r\n\tmin-width: 1.25em;\r\n}\r\n\r\n.fc-ltr .fc-basic-view .fc-day-number {\r\n\ttext-align: right;\r\n}\r\n\r\n.fc-rtl .fc-basic-view .fc-day-number {\r\n\ttext-align: left;\r\n}\r\n\r\n.fc-day-number.fc-other-month {\r\n\topacity: 0.3;\r\n\tfilter: alpha(opacity=30); /* for IE */\r\n\t/* opacity with small font can sometimes look too faded\r\n\t   might want to set the 'color' property instead\r\n\t   making day-numbers bold also fixes the problem */\r\n}\r\n\r\n/* AgendaView all-day area\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-agenda-view .fc-day-grid {\r\n\tposition: relative;\r\n\tz-index: 2; /* so the \"more..\" popover will be over the time grid */\r\n}\r\n\r\n.fc-agenda-view .fc-day-grid .fc-row {\r\n\tmin-height: 3em; /* all-day section will never get shorter than this */\r\n}\r\n\r\n.fc-agenda-view .fc-day-grid .fc-row .fc-content-skeleton {\r\n\tpadding-top: 1px; /* add a pixel to make sure there are 2px padding above events */\r\n\tpadding-bottom: 1em; /* give space underneath events for clicking/selecting days */\r\n}\r\n\r\n\r\n/* TimeGrid axis running down the side (for both the all-day area and the slot area)\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc .fc-axis { /* .fc to overcome default cell styles */\r\n\tvertical-align: middle;\r\n\tpadding: 0 4px;\r\n\twhite-space: nowrap;\r\n}\r\n\r\n.fc-ltr .fc-axis {\r\n\ttext-align: right;\r\n}\r\n\r\n.fc-rtl .fc-axis {\r\n\ttext-align: left;\r\n}\r\n\r\n.ui-widget td.fc-axis {\r\n\tfont-weight: normal; /* overcome jqui theme making it bold */\r\n}\r\n\r\n\r\n/* TimeGrid Structure\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-time-grid-container, /* so scroll container's z-index is below all-day */\r\n.fc-time-grid { /* so slats/bg/content/etc positions get scoped within here */\r\n\tposition: relative;\r\n\tz-index: 1;\r\n}\r\n\r\n.fc-time-grid {\r\n\tmin-height: 100%; /* so if height setting is 'auto', .fc-bg stretches to fill height */\r\n}\r\n\r\n.fc-time-grid table { /* don't put outer borders on slats/bg/content/etc */\r\n\tborder: 0 hidden transparent;\r\n}\r\n\r\n.fc-time-grid > .fc-bg {\r\n\tz-index: 1;\r\n}\r\n\r\n.fc-time-grid .fc-slats,\r\n.fc-time-grid > hr { /* the <hr> AgendaView injects when grid is shorter than scroller */\r\n\tposition: relative;\r\n\tz-index: 2;\r\n}\r\n\r\n.fc-time-grid .fc-content-col {\r\n\tposition: relative; /* because now-indicator lives directly inside */\r\n}\r\n\r\n.fc-time-grid .fc-content-skeleton {\r\n\tposition: absolute;\r\n\tz-index: 3;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tright: 0;\r\n}\r\n\r\n/* divs within a cell within the fc-content-skeleton */\r\n\r\n.fc-time-grid .fc-business-container {\r\n\tposition: relative;\r\n\tz-index: 1;\r\n}\r\n\r\n.fc-time-grid .fc-bgevent-container {\r\n\tposition: relative;\r\n\tz-index: 2;\r\n}\r\n\r\n.fc-time-grid .fc-highlight-container {\r\n\tposition: relative;\r\n\tz-index: 3;\r\n}\r\n\r\n.fc-time-grid .fc-event-container {\r\n\tposition: relative;\r\n\tz-index: 4;\r\n}\r\n\r\n.fc-time-grid .fc-now-indicator-line {\r\n\tz-index: 5;\r\n}\r\n\r\n.fc-time-grid .fc-helper-container { /* also is fc-event-container */\r\n\tposition: relative;\r\n\tz-index: 6;\r\n}\r\n\r\n\r\n/* TimeGrid Slats (lines that run horizontally)\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-time-grid .fc-slats td {\r\n\theight: 1.5em;\r\n\tborder-bottom: 0; /* each cell is responsible for its top border */\r\n}\r\n\r\n.fc-time-grid .fc-slats .fc-minor td {\r\n\tborder-top-style: dotted;\r\n}\r\n\r\n.fc-time-grid .fc-slats .ui-widget-content { /* for jqui theme */\r\n\tbackground: none; /* see through to fc-bg */\r\n}\r\n\r\n\r\n/* TimeGrid Highlighting Slots\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-time-grid .fc-highlight-container { /* a div within a cell within the fc-highlight-skeleton */\r\n\tposition: relative; /* scopes the left/right of the fc-highlight to be in the column */\r\n}\r\n\r\n.fc-time-grid .fc-highlight {\r\n\tposition: absolute;\r\n\tleft: 0;\r\n\tright: 0;\r\n\t/* top and bottom will be in by JS */\r\n}\r\n\r\n\r\n/* TimeGrid Event Containment\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-ltr .fc-time-grid .fc-event-container { /* space on the sides of events for LTR (default) */\r\n\tmargin: 0 2.5% 0 2px;\r\n}\r\n\r\n.fc-rtl .fc-time-grid .fc-event-container { /* space on the sides of events for RTL */\r\n\tmargin: 0 2px 0 2.5%;\r\n}\r\n\r\n.fc-time-grid .fc-event,\r\n.fc-time-grid .fc-bgevent {\r\n\tposition: absolute;\r\n\tz-index: 1; /* scope inner z-index's */\r\n}\r\n\r\n.fc-time-grid .fc-bgevent {\r\n\t/* background events always span full width */\r\n\tleft: 0;\r\n\tright: 0;\r\n}\r\n\r\n\r\n/* Generic Vertical Event\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-v-event.fc-not-start { /* events that are continuing from another day */\r\n\t/* replace space made by the top border with padding */\r\n\tborder-top-width: 0;\r\n\tpadding-top: 1px;\r\n\r\n\t/* remove top rounded corners */\r\n\tborder-top-left-radius: 0;\r\n\tborder-top-right-radius: 0;\r\n}\r\n\r\n.fc-v-event.fc-not-end {\r\n\t/* replace space made by the top border with padding */\r\n\tborder-bottom-width: 0;\r\n\tpadding-bottom: 1px;\r\n\r\n\t/* remove bottom rounded corners */\r\n\tborder-bottom-left-radius: 0;\r\n\tborder-bottom-right-radius: 0;\r\n}\r\n\r\n\r\n/* TimeGrid Event Styling\r\n----------------------------------------------------------------------------------------------------\r\nWe use the full \"fc-time-grid-event\" class instead of using descendants because the event won't\r\nbe a descendant of the grid when it is being dragged.\r\n*/\r\n\r\n.fc-time-grid-event {\r\n\toverflow: hidden; /* don't let the bg flow over rounded corners */\r\n}\r\n\r\n.fc-time-grid-event .fc-time,\r\n.fc-time-grid-event .fc-title {\r\n\tpadding: 0 1px;\r\n}\r\n\r\n.fc-time-grid-event .fc-time {\r\n\tfont-size: .85em;\r\n\twhite-space: nowrap;\r\n}\r\n\r\n/* short mode, where time and title are on the same line */\r\n\r\n.fc-time-grid-event.fc-short .fc-content {\r\n\t/* don't wrap to second line (now that contents will be inline) */\r\n\twhite-space: nowrap;\r\n}\r\n\r\n.fc-time-grid-event.fc-short .fc-time,\r\n.fc-time-grid-event.fc-short .fc-title {\r\n\t/* put the time and title on the same line */\r\n\tdisplay: inline-block;\r\n\tvertical-align: top;\r\n}\r\n\r\n.fc-time-grid-event.fc-short .fc-time span {\r\n\tdisplay: none; /* don't display the full time text... */\r\n}\r\n\r\n.fc-time-grid-event.fc-short .fc-time:before {\r\n\tcontent: attr(data-start); /* ...instead, display only the start time */\r\n}\r\n\r\n.fc-time-grid-event.fc-short .fc-time:after {\r\n\tcontent: \"\\A0-\\A0\"; /* seperate with a dash, wrapped in nbsp's */\r\n}\r\n\r\n.fc-time-grid-event.fc-short .fc-title {\r\n\tfont-size: .85em; /* make the title text the same size as the time */\r\n\tpadding: 0; /* undo padding from above */\r\n}\r\n\r\n/* resizer */\r\n\r\n.fc-time-grid-event .fc-resizer {\r\n\tleft: 0;\r\n\tright: 0;\r\n\tbottom: 0;\r\n\theight: 8px;\r\n\toverflow: hidden;\r\n\tline-height: 8px;\r\n\tfont-size: 11px;\r\n\tfont-family: monospace;\r\n\ttext-align: center;\r\n\tcursor: s-resize;\r\n}\r\n\r\n.fc-time-grid-event .fc-resizer:after {\r\n\tcontent: \"=\";\r\n}\r\n\r\n\r\n/* Now Indicator\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-time-grid .fc-now-indicator-line {\r\n\tborder-top-width: 1px;\r\n\tleft: 0;\r\n\tright: 0;\r\n}\r\n\r\n/* arrow on axis */\r\n\r\n.fc-time-grid .fc-now-indicator-arrow {\r\n\tmargin-top: -5px; /* vertically center on top coordinate */\r\n}\r\n\r\n.fc-ltr .fc-time-grid .fc-now-indicator-arrow {\r\n\tleft: 0;\r\n\t/* triangle pointing right... */\r\n\tborder-width: 5px 0 5px 6px;\r\n\tborder-top-color: transparent;\r\n\tborder-bottom-color: transparent;\r\n}\r\n\r\n.fc-rtl .fc-time-grid .fc-now-indicator-arrow {\r\n\tright: 0;\r\n\t/* triangle pointing left... */\r\n\tborder-width: 5px 6px 5px 0;\r\n\tborder-top-color: transparent;\r\n\tborder-bottom-color: transparent;\r\n}\r\n", ""]);
+
+	// exports
+
 
 /***/ },
 /* 592 */
@@ -62233,7 +63776,7 @@ webpackJsonp([0],[
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _jqueryUi = __webpack_require__(439);
+	var _jqueryUi = __webpack_require__(438);
 
 	var _jqueryUi2 = _interopRequireDefault(_jqueryUi);
 
@@ -62603,7 +64146,14 @@ webpackJsonp([0],[
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(466)();
+	// imports
+
+
+	// module
 	exports.push([module.id, "/*!\r\n * FullCalendar Scheduler v1.2.1\r\n * Docs & License: http://fullcalendar.io/scheduler/\r\n * (c) 2015 Adam Shaw\r\n */\r\n\r\n/* TODO: break this file up */\r\n\r\n/* Scroll Pane\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-scrollpane {\r\n\toverflow: hidden; /* for clipping scrollbars */\r\n\tposition: relative; /* so things like scrollfollowers can attach to this */\r\n}\r\n\r\n.fc-scrollpane-inner {\r\n\toverflow: hidden; /* for clipping inner content */\r\n\tposition: relative; /* origin for bg */\r\n\tbox-sizing: border-box; /* so that padding (for gutter) will be part of height */\r\n\tmin-height: 100%;\r\n}\r\n\r\n.fc-scrollpane-inner > .fc-bg {\r\n\tz-index: 1; /* make default? */\r\n}\r\n\r\n.fc-scrollpane-inner > .fc-content {\r\n\tz-index: 2; /* make default? */\r\n\tposition: relative; /* origin for inner content */\r\n}\r\n\r\n.fc-no-scrollbars::-webkit-scrollbar { /* might be applied to scrollpane-scroller */\r\n\t/* supresses rendering of native scrollbars */\r\n\twidth: 0;\r\n\theight: 0;\r\n}\r\n\r\n\r\n/* View Structure\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-rtl .fc-timeline {\r\n\tdirection: rtl;\r\n}\r\n\r\n.fc-timeline .fc-divider {\r\n\twidth: 3px;\r\n\tborder-style: double; /* overcome neighboring borders */\r\n}\r\n\r\n.fc-timeline .fc-head > tr > .fc-divider {\r\n\tborder-bottom: 0;\r\n}\r\n\r\n.fc-timeline .fc-body > tr > .fc-divider {\r\n\tborder-top: 0;\r\n}\r\n\r\n.fc-timeline .fc-body .fc-divider.ui-widget-header {\r\n\tbackground-image: none;\r\n}\r\n\r\n.fc-scrolled .fc-head .fc-scrollpane {\r\n\tz-index: 2; /* so drop shadow will go above body panes */\r\n}\r\n\r\n.fc-timeline.fc-scrolled .fc-head .fc-scrollpane {\r\n\tbox-shadow: 0 3px 4px rgba(0,0,0,0.075);\r\n}\r\n\r\n.fc-timeline .fc-body .fc-scrollpane {\r\n\tz-index: 1;\r\n}\r\n\r\n.fc-timeline .fc-scrollpane-inner > .fc-content,\r\n.fc-timeline .fc-scrollpane-inner > .fc-bg {\r\n\tmargin: -1px;\r\n}\r\n\r\n\r\n/* Table Cell Common\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-timeline th,\r\n.fc-timeline td {\r\n\twhite-space: nowrap;\r\n}\r\n\r\n.fc-timeline .fc-cell-content {\r\n\toverflow: hidden;\r\n}\r\n\r\n.fc-timeline .fc-cell-text {\r\n\tpadding-left: 4px;\r\n\tpadding-right: 4px;\r\n}\r\n\r\n.fc-timeline .fc-col-resizer {\r\n\tcursor: col-resize;\r\n}\r\n\r\n/*\r\nCells at the start of a week\r\nTODO: figure out better styling\r\n\r\n.fc-ltr .fc-timeline .fc-em-cell div {\r\n\tborder-left: 3px solid #eee;\r\n\theight: 100%;\r\n}\r\n.fc-rtl .fc-timeline .fc-em-cell {\r\n\tborder-right-width: 3px;\r\n}\r\n*/\r\n\r\n/* head */\r\n\r\n.fc-timeline th {\r\n\tvertical-align: middle;\r\n}\r\n\r\n.fc-timeline .fc-head .fc-cell-content {\r\n\tpadding-top: 3px;\r\n\tpadding-bottom: 3px;\r\n}\r\n\r\n/* body */\r\n\r\n.fc-timeline .fc-body .ui-widget-content {\r\n\tbackground-image: none;\r\n}\r\n\r\n\r\n/* Resource Area\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-resource-area {\r\n\twidth: 30%;\r\n}\r\n\r\n.fc-resource-area col {\r\n\twidth: 40%;\r\n\tmin-width: 70px; /* will be read by JS */\r\n}\r\n\r\n.fc-resource-area col.fc-main-col {\r\n\twidth: 60%; /* make the first column in a nested setup bigger */\r\n}\r\n\r\n\r\n.fc-flat .fc-expander-space { /* fc-flat is opposite of fc-nested */\r\n\tdisplay: none;\r\n}\r\n\r\n\r\n.fc-ltr .fc-resource-area tr > * {\r\n\ttext-align: left;\r\n}\r\n.fc-rtl .fc-resource-area tr > * {\r\n\ttext-align: right;\r\n}\r\n\r\n.fc-resource-area .fc-cell-content {\r\n\tpadding-left: 4px;\r\n\tpadding-right: 4px;\r\n}\r\n\r\n/* head */\r\n\r\n.fc-resource-area .fc-super th {\r\n\ttext-align: center;\r\n}\r\n\r\n.fc-resource-area th > div {\r\n\tposition: relative;\r\n}\r\n\r\n.fc-resource-area th .fc-cell-content {\r\n\tposition: relative;\r\n\tz-index: 1;\r\n}\r\n\r\n.fc-resource-area th .fc-col-resizer {\r\n\tposition: absolute;\r\n\tz-index: 2;\r\n\ttop: 0;\r\n\tbottom: 0;\r\n\twidth: 5px;\r\n}\r\n\r\n.fc-ltr .fc-resource-area th .fc-col-resizer {\r\n\tright: -3px;\r\n}\r\n.fc-rtl .fc-resource-area th .fc-col-resizer {\r\n\tleft: -3px;\r\n}\r\n\r\n/* body */\r\n\r\ntr.fc-collapsed > td, /* before the transition (prevents initial flicker) */\r\ntr.fc-transitioning > td { /* during the transition */\r\n\toverflow: hidden; /* prevents absolutely-positioned events from bleeding out */\r\n}\r\n\r\ntr.fc-transitioning > td > div {\r\n\ttransition: margin-top 0.2s;\r\n}\r\n\r\ntr.fc-collapsed > td > div {\r\n\tmargin-top: -10px;\r\n}\r\n\r\n\r\n.fc-body .fc-resource-area .fc-cell-content { /* might BE the cell */\r\n\tpadding-top: 8px;\r\n\tpadding-bottom: 8px;\r\n}\r\n\r\n.fc-no-overlap .fc-body .fc-resource-area .fc-cell-content { /* might BE the cell */\r\n\tpadding-top: 5px;\r\n\tpadding-bottom: 5px;\r\n}\r\n\r\n.fc-resource-area .fc-icon { /* the expander and spacers before the expander */\r\n\tfont-size: .9em;\r\n\tvertical-align: middle;\r\n\tmargin-top: -2%;\r\n}\r\n\r\n.fc-resource-area .fc-expander {\r\n\tcursor: pointer;\r\n\tcolor: #666;\r\n}\r\n\r\n\r\n/* Time Area\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-time-area col {\r\n\tmin-width: 2.2em; /* detected by JS */\r\n}\r\n\r\n/* head */\r\n\r\n.fc-ltr .fc-time-area .fc-chrono th {\r\n\ttext-align: left;\r\n}\r\n.fc-rtl .fc-time-area .fc-chrono th {\r\n\ttext-align: right;\r\n}\r\n\r\n/* body slats (vertical lines) */\r\n\r\n.fc-time-area .fc-slats { /* fc-bg is responsible for a lot of this now! */\r\n\tposition: absolute;\r\n\tz-index: 1;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tright: 0;\r\n\tbottom: 0;\r\n}\r\n\r\n.fc-time-area .fc-slats table {\r\n\theight: 100%;\r\n}\r\n\r\n.fc-time-area .fc-slats .fc-minor {\r\n\tborder-style: dotted;\r\n}\r\n\r\n.fc-time-area .fc-slats td {\r\n\tborder-width: 0 1px; /* need to do this. sometimes -1 margin wouldn't hide the dotted */\r\n}\r\n\r\n.fc-ltr .fc-time-area .fc-slats td {\r\n\tborder-right-width: 0;\r\n}\r\n.fc-rtl .fc-time-area .fc-slats td {\r\n\tborder-left-width: 0;\r\n}\r\n\r\n/* body content containers\r\n   can be within rows or directly within the pane's content\r\n*/\r\n\r\n.fc-time-area .fc-bgevent-container,\r\n.fc-time-area .fc-highlight-container {\r\n\tposition: absolute;\r\n\tz-index: 2; /* only for directly within pane. not for row. overridden later */\r\n\ttop: 0;\r\n\tbottom: 0;\r\n\twidth: 0;\r\n}\r\n\r\n.fc-ltr .fc-time-area .fc-helper-container, /* only within row */\r\n.fc-ltr .fc-time-area .fc-bgevent-container,\r\n.fc-ltr .fc-time-area .fc-highlight-container {\r\n\tleft: 0;\r\n}\r\n.fc-rtl .fc-time-area .fc-helper-container, /* only within row */\r\n.fc-rtl .fc-time-area .fc-bgevent-container,\r\n.fc-rtl .fc-time-area .fc-highlight-container {\r\n\tright: 0;\r\n}\r\n\r\n.fc-time-area .fc-bgevent,\r\n.fc-time-area .fc-highlight {\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tbottom: 0;\r\n}\r\n\r\n/* body resource rows */\r\n\r\n.fc-time-area .fc-rows {\r\n\tposition: relative;\r\n\tz-index: 3;\r\n}\r\n\r\n.fc-time-area .fc-rows .ui-widget-content {\r\n\tbackground: none;\r\n}\r\n\r\n.fc-time-area .fc-rows td > div {\r\n\tposition: relative;\r\n}\r\n\r\n.fc-time-area .fc-rows .fc-bgevent-container,\r\n.fc-time-area .fc-rows .fc-highlight-container {\r\n\tz-index: 1;\r\n}\r\n\r\n.fc-time-area .fc-event-container {\r\n\tposition: relative;\r\n\tz-index: 2; /* above bgevent and highlight */\r\n\twidth: 0; /* for event positioning. will end up on correct side based on dir */\r\n}\r\n\r\n.fc-time-area .fc-helper-container { /* also an fc-event-container */\r\n\tposition: absolute;\r\n\tz-index: 3;\r\n\ttop: 0;\r\n}\r\n\r\n.fc-time-area .fc-event-container {\r\n\tpadding-bottom: 8px;\r\n\ttop: -1px;\r\n}\r\n\r\n.fc-time-area tr:first-child .fc-event-container {\r\n\ttop: 0;\r\n}\r\n\r\n.fc-no-overlap .fc-time-area .fc-event-container {\r\n\tpadding-bottom: 0;\r\n\ttop: 0;\r\n}\r\n\r\n\r\n/* Now Indicator\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-timeline .fc-now-indicator { /* both the arrow and the line */\r\n\tz-index: 3; /* one above scroller's fc-content */\r\n\ttop: 0;\r\n}\r\n\r\n.fc-time-area .fc-now-indicator-arrow {\r\n\tmargin: 0 -6px; /* 5, then one more to counteract scroller's negative margins */\r\n\t/* triangle pointing down... */\r\n\tborder-width: 6px 5px 0 5px;\r\n\tborder-left-color: transparent;\r\n\tborder-right-color: transparent;\r\n}\r\n\r\n.fc-time-area .fc-now-indicator-line {\r\n\tmargin: 0 -1px; /* counteract scroller's negative margins */\r\n\tbottom: 0;\r\n\tborder-left-width: 1px;\r\n}\r\n\r\n\r\n/* Time Grid Events\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-timeline-event {\r\n\tposition: absolute;\r\n\tborder-radius: 0;\r\n\tpadding: 2px 0;\r\n\tmargin-bottom: 1px;\r\n}\r\n\r\n.fc-no-overlap .fc-timeline-event {\r\n\tpadding: 5px 0;\r\n\tmargin-bottom: 0;\r\n}\r\n\r\n/* don't overlap grid lines at the event's end */\r\n.fc-ltr .fc-timeline-event { margin-right: 1px }\r\n.fc-rtl .fc-timeline-event { margin-left: 1px }\r\n\r\n.fc-timeline-event .fc-content {\r\n\tpadding: 0 1px;\r\n\twhite-space: nowrap;\r\n\toverflow: hidden;\r\n}\r\n\r\n.fc-timeline-event .fc-time {\r\n\tfont-weight: bold;\r\n\tpadding: 0 1px;\r\n}\r\n\r\n.fc-rtl .fc-timeline-event .fc-time {\r\n\tdisplay: inline-block; /* will force it on the other side */\r\n}\r\n\r\n.fc-timeline-event .fc-title {\r\n\tpadding: 0 1px;\r\n}\r\n\r\n.fc-timeline-event .fc-resizer:after {\r\n\twidth: 1px; /* activate! */\r\n}\r\n\r\n\r\n/* follower logic */\r\n\r\n\r\n.fc-ltr .fc-timeline-event .fc-title {\r\n\tpadding-left: 10px;\r\n\tmargin-left: -8px;\r\n}\r\n.fc-rtl .fc-timeline-event .fc-title {\r\n\tpadding-right: 10px;\r\n\tmargin-right: -8px;\r\n}\r\n\r\n.fc-ltr .fc-timeline-event.fc-not-start .fc-title {\r\n\tmargin-left: -2px;\r\n}\r\n.fc-rtl .fc-timeline-event.fc-not-start .fc-title {\r\n\tmargin-right: -2px;\r\n}\r\n\r\n.fc-timeline-event.fc-not-start .fc-title,\r\n.fc-body .fc-time-area .fc-following {\r\n\tposition: relative;\r\n}\r\n\r\n.fc-timeline-event.fc-not-start .fc-title:before,\r\n.fc-body .fc-time-area .fc-following:before { /* generic arrow */\r\n\tcontent: \"\";\r\n\tposition: absolute;\r\n\ttop: 50%;\r\n\tmargin-top: -5px;\r\n\tborder: 5px solid #000;\r\n\tborder-top-color: transparent;\r\n\tborder-bottom-color: transparent;\r\n\topacity: .5;\r\n}\r\n\r\n.fc-ltr .fc-timeline-event.fc-not-start .fc-title:before,\r\n.fc-ltr .fc-body .fc-time-area .fc-following:before { /* LTR. left pointing arrow */\r\n\tborder-left: 0;\r\n\tleft: 2px;\r\n}\r\n\r\n.fc-rtl .fc-timeline-event.fc-not-start .fc-title:before,\r\n.fc-rtl .fc-body .fc-time-area .fc-following:before { /* RTL. right pointing arrow */\r\n\tborder-right: 0;\r\n\tright: 2px;\r\n}\r\n\r\n\r\n/* License Message\r\n--------------------------------------------------------------------------------------------------*/\r\n\r\n.fc-license-message {\r\n\tposition: absolute;\r\n\tz-index: 99999;\r\n\tbottom: 1px;\r\n\tleft: 1px;\r\n\tbackground: #eee;\r\n\tborder-color: #ddd;\r\n\tborder-style: solid;\r\n\tborder-width: 1px 1px 0 0;\r\n\tpadding: 2px 4px;\r\n\tfont-size: 12px;\r\n\tborder-top-right-radius: 3px;\r\n}\r\n", ""]);
+
+	// exports
+
 
 /***/ },
 /* 597 */
@@ -63485,7 +65035,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement(
 	                                                        'label',
 	                                                        { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'authz' },
-	                                                        'Behörighet'
+	                                                        'Beh\xF6righet'
 	                                                    ),
 	                                                    _react2.default.createElement(
 	                                                        'div',
@@ -63536,8 +65086,8 @@ webpackJsonp([0],[
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-min': '5',
 	                                                            'data-val-length-max': '100',
-	                                                            'data-val-length': 'E-post måste vara mellan 5 och 100 tecken',
-	                                                            'data-val-required': 'E-post får inte vara tom',
+	                                                            'data-val-length': 'E-post m\xE5ste vara mellan 5 och 100 tecken',
+	                                                            'data-val-required': 'E-post f\xE5r inte vara tom',
 	                                                            id: 'email',
 	                                                            name: 'email',
 	                                                            type: 'text',
@@ -63550,7 +65100,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement(
 	                                                        'label',
 	                                                        { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'password' },
-	                                                        'Lösenord'
+	                                                        'L\xF6senord'
 	                                                    ),
 	                                                    _react2.default.createElement(
 	                                                        'div',
@@ -63565,8 +65115,8 @@ webpackJsonp([0],[
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-min': '6',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Lösenord måste vara mellan 6 och 45 tecken',
-	                                                            'data-val-required': 'Lösenord får inte vara tom',
+	                                                            'data-val-length': 'L\xF6senord m\xE5ste vara mellan 6 och 45 tecken',
+	                                                            'data-val-required': 'L\xF6senord f\xE5r inte vara tom',
 	                                                            id: 'password',
 	                                                            name: 'password'
 	                                                            //onKeyUp    = "return Site.Validation.isSecurePassword(event)"
@@ -63580,7 +65130,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement(
 	                                                        'label',
 	                                                        { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'firstname' },
-	                                                        'Förnamn'
+	                                                        'F\xF6rnamn'
 	                                                    ),
 	                                                    _react2.default.createElement(
 	                                                        'div',
@@ -63595,8 +65145,8 @@ webpackJsonp([0],[
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-min': '2',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Förnamn måste vara mellan 2 och 45 tecken',
-	                                                            'data-val-required': 'Förnamn får inte vara tom',
+	                                                            'data-val-length': 'F\xF6rnamn m\xE5ste vara mellan 2 och 45 tecken',
+	                                                            'data-val-required': 'F\xF6rnamn f\xE5r inte vara tom',
 	                                                            id: 'firstname',
 	                                                            name: 'firstname',
 	                                                            type: 'text',
@@ -63624,8 +65174,8 @@ webpackJsonp([0],[
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-min': '2',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Efternamn måste vara mellan 2 och 45 tecken',
-	                                                            'data-val-required': 'Efternamn får inte vara tom',
+	                                                            'data-val-length': 'Efternamn m\xE5ste vara mellan 2 och 45 tecken',
+	                                                            'data-val-required': 'Efternamn f\xE5r inte vara tom',
 	                                                            id: 'lastname',
 	                                                            name: 'lastname',
 	                                                            type: 'text',
@@ -63656,7 +65206,7 @@ webpackJsonp([0],[
 	                                                            'data-autoajax': 'true',
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Telefon får inte överstiga 45 tecken',
+	                                                            'data-val-length': 'Telefon f\xE5r inte \xF6verstiga 45 tecken',
 	                                                            id: 'phone',
 	                                                            name: 'phone'
 	                                                            //onKeyPress = "return Site.Validation.isPhoneNumber(event)"
@@ -63684,7 +65234,7 @@ webpackJsonp([0],[
 	                                                            'data-autoajax': 'true',
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Adress får inte överstiga 45 tecken',
+	                                                            'data-val-length': 'Adress f\xE5r inte \xF6verstiga 45 tecken',
 	                                                            id: 'address',
 	                                                            name: 'address',
 	                                                            type: 'text',
@@ -63697,7 +65247,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement(
 	                                                        'label',
 	                                                        { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'floor' },
-	                                                        'Våning'
+	                                                        'V\xE5ning'
 	                                                    ),
 	                                                    _react2.default.createElement(
 	                                                        'div',
@@ -63711,7 +65261,7 @@ webpackJsonp([0],[
 	                                                            'data-autoajax': 'true',
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Våning får inte överstiga 45 tecken',
+	                                                            'data-val-length': 'V\xE5ning f\xE5r inte \xF6verstiga 45 tecken',
 	                                                            id: 'floor',
 	                                                            name: 'floor',
 	                                                            type: 'text',
@@ -63724,7 +65274,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement(
 	                                                        'label',
 	                                                        { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'apartment' },
-	                                                        'Lägenhet'
+	                                                        'L\xE4genhet'
 	                                                    ),
 	                                                    _react2.default.createElement(
 	                                                        'div',
@@ -63738,7 +65288,7 @@ webpackJsonp([0],[
 	                                                            'data-autoajax': 'true',
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Lägenhet får inte överstiga 45 tecken',
+	                                                            'data-val-length': 'L\xE4genhet f\xE5r inte \xF6verstiga 45 tecken',
 	                                                            id: 'apartment',
 	                                                            name: 'apartment',
 	                                                            type: 'text',
@@ -63798,7 +65348,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'button',
 	                                                    { className: 'site-buttonmargin-left pull-right btn-default btn create-resident-form-buttons', 'data-action': '2', type: 'button' },
-	                                                    'Stäng'
+	                                                    'St\xE4ng'
 	                                                )
 	                                            )
 	                                        )
@@ -63869,7 +65419,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement(
 	                                                        'label',
 	                                                        { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'authz' },
-	                                                        'Behörighet'
+	                                                        'Beh\xF6righet'
 	                                                    ),
 	                                                    _react2.default.createElement(
 	                                                        'div',
@@ -63920,8 +65470,8 @@ webpackJsonp([0],[
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-min': '5',
 	                                                            'data-val-length-max': '100',
-	                                                            'data-val-length': 'E-post måste vara mellan 5 och 100 tecken',
-	                                                            'data-val-required': 'E-post får inte vara tom',
+	                                                            'data-val-length': 'E-post m\xE5ste vara mellan 5 och 100 tecken',
+	                                                            'data-val-required': 'E-post f\xE5r inte vara tom',
 	                                                            id: 'email',
 	                                                            name: 'email',
 	                                                            type: 'text',
@@ -63934,7 +65484,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement(
 	                                                        'label',
 	                                                        { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'firstname' },
-	                                                        'Förnamn'
+	                                                        'F\xF6rnamn'
 	                                                    ),
 	                                                    _react2.default.createElement(
 	                                                        'div',
@@ -63949,8 +65499,8 @@ webpackJsonp([0],[
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-min': '2',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Förnamn måste vara mellan 2 och 45 tecken',
-	                                                            'data-val-required': 'Förnamn får inte vara tom',
+	                                                            'data-val-length': 'F\xF6rnamn m\xE5ste vara mellan 2 och 45 tecken',
+	                                                            'data-val-required': 'F\xF6rnamn f\xE5r inte vara tom',
 	                                                            id: 'firstname',
 	                                                            name: 'firstname',
 	                                                            type: 'text',
@@ -63978,8 +65528,8 @@ webpackJsonp([0],[
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-min': '2',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Efternamn måste vara mellan 2 och 45 tecken',
-	                                                            'data-val-required': 'Efternamn får inte vara tom',
+	                                                            'data-val-length': 'Efternamn m\xE5ste vara mellan 2 och 45 tecken',
+	                                                            'data-val-required': 'Efternamn f\xE5r inte vara tom',
 	                                                            id: 'lastname',
 	                                                            name: 'lastname',
 	                                                            type: 'text',
@@ -64010,7 +65560,7 @@ webpackJsonp([0],[
 	                                                            'data-autoajax': 'true',
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Telefon får inte överstiga 45 tecken',
+	                                                            'data-val-length': 'Telefon f\xE5r inte \xF6verstiga 45 tecken',
 	                                                            id: 'phone',
 	                                                            name: 'phone'
 	                                                            //onKeyPress = "return Site.Validation.isPhoneNumber(event)"
@@ -64038,7 +65588,7 @@ webpackJsonp([0],[
 	                                                            'data-autoajax': 'true',
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Adress får inte överstiga 45 tecken',
+	                                                            'data-val-length': 'Adress f\xE5r inte \xF6verstiga 45 tecken',
 	                                                            id: 'address',
 	                                                            name: 'address',
 	                                                            type: 'text',
@@ -64051,7 +65601,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement(
 	                                                        'label',
 	                                                        { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'floor' },
-	                                                        'Våning'
+	                                                        'V\xE5ning'
 	                                                    ),
 	                                                    _react2.default.createElement(
 	                                                        'div',
@@ -64065,7 +65615,7 @@ webpackJsonp([0],[
 	                                                            'data-autoajax': 'true',
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Våning får inte överstiga 45 tecken',
+	                                                            'data-val-length': 'V\xE5ning f\xE5r inte \xF6verstiga 45 tecken',
 	                                                            id: 'floor',
 	                                                            name: 'floor',
 	                                                            type: 'text',
@@ -64078,7 +65628,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement(
 	                                                        'label',
 	                                                        { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'apartment' },
-	                                                        'Lägenhet'
+	                                                        'L\xE4genhet'
 	                                                    ),
 	                                                    _react2.default.createElement(
 	                                                        'div',
@@ -64092,7 +65642,7 @@ webpackJsonp([0],[
 	                                                            'data-autoajax': 'true',
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Lägenhet får inte överstiga 45 tecken',
+	                                                            'data-val-length': 'L\xE4genhet f\xE5r inte \xF6verstiga 45 tecken',
 	                                                            id: 'apartment',
 	                                                            name: 'apartment',
 	                                                            type: 'text',
@@ -64152,7 +65702,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'button',
 	                                                    { className: 'site-buttonmargin-left pull-right btn-default btn update-resident-form-buttons', 'data-action': '2', type: 'button' },
-	                                                    'Stäng'
+	                                                    'St\xE4ng'
 	                                                )
 	                                            )
 	                                        )
@@ -64176,7 +65726,7 @@ webpackJsonp([0],[
 	                                    _react2.default.createElement(
 	                                        'h3',
 	                                        { className: 'panel-title', id: 'title' },
-	                                        'Byt lösenord'
+	                                        'Byt l\xF6senord'
 	                                    )
 	                                ),
 	                                _react2.default.createElement(
@@ -64238,7 +65788,7 @@ webpackJsonp([0],[
 	                                                    _react2.default.createElement(
 	                                                        'label',
 	                                                        { className: 'control-label col-md-3', style: { marginLeft: "-15px", marginRight: "15px" }, htmlFor: 'password' },
-	                                                        'Lösenord'
+	                                                        'L\xF6senord'
 	                                                    ),
 	                                                    _react2.default.createElement(
 	                                                        'div',
@@ -64253,8 +65803,8 @@ webpackJsonp([0],[
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-min': '6',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Lösenord måste vara mellan 6 och 45 tecken',
-	                                                            'data-val-required': 'Lösenord får inte vara tom',
+	                                                            'data-val-length': 'L\xF6senord m\xE5ste vara mellan 6 och 45 tecken',
+	                                                            'data-val-required': 'L\xF6senord f\xE5r inte vara tom',
 	                                                            id: 'password',
 	                                                            name: 'password'
 	                                                            //onKeyUp    = "return Site.Validation.isSecurePassword(event)"
@@ -64279,7 +65829,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'button',
 	                                                    { className: 'site-buttonmargin-left pull-right btn-default btn change-password-form-buttons', 'data-action': '2', type: 'button' },
-	                                                    'Stäng'
+	                                                    'St\xE4ng'
 	                                                )
 	                                            )
 	                                        )
@@ -64307,7 +65857,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'th',
 	                                            null,
-	                                            'Förnamn'
+	                                            'F\xF6rnamn'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'th',
@@ -64323,7 +65873,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'th',
 	                                            null,
-	                                            'Behörighet'
+	                                            'Beh\xF6righet'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'th',
@@ -64349,7 +65899,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'th',
 	                                            null,
-	                                            'Förnamn'
+	                                            'F\xF6rnamn'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'th',
@@ -64365,7 +65915,7 @@ webpackJsonp([0],[
 	                                        _react2.default.createElement(
 	                                            'th',
 	                                            null,
-	                                            'Behörighet'
+	                                            'Beh\xF6righet'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'th',
@@ -64714,7 +66264,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'button',
 	                                                    { className: 'site-buttonmargin-left pull-right btn-default btn update-timetype-form-buttons', 'data-action': '2', type: 'button' },
-	                                                    'Stäng'
+	                                                    'St\xE4ng'
 	                                                )
 	                                            )
 	                                        )
@@ -64910,7 +66460,7 @@ webpackJsonp([0],[
 	                    _react2.default.createElement(
 	                        'h3',
 	                        { className: 'site-page-header' },
-	                        'Ärendeklasser'
+	                        '\xC4rendeklasser'
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
@@ -64921,7 +66471,7 @@ webpackJsonp([0],[
 	                            _react2.default.createElement(
 	                                'h4',
 	                                null,
-	                                'Ny ärendeklass'
+	                                'Ny \xE4rendeklass'
 	                            )
 	                        )
 	                    ),
@@ -64957,7 +66507,7 @@ webpackJsonp([0],[
 	                                    _react2.default.createElement(
 	                                        'h3',
 	                                        { className: 'panel-title', id: 'title' },
-	                                        'Skapa ärendeklass'
+	                                        'Skapa \xE4rendeklass'
 	                                    )
 	                                ),
 	                                _react2.default.createElement(
@@ -64993,8 +66543,8 @@ webpackJsonp([0],[
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-min': '1',
 	                                                            'data-val-length-max': '30',
-	                                                            'data-val-length': 'Namn måste vara mellan 1 och 30 tecken',
-	                                                            'data-val-required': 'Namn får inte vara tom',
+	                                                            'data-val-length': 'Namn m\xE5ste vara mellan 1 och 30 tecken',
+	                                                            'data-val-required': 'Namn f\xE5r inte vara tom',
 	                                                            id: 'name',
 	                                                            name: 'name',
 	                                                            type: 'text',
@@ -65018,7 +66568,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'button',
 	                                                    { className: 'site-buttonmargin-left pull-right btn-default btn create-issueclass-form-buttons', 'data-action': '2', type: 'button' },
-	                                                    'Stäng'
+	                                                    'St\xE4ng'
 	                                                )
 	                                            )
 	                                        )
@@ -65042,7 +66592,7 @@ webpackJsonp([0],[
 	                                    _react2.default.createElement(
 	                                        'h3',
 	                                        { className: 'panel-title', id: 'title' },
-	                                        'Uppdatera ärendeklass'
+	                                        'Uppdatera \xE4rendeklass'
 	                                    )
 	                                ),
 	                                _react2.default.createElement(
@@ -65091,8 +66641,8 @@ webpackJsonp([0],[
 	                                                            'data-val': 'true',
 	                                                            'data-val-length-min': '2',
 	                                                            'data-val-length-max': '45',
-	                                                            'data-val-length': 'Namn måste vara mellan 2 och 45 tecken',
-	                                                            'data-val-required': 'Namn får inte vara tom',
+	                                                            'data-val-length': 'Namn m\xE5ste vara mellan 2 och 45 tecken',
+	                                                            'data-val-required': 'Namn f\xE5r inte vara tom',
 	                                                            id: 'name',
 	                                                            name: 'name',
 	                                                            type: 'text',
@@ -65116,7 +66666,7 @@ webpackJsonp([0],[
 	                                                _react2.default.createElement(
 	                                                    'button',
 	                                                    { className: 'site-buttonmargin-left pull-right btn-default btn update-issueclass-form-buttons', 'data-action': '2', type: 'button' },
-	                                                    'Stäng'
+	                                                    'St\xE4ng'
 	                                                )
 	                                            )
 	                                        )
@@ -65427,7 +66977,7 @@ webpackJsonp([0],[
 	                            _react2.default.createElement(
 	                                'h4',
 	                                null,
-	                                'Användare'
+	                                'Anv\xE4ndare'
 	                            ),
 	                            _react2.default.createElement('div', { id: 'username' })
 	                        ),
@@ -65446,7 +66996,7 @@ webpackJsonp([0],[
 	                            _react2.default.createElement(
 	                                'h4',
 	                                null,
-	                                'Förening'
+	                                'F\xF6rening'
 	                            ),
 	                            _react2.default.createElement('div', { id: 'customername' })
 	                        )
@@ -65460,7 +67010,7 @@ webpackJsonp([0],[
 	                            _react2.default.createElement(
 	                                'h4',
 	                                null,
-	                                'Behörighet'
+	                                'Beh\xF6righet'
 	                            ),
 	                            _react2.default.createElement('div', { id: 'authorization' })
 	                        )
@@ -65930,7 +67480,7 @@ webpackJsonp([0],[
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _jqueryUi = __webpack_require__(439);
+	var _jqueryUi = __webpack_require__(438);
 
 	var _jqueryUi2 = _interopRequireDefault(_jqueryUi);
 
@@ -66076,7 +67626,14 @@ webpackJsonp([0],[
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(466)();
-	exports.push([module.id, "/*! jQuery UI - v1.11.2 - 2014-10-16\r\n* http://jqueryui.com\r\n* Includes: core.css, accordion.css, autocomplete.css, button.css, datepicker.css, dialog.css, draggable.css, menu.css, progressbar.css, resizable.css, selectable.css, selectmenu.css, slider.css, sortable.css, spinner.css, tabs.css, tooltip.css, theme.css\r\n* To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Trebuchet%20MS%2CTahoma%2CVerdana%2CArial%2Csans-serif&fwDefault=bold&fsDefault=1.1em&cornerRadius=4px&bgColorHeader=f6a828&bgTextureHeader=gloss_wave&bgImgOpacityHeader=35&borderColorHeader=e78f08&fcHeader=ffffff&iconColorHeader=ffffff&bgColorContent=eeeeee&bgTextureContent=highlight_soft&bgImgOpacityContent=100&borderColorContent=dddddd&fcContent=333333&iconColorContent=222222&bgColorDefault=f6f6f6&bgTextureDefault=glass&bgImgOpacityDefault=100&borderColorDefault=cccccc&fcDefault=1c94c4&iconColorDefault=ef8c08&bgColorHover=fdf5ce&bgTextureHover=glass&bgImgOpacityHover=100&borderColorHover=fbcb09&fcHover=c77405&iconColorHover=ef8c08&bgColorActive=ffffff&bgTextureActive=glass&bgImgOpacityActive=65&borderColorActive=fbd850&fcActive=eb8f00&iconColorActive=ef8c08&bgColorHighlight=ffe45c&bgTextureHighlight=highlight_soft&bgImgOpacityHighlight=75&borderColorHighlight=fed22f&fcHighlight=363636&iconColorHighlight=228ef1&bgColorError=b81900&bgTextureError=diagonals_thick&bgImgOpacityError=18&borderColorError=cd0a0a&fcError=ffffff&iconColorError=ffd27a&bgColorOverlay=666666&bgTextureOverlay=diagonals_thick&bgImgOpacityOverlay=20&opacityOverlay=50&bgColorShadow=000000&bgTextureShadow=flat&bgImgOpacityShadow=10&opacityShadow=20&thicknessShadow=5px&offsetTopShadow=-5px&offsetLeftShadow=-5px&cornerRadiusShadow=5px\r\n* Copyright 2014 jQuery Foundation and other contributors; Licensed MIT */\r\n\r\n/* Layout helpers\r\n----------------------------------*/\r\n.ui-helper-hidden {\r\n\tdisplay: none;\r\n}\r\n.ui-helper-hidden-accessible {\r\n\tborder: 0;\r\n\tclip: rect(0 0 0 0);\r\n\theight: 1px;\r\n\tmargin: -1px;\r\n\toverflow: hidden;\r\n\tpadding: 0;\r\n\tposition: absolute;\r\n\twidth: 1px;\r\n}\r\n.ui-helper-reset {\r\n\tmargin: 0;\r\n\tpadding: 0;\r\n\tborder: 0;\r\n\toutline: 0;\r\n\tline-height: 1.3;\r\n\ttext-decoration: none;\r\n\tfont-size: 100%;\r\n\tlist-style: none;\r\n}\r\n.ui-helper-clearfix:before,\r\n.ui-helper-clearfix:after {\r\n\tcontent: \"\";\r\n\tdisplay: table;\r\n\tborder-collapse: collapse;\r\n}\r\n.ui-helper-clearfix:after {\r\n\tclear: both;\r\n}\r\n.ui-helper-clearfix {\r\n\tmin-height: 0; /* support: IE7 */\r\n}\r\n.ui-helper-zfix {\r\n\twidth: 100%;\r\n\theight: 100%;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tposition: absolute;\r\n\topacity: 0;\r\n\tfilter:Alpha(Opacity=0); /* support: IE8 */\r\n}\r\n\r\n.ui-front {\r\n\tz-index: 100;\r\n}\r\n\r\n\r\n/* Interaction Cues\r\n----------------------------------*/\r\n.ui-state-disabled {\r\n\tcursor: default !important;\r\n}\r\n\r\n\r\n/* Icons\r\n----------------------------------*/\r\n\r\n/* states and images */\r\n.ui-icon {\r\n\tdisplay: block;\r\n\ttext-indent: -99999px;\r\n\toverflow: hidden;\r\n\tbackground-repeat: no-repeat;\r\n}\r\n\r\n\r\n/* Misc visuals\r\n----------------------------------*/\r\n\r\n/* Overlays */\r\n.ui-widget-overlay {\r\n\tposition: fixed;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\twidth: 100%;\r\n\theight: 100%;\r\n}\r\n.ui-accordion .ui-accordion-header {\r\n\tdisplay: block;\r\n\tcursor: pointer;\r\n\tposition: relative;\r\n\tmargin: 2px 0 0 0;\r\n\tpadding: .5em .5em .5em .7em;\r\n\tmin-height: 0; /* support: IE7 */\r\n\tfont-size: 100%;\r\n}\r\n.ui-accordion .ui-accordion-icons {\r\n\tpadding-left: 2.2em;\r\n}\r\n.ui-accordion .ui-accordion-icons .ui-accordion-icons {\r\n\tpadding-left: 2.2em;\r\n}\r\n.ui-accordion .ui-accordion-header .ui-accordion-header-icon {\r\n\tposition: absolute;\r\n\tleft: .5em;\r\n\ttop: 50%;\r\n\tmargin-top: -8px;\r\n}\r\n.ui-accordion .ui-accordion-content {\r\n\tpadding: 1em 2.2em;\r\n\tborder-top: 0;\r\n\toverflow: auto;\r\n}\r\n.ui-autocomplete {\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tcursor: default;\r\n}\r\n.ui-button {\r\n\tdisplay: inline-block;\r\n\tposition: relative;\r\n\tpadding: 0;\r\n\tline-height: normal;\r\n\tmargin-right: .1em;\r\n\tcursor: pointer;\r\n\tvertical-align: middle;\r\n\ttext-align: center;\r\n\toverflow: visible; /* removes extra width in IE */\r\n}\r\n.ui-button,\r\n.ui-button:link,\r\n.ui-button:visited,\r\n.ui-button:hover,\r\n.ui-button:active {\r\n\ttext-decoration: none;\r\n}\r\n/* to make room for the icon, a width needs to be set here */\r\n.ui-button-icon-only {\r\n\twidth: 2.2em;\r\n}\r\n/* button elements seem to need a little more width */\r\nbutton.ui-button-icon-only {\r\n\twidth: 2.4em;\r\n}\r\n.ui-button-icons-only {\r\n\twidth: 3.4em;\r\n}\r\nbutton.ui-button-icons-only {\r\n\twidth: 3.7em;\r\n}\r\n\r\n/* button text element */\r\n.ui-button .ui-button-text {\r\n\tdisplay: block;\r\n\tline-height: normal;\r\n}\r\n.ui-button-text-only .ui-button-text {\r\n\tpadding: .4em 1em;\r\n}\r\n.ui-button-icon-only .ui-button-text,\r\n.ui-button-icons-only .ui-button-text {\r\n\tpadding: .4em;\r\n\ttext-indent: -9999999px;\r\n}\r\n.ui-button-text-icon-primary .ui-button-text,\r\n.ui-button-text-icons .ui-button-text {\r\n\tpadding: .4em 1em .4em 2.1em;\r\n}\r\n.ui-button-text-icon-secondary .ui-button-text,\r\n.ui-button-text-icons .ui-button-text {\r\n\tpadding: .4em 2.1em .4em 1em;\r\n}\r\n.ui-button-text-icons .ui-button-text {\r\n\tpadding-left: 2.1em;\r\n\tpadding-right: 2.1em;\r\n}\r\n/* no icon support for input elements, provide padding by default */\r\ninput.ui-button {\r\n\tpadding: .4em 1em;\r\n}\r\n\r\n/* button icon element(s) */\r\n.ui-button-icon-only .ui-icon,\r\n.ui-button-text-icon-primary .ui-icon,\r\n.ui-button-text-icon-secondary .ui-icon,\r\n.ui-button-text-icons .ui-icon,\r\n.ui-button-icons-only .ui-icon {\r\n\tposition: absolute;\r\n\ttop: 50%;\r\n\tmargin-top: -8px;\r\n}\r\n.ui-button-icon-only .ui-icon {\r\n\tleft: 50%;\r\n\tmargin-left: -8px;\r\n}\r\n.ui-button-text-icon-primary .ui-button-icon-primary,\r\n.ui-button-text-icons .ui-button-icon-primary,\r\n.ui-button-icons-only .ui-button-icon-primary {\r\n\tleft: .5em;\r\n}\r\n.ui-button-text-icon-secondary .ui-button-icon-secondary,\r\n.ui-button-text-icons .ui-button-icon-secondary,\r\n.ui-button-icons-only .ui-button-icon-secondary {\r\n\tright: .5em;\r\n}\r\n\r\n/* button sets */\r\n.ui-buttonset {\r\n\tmargin-right: 7px;\r\n}\r\n.ui-buttonset .ui-button {\r\n\tmargin-left: 0;\r\n\tmargin-right: -.3em;\r\n}\r\n\r\n/* workarounds */\r\n/* reset extra padding in Firefox, see h5bp.com/l */\r\ninput.ui-button::-moz-focus-inner,\r\nbutton.ui-button::-moz-focus-inner {\r\n\tborder: 0;\r\n\tpadding: 0;\r\n}\r\n.ui-datepicker {\r\n\twidth: 17em;\r\n\tpadding: .2em .2em 0;\r\n\tdisplay: none;\r\n}\r\n.ui-datepicker .ui-datepicker-header {\r\n\tposition: relative;\r\n\tpadding: .2em 0;\r\n}\r\n.ui-datepicker .ui-datepicker-prev,\r\n.ui-datepicker .ui-datepicker-next {\r\n\tposition: absolute;\r\n\ttop: 2px;\r\n\twidth: 1.8em;\r\n\theight: 1.8em;\r\n}\r\n.ui-datepicker .ui-datepicker-prev-hover,\r\n.ui-datepicker .ui-datepicker-next-hover {\r\n\ttop: 1px;\r\n}\r\n.ui-datepicker .ui-datepicker-prev {\r\n\tleft: 2px;\r\n}\r\n.ui-datepicker .ui-datepicker-next {\r\n\tright: 2px;\r\n}\r\n.ui-datepicker .ui-datepicker-prev-hover {\r\n\tleft: 1px;\r\n}\r\n.ui-datepicker .ui-datepicker-next-hover {\r\n\tright: 1px;\r\n}\r\n.ui-datepicker .ui-datepicker-prev span,\r\n.ui-datepicker .ui-datepicker-next span {\r\n\tdisplay: block;\r\n\tposition: absolute;\r\n\tleft: 50%;\r\n\tmargin-left: -8px;\r\n\ttop: 50%;\r\n\tmargin-top: -8px;\r\n}\r\n.ui-datepicker .ui-datepicker-title {\r\n\tmargin: 0 2.3em;\r\n\tline-height: 1.8em;\r\n\ttext-align: center;\r\n}\r\n.ui-datepicker .ui-datepicker-title select {\r\n\tfont-size: 1em;\r\n\tmargin: 1px 0;\r\n}\r\n.ui-datepicker select.ui-datepicker-month,\r\n.ui-datepicker select.ui-datepicker-year {\r\n\twidth: 45%;\r\n}\r\n.ui-datepicker table {\r\n\twidth: 100%;\r\n\tfont-size: .9em;\r\n\tborder-collapse: collapse;\r\n\tmargin: 0 0 .4em;\r\n}\r\n.ui-datepicker th {\r\n\tpadding: .7em .3em;\r\n\ttext-align: center;\r\n\tfont-weight: bold;\r\n\tborder: 0;\r\n}\r\n.ui-datepicker td {\r\n\tborder: 0;\r\n\tpadding: 1px;\r\n}\r\n.ui-datepicker td span,\r\n.ui-datepicker td a {\r\n\tdisplay: block;\r\n\tpadding: .2em;\r\n\ttext-align: right;\r\n\ttext-decoration: none;\r\n}\r\n.ui-datepicker .ui-datepicker-buttonpane {\r\n\tbackground-image: none;\r\n\tmargin: .7em 0 0 0;\r\n\tpadding: 0 .2em;\r\n\tborder-left: 0;\r\n\tborder-right: 0;\r\n\tborder-bottom: 0;\r\n}\r\n.ui-datepicker .ui-datepicker-buttonpane button {\r\n\tfloat: right;\r\n\tmargin: .5em .2em .4em;\r\n\tcursor: pointer;\r\n\tpadding: .2em .6em .3em .6em;\r\n\twidth: auto;\r\n\toverflow: visible;\r\n}\r\n.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current {\r\n\tfloat: left;\r\n}\r\n\r\n/* with multiple calendars */\r\n.ui-datepicker.ui-datepicker-multi {\r\n\twidth: auto;\r\n}\r\n.ui-datepicker-multi .ui-datepicker-group {\r\n\tfloat: left;\r\n}\r\n.ui-datepicker-multi .ui-datepicker-group table {\r\n\twidth: 95%;\r\n\tmargin: 0 auto .4em;\r\n}\r\n.ui-datepicker-multi-2 .ui-datepicker-group {\r\n\twidth: 50%;\r\n}\r\n.ui-datepicker-multi-3 .ui-datepicker-group {\r\n\twidth: 33.3%;\r\n}\r\n.ui-datepicker-multi-4 .ui-datepicker-group {\r\n\twidth: 25%;\r\n}\r\n.ui-datepicker-multi .ui-datepicker-group-last .ui-datepicker-header,\r\n.ui-datepicker-multi .ui-datepicker-group-middle .ui-datepicker-header {\r\n\tborder-left-width: 0;\r\n}\r\n.ui-datepicker-multi .ui-datepicker-buttonpane {\r\n\tclear: left;\r\n}\r\n.ui-datepicker-row-break {\r\n\tclear: both;\r\n\twidth: 100%;\r\n\tfont-size: 0;\r\n}\r\n\r\n/* RTL support */\r\n.ui-datepicker-rtl {\r\n\tdirection: rtl;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-prev {\r\n\tright: 2px;\r\n\tleft: auto;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-next {\r\n\tleft: 2px;\r\n\tright: auto;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-prev:hover {\r\n\tright: 1px;\r\n\tleft: auto;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-next:hover {\r\n\tleft: 1px;\r\n\tright: auto;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-buttonpane {\r\n\tclear: right;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-buttonpane button {\r\n\tfloat: left;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-buttonpane button.ui-datepicker-current,\r\n.ui-datepicker-rtl .ui-datepicker-group {\r\n\tfloat: right;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-group-last .ui-datepicker-header,\r\n.ui-datepicker-rtl .ui-datepicker-group-middle .ui-datepicker-header {\r\n\tborder-right-width: 0;\r\n\tborder-left-width: 1px;\r\n}\r\n.ui-dialog {\r\n\toverflow: hidden;\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tpadding: .2em;\r\n\toutline: 0;\r\n}\r\n.ui-dialog .ui-dialog-titlebar {\r\n\tpadding: .4em 1em;\r\n\tposition: relative;\r\n}\r\n.ui-dialog .ui-dialog-title {\r\n\tfloat: left;\r\n\tmargin: .1em 0;\r\n\twhite-space: nowrap;\r\n\twidth: 90%;\r\n\toverflow: hidden;\r\n\ttext-overflow: ellipsis;\r\n}\r\n.ui-dialog .ui-dialog-titlebar-close {\r\n\tposition: absolute;\r\n\tright: .3em;\r\n\ttop: 50%;\r\n\twidth: 20px;\r\n\tmargin: -10px 0 0 0;\r\n\tpadding: 1px;\r\n\theight: 20px;\r\n}\r\n.ui-dialog .ui-dialog-content {\r\n\tposition: relative;\r\n\tborder: 0;\r\n\tpadding: .5em 1em;\r\n\tbackground: none;\r\n\toverflow: auto;\r\n}\r\n.ui-dialog .ui-dialog-buttonpane {\r\n\ttext-align: left;\r\n\tborder-width: 1px 0 0 0;\r\n\tbackground-image: none;\r\n\tmargin-top: .5em;\r\n\tpadding: .3em 1em .5em .4em;\r\n}\r\n.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {\r\n\tfloat: right;\r\n}\r\n.ui-dialog .ui-dialog-buttonpane button {\r\n\tmargin: .5em .4em .5em 0;\r\n\tcursor: pointer;\r\n}\r\n.ui-dialog .ui-resizable-se {\r\n\twidth: 12px;\r\n\theight: 12px;\r\n\tright: -5px;\r\n\tbottom: -5px;\r\n\tbackground-position: 16px 16px;\r\n}\r\n.ui-draggable .ui-dialog-titlebar {\r\n\tcursor: move;\r\n}\r\n.ui-draggable-handle {\r\n\t-ms-touch-action: none;\r\n\ttouch-action: none;\r\n}\r\n.ui-menu {\r\n\tlist-style: none;\r\n\tpadding: 0;\r\n\tmargin: 0;\r\n\tdisplay: block;\r\n\toutline: none;\r\n}\r\n.ui-menu .ui-menu {\r\n\tposition: absolute;\r\n}\r\n.ui-menu .ui-menu-item {\r\n\tposition: relative;\r\n\tmargin: 0;\r\n\tpadding: 3px 1em 3px .4em;\r\n\tcursor: pointer;\r\n\tmin-height: 0; /* support: IE7 */\r\n\t/* support: IE10, see #8844 */\r\n\tlist-style-image: url(\"data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7\");\r\n}\r\n.ui-menu .ui-menu-divider {\r\n\tmargin: 5px 0;\r\n\theight: 0;\r\n\tfont-size: 0;\r\n\tline-height: 0;\r\n\tborder-width: 1px 0 0 0;\r\n}\r\n.ui-menu .ui-state-focus,\r\n.ui-menu .ui-state-active {\r\n\tmargin: -1px;\r\n}\r\n\r\n/* icon support */\r\n.ui-menu-icons {\r\n\tposition: relative;\r\n}\r\n.ui-menu-icons .ui-menu-item {\r\n\tpadding-left: 2em;\r\n}\r\n\r\n/* left-aligned */\r\n.ui-menu .ui-icon {\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tbottom: 0;\r\n\tleft: .2em;\r\n\tmargin: auto 0;\r\n}\r\n\r\n/* right-aligned */\r\n.ui-menu .ui-menu-icon {\r\n\tleft: auto;\r\n\tright: 0;\r\n}\r\n.ui-progressbar {\r\n\theight: 2em;\r\n\ttext-align: left;\r\n\toverflow: hidden;\r\n}\r\n.ui-progressbar .ui-progressbar-value {\r\n\tmargin: -1px;\r\n\theight: 100%;\r\n}\r\n.ui-progressbar .ui-progressbar-overlay {\r\n\tbackground: url(\"data:image/gif;base64,R0lGODlhKAAoAIABAAAAAP///yH/C05FVFNDQVBFMi4wAwEAAAAh+QQJAQABACwAAAAAKAAoAAACkYwNqXrdC52DS06a7MFZI+4FHBCKoDeWKXqymPqGqxvJrXZbMx7Ttc+w9XgU2FB3lOyQRWET2IFGiU9m1frDVpxZZc6bfHwv4c1YXP6k1Vdy292Fb6UkuvFtXpvWSzA+HycXJHUXiGYIiMg2R6W459gnWGfHNdjIqDWVqemH2ekpObkpOlppWUqZiqr6edqqWQAAIfkECQEAAQAsAAAAACgAKAAAApSMgZnGfaqcg1E2uuzDmmHUBR8Qil95hiPKqWn3aqtLsS18y7G1SzNeowWBENtQd+T1JktP05nzPTdJZlR6vUxNWWjV+vUWhWNkWFwxl9VpZRedYcflIOLafaa28XdsH/ynlcc1uPVDZxQIR0K25+cICCmoqCe5mGhZOfeYSUh5yJcJyrkZWWpaR8doJ2o4NYq62lAAACH5BAkBAAEALAAAAAAoACgAAAKVDI4Yy22ZnINRNqosw0Bv7i1gyHUkFj7oSaWlu3ovC8GxNso5fluz3qLVhBVeT/Lz7ZTHyxL5dDalQWPVOsQWtRnuwXaFTj9jVVh8pma9JjZ4zYSj5ZOyma7uuolffh+IR5aW97cHuBUXKGKXlKjn+DiHWMcYJah4N0lYCMlJOXipGRr5qdgoSTrqWSq6WFl2ypoaUAAAIfkECQEAAQAsAAAAACgAKAAAApaEb6HLgd/iO7FNWtcFWe+ufODGjRfoiJ2akShbueb0wtI50zm02pbvwfWEMWBQ1zKGlLIhskiEPm9R6vRXxV4ZzWT2yHOGpWMyorblKlNp8HmHEb/lCXjcW7bmtXP8Xt229OVWR1fod2eWqNfHuMjXCPkIGNileOiImVmCOEmoSfn3yXlJWmoHGhqp6ilYuWYpmTqKUgAAIfkECQEAAQAsAAAAACgAKAAAApiEH6kb58biQ3FNWtMFWW3eNVcojuFGfqnZqSebuS06w5V80/X02pKe8zFwP6EFWOT1lDFk8rGERh1TTNOocQ61Hm4Xm2VexUHpzjymViHrFbiELsefVrn6XKfnt2Q9G/+Xdie499XHd2g4h7ioOGhXGJboGAnXSBnoBwKYyfioubZJ2Hn0RuRZaflZOil56Zp6iioKSXpUAAAh+QQJAQABACwAAAAAKAAoAAACkoQRqRvnxuI7kU1a1UU5bd5tnSeOZXhmn5lWK3qNTWvRdQxP8qvaC+/yaYQzXO7BMvaUEmJRd3TsiMAgswmNYrSgZdYrTX6tSHGZO73ezuAw2uxuQ+BbeZfMxsexY35+/Qe4J1inV0g4x3WHuMhIl2jXOKT2Q+VU5fgoSUI52VfZyfkJGkha6jmY+aaYdirq+lQAACH5BAkBAAEALAAAAAAoACgAAAKWBIKpYe0L3YNKToqswUlvznigd4wiR4KhZrKt9Upqip61i9E3vMvxRdHlbEFiEXfk9YARYxOZZD6VQ2pUunBmtRXo1Lf8hMVVcNl8JafV38aM2/Fu5V16Bn63r6xt97j09+MXSFi4BniGFae3hzbH9+hYBzkpuUh5aZmHuanZOZgIuvbGiNeomCnaxxap2upaCZsq+1kAACH5BAkBAAEALAAAAAAoACgAAAKXjI8By5zf4kOxTVrXNVlv1X0d8IGZGKLnNpYtm8Lr9cqVeuOSvfOW79D9aDHizNhDJidFZhNydEahOaDH6nomtJjp1tutKoNWkvA6JqfRVLHU/QUfau9l2x7G54d1fl995xcIGAdXqMfBNadoYrhH+Mg2KBlpVpbluCiXmMnZ2Sh4GBqJ+ckIOqqJ6LmKSllZmsoq6wpQAAAh+QQJAQABACwAAAAAKAAoAAAClYx/oLvoxuJDkU1a1YUZbJ59nSd2ZXhWqbRa2/gF8Gu2DY3iqs7yrq+xBYEkYvFSM8aSSObE+ZgRl1BHFZNr7pRCavZ5BW2142hY3AN/zWtsmf12p9XxxFl2lpLn1rseztfXZjdIWIf2s5dItwjYKBgo9yg5pHgzJXTEeGlZuenpyPmpGQoKOWkYmSpaSnqKileI2FAAACH5BAkBAAEALAAAAAAoACgAAAKVjB+gu+jG4kORTVrVhRlsnn2dJ3ZleFaptFrb+CXmO9OozeL5VfP99HvAWhpiUdcwkpBH3825AwYdU8xTqlLGhtCosArKMpvfa1mMRae9VvWZfeB2XfPkeLmm18lUcBj+p5dnN8jXZ3YIGEhYuOUn45aoCDkp16hl5IjYJvjWKcnoGQpqyPlpOhr3aElaqrq56Bq7VAAAOw==\");\r\n\theight: 100%;\r\n\tfilter: alpha(opacity=25); /* support: IE8 */\r\n\topacity: 0.25;\r\n}\r\n.ui-progressbar-indeterminate .ui-progressbar-value {\r\n\tbackground-image: none;\r\n}\r\n.ui-resizable {\r\n\tposition: relative;\r\n}\r\n.ui-resizable-handle {\r\n\tposition: absolute;\r\n\tfont-size: 0.1px;\r\n\tdisplay: block;\r\n\t-ms-touch-action: none;\r\n\ttouch-action: none;\r\n}\r\n.ui-resizable-disabled .ui-resizable-handle,\r\n.ui-resizable-autohide .ui-resizable-handle {\r\n\tdisplay: none;\r\n}\r\n.ui-resizable-n {\r\n\tcursor: n-resize;\r\n\theight: 7px;\r\n\twidth: 100%;\r\n\ttop: -5px;\r\n\tleft: 0;\r\n}\r\n.ui-resizable-s {\r\n\tcursor: s-resize;\r\n\theight: 7px;\r\n\twidth: 100%;\r\n\tbottom: -5px;\r\n\tleft: 0;\r\n}\r\n.ui-resizable-e {\r\n\tcursor: e-resize;\r\n\twidth: 7px;\r\n\tright: -5px;\r\n\ttop: 0;\r\n\theight: 100%;\r\n}\r\n.ui-resizable-w {\r\n\tcursor: w-resize;\r\n\twidth: 7px;\r\n\tleft: -5px;\r\n\ttop: 0;\r\n\theight: 100%;\r\n}\r\n.ui-resizable-se {\r\n\tcursor: se-resize;\r\n\twidth: 12px;\r\n\theight: 12px;\r\n\tright: 1px;\r\n\tbottom: 1px;\r\n}\r\n.ui-resizable-sw {\r\n\tcursor: sw-resize;\r\n\twidth: 9px;\r\n\theight: 9px;\r\n\tleft: -5px;\r\n\tbottom: -5px;\r\n}\r\n.ui-resizable-nw {\r\n\tcursor: nw-resize;\r\n\twidth: 9px;\r\n\theight: 9px;\r\n\tleft: -5px;\r\n\ttop: -5px;\r\n}\r\n.ui-resizable-ne {\r\n\tcursor: ne-resize;\r\n\twidth: 9px;\r\n\theight: 9px;\r\n\tright: -5px;\r\n\ttop: -5px;\r\n}\r\n.ui-selectable {\r\n\t-ms-touch-action: none;\r\n\ttouch-action: none;\r\n}\r\n.ui-selectable-helper {\r\n\tposition: absolute;\r\n\tz-index: 100;\r\n\tborder: 1px dotted black;\r\n}\r\n.ui-selectmenu-menu {\r\n\tpadding: 0;\r\n\tmargin: 0;\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tdisplay: none;\r\n}\r\n.ui-selectmenu-menu .ui-menu {\r\n\toverflow: auto;\r\n\t/* Support: IE7 */\r\n\toverflow-x: hidden;\r\n\tpadding-bottom: 1px;\r\n}\r\n.ui-selectmenu-menu .ui-menu .ui-selectmenu-optgroup {\r\n\tfont-size: 1em;\r\n\tfont-weight: bold;\r\n\tline-height: 1.5;\r\n\tpadding: 2px 0.4em;\r\n\tmargin: 0.5em 0 0 0;\r\n\theight: auto;\r\n\tborder: 0;\r\n}\r\n.ui-selectmenu-open {\r\n\tdisplay: block;\r\n}\r\n.ui-selectmenu-button {\r\n\tdisplay: inline-block;\r\n\toverflow: hidden;\r\n\tposition: relative;\r\n\ttext-decoration: none;\r\n\tcursor: pointer;\r\n}\r\n.ui-selectmenu-button span.ui-icon {\r\n\tright: 0.5em;\r\n\tleft: auto;\r\n\tmargin-top: -8px;\r\n\tposition: absolute;\r\n\ttop: 50%;\r\n}\r\n.ui-selectmenu-button span.ui-selectmenu-text {\r\n\ttext-align: left;\r\n\tpadding: 0.4em 2.1em 0.4em 1em;\r\n\tdisplay: block;\r\n\tline-height: 1.4;\r\n\toverflow: hidden;\r\n\ttext-overflow: ellipsis;\r\n\twhite-space: nowrap;\r\n}\r\n.ui-slider {\r\n\tposition: relative;\r\n\ttext-align: left;\r\n}\r\n.ui-slider .ui-slider-handle {\r\n\tposition: absolute;\r\n\tz-index: 2;\r\n\twidth: 1.2em;\r\n\theight: 1.2em;\r\n\tcursor: default;\r\n\t-ms-touch-action: none;\r\n\ttouch-action: none;\r\n}\r\n.ui-slider .ui-slider-range {\r\n\tposition: absolute;\r\n\tz-index: 1;\r\n\tfont-size: .7em;\r\n\tdisplay: block;\r\n\tborder: 0;\r\n\tbackground-position: 0 0;\r\n}\r\n\r\n/* support: IE8 - See #6727 */\r\n.ui-slider.ui-state-disabled .ui-slider-handle,\r\n.ui-slider.ui-state-disabled .ui-slider-range {\r\n\tfilter: inherit;\r\n}\r\n\r\n.ui-slider-horizontal {\r\n\theight: .8em;\r\n}\r\n.ui-slider-horizontal .ui-slider-handle {\r\n\ttop: -.3em;\r\n\tmargin-left: -.6em;\r\n}\r\n.ui-slider-horizontal .ui-slider-range {\r\n\ttop: 0;\r\n\theight: 100%;\r\n}\r\n.ui-slider-horizontal .ui-slider-range-min {\r\n\tleft: 0;\r\n}\r\n.ui-slider-horizontal .ui-slider-range-max {\r\n\tright: 0;\r\n}\r\n\r\n.ui-slider-vertical {\r\n\twidth: .8em;\r\n\theight: 100px;\r\n}\r\n.ui-slider-vertical .ui-slider-handle {\r\n\tleft: -.3em;\r\n\tmargin-left: 0;\r\n\tmargin-bottom: -.6em;\r\n}\r\n.ui-slider-vertical .ui-slider-range {\r\n\tleft: 0;\r\n\twidth: 100%;\r\n}\r\n.ui-slider-vertical .ui-slider-range-min {\r\n\tbottom: 0;\r\n}\r\n.ui-slider-vertical .ui-slider-range-max {\r\n\ttop: 0;\r\n}\r\n.ui-sortable-handle {\r\n\t-ms-touch-action: none;\r\n\ttouch-action: none;\r\n}\r\n.ui-spinner {\r\n\tposition: relative;\r\n\tdisplay: inline-block;\r\n\toverflow: hidden;\r\n\tpadding: 0;\r\n\tvertical-align: middle;\r\n}\r\n.ui-spinner-input {\r\n\tborder: none;\r\n\tbackground: none;\r\n\tcolor: inherit;\r\n\tpadding: 0;\r\n\tmargin: .2em 0;\r\n\tvertical-align: middle;\r\n\tmargin-left: .4em;\r\n\tmargin-right: 22px;\r\n}\r\n.ui-spinner-button {\r\n\twidth: 16px;\r\n\theight: 50%;\r\n\tfont-size: .5em;\r\n\tpadding: 0;\r\n\tmargin: 0;\r\n\ttext-align: center;\r\n\tposition: absolute;\r\n\tcursor: default;\r\n\tdisplay: block;\r\n\toverflow: hidden;\r\n\tright: 0;\r\n}\r\n/* more specificity required here to override default borders */\r\n.ui-spinner a.ui-spinner-button {\r\n\tborder-top: none;\r\n\tborder-bottom: none;\r\n\tborder-right: none;\r\n}\r\n/* vertically center icon */\r\n.ui-spinner .ui-icon {\r\n\tposition: absolute;\r\n\tmargin-top: -8px;\r\n\ttop: 50%;\r\n\tleft: 0;\r\n}\r\n.ui-spinner-up {\r\n\ttop: 0;\r\n}\r\n.ui-spinner-down {\r\n\tbottom: 0;\r\n}\r\n\r\n/* TR overrides */\r\n.ui-spinner .ui-icon-triangle-1-s {\r\n\t/* need to fix icons sprite */\r\n\tbackground-position: -65px -16px;\r\n}\r\n.ui-tabs {\r\n\tposition: relative;/* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as \"fixed\") */\r\n\tpadding: .2em;\r\n}\r\n.ui-tabs .ui-tabs-nav {\r\n\tmargin: 0;\r\n\tpadding: .2em .2em 0;\r\n}\r\n.ui-tabs .ui-tabs-nav li {\r\n\tlist-style: none;\r\n\tfloat: left;\r\n\tposition: relative;\r\n\ttop: 0;\r\n\tmargin: 1px .2em 0 0;\r\n\tborder-bottom-width: 0;\r\n\tpadding: 0;\r\n\twhite-space: nowrap;\r\n}\r\n.ui-tabs .ui-tabs-nav .ui-tabs-anchor {\r\n\tfloat: left;\r\n\tpadding: .5em 1em;\r\n\ttext-decoration: none;\r\n}\r\n.ui-tabs .ui-tabs-nav li.ui-tabs-active {\r\n\tmargin-bottom: -1px;\r\n\tpadding-bottom: 1px;\r\n}\r\n.ui-tabs .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor,\r\n.ui-tabs .ui-tabs-nav li.ui-state-disabled .ui-tabs-anchor,\r\n.ui-tabs .ui-tabs-nav li.ui-tabs-loading .ui-tabs-anchor {\r\n\tcursor: text;\r\n}\r\n.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor {\r\n\tcursor: pointer;\r\n}\r\n.ui-tabs .ui-tabs-panel {\r\n\tdisplay: block;\r\n\tborder-width: 0;\r\n\tpadding: 1em 1.4em;\r\n\tbackground: none;\r\n}\r\n.ui-tooltip {\r\n\tpadding: 8px;\r\n\tposition: absolute;\r\n\tz-index: 9999;\r\n\tmax-width: 300px;\r\n\t-webkit-box-shadow: 0 0 5px #aaa;\r\n\tbox-shadow: 0 0 5px #aaa;\r\n}\r\nbody .ui-tooltip {\r\n\tborder-width: 2px;\r\n}\r\n\r\n/* Component containers\r\n----------------------------------*/\r\n.ui-widget {\r\n\tfont-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;\r\n\tfont-size: 1.1em;\r\n}\r\n.ui-widget .ui-widget {\r\n\tfont-size: 1em;\r\n}\r\n.ui-widget input,\r\n.ui-widget select,\r\n.ui-widget textarea,\r\n.ui-widget button {\r\n\tfont-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;\r\n\tfont-size: 1em;\r\n}\r\n.ui-widget-content {\r\n\tborder: 1px solid #dddddd;\r\n\tbackground: #eeeeee url("+__webpack_require__(632)+") 50% top repeat-x;\r\n\tcolor: #333333;\r\n}\r\n.ui-widget-content a {\r\n\tcolor: #333333;\r\n}\r\n.ui-widget-header {\r\n\tborder: 1px solid #e78f08;\r\n\tbackground: #f6a828 url("+__webpack_require__(633)+") 50% 50% repeat-x;\r\n\tcolor: #ffffff;\r\n\tfont-weight: bold;\r\n}\r\n.ui-widget-header a {\r\n\tcolor: #ffffff;\r\n}\r\n\r\n/* Interaction states\r\n----------------------------------*/\r\n.ui-state-default,\r\n.ui-widget-content .ui-state-default,\r\n.ui-widget-header .ui-state-default {\r\n\tborder: 1px solid #cccccc;\r\n\tbackground: #f6f6f6 url("+__webpack_require__(634)+") 50% 50% repeat-x;\r\n\tfont-weight: bold;\r\n\tcolor: #1c94c4;\r\n}\r\n.ui-state-default a,\r\n.ui-state-default a:link,\r\n.ui-state-default a:visited {\r\n\tcolor: #1c94c4;\r\n\ttext-decoration: none;\r\n}\r\n.ui-state-hover,\r\n.ui-widget-content .ui-state-hover,\r\n.ui-widget-header .ui-state-hover,\r\n.ui-state-focus,\r\n.ui-widget-content .ui-state-focus,\r\n.ui-widget-header .ui-state-focus {\r\n\tborder: 1px solid #fbcb09;\r\n\tbackground: #fdf5ce url("+__webpack_require__(635)+") 50% 50% repeat-x;\r\n\tfont-weight: bold;\r\n\tcolor: #c77405;\r\n}\r\n.ui-state-hover a,\r\n.ui-state-hover a:hover,\r\n.ui-state-hover a:link,\r\n.ui-state-hover a:visited,\r\n.ui-state-focus a,\r\n.ui-state-focus a:hover,\r\n.ui-state-focus a:link,\r\n.ui-state-focus a:visited {\r\n\tcolor: #c77405;\r\n\ttext-decoration: none;\r\n}\r\n.ui-state-active,\r\n.ui-widget-content .ui-state-active,\r\n.ui-widget-header .ui-state-active {\r\n\tborder: 1px solid #fbd850;\r\n\tbackground: #ffffff url("+__webpack_require__(636)+") 50% 50% repeat-x;\r\n\tfont-weight: bold;\r\n\tcolor: #eb8f00;\r\n}\r\n.ui-state-active a,\r\n.ui-state-active a:link,\r\n.ui-state-active a:visited {\r\n\tcolor: #eb8f00;\r\n\ttext-decoration: none;\r\n}\r\n\r\n/* Interaction Cues\r\n----------------------------------*/\r\n.ui-state-highlight,\r\n.ui-widget-content .ui-state-highlight,\r\n.ui-widget-header .ui-state-highlight {\r\n\tborder: 1px solid #fed22f;\r\n\tbackground: #ffe45c url("+__webpack_require__(637)+") 50% top repeat-x;\r\n\tcolor: #363636;\r\n}\r\n.ui-state-highlight a,\r\n.ui-widget-content .ui-state-highlight a,\r\n.ui-widget-header .ui-state-highlight a {\r\n\tcolor: #363636;\r\n}\r\n.ui-state-error,\r\n.ui-widget-content .ui-state-error,\r\n.ui-widget-header .ui-state-error {\r\n\tborder: 1px solid #cd0a0a;\r\n\tbackground: #b81900 url("+__webpack_require__(638)+") 50% 50% repeat;\r\n\tcolor: #ffffff;\r\n}\r\n.ui-state-error a,\r\n.ui-widget-content .ui-state-error a,\r\n.ui-widget-header .ui-state-error a {\r\n\tcolor: #ffffff;\r\n}\r\n.ui-state-error-text,\r\n.ui-widget-content .ui-state-error-text,\r\n.ui-widget-header .ui-state-error-text {\r\n\tcolor: #ffffff;\r\n}\r\n.ui-priority-primary,\r\n.ui-widget-content .ui-priority-primary,\r\n.ui-widget-header .ui-priority-primary {\r\n\tfont-weight: bold;\r\n}\r\n.ui-priority-secondary,\r\n.ui-widget-content .ui-priority-secondary,\r\n.ui-widget-header .ui-priority-secondary {\r\n\topacity: .7;\r\n\tfilter:Alpha(Opacity=70); /* support: IE8 */\r\n\tfont-weight: normal;\r\n}\r\n.ui-state-disabled,\r\n.ui-widget-content .ui-state-disabled,\r\n.ui-widget-header .ui-state-disabled {\r\n\topacity: .35;\r\n\tfilter:Alpha(Opacity=35); /* support: IE8 */\r\n\tbackground-image: none;\r\n}\r\n.ui-state-disabled .ui-icon {\r\n\tfilter:Alpha(Opacity=35); /* support: IE8 - See #6059 */\r\n}\r\n\r\n/* Icons\r\n----------------------------------*/\r\n\r\n/* states and images */\r\n.ui-icon {\r\n\twidth: 16px;\r\n\theight: 16px;\r\n}\r\n.ui-icon,\r\n.ui-widget-content .ui-icon {\r\n\tbackground-image: url("+__webpack_require__(639)+");\r\n}\r\n.ui-widget-header .ui-icon {\r\n\tbackground-image: url("+__webpack_require__(640)+");\r\n}\r\n.ui-state-default .ui-icon {\r\n\tbackground-image: url("+__webpack_require__(641)+");\r\n}\r\n.ui-state-hover .ui-icon,\r\n.ui-state-focus .ui-icon {\r\n\tbackground-image: url("+__webpack_require__(641)+");\r\n}\r\n.ui-state-active .ui-icon {\r\n\tbackground-image: url("+__webpack_require__(641)+");\r\n}\r\n.ui-state-highlight .ui-icon {\r\n\tbackground-image: url("+__webpack_require__(642)+");\r\n}\r\n.ui-state-error .ui-icon,\r\n.ui-state-error-text .ui-icon {\r\n\tbackground-image: url("+__webpack_require__(643)+");\r\n}\r\n\r\n/* positioning */\r\n.ui-icon-blank { background-position: 16px 16px; }\r\n.ui-icon-carat-1-n { background-position: 0 0; }\r\n.ui-icon-carat-1-ne { background-position: -16px 0; }\r\n.ui-icon-carat-1-e { background-position: -32px 0; }\r\n.ui-icon-carat-1-se { background-position: -48px 0; }\r\n.ui-icon-carat-1-s { background-position: -64px 0; }\r\n.ui-icon-carat-1-sw { background-position: -80px 0; }\r\n.ui-icon-carat-1-w { background-position: -96px 0; }\r\n.ui-icon-carat-1-nw { background-position: -112px 0; }\r\n.ui-icon-carat-2-n-s { background-position: -128px 0; }\r\n.ui-icon-carat-2-e-w { background-position: -144px 0; }\r\n.ui-icon-triangle-1-n { background-position: 0 -16px; }\r\n.ui-icon-triangle-1-ne { background-position: -16px -16px; }\r\n.ui-icon-triangle-1-e { background-position: -32px -16px; }\r\n.ui-icon-triangle-1-se { background-position: -48px -16px; }\r\n.ui-icon-triangle-1-s { background-position: -64px -16px; }\r\n.ui-icon-triangle-1-sw { background-position: -80px -16px; }\r\n.ui-icon-triangle-1-w { background-position: -96px -16px; }\r\n.ui-icon-triangle-1-nw { background-position: -112px -16px; }\r\n.ui-icon-triangle-2-n-s { background-position: -128px -16px; }\r\n.ui-icon-triangle-2-e-w { background-position: -144px -16px; }\r\n.ui-icon-arrow-1-n { background-position: 0 -32px; }\r\n.ui-icon-arrow-1-ne { background-position: -16px -32px; }\r\n.ui-icon-arrow-1-e { background-position: -32px -32px; }\r\n.ui-icon-arrow-1-se { background-position: -48px -32px; }\r\n.ui-icon-arrow-1-s { background-position: -64px -32px; }\r\n.ui-icon-arrow-1-sw { background-position: -80px -32px; }\r\n.ui-icon-arrow-1-w { background-position: -96px -32px; }\r\n.ui-icon-arrow-1-nw { background-position: -112px -32px; }\r\n.ui-icon-arrow-2-n-s { background-position: -128px -32px; }\r\n.ui-icon-arrow-2-ne-sw { background-position: -144px -32px; }\r\n.ui-icon-arrow-2-e-w { background-position: -160px -32px; }\r\n.ui-icon-arrow-2-se-nw { background-position: -176px -32px; }\r\n.ui-icon-arrowstop-1-n { background-position: -192px -32px; }\r\n.ui-icon-arrowstop-1-e { background-position: -208px -32px; }\r\n.ui-icon-arrowstop-1-s { background-position: -224px -32px; }\r\n.ui-icon-arrowstop-1-w { background-position: -240px -32px; }\r\n.ui-icon-arrowthick-1-n { background-position: 0 -48px; }\r\n.ui-icon-arrowthick-1-ne { background-position: -16px -48px; }\r\n.ui-icon-arrowthick-1-e { background-position: -32px -48px; }\r\n.ui-icon-arrowthick-1-se { background-position: -48px -48px; }\r\n.ui-icon-arrowthick-1-s { background-position: -64px -48px; }\r\n.ui-icon-arrowthick-1-sw { background-position: -80px -48px; }\r\n.ui-icon-arrowthick-1-w { background-position: -96px -48px; }\r\n.ui-icon-arrowthick-1-nw { background-position: -112px -48px; }\r\n.ui-icon-arrowthick-2-n-s { background-position: -128px -48px; }\r\n.ui-icon-arrowthick-2-ne-sw { background-position: -144px -48px; }\r\n.ui-icon-arrowthick-2-e-w { background-position: -160px -48px; }\r\n.ui-icon-arrowthick-2-se-nw { background-position: -176px -48px; }\r\n.ui-icon-arrowthickstop-1-n { background-position: -192px -48px; }\r\n.ui-icon-arrowthickstop-1-e { background-position: -208px -48px; }\r\n.ui-icon-arrowthickstop-1-s { background-position: -224px -48px; }\r\n.ui-icon-arrowthickstop-1-w { background-position: -240px -48px; }\r\n.ui-icon-arrowreturnthick-1-w { background-position: 0 -64px; }\r\n.ui-icon-arrowreturnthick-1-n { background-position: -16px -64px; }\r\n.ui-icon-arrowreturnthick-1-e { background-position: -32px -64px; }\r\n.ui-icon-arrowreturnthick-1-s { background-position: -48px -64px; }\r\n.ui-icon-arrowreturn-1-w { background-position: -64px -64px; }\r\n.ui-icon-arrowreturn-1-n { background-position: -80px -64px; }\r\n.ui-icon-arrowreturn-1-e { background-position: -96px -64px; }\r\n.ui-icon-arrowreturn-1-s { background-position: -112px -64px; }\r\n.ui-icon-arrowrefresh-1-w { background-position: -128px -64px; }\r\n.ui-icon-arrowrefresh-1-n { background-position: -144px -64px; }\r\n.ui-icon-arrowrefresh-1-e { background-position: -160px -64px; }\r\n.ui-icon-arrowrefresh-1-s { background-position: -176px -64px; }\r\n.ui-icon-arrow-4 { background-position: 0 -80px; }\r\n.ui-icon-arrow-4-diag { background-position: -16px -80px; }\r\n.ui-icon-extlink { background-position: -32px -80px; }\r\n.ui-icon-newwin { background-position: -48px -80px; }\r\n.ui-icon-refresh { background-position: -64px -80px; }\r\n.ui-icon-shuffle { background-position: -80px -80px; }\r\n.ui-icon-transfer-e-w { background-position: -96px -80px; }\r\n.ui-icon-transferthick-e-w { background-position: -112px -80px; }\r\n.ui-icon-folder-collapsed { background-position: 0 -96px; }\r\n.ui-icon-folder-open { background-position: -16px -96px; }\r\n.ui-icon-document { background-position: -32px -96px; }\r\n.ui-icon-document-b { background-position: -48px -96px; }\r\n.ui-icon-note { background-position: -64px -96px; }\r\n.ui-icon-mail-closed { background-position: -80px -96px; }\r\n.ui-icon-mail-open { background-position: -96px -96px; }\r\n.ui-icon-suitcase { background-position: -112px -96px; }\r\n.ui-icon-comment { background-position: -128px -96px; }\r\n.ui-icon-person { background-position: -144px -96px; }\r\n.ui-icon-print { background-position: -160px -96px; }\r\n.ui-icon-trash { background-position: -176px -96px; }\r\n.ui-icon-locked { background-position: -192px -96px; }\r\n.ui-icon-unlocked { background-position: -208px -96px; }\r\n.ui-icon-bookmark { background-position: -224px -96px; }\r\n.ui-icon-tag { background-position: -240px -96px; }\r\n.ui-icon-home { background-position: 0 -112px; }\r\n.ui-icon-flag { background-position: -16px -112px; }\r\n.ui-icon-calendar { background-position: -32px -112px; }\r\n.ui-icon-cart { background-position: -48px -112px; }\r\n.ui-icon-pencil { background-position: -64px -112px; }\r\n.ui-icon-clock { background-position: -80px -112px; }\r\n.ui-icon-disk { background-position: -96px -112px; }\r\n.ui-icon-calculator { background-position: -112px -112px; }\r\n.ui-icon-zoomin { background-position: -128px -112px; }\r\n.ui-icon-zoomout { background-position: -144px -112px; }\r\n.ui-icon-search { background-position: -160px -112px; }\r\n.ui-icon-wrench { background-position: -176px -112px; }\r\n.ui-icon-gear { background-position: -192px -112px; }\r\n.ui-icon-heart { background-position: -208px -112px; }\r\n.ui-icon-star { background-position: -224px -112px; }\r\n.ui-icon-link { background-position: -240px -112px; }\r\n.ui-icon-cancel { background-position: 0 -128px; }\r\n.ui-icon-plus { background-position: -16px -128px; }\r\n.ui-icon-plusthick { background-position: -32px -128px; }\r\n.ui-icon-minus { background-position: -48px -128px; }\r\n.ui-icon-minusthick { background-position: -64px -128px; }\r\n.ui-icon-close { background-position: -80px -128px; }\r\n.ui-icon-closethick { background-position: -96px -128px; }\r\n.ui-icon-key { background-position: -112px -128px; }\r\n.ui-icon-lightbulb { background-position: -128px -128px; }\r\n.ui-icon-scissors { background-position: -144px -128px; }\r\n.ui-icon-clipboard { background-position: -160px -128px; }\r\n.ui-icon-copy { background-position: -176px -128px; }\r\n.ui-icon-contact { background-position: -192px -128px; }\r\n.ui-icon-image { background-position: -208px -128px; }\r\n.ui-icon-video { background-position: -224px -128px; }\r\n.ui-icon-script { background-position: -240px -128px; }\r\n.ui-icon-alert { background-position: 0 -144px; }\r\n.ui-icon-info { background-position: -16px -144px; }\r\n.ui-icon-notice { background-position: -32px -144px; }\r\n.ui-icon-help { background-position: -48px -144px; }\r\n.ui-icon-check { background-position: -64px -144px; }\r\n.ui-icon-bullet { background-position: -80px -144px; }\r\n.ui-icon-radio-on { background-position: -96px -144px; }\r\n.ui-icon-radio-off { background-position: -112px -144px; }\r\n.ui-icon-pin-w { background-position: -128px -144px; }\r\n.ui-icon-pin-s { background-position: -144px -144px; }\r\n.ui-icon-play { background-position: 0 -160px; }\r\n.ui-icon-pause { background-position: -16px -160px; }\r\n.ui-icon-seek-next { background-position: -32px -160px; }\r\n.ui-icon-seek-prev { background-position: -48px -160px; }\r\n.ui-icon-seek-end { background-position: -64px -160px; }\r\n.ui-icon-seek-start { background-position: -80px -160px; }\r\n/* ui-icon-seek-first is deprecated, use ui-icon-seek-start instead */\r\n.ui-icon-seek-first { background-position: -80px -160px; }\r\n.ui-icon-stop { background-position: -96px -160px; }\r\n.ui-icon-eject { background-position: -112px -160px; }\r\n.ui-icon-volume-off { background-position: -128px -160px; }\r\n.ui-icon-volume-on { background-position: -144px -160px; }\r\n.ui-icon-power { background-position: 0 -176px; }\r\n.ui-icon-signal-diag { background-position: -16px -176px; }\r\n.ui-icon-signal { background-position: -32px -176px; }\r\n.ui-icon-battery-0 { background-position: -48px -176px; }\r\n.ui-icon-battery-1 { background-position: -64px -176px; }\r\n.ui-icon-battery-2 { background-position: -80px -176px; }\r\n.ui-icon-battery-3 { background-position: -96px -176px; }\r\n.ui-icon-circle-plus { background-position: 0 -192px; }\r\n.ui-icon-circle-minus { background-position: -16px -192px; }\r\n.ui-icon-circle-close { background-position: -32px -192px; }\r\n.ui-icon-circle-triangle-e { background-position: -48px -192px; }\r\n.ui-icon-circle-triangle-s { background-position: -64px -192px; }\r\n.ui-icon-circle-triangle-w { background-position: -80px -192px; }\r\n.ui-icon-circle-triangle-n { background-position: -96px -192px; }\r\n.ui-icon-circle-arrow-e { background-position: -112px -192px; }\r\n.ui-icon-circle-arrow-s { background-position: -128px -192px; }\r\n.ui-icon-circle-arrow-w { background-position: -144px -192px; }\r\n.ui-icon-circle-arrow-n { background-position: -160px -192px; }\r\n.ui-icon-circle-zoomin { background-position: -176px -192px; }\r\n.ui-icon-circle-zoomout { background-position: -192px -192px; }\r\n.ui-icon-circle-check { background-position: -208px -192px; }\r\n.ui-icon-circlesmall-plus { background-position: 0 -208px; }\r\n.ui-icon-circlesmall-minus { background-position: -16px -208px; }\r\n.ui-icon-circlesmall-close { background-position: -32px -208px; }\r\n.ui-icon-squaresmall-plus { background-position: -48px -208px; }\r\n.ui-icon-squaresmall-minus { background-position: -64px -208px; }\r\n.ui-icon-squaresmall-close { background-position: -80px -208px; }\r\n.ui-icon-grip-dotted-vertical { background-position: 0 -224px; }\r\n.ui-icon-grip-dotted-horizontal { background-position: -16px -224px; }\r\n.ui-icon-grip-solid-vertical { background-position: -32px -224px; }\r\n.ui-icon-grip-solid-horizontal { background-position: -48px -224px; }\r\n.ui-icon-gripsmall-diagonal-se { background-position: -64px -224px; }\r\n.ui-icon-grip-diagonal-se { background-position: -80px -224px; }\r\n\r\n\r\n/* Misc visuals\r\n----------------------------------*/\r\n\r\n/* Corner radius */\r\n.ui-corner-all,\r\n.ui-corner-top,\r\n.ui-corner-left,\r\n.ui-corner-tl {\r\n\tborder-top-left-radius: 4px;\r\n}\r\n.ui-corner-all,\r\n.ui-corner-top,\r\n.ui-corner-right,\r\n.ui-corner-tr {\r\n\tborder-top-right-radius: 4px;\r\n}\r\n.ui-corner-all,\r\n.ui-corner-bottom,\r\n.ui-corner-left,\r\n.ui-corner-bl {\r\n\tborder-bottom-left-radius: 4px;\r\n}\r\n.ui-corner-all,\r\n.ui-corner-bottom,\r\n.ui-corner-right,\r\n.ui-corner-br {\r\n\tborder-bottom-right-radius: 4px;\r\n}\r\n\r\n/* Overlays */\r\n.ui-widget-overlay {\r\n\tbackground: #666666 url("+__webpack_require__(644)+") 50% 50% repeat;\r\n\topacity: .5;\r\n\tfilter: Alpha(Opacity=50); /* support: IE8 */\r\n}\r\n.ui-widget-shadow {\r\n\tmargin: -5px 0 0 -5px;\r\n\tpadding: 5px;\r\n\tbackground: #000000 url("+__webpack_require__(645)+") 50% 50% repeat-x;\r\n\topacity: .2;\r\n\tfilter: Alpha(Opacity=20); /* support: IE8 */\r\n\tborder-radius: 5px;\r\n}\r\n", ""]);
+	// imports
+
+
+	// module
+	exports.push([module.id, "/*! jQuery UI - v1.11.2 - 2014-10-16\r\n* http://jqueryui.com\r\n* Includes: core.css, accordion.css, autocomplete.css, button.css, datepicker.css, dialog.css, draggable.css, menu.css, progressbar.css, resizable.css, selectable.css, selectmenu.css, slider.css, sortable.css, spinner.css, tabs.css, tooltip.css, theme.css\r\n* To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Trebuchet%20MS%2CTahoma%2CVerdana%2CArial%2Csans-serif&fwDefault=bold&fsDefault=1.1em&cornerRadius=4px&bgColorHeader=f6a828&bgTextureHeader=gloss_wave&bgImgOpacityHeader=35&borderColorHeader=e78f08&fcHeader=ffffff&iconColorHeader=ffffff&bgColorContent=eeeeee&bgTextureContent=highlight_soft&bgImgOpacityContent=100&borderColorContent=dddddd&fcContent=333333&iconColorContent=222222&bgColorDefault=f6f6f6&bgTextureDefault=glass&bgImgOpacityDefault=100&borderColorDefault=cccccc&fcDefault=1c94c4&iconColorDefault=ef8c08&bgColorHover=fdf5ce&bgTextureHover=glass&bgImgOpacityHover=100&borderColorHover=fbcb09&fcHover=c77405&iconColorHover=ef8c08&bgColorActive=ffffff&bgTextureActive=glass&bgImgOpacityActive=65&borderColorActive=fbd850&fcActive=eb8f00&iconColorActive=ef8c08&bgColorHighlight=ffe45c&bgTextureHighlight=highlight_soft&bgImgOpacityHighlight=75&borderColorHighlight=fed22f&fcHighlight=363636&iconColorHighlight=228ef1&bgColorError=b81900&bgTextureError=diagonals_thick&bgImgOpacityError=18&borderColorError=cd0a0a&fcError=ffffff&iconColorError=ffd27a&bgColorOverlay=666666&bgTextureOverlay=diagonals_thick&bgImgOpacityOverlay=20&opacityOverlay=50&bgColorShadow=000000&bgTextureShadow=flat&bgImgOpacityShadow=10&opacityShadow=20&thicknessShadow=5px&offsetTopShadow=-5px&offsetLeftShadow=-5px&cornerRadiusShadow=5px\r\n* Copyright 2014 jQuery Foundation and other contributors; Licensed MIT */\r\n\r\n/* Layout helpers\r\n----------------------------------*/\r\n.ui-helper-hidden {\r\n\tdisplay: none;\r\n}\r\n.ui-helper-hidden-accessible {\r\n\tborder: 0;\r\n\tclip: rect(0 0 0 0);\r\n\theight: 1px;\r\n\tmargin: -1px;\r\n\toverflow: hidden;\r\n\tpadding: 0;\r\n\tposition: absolute;\r\n\twidth: 1px;\r\n}\r\n.ui-helper-reset {\r\n\tmargin: 0;\r\n\tpadding: 0;\r\n\tborder: 0;\r\n\toutline: 0;\r\n\tline-height: 1.3;\r\n\ttext-decoration: none;\r\n\tfont-size: 100%;\r\n\tlist-style: none;\r\n}\r\n.ui-helper-clearfix:before,\r\n.ui-helper-clearfix:after {\r\n\tcontent: \"\";\r\n\tdisplay: table;\r\n\tborder-collapse: collapse;\r\n}\r\n.ui-helper-clearfix:after {\r\n\tclear: both;\r\n}\r\n.ui-helper-clearfix {\r\n\tmin-height: 0; /* support: IE7 */\r\n}\r\n.ui-helper-zfix {\r\n\twidth: 100%;\r\n\theight: 100%;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tposition: absolute;\r\n\topacity: 0;\r\n\tfilter:Alpha(Opacity=0); /* support: IE8 */\r\n}\r\n\r\n.ui-front {\r\n\tz-index: 100;\r\n}\r\n\r\n\r\n/* Interaction Cues\r\n----------------------------------*/\r\n.ui-state-disabled {\r\n\tcursor: default !important;\r\n}\r\n\r\n\r\n/* Icons\r\n----------------------------------*/\r\n\r\n/* states and images */\r\n.ui-icon {\r\n\tdisplay: block;\r\n\ttext-indent: -99999px;\r\n\toverflow: hidden;\r\n\tbackground-repeat: no-repeat;\r\n}\r\n\r\n\r\n/* Misc visuals\r\n----------------------------------*/\r\n\r\n/* Overlays */\r\n.ui-widget-overlay {\r\n\tposition: fixed;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\twidth: 100%;\r\n\theight: 100%;\r\n}\r\n.ui-accordion .ui-accordion-header {\r\n\tdisplay: block;\r\n\tcursor: pointer;\r\n\tposition: relative;\r\n\tmargin: 2px 0 0 0;\r\n\tpadding: .5em .5em .5em .7em;\r\n\tmin-height: 0; /* support: IE7 */\r\n\tfont-size: 100%;\r\n}\r\n.ui-accordion .ui-accordion-icons {\r\n\tpadding-left: 2.2em;\r\n}\r\n.ui-accordion .ui-accordion-icons .ui-accordion-icons {\r\n\tpadding-left: 2.2em;\r\n}\r\n.ui-accordion .ui-accordion-header .ui-accordion-header-icon {\r\n\tposition: absolute;\r\n\tleft: .5em;\r\n\ttop: 50%;\r\n\tmargin-top: -8px;\r\n}\r\n.ui-accordion .ui-accordion-content {\r\n\tpadding: 1em 2.2em;\r\n\tborder-top: 0;\r\n\toverflow: auto;\r\n}\r\n.ui-autocomplete {\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tcursor: default;\r\n}\r\n.ui-button {\r\n\tdisplay: inline-block;\r\n\tposition: relative;\r\n\tpadding: 0;\r\n\tline-height: normal;\r\n\tmargin-right: .1em;\r\n\tcursor: pointer;\r\n\tvertical-align: middle;\r\n\ttext-align: center;\r\n\toverflow: visible; /* removes extra width in IE */\r\n}\r\n.ui-button,\r\n.ui-button:link,\r\n.ui-button:visited,\r\n.ui-button:hover,\r\n.ui-button:active {\r\n\ttext-decoration: none;\r\n}\r\n/* to make room for the icon, a width needs to be set here */\r\n.ui-button-icon-only {\r\n\twidth: 2.2em;\r\n}\r\n/* button elements seem to need a little more width */\r\nbutton.ui-button-icon-only {\r\n\twidth: 2.4em;\r\n}\r\n.ui-button-icons-only {\r\n\twidth: 3.4em;\r\n}\r\nbutton.ui-button-icons-only {\r\n\twidth: 3.7em;\r\n}\r\n\r\n/* button text element */\r\n.ui-button .ui-button-text {\r\n\tdisplay: block;\r\n\tline-height: normal;\r\n}\r\n.ui-button-text-only .ui-button-text {\r\n\tpadding: .4em 1em;\r\n}\r\n.ui-button-icon-only .ui-button-text,\r\n.ui-button-icons-only .ui-button-text {\r\n\tpadding: .4em;\r\n\ttext-indent: -9999999px;\r\n}\r\n.ui-button-text-icon-primary .ui-button-text,\r\n.ui-button-text-icons .ui-button-text {\r\n\tpadding: .4em 1em .4em 2.1em;\r\n}\r\n.ui-button-text-icon-secondary .ui-button-text,\r\n.ui-button-text-icons .ui-button-text {\r\n\tpadding: .4em 2.1em .4em 1em;\r\n}\r\n.ui-button-text-icons .ui-button-text {\r\n\tpadding-left: 2.1em;\r\n\tpadding-right: 2.1em;\r\n}\r\n/* no icon support for input elements, provide padding by default */\r\ninput.ui-button {\r\n\tpadding: .4em 1em;\r\n}\r\n\r\n/* button icon element(s) */\r\n.ui-button-icon-only .ui-icon,\r\n.ui-button-text-icon-primary .ui-icon,\r\n.ui-button-text-icon-secondary .ui-icon,\r\n.ui-button-text-icons .ui-icon,\r\n.ui-button-icons-only .ui-icon {\r\n\tposition: absolute;\r\n\ttop: 50%;\r\n\tmargin-top: -8px;\r\n}\r\n.ui-button-icon-only .ui-icon {\r\n\tleft: 50%;\r\n\tmargin-left: -8px;\r\n}\r\n.ui-button-text-icon-primary .ui-button-icon-primary,\r\n.ui-button-text-icons .ui-button-icon-primary,\r\n.ui-button-icons-only .ui-button-icon-primary {\r\n\tleft: .5em;\r\n}\r\n.ui-button-text-icon-secondary .ui-button-icon-secondary,\r\n.ui-button-text-icons .ui-button-icon-secondary,\r\n.ui-button-icons-only .ui-button-icon-secondary {\r\n\tright: .5em;\r\n}\r\n\r\n/* button sets */\r\n.ui-buttonset {\r\n\tmargin-right: 7px;\r\n}\r\n.ui-buttonset .ui-button {\r\n\tmargin-left: 0;\r\n\tmargin-right: -.3em;\r\n}\r\n\r\n/* workarounds */\r\n/* reset extra padding in Firefox, see h5bp.com/l */\r\ninput.ui-button::-moz-focus-inner,\r\nbutton.ui-button::-moz-focus-inner {\r\n\tborder: 0;\r\n\tpadding: 0;\r\n}\r\n.ui-datepicker {\r\n\twidth: 17em;\r\n\tpadding: .2em .2em 0;\r\n\tdisplay: none;\r\n}\r\n.ui-datepicker .ui-datepicker-header {\r\n\tposition: relative;\r\n\tpadding: .2em 0;\r\n}\r\n.ui-datepicker .ui-datepicker-prev,\r\n.ui-datepicker .ui-datepicker-next {\r\n\tposition: absolute;\r\n\ttop: 2px;\r\n\twidth: 1.8em;\r\n\theight: 1.8em;\r\n}\r\n.ui-datepicker .ui-datepicker-prev-hover,\r\n.ui-datepicker .ui-datepicker-next-hover {\r\n\ttop: 1px;\r\n}\r\n.ui-datepicker .ui-datepicker-prev {\r\n\tleft: 2px;\r\n}\r\n.ui-datepicker .ui-datepicker-next {\r\n\tright: 2px;\r\n}\r\n.ui-datepicker .ui-datepicker-prev-hover {\r\n\tleft: 1px;\r\n}\r\n.ui-datepicker .ui-datepicker-next-hover {\r\n\tright: 1px;\r\n}\r\n.ui-datepicker .ui-datepicker-prev span,\r\n.ui-datepicker .ui-datepicker-next span {\r\n\tdisplay: block;\r\n\tposition: absolute;\r\n\tleft: 50%;\r\n\tmargin-left: -8px;\r\n\ttop: 50%;\r\n\tmargin-top: -8px;\r\n}\r\n.ui-datepicker .ui-datepicker-title {\r\n\tmargin: 0 2.3em;\r\n\tline-height: 1.8em;\r\n\ttext-align: center;\r\n}\r\n.ui-datepicker .ui-datepicker-title select {\r\n\tfont-size: 1em;\r\n\tmargin: 1px 0;\r\n}\r\n.ui-datepicker select.ui-datepicker-month,\r\n.ui-datepicker select.ui-datepicker-year {\r\n\twidth: 45%;\r\n}\r\n.ui-datepicker table {\r\n\twidth: 100%;\r\n\tfont-size: .9em;\r\n\tborder-collapse: collapse;\r\n\tmargin: 0 0 .4em;\r\n}\r\n.ui-datepicker th {\r\n\tpadding: .7em .3em;\r\n\ttext-align: center;\r\n\tfont-weight: bold;\r\n\tborder: 0;\r\n}\r\n.ui-datepicker td {\r\n\tborder: 0;\r\n\tpadding: 1px;\r\n}\r\n.ui-datepicker td span,\r\n.ui-datepicker td a {\r\n\tdisplay: block;\r\n\tpadding: .2em;\r\n\ttext-align: right;\r\n\ttext-decoration: none;\r\n}\r\n.ui-datepicker .ui-datepicker-buttonpane {\r\n\tbackground-image: none;\r\n\tmargin: .7em 0 0 0;\r\n\tpadding: 0 .2em;\r\n\tborder-left: 0;\r\n\tborder-right: 0;\r\n\tborder-bottom: 0;\r\n}\r\n.ui-datepicker .ui-datepicker-buttonpane button {\r\n\tfloat: right;\r\n\tmargin: .5em .2em .4em;\r\n\tcursor: pointer;\r\n\tpadding: .2em .6em .3em .6em;\r\n\twidth: auto;\r\n\toverflow: visible;\r\n}\r\n.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current {\r\n\tfloat: left;\r\n}\r\n\r\n/* with multiple calendars */\r\n.ui-datepicker.ui-datepicker-multi {\r\n\twidth: auto;\r\n}\r\n.ui-datepicker-multi .ui-datepicker-group {\r\n\tfloat: left;\r\n}\r\n.ui-datepicker-multi .ui-datepicker-group table {\r\n\twidth: 95%;\r\n\tmargin: 0 auto .4em;\r\n}\r\n.ui-datepicker-multi-2 .ui-datepicker-group {\r\n\twidth: 50%;\r\n}\r\n.ui-datepicker-multi-3 .ui-datepicker-group {\r\n\twidth: 33.3%;\r\n}\r\n.ui-datepicker-multi-4 .ui-datepicker-group {\r\n\twidth: 25%;\r\n}\r\n.ui-datepicker-multi .ui-datepicker-group-last .ui-datepicker-header,\r\n.ui-datepicker-multi .ui-datepicker-group-middle .ui-datepicker-header {\r\n\tborder-left-width: 0;\r\n}\r\n.ui-datepicker-multi .ui-datepicker-buttonpane {\r\n\tclear: left;\r\n}\r\n.ui-datepicker-row-break {\r\n\tclear: both;\r\n\twidth: 100%;\r\n\tfont-size: 0;\r\n}\r\n\r\n/* RTL support */\r\n.ui-datepicker-rtl {\r\n\tdirection: rtl;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-prev {\r\n\tright: 2px;\r\n\tleft: auto;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-next {\r\n\tleft: 2px;\r\n\tright: auto;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-prev:hover {\r\n\tright: 1px;\r\n\tleft: auto;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-next:hover {\r\n\tleft: 1px;\r\n\tright: auto;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-buttonpane {\r\n\tclear: right;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-buttonpane button {\r\n\tfloat: left;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-buttonpane button.ui-datepicker-current,\r\n.ui-datepicker-rtl .ui-datepicker-group {\r\n\tfloat: right;\r\n}\r\n.ui-datepicker-rtl .ui-datepicker-group-last .ui-datepicker-header,\r\n.ui-datepicker-rtl .ui-datepicker-group-middle .ui-datepicker-header {\r\n\tborder-right-width: 0;\r\n\tborder-left-width: 1px;\r\n}\r\n.ui-dialog {\r\n\toverflow: hidden;\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tpadding: .2em;\r\n\toutline: 0;\r\n}\r\n.ui-dialog .ui-dialog-titlebar {\r\n\tpadding: .4em 1em;\r\n\tposition: relative;\r\n}\r\n.ui-dialog .ui-dialog-title {\r\n\tfloat: left;\r\n\tmargin: .1em 0;\r\n\twhite-space: nowrap;\r\n\twidth: 90%;\r\n\toverflow: hidden;\r\n\ttext-overflow: ellipsis;\r\n}\r\n.ui-dialog .ui-dialog-titlebar-close {\r\n\tposition: absolute;\r\n\tright: .3em;\r\n\ttop: 50%;\r\n\twidth: 20px;\r\n\tmargin: -10px 0 0 0;\r\n\tpadding: 1px;\r\n\theight: 20px;\r\n}\r\n.ui-dialog .ui-dialog-content {\r\n\tposition: relative;\r\n\tborder: 0;\r\n\tpadding: .5em 1em;\r\n\tbackground: none;\r\n\toverflow: auto;\r\n}\r\n.ui-dialog .ui-dialog-buttonpane {\r\n\ttext-align: left;\r\n\tborder-width: 1px 0 0 0;\r\n\tbackground-image: none;\r\n\tmargin-top: .5em;\r\n\tpadding: .3em 1em .5em .4em;\r\n}\r\n.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {\r\n\tfloat: right;\r\n}\r\n.ui-dialog .ui-dialog-buttonpane button {\r\n\tmargin: .5em .4em .5em 0;\r\n\tcursor: pointer;\r\n}\r\n.ui-dialog .ui-resizable-se {\r\n\twidth: 12px;\r\n\theight: 12px;\r\n\tright: -5px;\r\n\tbottom: -5px;\r\n\tbackground-position: 16px 16px;\r\n}\r\n.ui-draggable .ui-dialog-titlebar {\r\n\tcursor: move;\r\n}\r\n.ui-draggable-handle {\r\n\t-ms-touch-action: none;\r\n\ttouch-action: none;\r\n}\r\n.ui-menu {\r\n\tlist-style: none;\r\n\tpadding: 0;\r\n\tmargin: 0;\r\n\tdisplay: block;\r\n\toutline: none;\r\n}\r\n.ui-menu .ui-menu {\r\n\tposition: absolute;\r\n}\r\n.ui-menu .ui-menu-item {\r\n\tposition: relative;\r\n\tmargin: 0;\r\n\tpadding: 3px 1em 3px .4em;\r\n\tcursor: pointer;\r\n\tmin-height: 0; /* support: IE7 */\r\n\t/* support: IE10, see #8844 */\r\n\tlist-style-image: url(\"data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7\");\r\n}\r\n.ui-menu .ui-menu-divider {\r\n\tmargin: 5px 0;\r\n\theight: 0;\r\n\tfont-size: 0;\r\n\tline-height: 0;\r\n\tborder-width: 1px 0 0 0;\r\n}\r\n.ui-menu .ui-state-focus,\r\n.ui-menu .ui-state-active {\r\n\tmargin: -1px;\r\n}\r\n\r\n/* icon support */\r\n.ui-menu-icons {\r\n\tposition: relative;\r\n}\r\n.ui-menu-icons .ui-menu-item {\r\n\tpadding-left: 2em;\r\n}\r\n\r\n/* left-aligned */\r\n.ui-menu .ui-icon {\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tbottom: 0;\r\n\tleft: .2em;\r\n\tmargin: auto 0;\r\n}\r\n\r\n/* right-aligned */\r\n.ui-menu .ui-menu-icon {\r\n\tleft: auto;\r\n\tright: 0;\r\n}\r\n.ui-progressbar {\r\n\theight: 2em;\r\n\ttext-align: left;\r\n\toverflow: hidden;\r\n}\r\n.ui-progressbar .ui-progressbar-value {\r\n\tmargin: -1px;\r\n\theight: 100%;\r\n}\r\n.ui-progressbar .ui-progressbar-overlay {\r\n\tbackground: url(\"data:image/gif;base64,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\");\r\n\theight: 100%;\r\n\tfilter: alpha(opacity=25); /* support: IE8 */\r\n\topacity: 0.25;\r\n}\r\n.ui-progressbar-indeterminate .ui-progressbar-value {\r\n\tbackground-image: none;\r\n}\r\n.ui-resizable {\r\n\tposition: relative;\r\n}\r\n.ui-resizable-handle {\r\n\tposition: absolute;\r\n\tfont-size: 0.1px;\r\n\tdisplay: block;\r\n\t-ms-touch-action: none;\r\n\ttouch-action: none;\r\n}\r\n.ui-resizable-disabled .ui-resizable-handle,\r\n.ui-resizable-autohide .ui-resizable-handle {\r\n\tdisplay: none;\r\n}\r\n.ui-resizable-n {\r\n\tcursor: n-resize;\r\n\theight: 7px;\r\n\twidth: 100%;\r\n\ttop: -5px;\r\n\tleft: 0;\r\n}\r\n.ui-resizable-s {\r\n\tcursor: s-resize;\r\n\theight: 7px;\r\n\twidth: 100%;\r\n\tbottom: -5px;\r\n\tleft: 0;\r\n}\r\n.ui-resizable-e {\r\n\tcursor: e-resize;\r\n\twidth: 7px;\r\n\tright: -5px;\r\n\ttop: 0;\r\n\theight: 100%;\r\n}\r\n.ui-resizable-w {\r\n\tcursor: w-resize;\r\n\twidth: 7px;\r\n\tleft: -5px;\r\n\ttop: 0;\r\n\theight: 100%;\r\n}\r\n.ui-resizable-se {\r\n\tcursor: se-resize;\r\n\twidth: 12px;\r\n\theight: 12px;\r\n\tright: 1px;\r\n\tbottom: 1px;\r\n}\r\n.ui-resizable-sw {\r\n\tcursor: sw-resize;\r\n\twidth: 9px;\r\n\theight: 9px;\r\n\tleft: -5px;\r\n\tbottom: -5px;\r\n}\r\n.ui-resizable-nw {\r\n\tcursor: nw-resize;\r\n\twidth: 9px;\r\n\theight: 9px;\r\n\tleft: -5px;\r\n\ttop: -5px;\r\n}\r\n.ui-resizable-ne {\r\n\tcursor: ne-resize;\r\n\twidth: 9px;\r\n\theight: 9px;\r\n\tright: -5px;\r\n\ttop: -5px;\r\n}\r\n.ui-selectable {\r\n\t-ms-touch-action: none;\r\n\ttouch-action: none;\r\n}\r\n.ui-selectable-helper {\r\n\tposition: absolute;\r\n\tz-index: 100;\r\n\tborder: 1px dotted black;\r\n}\r\n.ui-selectmenu-menu {\r\n\tpadding: 0;\r\n\tmargin: 0;\r\n\tposition: absolute;\r\n\ttop: 0;\r\n\tleft: 0;\r\n\tdisplay: none;\r\n}\r\n.ui-selectmenu-menu .ui-menu {\r\n\toverflow: auto;\r\n\t/* Support: IE7 */\r\n\toverflow-x: hidden;\r\n\tpadding-bottom: 1px;\r\n}\r\n.ui-selectmenu-menu .ui-menu .ui-selectmenu-optgroup {\r\n\tfont-size: 1em;\r\n\tfont-weight: bold;\r\n\tline-height: 1.5;\r\n\tpadding: 2px 0.4em;\r\n\tmargin: 0.5em 0 0 0;\r\n\theight: auto;\r\n\tborder: 0;\r\n}\r\n.ui-selectmenu-open {\r\n\tdisplay: block;\r\n}\r\n.ui-selectmenu-button {\r\n\tdisplay: inline-block;\r\n\toverflow: hidden;\r\n\tposition: relative;\r\n\ttext-decoration: none;\r\n\tcursor: pointer;\r\n}\r\n.ui-selectmenu-button span.ui-icon {\r\n\tright: 0.5em;\r\n\tleft: auto;\r\n\tmargin-top: -8px;\r\n\tposition: absolute;\r\n\ttop: 50%;\r\n}\r\n.ui-selectmenu-button span.ui-selectmenu-text {\r\n\ttext-align: left;\r\n\tpadding: 0.4em 2.1em 0.4em 1em;\r\n\tdisplay: block;\r\n\tline-height: 1.4;\r\n\toverflow: hidden;\r\n\ttext-overflow: ellipsis;\r\n\twhite-space: nowrap;\r\n}\r\n.ui-slider {\r\n\tposition: relative;\r\n\ttext-align: left;\r\n}\r\n.ui-slider .ui-slider-handle {\r\n\tposition: absolute;\r\n\tz-index: 2;\r\n\twidth: 1.2em;\r\n\theight: 1.2em;\r\n\tcursor: default;\r\n\t-ms-touch-action: none;\r\n\ttouch-action: none;\r\n}\r\n.ui-slider .ui-slider-range {\r\n\tposition: absolute;\r\n\tz-index: 1;\r\n\tfont-size: .7em;\r\n\tdisplay: block;\r\n\tborder: 0;\r\n\tbackground-position: 0 0;\r\n}\r\n\r\n/* support: IE8 - See #6727 */\r\n.ui-slider.ui-state-disabled .ui-slider-handle,\r\n.ui-slider.ui-state-disabled .ui-slider-range {\r\n\tfilter: inherit;\r\n}\r\n\r\n.ui-slider-horizontal {\r\n\theight: .8em;\r\n}\r\n.ui-slider-horizontal .ui-slider-handle {\r\n\ttop: -.3em;\r\n\tmargin-left: -.6em;\r\n}\r\n.ui-slider-horizontal .ui-slider-range {\r\n\ttop: 0;\r\n\theight: 100%;\r\n}\r\n.ui-slider-horizontal .ui-slider-range-min {\r\n\tleft: 0;\r\n}\r\n.ui-slider-horizontal .ui-slider-range-max {\r\n\tright: 0;\r\n}\r\n\r\n.ui-slider-vertical {\r\n\twidth: .8em;\r\n\theight: 100px;\r\n}\r\n.ui-slider-vertical .ui-slider-handle {\r\n\tleft: -.3em;\r\n\tmargin-left: 0;\r\n\tmargin-bottom: -.6em;\r\n}\r\n.ui-slider-vertical .ui-slider-range {\r\n\tleft: 0;\r\n\twidth: 100%;\r\n}\r\n.ui-slider-vertical .ui-slider-range-min {\r\n\tbottom: 0;\r\n}\r\n.ui-slider-vertical .ui-slider-range-max {\r\n\ttop: 0;\r\n}\r\n.ui-sortable-handle {\r\n\t-ms-touch-action: none;\r\n\ttouch-action: none;\r\n}\r\n.ui-spinner {\r\n\tposition: relative;\r\n\tdisplay: inline-block;\r\n\toverflow: hidden;\r\n\tpadding: 0;\r\n\tvertical-align: middle;\r\n}\r\n.ui-spinner-input {\r\n\tborder: none;\r\n\tbackground: none;\r\n\tcolor: inherit;\r\n\tpadding: 0;\r\n\tmargin: .2em 0;\r\n\tvertical-align: middle;\r\n\tmargin-left: .4em;\r\n\tmargin-right: 22px;\r\n}\r\n.ui-spinner-button {\r\n\twidth: 16px;\r\n\theight: 50%;\r\n\tfont-size: .5em;\r\n\tpadding: 0;\r\n\tmargin: 0;\r\n\ttext-align: center;\r\n\tposition: absolute;\r\n\tcursor: default;\r\n\tdisplay: block;\r\n\toverflow: hidden;\r\n\tright: 0;\r\n}\r\n/* more specificity required here to override default borders */\r\n.ui-spinner a.ui-spinner-button {\r\n\tborder-top: none;\r\n\tborder-bottom: none;\r\n\tborder-right: none;\r\n}\r\n/* vertically center icon */\r\n.ui-spinner .ui-icon {\r\n\tposition: absolute;\r\n\tmargin-top: -8px;\r\n\ttop: 50%;\r\n\tleft: 0;\r\n}\r\n.ui-spinner-up {\r\n\ttop: 0;\r\n}\r\n.ui-spinner-down {\r\n\tbottom: 0;\r\n}\r\n\r\n/* TR overrides */\r\n.ui-spinner .ui-icon-triangle-1-s {\r\n\t/* need to fix icons sprite */\r\n\tbackground-position: -65px -16px;\r\n}\r\n.ui-tabs {\r\n\tposition: relative;/* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as \"fixed\") */\r\n\tpadding: .2em;\r\n}\r\n.ui-tabs .ui-tabs-nav {\r\n\tmargin: 0;\r\n\tpadding: .2em .2em 0;\r\n}\r\n.ui-tabs .ui-tabs-nav li {\r\n\tlist-style: none;\r\n\tfloat: left;\r\n\tposition: relative;\r\n\ttop: 0;\r\n\tmargin: 1px .2em 0 0;\r\n\tborder-bottom-width: 0;\r\n\tpadding: 0;\r\n\twhite-space: nowrap;\r\n}\r\n.ui-tabs .ui-tabs-nav .ui-tabs-anchor {\r\n\tfloat: left;\r\n\tpadding: .5em 1em;\r\n\ttext-decoration: none;\r\n}\r\n.ui-tabs .ui-tabs-nav li.ui-tabs-active {\r\n\tmargin-bottom: -1px;\r\n\tpadding-bottom: 1px;\r\n}\r\n.ui-tabs .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor,\r\n.ui-tabs .ui-tabs-nav li.ui-state-disabled .ui-tabs-anchor,\r\n.ui-tabs .ui-tabs-nav li.ui-tabs-loading .ui-tabs-anchor {\r\n\tcursor: text;\r\n}\r\n.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor {\r\n\tcursor: pointer;\r\n}\r\n.ui-tabs .ui-tabs-panel {\r\n\tdisplay: block;\r\n\tborder-width: 0;\r\n\tpadding: 1em 1.4em;\r\n\tbackground: none;\r\n}\r\n.ui-tooltip {\r\n\tpadding: 8px;\r\n\tposition: absolute;\r\n\tz-index: 9999;\r\n\tmax-width: 300px;\r\n\t-webkit-box-shadow: 0 0 5px #aaa;\r\n\tbox-shadow: 0 0 5px #aaa;\r\n}\r\nbody .ui-tooltip {\r\n\tborder-width: 2px;\r\n}\r\n\r\n/* Component containers\r\n----------------------------------*/\r\n.ui-widget {\r\n\tfont-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;\r\n\tfont-size: 1.1em;\r\n}\r\n.ui-widget .ui-widget {\r\n\tfont-size: 1em;\r\n}\r\n.ui-widget input,\r\n.ui-widget select,\r\n.ui-widget textarea,\r\n.ui-widget button {\r\n\tfont-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;\r\n\tfont-size: 1em;\r\n}\r\n.ui-widget-content {\r\n\tborder: 1px solid #dddddd;\r\n\tbackground: #eeeeee url(" + __webpack_require__(632) + ") 50% top repeat-x;\r\n\tcolor: #333333;\r\n}\r\n.ui-widget-content a {\r\n\tcolor: #333333;\r\n}\r\n.ui-widget-header {\r\n\tborder: 1px solid #e78f08;\r\n\tbackground: #f6a828 url(" + __webpack_require__(633) + ") 50% 50% repeat-x;\r\n\tcolor: #ffffff;\r\n\tfont-weight: bold;\r\n}\r\n.ui-widget-header a {\r\n\tcolor: #ffffff;\r\n}\r\n\r\n/* Interaction states\r\n----------------------------------*/\r\n.ui-state-default,\r\n.ui-widget-content .ui-state-default,\r\n.ui-widget-header .ui-state-default {\r\n\tborder: 1px solid #cccccc;\r\n\tbackground: #f6f6f6 url(" + __webpack_require__(634) + ") 50% 50% repeat-x;\r\n\tfont-weight: bold;\r\n\tcolor: #1c94c4;\r\n}\r\n.ui-state-default a,\r\n.ui-state-default a:link,\r\n.ui-state-default a:visited {\r\n\tcolor: #1c94c4;\r\n\ttext-decoration: none;\r\n}\r\n.ui-state-hover,\r\n.ui-widget-content .ui-state-hover,\r\n.ui-widget-header .ui-state-hover,\r\n.ui-state-focus,\r\n.ui-widget-content .ui-state-focus,\r\n.ui-widget-header .ui-state-focus {\r\n\tborder: 1px solid #fbcb09;\r\n\tbackground: #fdf5ce url(" + __webpack_require__(635) + ") 50% 50% repeat-x;\r\n\tfont-weight: bold;\r\n\tcolor: #c77405;\r\n}\r\n.ui-state-hover a,\r\n.ui-state-hover a:hover,\r\n.ui-state-hover a:link,\r\n.ui-state-hover a:visited,\r\n.ui-state-focus a,\r\n.ui-state-focus a:hover,\r\n.ui-state-focus a:link,\r\n.ui-state-focus a:visited {\r\n\tcolor: #c77405;\r\n\ttext-decoration: none;\r\n}\r\n.ui-state-active,\r\n.ui-widget-content .ui-state-active,\r\n.ui-widget-header .ui-state-active {\r\n\tborder: 1px solid #fbd850;\r\n\tbackground: #ffffff url(" + __webpack_require__(636) + ") 50% 50% repeat-x;\r\n\tfont-weight: bold;\r\n\tcolor: #eb8f00;\r\n}\r\n.ui-state-active a,\r\n.ui-state-active a:link,\r\n.ui-state-active a:visited {\r\n\tcolor: #eb8f00;\r\n\ttext-decoration: none;\r\n}\r\n\r\n/* Interaction Cues\r\n----------------------------------*/\r\n.ui-state-highlight,\r\n.ui-widget-content .ui-state-highlight,\r\n.ui-widget-header .ui-state-highlight {\r\n\tborder: 1px solid #fed22f;\r\n\tbackground: #ffe45c url(" + __webpack_require__(637) + ") 50% top repeat-x;\r\n\tcolor: #363636;\r\n}\r\n.ui-state-highlight a,\r\n.ui-widget-content .ui-state-highlight a,\r\n.ui-widget-header .ui-state-highlight a {\r\n\tcolor: #363636;\r\n}\r\n.ui-state-error,\r\n.ui-widget-content .ui-state-error,\r\n.ui-widget-header .ui-state-error {\r\n\tborder: 1px solid #cd0a0a;\r\n\tbackground: #b81900 url(" + __webpack_require__(638) + ") 50% 50% repeat;\r\n\tcolor: #ffffff;\r\n}\r\n.ui-state-error a,\r\n.ui-widget-content .ui-state-error a,\r\n.ui-widget-header .ui-state-error a {\r\n\tcolor: #ffffff;\r\n}\r\n.ui-state-error-text,\r\n.ui-widget-content .ui-state-error-text,\r\n.ui-widget-header .ui-state-error-text {\r\n\tcolor: #ffffff;\r\n}\r\n.ui-priority-primary,\r\n.ui-widget-content .ui-priority-primary,\r\n.ui-widget-header .ui-priority-primary {\r\n\tfont-weight: bold;\r\n}\r\n.ui-priority-secondary,\r\n.ui-widget-content .ui-priority-secondary,\r\n.ui-widget-header .ui-priority-secondary {\r\n\topacity: .7;\r\n\tfilter:Alpha(Opacity=70); /* support: IE8 */\r\n\tfont-weight: normal;\r\n}\r\n.ui-state-disabled,\r\n.ui-widget-content .ui-state-disabled,\r\n.ui-widget-header .ui-state-disabled {\r\n\topacity: .35;\r\n\tfilter:Alpha(Opacity=35); /* support: IE8 */\r\n\tbackground-image: none;\r\n}\r\n.ui-state-disabled .ui-icon {\r\n\tfilter:Alpha(Opacity=35); /* support: IE8 - See #6059 */\r\n}\r\n\r\n/* Icons\r\n----------------------------------*/\r\n\r\n/* states and images */\r\n.ui-icon {\r\n\twidth: 16px;\r\n\theight: 16px;\r\n}\r\n.ui-icon,\r\n.ui-widget-content .ui-icon {\r\n\tbackground-image: url(" + __webpack_require__(639) + ");\r\n}\r\n.ui-widget-header .ui-icon {\r\n\tbackground-image: url(" + __webpack_require__(640) + ");\r\n}\r\n.ui-state-default .ui-icon {\r\n\tbackground-image: url(" + __webpack_require__(641) + ");\r\n}\r\n.ui-state-hover .ui-icon,\r\n.ui-state-focus .ui-icon {\r\n\tbackground-image: url(" + __webpack_require__(641) + ");\r\n}\r\n.ui-state-active .ui-icon {\r\n\tbackground-image: url(" + __webpack_require__(641) + ");\r\n}\r\n.ui-state-highlight .ui-icon {\r\n\tbackground-image: url(" + __webpack_require__(642) + ");\r\n}\r\n.ui-state-error .ui-icon,\r\n.ui-state-error-text .ui-icon {\r\n\tbackground-image: url(" + __webpack_require__(643) + ");\r\n}\r\n\r\n/* positioning */\r\n.ui-icon-blank { background-position: 16px 16px; }\r\n.ui-icon-carat-1-n { background-position: 0 0; }\r\n.ui-icon-carat-1-ne { background-position: -16px 0; }\r\n.ui-icon-carat-1-e { background-position: -32px 0; }\r\n.ui-icon-carat-1-se { background-position: -48px 0; }\r\n.ui-icon-carat-1-s { background-position: -64px 0; }\r\n.ui-icon-carat-1-sw { background-position: -80px 0; }\r\n.ui-icon-carat-1-w { background-position: -96px 0; }\r\n.ui-icon-carat-1-nw { background-position: -112px 0; }\r\n.ui-icon-carat-2-n-s { background-position: -128px 0; }\r\n.ui-icon-carat-2-e-w { background-position: -144px 0; }\r\n.ui-icon-triangle-1-n { background-position: 0 -16px; }\r\n.ui-icon-triangle-1-ne { background-position: -16px -16px; }\r\n.ui-icon-triangle-1-e { background-position: -32px -16px; }\r\n.ui-icon-triangle-1-se { background-position: -48px -16px; }\r\n.ui-icon-triangle-1-s { background-position: -64px -16px; }\r\n.ui-icon-triangle-1-sw { background-position: -80px -16px; }\r\n.ui-icon-triangle-1-w { background-position: -96px -16px; }\r\n.ui-icon-triangle-1-nw { background-position: -112px -16px; }\r\n.ui-icon-triangle-2-n-s { background-position: -128px -16px; }\r\n.ui-icon-triangle-2-e-w { background-position: -144px -16px; }\r\n.ui-icon-arrow-1-n { background-position: 0 -32px; }\r\n.ui-icon-arrow-1-ne { background-position: -16px -32px; }\r\n.ui-icon-arrow-1-e { background-position: -32px -32px; }\r\n.ui-icon-arrow-1-se { background-position: -48px -32px; }\r\n.ui-icon-arrow-1-s { background-position: -64px -32px; }\r\n.ui-icon-arrow-1-sw { background-position: -80px -32px; }\r\n.ui-icon-arrow-1-w { background-position: -96px -32px; }\r\n.ui-icon-arrow-1-nw { background-position: -112px -32px; }\r\n.ui-icon-arrow-2-n-s { background-position: -128px -32px; }\r\n.ui-icon-arrow-2-ne-sw { background-position: -144px -32px; }\r\n.ui-icon-arrow-2-e-w { background-position: -160px -32px; }\r\n.ui-icon-arrow-2-se-nw { background-position: -176px -32px; }\r\n.ui-icon-arrowstop-1-n { background-position: -192px -32px; }\r\n.ui-icon-arrowstop-1-e { background-position: -208px -32px; }\r\n.ui-icon-arrowstop-1-s { background-position: -224px -32px; }\r\n.ui-icon-arrowstop-1-w { background-position: -240px -32px; }\r\n.ui-icon-arrowthick-1-n { background-position: 0 -48px; }\r\n.ui-icon-arrowthick-1-ne { background-position: -16px -48px; }\r\n.ui-icon-arrowthick-1-e { background-position: -32px -48px; }\r\n.ui-icon-arrowthick-1-se { background-position: -48px -48px; }\r\n.ui-icon-arrowthick-1-s { background-position: -64px -48px; }\r\n.ui-icon-arrowthick-1-sw { background-position: -80px -48px; }\r\n.ui-icon-arrowthick-1-w { background-position: -96px -48px; }\r\n.ui-icon-arrowthick-1-nw { background-position: -112px -48px; }\r\n.ui-icon-arrowthick-2-n-s { background-position: -128px -48px; }\r\n.ui-icon-arrowthick-2-ne-sw { background-position: -144px -48px; }\r\n.ui-icon-arrowthick-2-e-w { background-position: -160px -48px; }\r\n.ui-icon-arrowthick-2-se-nw { background-position: -176px -48px; }\r\n.ui-icon-arrowthickstop-1-n { background-position: -192px -48px; }\r\n.ui-icon-arrowthickstop-1-e { background-position: -208px -48px; }\r\n.ui-icon-arrowthickstop-1-s { background-position: -224px -48px; }\r\n.ui-icon-arrowthickstop-1-w { background-position: -240px -48px; }\r\n.ui-icon-arrowreturnthick-1-w { background-position: 0 -64px; }\r\n.ui-icon-arrowreturnthick-1-n { background-position: -16px -64px; }\r\n.ui-icon-arrowreturnthick-1-e { background-position: -32px -64px; }\r\n.ui-icon-arrowreturnthick-1-s { background-position: -48px -64px; }\r\n.ui-icon-arrowreturn-1-w { background-position: -64px -64px; }\r\n.ui-icon-arrowreturn-1-n { background-position: -80px -64px; }\r\n.ui-icon-arrowreturn-1-e { background-position: -96px -64px; }\r\n.ui-icon-arrowreturn-1-s { background-position: -112px -64px; }\r\n.ui-icon-arrowrefresh-1-w { background-position: -128px -64px; }\r\n.ui-icon-arrowrefresh-1-n { background-position: -144px -64px; }\r\n.ui-icon-arrowrefresh-1-e { background-position: -160px -64px; }\r\n.ui-icon-arrowrefresh-1-s { background-position: -176px -64px; }\r\n.ui-icon-arrow-4 { background-position: 0 -80px; }\r\n.ui-icon-arrow-4-diag { background-position: -16px -80px; }\r\n.ui-icon-extlink { background-position: -32px -80px; }\r\n.ui-icon-newwin { background-position: -48px -80px; }\r\n.ui-icon-refresh { background-position: -64px -80px; }\r\n.ui-icon-shuffle { background-position: -80px -80px; }\r\n.ui-icon-transfer-e-w { background-position: -96px -80px; }\r\n.ui-icon-transferthick-e-w { background-position: -112px -80px; }\r\n.ui-icon-folder-collapsed { background-position: 0 -96px; }\r\n.ui-icon-folder-open { background-position: -16px -96px; }\r\n.ui-icon-document { background-position: -32px -96px; }\r\n.ui-icon-document-b { background-position: -48px -96px; }\r\n.ui-icon-note { background-position: -64px -96px; }\r\n.ui-icon-mail-closed { background-position: -80px -96px; }\r\n.ui-icon-mail-open { background-position: -96px -96px; }\r\n.ui-icon-suitcase { background-position: -112px -96px; }\r\n.ui-icon-comment { background-position: -128px -96px; }\r\n.ui-icon-person { background-position: -144px -96px; }\r\n.ui-icon-print { background-position: -160px -96px; }\r\n.ui-icon-trash { background-position: -176px -96px; }\r\n.ui-icon-locked { background-position: -192px -96px; }\r\n.ui-icon-unlocked { background-position: -208px -96px; }\r\n.ui-icon-bookmark { background-position: -224px -96px; }\r\n.ui-icon-tag { background-position: -240px -96px; }\r\n.ui-icon-home { background-position: 0 -112px; }\r\n.ui-icon-flag { background-position: -16px -112px; }\r\n.ui-icon-calendar { background-position: -32px -112px; }\r\n.ui-icon-cart { background-position: -48px -112px; }\r\n.ui-icon-pencil { background-position: -64px -112px; }\r\n.ui-icon-clock { background-position: -80px -112px; }\r\n.ui-icon-disk { background-position: -96px -112px; }\r\n.ui-icon-calculator { background-position: -112px -112px; }\r\n.ui-icon-zoomin { background-position: -128px -112px; }\r\n.ui-icon-zoomout { background-position: -144px -112px; }\r\n.ui-icon-search { background-position: -160px -112px; }\r\n.ui-icon-wrench { background-position: -176px -112px; }\r\n.ui-icon-gear { background-position: -192px -112px; }\r\n.ui-icon-heart { background-position: -208px -112px; }\r\n.ui-icon-star { background-position: -224px -112px; }\r\n.ui-icon-link { background-position: -240px -112px; }\r\n.ui-icon-cancel { background-position: 0 -128px; }\r\n.ui-icon-plus { background-position: -16px -128px; }\r\n.ui-icon-plusthick { background-position: -32px -128px; }\r\n.ui-icon-minus { background-position: -48px -128px; }\r\n.ui-icon-minusthick { background-position: -64px -128px; }\r\n.ui-icon-close { background-position: -80px -128px; }\r\n.ui-icon-closethick { background-position: -96px -128px; }\r\n.ui-icon-key { background-position: -112px -128px; }\r\n.ui-icon-lightbulb { background-position: -128px -128px; }\r\n.ui-icon-scissors { background-position: -144px -128px; }\r\n.ui-icon-clipboard { background-position: -160px -128px; }\r\n.ui-icon-copy { background-position: -176px -128px; }\r\n.ui-icon-contact { background-position: -192px -128px; }\r\n.ui-icon-image { background-position: -208px -128px; }\r\n.ui-icon-video { background-position: -224px -128px; }\r\n.ui-icon-script { background-position: -240px -128px; }\r\n.ui-icon-alert { background-position: 0 -144px; }\r\n.ui-icon-info { background-position: -16px -144px; }\r\n.ui-icon-notice { background-position: -32px -144px; }\r\n.ui-icon-help { background-position: -48px -144px; }\r\n.ui-icon-check { background-position: -64px -144px; }\r\n.ui-icon-bullet { background-position: -80px -144px; }\r\n.ui-icon-radio-on { background-position: -96px -144px; }\r\n.ui-icon-radio-off { background-position: -112px -144px; }\r\n.ui-icon-pin-w { background-position: -128px -144px; }\r\n.ui-icon-pin-s { background-position: -144px -144px; }\r\n.ui-icon-play { background-position: 0 -160px; }\r\n.ui-icon-pause { background-position: -16px -160px; }\r\n.ui-icon-seek-next { background-position: -32px -160px; }\r\n.ui-icon-seek-prev { background-position: -48px -160px; }\r\n.ui-icon-seek-end { background-position: -64px -160px; }\r\n.ui-icon-seek-start { background-position: -80px -160px; }\r\n/* ui-icon-seek-first is deprecated, use ui-icon-seek-start instead */\r\n.ui-icon-seek-first { background-position: -80px -160px; }\r\n.ui-icon-stop { background-position: -96px -160px; }\r\n.ui-icon-eject { background-position: -112px -160px; }\r\n.ui-icon-volume-off { background-position: -128px -160px; }\r\n.ui-icon-volume-on { background-position: -144px -160px; }\r\n.ui-icon-power { background-position: 0 -176px; }\r\n.ui-icon-signal-diag { background-position: -16px -176px; }\r\n.ui-icon-signal { background-position: -32px -176px; }\r\n.ui-icon-battery-0 { background-position: -48px -176px; }\r\n.ui-icon-battery-1 { background-position: -64px -176px; }\r\n.ui-icon-battery-2 { background-position: -80px -176px; }\r\n.ui-icon-battery-3 { background-position: -96px -176px; }\r\n.ui-icon-circle-plus { background-position: 0 -192px; }\r\n.ui-icon-circle-minus { background-position: -16px -192px; }\r\n.ui-icon-circle-close { background-position: -32px -192px; }\r\n.ui-icon-circle-triangle-e { background-position: -48px -192px; }\r\n.ui-icon-circle-triangle-s { background-position: -64px -192px; }\r\n.ui-icon-circle-triangle-w { background-position: -80px -192px; }\r\n.ui-icon-circle-triangle-n { background-position: -96px -192px; }\r\n.ui-icon-circle-arrow-e { background-position: -112px -192px; }\r\n.ui-icon-circle-arrow-s { background-position: -128px -192px; }\r\n.ui-icon-circle-arrow-w { background-position: -144px -192px; }\r\n.ui-icon-circle-arrow-n { background-position: -160px -192px; }\r\n.ui-icon-circle-zoomin { background-position: -176px -192px; }\r\n.ui-icon-circle-zoomout { background-position: -192px -192px; }\r\n.ui-icon-circle-check { background-position: -208px -192px; }\r\n.ui-icon-circlesmall-plus { background-position: 0 -208px; }\r\n.ui-icon-circlesmall-minus { background-position: -16px -208px; }\r\n.ui-icon-circlesmall-close { background-position: -32px -208px; }\r\n.ui-icon-squaresmall-plus { background-position: -48px -208px; }\r\n.ui-icon-squaresmall-minus { background-position: -64px -208px; }\r\n.ui-icon-squaresmall-close { background-position: -80px -208px; }\r\n.ui-icon-grip-dotted-vertical { background-position: 0 -224px; }\r\n.ui-icon-grip-dotted-horizontal { background-position: -16px -224px; }\r\n.ui-icon-grip-solid-vertical { background-position: -32px -224px; }\r\n.ui-icon-grip-solid-horizontal { background-position: -48px -224px; }\r\n.ui-icon-gripsmall-diagonal-se { background-position: -64px -224px; }\r\n.ui-icon-grip-diagonal-se { background-position: -80px -224px; }\r\n\r\n\r\n/* Misc visuals\r\n----------------------------------*/\r\n\r\n/* Corner radius */\r\n.ui-corner-all,\r\n.ui-corner-top,\r\n.ui-corner-left,\r\n.ui-corner-tl {\r\n\tborder-top-left-radius: 4px;\r\n}\r\n.ui-corner-all,\r\n.ui-corner-top,\r\n.ui-corner-right,\r\n.ui-corner-tr {\r\n\tborder-top-right-radius: 4px;\r\n}\r\n.ui-corner-all,\r\n.ui-corner-bottom,\r\n.ui-corner-left,\r\n.ui-corner-bl {\r\n\tborder-bottom-left-radius: 4px;\r\n}\r\n.ui-corner-all,\r\n.ui-corner-bottom,\r\n.ui-corner-right,\r\n.ui-corner-br {\r\n\tborder-bottom-right-radius: 4px;\r\n}\r\n\r\n/* Overlays */\r\n.ui-widget-overlay {\r\n\tbackground: #666666 url(" + __webpack_require__(644) + ") 50% 50% repeat;\r\n\topacity: .5;\r\n\tfilter: Alpha(Opacity=50); /* support: IE8 */\r\n}\r\n.ui-widget-shadow {\r\n\tmargin: -5px 0 0 -5px;\r\n\tpadding: 5px;\r\n\tbackground: #000000 url(" + __webpack_require__(645) + ") 50% 50% repeat-x;\r\n\topacity: .2;\r\n\tfilter: Alpha(Opacity=20); /* support: IE8 */\r\n\tborder-radius: 5px;\r\n}\r\n", ""]);
+
+	// exports
+
 
 /***/ },
 /* 632 */

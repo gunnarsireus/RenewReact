@@ -19,7 +19,8 @@ module.exports = {
         new WebpackNotifierPlugin(),
         new webpack.ProvidePlugin({
               $: "jquery",
-              jQuery: "jquery"
+              jQuery: "jquery",
+              jquery: "jquery"
           })
           //new webpack.optimize.UglifyJsPlugin({
           //    compress: { warnings: false }
@@ -33,11 +34,5 @@ module.exports = {
             { test: /\.js$/, loader: "babel" },
             { test: /\.jsx$/, loader: "babel" }
         ]
-    },
-    resolve: {
-    alias: {
-      $: 'jquery',
-      jQuery: 'jquery'
-    }
-  }   
+    }  
 };

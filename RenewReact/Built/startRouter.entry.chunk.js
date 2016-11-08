@@ -50732,29 +50732,17 @@ webpackJsonp([0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _jquery = __webpack_require__(2);
+	__webpack_require__(2);
 
-	var _jquery2 = _interopRequireDefault(_jquery);
+	__webpack_require__(438);
 
-	var _jqueryUi = __webpack_require__(438);
+	__webpack_require__(480);
 
-	var _jqueryUi2 = _interopRequireDefault(_jqueryUi);
+	__webpack_require__(587);
 
-	var _moment = __webpack_require__(480);
+	__webpack_require__(588);
 
-	var _moment2 = _interopRequireDefault(_moment);
-
-	var _fullcalendar = __webpack_require__(587);
-
-	var _fullcalendar2 = _interopRequireDefault(_fullcalendar);
-
-	var _Fullcalendar = __webpack_require__(588);
-
-	var _Fullcalendar2 = _interopRequireDefault(_Fullcalendar);
-
-	var _fullcalendar3 = __webpack_require__(590);
-
-	var _fullcalendar4 = _interopRequireDefault(_fullcalendar3);
+	__webpack_require__(590);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -50818,7 +50806,7 @@ webpackJsonp([0],[
 	                    }
 	                },
 	                dayClick: function dayClick(start, jsEvent, view) {
-	                    var end = (0, _moment2.default)(start);
+	                    var end = moment(start);
 	                    end.add(1, 'hours');
 	                    if (slotLeftClick && jsEvent.timeStamp - thiz.prevclick < 500) {
 	                        slotLeftClick(start, end, jsEvent, $(this));
@@ -67476,33 +67464,19 @@ webpackJsonp([0],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _jquery = __webpack_require__(2);
+	__webpack_require__(2);
 
-	var _jquery2 = _interopRequireDefault(_jquery);
+	__webpack_require__(438);
 
-	var _jqueryUi = __webpack_require__(438);
+	__webpack_require__(480);
 
-	var _jqueryUi2 = _interopRequireDefault(_jqueryUi);
+	__webpack_require__(587);
 
-	var _moment = __webpack_require__(480);
+	__webpack_require__(588);
 
-	var _moment2 = _interopRequireDefault(_moment);
+	__webpack_require__(590);
 
-	var _fullcalendar = __webpack_require__(587);
-
-	var _fullcalendar2 = _interopRequireDefault(_fullcalendar);
-
-	var _Fullcalendar = __webpack_require__(588);
-
-	var _Fullcalendar2 = _interopRequireDefault(_Fullcalendar);
-
-	var _fullcalendar3 = __webpack_require__(590);
-
-	var _fullcalendar4 = _interopRequireDefault(_fullcalendar3);
-
-	var _jqueryUi3 = __webpack_require__(630);
-
-	var _jqueryUi4 = _interopRequireDefault(_jqueryUi3);
+	__webpack_require__(630);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -67580,11 +67554,11 @@ webpackJsonp([0],[
 	                    stick: true // maintain when user navigates (see docs on the renderEvent method)
 	                });
 	                //make the event draggable using jQuery UI
-	                //$(this).draggable({
-	                //    zIndex: 999,
-	                //    revert: true,      // will cause the event to go back to its
-	                //    revertDuration: 0  //  original position after the drag
-	                //});
+	                $(this).draggable({
+	                    zIndex: 999,
+	                    revert: true, // will cause the event to go back to its
+	                    revertDuration: 0 //  original position after the drag
+	                });
 	            });
 	        }
 	    }]);

@@ -1,11 +1,11 @@
 ﻿import React, { Component } from 'react';
-import jquery from 'jquery';
-import jqueryUi from 'jquery-ui';
-import moment from 'moment';
+import 'jquery';
+import 'jquery-ui';
+import 'moment';
 //import sv from '../../js/FullCalendar-2.6.1/lang/sv.js';
-import fullcalendar from 'fullcalendar';
-import styles from '../../css/Fullcalendar.css';
-import styles2 from '../../css/FullCalendar-2.6.1/fullcalendar.css'
+import 'fullcalendar';
+import '../../css/Fullcalendar.css';
+import '../../css/FullCalendar-2.6.1/fullcalendar.css'
 
 export default class Calendar extends Component {
     constructor(props) {

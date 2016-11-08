@@ -1,11 +1,11 @@
 ﻿import React, { Component } from 'react';
-import jquery from 'jquery';
-import jqueryUi from 'jquery-ui';
-import moment from 'moment';
-import fullcalendar from 'fullcalendar';
-import styles from '../../css/Fullcalendar.css';
-import styles2 from '../../css/FullCalendar-2.6.1/fullcalendar.css';
-import styles3 from '../../css/jquery-ui-1.11.2.css';
+import 'jquery';
+import 'jquery-ui';
+import 'moment';
+import 'fullcalendar';
+import '../../css/Fullcalendar.css';
+import '../../css/FullCalendar-2.6.1/fullcalendar.css';
+import '../../css/jquery-ui-1.11.2.css';
 
 export default class External extends Component {
     constructor(props) {
@@ -34,11 +34,11 @@ export default class External extends Component {
                 stick: true // maintain when user navigates (see docs on the renderEvent method)
             });
              //make the event draggable using jQuery UI
-            //$(this).draggable({
-            //    zIndex: 999,
-            //    revert: true,      // will cause the event to go back to its
-            //    revertDuration: 0  //  original position after the drag
-            //});
+            $(this).draggable({
+                zIndex: 999,
+                revert: true,      // will cause the event to go back to its
+                revertDuration: 0  //  original position after the drag
+            });
         });
     }
 }

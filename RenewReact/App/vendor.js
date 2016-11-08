@@ -1,6 +1,9 @@
 ﻿// jQuery
 //require('../Scripts/kendo/2015.1.318/jquery.min'); //jquery 1.9.1
-require('jquery'); //jquery 1.11.2
+import 'jquery'; //jquery 1.11.2
+import 'jquery-ui';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap';
 
 // PubSub
 require('../Scripts/pubsub.js');
@@ -18,7 +21,7 @@ require('../Scripts/kendo/2015.1.318/kendo.fx.min');
 //require('../App/css/jquery-ui-1.11.2.css');
 //require('../App/css/DataTables-1.10.4/css/jquery.dataTables.css');
 //require('../App/css/DataTables-1.10.4/css/dataTables.bootstrap.css');
-require('../App/css/bootstrap.css');
+//require('../App/css/bootstrap.css');
 //require('../App/css/bootstrap-clockpicker.css');
 //require('../App/css/bootstrap-datepicker.css');
 //require('../App/css/bootstrap-select.css');
@@ -44,7 +47,7 @@ require('../App/css/site.css');
 //require('../App/js/platform/jquery.unobtrusive-ajax.js');
 
 //bootstrap.js
-require('../App/js/platform/bootstrap.js');
+//require('../App/js/platform/bootstrap.js');
 //require('../App/js/platform/bootstrap-select.js');
 //require('../App/js/platform/bootstrap-clockpicker.js');
 //require('../App/js/platform/bootstrap-datepicker.js');

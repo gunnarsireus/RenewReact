@@ -1,21 +1,19 @@
 ﻿var webpack = require('webpack');
 var path = require('path');
 var WebpackNotifierPlugin = require('webpack-notifier');
-var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
+//var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 
 var PROD = JSON.parse(process.env.PROD_ENV || '0');
 
 module.exports = {
     context: path.join(__dirname, 'App'),
-    entry: {vendor: './vendor.js',
-            startRouter: './startRouter.js'
-    },
+    entry: './main.js',
     output: {
         path: path.join(__dirname, 'Built'),
-        filename: '[name].entry.chunk.js'
+        filename: '[name].bundle.js'
     },
     plugins: [
-        new CommonsChunkPlugin("commons.chunk.js"),
+        //new CommonsChunkPlugin("commons.chunk.js"),
         new WebpackNotifierPlugin(),
         new webpack.ProvidePlugin({
               $: "jquery",

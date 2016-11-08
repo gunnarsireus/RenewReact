@@ -473,7 +473,7 @@
     <Content Include="App\Jsx\Nyheter\Index.js" />
     <Content Include="App\Jsx\Personal\Index.js" />
     <Content Include="App\router.js" />
-    <Content Include="App\startRouter.js" />
+    <Content Include="App\main.js" />
     <Content Include="App\swf\copy_csv_xls.swf" />
     <Content Include="App\swf\copy_csv_xls_pdf.swf" />
     <Content Include="App\Jsx\Tidkoder\Index.js" />
